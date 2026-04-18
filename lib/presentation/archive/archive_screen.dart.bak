@@ -1,0 +1,100 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../domain/providers/archive_provider.dart';
+import '../../widgets/app_decorated_scaffold.dart';
+import '../../widgets/app_navigation_bar.dart';
+import '../../widgets/quote_card.dart';
+
+class ArchiveScreen extends ConsumerWidget {
+  const ArchiveScreen({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final scheme = Theme.of(context).colorScheme;
+    final archiveAsync = ref.watch(archiveProvider);
+
+    return AppDecoratedScaffold(
+      appBar: AppBar(
+        title: const Text('Archiv'),
+        actions: <Widget>[
+          IconButton(onPressed: () {}, icon: const Icon(Icons.tune_rounded)),
+        ],
+      ),
+      bottomNavigationBar: const AppNavigationBar(selectedIndex: 1),
+      child: Column(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.fromLTRB(24, 10, 24, 10),
+            child: EditorialSectionTitle(
+              label: 'Bibliothek',
+              title: 'Archiv der Textstellen',
+              trailing: archiveAsync.maybeWhen(
+                data: (quotes) => Text(
+                  '${quotes.length} Treffer',
+                  style: Theme.of(context).textTheme.labelSmall,
+                ),
+                orElse: () => const SizedBox.shrink(),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(24, 0, 24, 14),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              decoration: BoxDecoration(
+                color: scheme.surface,
+                borderRadius: BorderRadius.circular(14),
+                border: Border.all(
+                  color: scheme.outline.withValues(alpha: 0.18),
+                ),
+              ),
+              child: TextField(
+                decoration: const InputDecoration(
+                  labelText: 'Suche',
+                  prefixIcon: Icon(Icons.search),
+                  border: InputBorder.none,
+                ),
+                onChanged: (value) {
+                  ref.read(archiveQueryProvider.notifier).state = value;
+                },
+              ),
+            ),
+          ),
+          Expanded(
+            child: archiveAsync.when(
+              data: (quotes) {
+                if (quotes.isEmpty) {
+                  return Center(
+                    child: Text(
+                      'Keine Treffer. Probiere einen Werk- oder Begriffsfilter.',
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  );
+                }
+                return ListView.builder(
+                  padding: const EdgeInsets.fromLTRB(24, 2, 24, 24),
+                  itemCount: quotes.length,
+                  itemBuilder: (context, index) {
+                    final quote = quotes[index];
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 12),
+                      child: QuoteCard(
+                        quote: quote,
+                        onTap: () => context.push('/detail/${quote.id}'),
+                      ),
+                    );
+                  },
+                );
+              },
+              loading: () => const Center(child: CircularProgressIndicator()),
+              error: (error, _) => Center(child: Text('Fehler: $error')),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

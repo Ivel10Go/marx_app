@@ -1,0 +1,125 @@
+import 'dart:convert';
+
+import 'package:drift/drift.dart';
+import 'package:flutter/services.dart';
+
+import '../../core/utils/quote_scheduler.dart';
+import '../database/app_database.dart';
+import '../models/quote.dart';
+
+class QuoteRepository {
+  QuoteRepository(this._db);
+
+  final AppDatabase _db;
+
+  Future<void> ensureSeeded() async {
+    final raw = await rootBundle.loadString('assets/quotes.json');
+    final decoded = jsonDecode(raw) as List<dynamic>;
+    final quotes = decoded
+        .map((dynamic item) => Quote.fromJson(item as Map<String, dynamic>))
+        .toList();
+
+    await _db.quoteDao.upsertQuotes(quotes.map(_toCompanion).toList());
+  }
+
+  Stream<List<Quote>> watchAllQuotes() {
+    return _db.quoteDao.watchAllQuoteEntries().map(
+      (List<QuoteEntry> rows) => rows.map(_fromEntry).toList(),
+    );
+  }
+
+  Stream<List<Quote>> watchFavorites() {
+    return _db.quoteDao.watchFavoriteQuoteEntries().map(
+      (List<QuoteEntry> rows) => rows.map(_fromEntry).toList(),
+    );
+  }
+
+  Stream<Quote?> watchQuoteById(String id) {
+    return _db.quoteDao.watchQuoteById(id).map((QuoteEntry? row) {
+      if (row == null) {
+        return null;
+      }
+      return _fromEntry(row);
+    });
+  }
+
+  Future<Quote?> getQuoteById(String id) async {
+    final row = await _db.quoteDao.getQuoteById(id);
+    if (row == null) {
+      return null;
+    }
+    return _fromEntry(row);
+  }
+
+  Future<Quote?> getDailyQuote() async {
+    final allIds = await _db.quoteDao.getAllQuoteIds();
+    final id = await QuoteScheduler.pickDailyId(allIds);
+    if (id == null) {
+      return null;
+    }
+
+    final row = await _db.quoteDao.getQuoteById(id);
+    if (row == null) {
+      return null;
+    }
+
+    await _db.quoteDao.markSeen(id);
+    return _fromEntry(row);
+  }
+
+  Future<void> addFavorite(String quoteId) => _db.quoteDao.addFavorite(quoteId);
+
+  Future<void> removeFavorite(String quoteId) =>
+      _db.quoteDao.removeFavorite(quoteId);
+
+  Stream<bool> watchIsFavorite(String quoteId) =>
+      _db.quoteDao.watchIsFavorite(quoteId);
+
+  QuoteEntriesCompanion _toCompanion(Quote quote) {
+    return QuoteEntriesCompanion.insert(
+      id: quote.id,
+      textDe: quote.textDe,
+      textOriginal: quote.textOriginal,
+      source: quote.source,
+      year: quote.year,
+      chapter: quote.chapter,
+      categoryCsv: quote.category.join(', '),
+      difficulty: quote.difficulty,
+      series: quote.series,
+      explanationShort: quote.explanationShort,
+      explanationLong: quote.explanationLong,
+      relatedIdsCsv: quote.relatedIds.join(', '),
+      funFact: Value<String?>(quote.funFact),
+    );
+  }
+
+  Quote _fromEntry(QuoteEntry row) {
+    final categories = row.categoryCsv
+        .split(',')
+        .map((String item) => item.trim())
+        .where((String item) => item.isNotEmpty)
+        .toList();
+
+    final related = row.relatedIdsCsv
+        .split(',')
+        .map((String item) => item.trim())
+        .where((String item) => item.isNotEmpty)
+        .toList();
+
+    return Quote(
+      id: row.id,
+      textDe: row.textDe,
+      textOriginal: row.textOriginal,
+      source: row.source,
+      year: row.year,
+      chapter: row.chapter,
+      category: categories,
+      difficulty: row.difficulty,
+      series: row.series,
+      explanationShort: row.explanationShort,
+      explanationLong: row.explanationLong,
+      relatedIds: related,
+      funFact: row.funFact,
+    );
+  }
+}

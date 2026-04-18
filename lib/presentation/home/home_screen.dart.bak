@@ -1,0 +1,269 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+import '../../core/services/notification_service.dart';
+import '../../core/theme/app_colors.dart';
+import '../../domain/providers/daily_quote_provider.dart';
+import '../../domain/providers/settings_provider.dart';
+import '../../widgets/app_decorated_scaffold.dart';
+import '../../widgets/app_navigation_bar.dart';
+import '../../widgets/quote_card.dart';
+import '../../widgets/streak_badge.dart';
+
+class HomeScreen extends ConsumerStatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends ConsumerState<HomeScreen>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  late final Animation<Offset> _slide;
+  late final Animation<double> _fade;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    )..forward();
+
+    _slide = Tween<Offset>(
+      begin: const Offset(0, 0.08),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
+
+    _fade = CurvedAnimation(parent: _controller, curve: Curves.easeOut);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final dailyQuote = ref.watch(dailyQuoteProvider);
+    final settings = ref.watch(settingsControllerProvider);
+
+    return AppDecoratedScaffold(
+      appBar: AppBar(
+        title: const Text('Das Kapital'),
+        actions: <Widget>[
+          IconButton(
+            onPressed: () => context.push('/archive'),
+            icon: const Icon(Icons.search),
+          ),
+          IconButton(
+            onPressed: () => context.push('/favorites'),
+            icon: const Icon(Icons.favorite_border),
+          ),
+          IconButton(
+            onPressed: () => context.push('/settings'),
+            icon: const Icon(Icons.tune_rounded),
+          ),
+        ],
+      ),
+      bottomNavigationBar: const AppNavigationBar(selectedIndex: 0),
+      child: RefreshIndicator(
+        onRefresh: () async => ref.invalidate(dailyQuoteProvider),
+        child: ListView(
+          padding: const EdgeInsets.fromLTRB(24, 10, 24, 24),
+          children: <Widget>[
+            const EditorialSectionTitle(label: 'Edition', title: 'Das Kapital'),
+            const SizedBox(height: 16),
+            _HeroHeader(
+              scheme: scheme,
+              streak: settings.maybeWhen(
+                data: (value) => value.streak,
+                orElse: () => 0,
+              ),
+            ),
+            const SizedBox(height: 20),
+            settings.maybeWhen(
+              data: (value) => StreakBadge(days: value.streak),
+              orElse: () => const SizedBox.shrink(),
+            ),
+            const SizedBox(height: 20),
+            dailyQuote.when(
+              data: (quote) {
+                if (quote == null) {
+                  return const _EmptyStateCard(
+                    icon: Icons.hourglass_empty_rounded,
+                    title: 'Noch kein Tageszitat',
+                    body:
+                        'Die App lädt den Korpus und bereitet das erste Zitat vor.',
+                  );
+                }
+
+                return FadeTransition(
+                  opacity: _fade,
+                  child: SlideTransition(
+                    position: _slide,
+                    child: QuoteCard(
+                      quote: quote,
+                      onTap: () => context.push('/detail/${quote.id}'),
+                    ),
+                  ),
+                );
+              },
+              loading: () => const _LoadingCard(),
+              error: (error, _) => _EmptyStateCard(
+                icon: Icons.error_outline_rounded,
+                title: 'Ladevorgang fehlgeschlagen',
+                body: '$error',
+              ),
+            ),
+            const SizedBox(height: 20),
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: FilledButton.tonalIcon(
+                    onPressed: () => context.push('/archive'),
+                    icon: const Icon(Icons.library_books_outlined),
+                    label: const Text('Archiv'),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: FilledButton.tonalIcon(
+                    onPressed: () => context.push('/favorites'),
+                    icon: const Icon(Icons.favorite_border),
+                    label: const Text('Favoriten'),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 14),
+            FilledButton.tonalIcon(
+              onPressed: () => context.push('/onboarding'),
+              icon: const Icon(Icons.library_books_rounded),
+              label: const Text('Einführung ansehen'),
+            ),
+            const SizedBox(height: 14),
+            OutlinedButton.icon(
+              onPressed: () async {
+                final current = ref.read(dailyQuoteProvider).valueOrNull;
+                if (current != null) {
+                  await NotificationService.instance.showDailyQuote(current);
+                }
+              },
+              icon: const Icon(Icons.notifications_active_outlined),
+              label: const Text('Benachrichtigung testen'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _HeroHeader extends StatelessWidget {
+  const _HeroHeader({required this.scheme, required this.streak});
+
+  final ColorScheme scheme;
+  final int streak;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: <Color>[
+            scheme.surface.withValues(alpha: 0.94),
+            scheme.primary.withValues(alpha: 0.10),
+            scheme.secondary.withValues(alpha: 0.08),
+          ],
+        ),
+        border: Border.all(color: scheme.outline.withValues(alpha: 0.28)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            'Tageszitat',
+            style: Theme.of(context).textTheme.labelSmall?.copyWith(
+              color: scheme.primary.withValues(alpha: 0.85),
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            'Politische Einordnung',
+            style: Theme.of(context).textTheme.headlineSmall,
+          ),
+          const SizedBox(height: 10),
+          Divider(color: scheme.primary.withValues(alpha: 0.25), height: 1),
+          const SizedBox(height: 10),
+          Text(
+            'Eine lesbare Spur durch Marx und Engels, kuratiert fuer den heutigen Blick.',
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+          const SizedBox(height: 14),
+          Align(
+            alignment: Alignment.centerRight,
+            child: StreakBadge(days: streak),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _EmptyStateCard extends StatelessWidget {
+  const _EmptyStateCard({
+    required this.icon,
+    required this.title,
+    required this.body,
+  });
+
+  final IconData icon;
+  final String title;
+  final String body;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: scheme.surface,
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: scheme.outline.withValues(alpha: 0.18)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Icon(icon, color: scheme.primary),
+          const SizedBox(height: 12),
+          Text(title, style: Theme.of(context).textTheme.titleMedium),
+          const SizedBox(height: 6),
+          Text(body, style: Theme.of(context).textTheme.bodyMedium),
+        ],
+      ),
+    );
+  }
+}
+
+class _LoadingCard extends StatelessWidget {
+  const _LoadingCard();
+
+  @override
+  Widget build(BuildContext context) {
+    return const SizedBox(
+      height: 220,
+      child: Center(child: CircularProgressIndicator()),
+    );
+  }
+}
