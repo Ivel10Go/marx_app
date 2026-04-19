@@ -2,6 +2,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../data/database/app_database.dart';
 import '../../data/models/daily_content.dart';
+import '../../data/models/user_profile.dart';
 import '../../data/repositories/history_repository.dart';
 import '../../data/repositories/quote_repository.dart';
 import '../constants/settings_keys.dart';
@@ -53,8 +54,8 @@ abstract final class AppBootstrap {
     await BackgroundTasksService.initialize();
 
     final settings = await SharedPreferences.getInstance();
-    final onboardingSeen =
-        settings.getBool('settings_onboarding_seen') ?? false;
+    final profileRaw = settings.getString(UserProfile.storageKey);
+    final onboardingSeen = _resolveOnboardingSeen(profileRaw);
     final launchRoute = NotificationService.instance.consumeLaunchRoute();
     final initialRoute = launchRoute != '/'
         ? launchRoute
@@ -63,6 +64,18 @@ abstract final class AppBootstrap {
         : '/onboarding';
 
     return AppBootstrapResult(initialRoute: initialRoute);
+  }
+
+  static bool _resolveOnboardingSeen(String? profileRaw) {
+    if (profileRaw == null || profileRaw.isEmpty) {
+      return false;
+    }
+
+    try {
+      return UserProfile.fromJsonString(profileRaw).onboardingCompleted;
+    } catch (_) {
+      return false;
+    }
   }
 
   static Future<DailyContent?> _resolveDailyContent({

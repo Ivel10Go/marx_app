@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../core/utils/pdf_export_service.dart';
 import '../../core/theme/app_colors.dart';
 import '../../domain/providers/favorites_provider.dart';
 import '../../widgets/app_decorated_scaffold.dart';
@@ -35,6 +36,30 @@ class FavoritesScreen extends ConsumerWidget {
                     fontWeight: FontWeight.w700,
                     color: AppColors.ink,
                     letterSpacing: -0.5,
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton.icon(
+                    onPressed: favoritesAsync.maybeWhen(
+                      data: (quotes) => () async {
+                        final service = PdfExportService();
+                        await service.exportFavorites(
+                          quotes: quotes,
+                          facts: const [],
+                        );
+                      },
+                      orElse: () => null,
+                    ),
+                    icon: const Icon(Icons.picture_as_pdf_outlined, size: 18),
+                    label: Text(
+                      'PDF',
+                      style: GoogleFonts.ibmPlexSans(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    style: TextButton.styleFrom(foregroundColor: AppColors.red),
                   ),
                 ),
                 const SizedBox(height: 12),

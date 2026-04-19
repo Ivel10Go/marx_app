@@ -7,6 +7,7 @@ import '../../domain/providers/settings_provider.dart';
 import '../../widgets/app_decorated_scaffold.dart';
 import '../../widgets/app_navigation_bar.dart';
 import 'widgets/mode_selector.dart';
+import 'widgets/profile_section.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -17,7 +18,7 @@ class SettingsScreen extends ConsumerWidget {
 
     return AppDecoratedScaffold(
       appBar: null,
-      bottomNavigationBar: const AppNavigationBar(selectedIndex: 3),
+      bottomNavigationBar: const AppNavigationBar(selectedIndex: 4),
       child: Column(
         children: <Widget>[
           // Masthead
@@ -51,6 +52,8 @@ class SettingsScreen extends ConsumerWidget {
                       title: 'TÄGLICHER INHALT',
                       children: <Widget>[const ModeSelector()],
                     ),
+                    const SizedBox(height: 24),
+                    const ProfileSection(),
                     const SizedBox(height: 24),
                     _SettingsGroup(
                       title: 'DARSTELLUNG',

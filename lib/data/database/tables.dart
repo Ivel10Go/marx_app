@@ -54,3 +54,11 @@ class HistoryFactEntries extends Table {
   @override
   Set<Column<Object>> get primaryKey => <Column<Object>>{id};
 }
+
+class AppOpenLog extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  DateTimeColumn get openedAt => dateTime()();
+
+  @override
+  List<String> get customConstraints => <String>['UNIQUE(opened_at)'];
+}

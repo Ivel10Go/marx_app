@@ -6,13 +6,14 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../core/services/notification_service.dart';
 import '../../core/theme/app_colors.dart';
 import '../../domain/providers/daily_content_provider.dart';
-import '../../domain/providers/settings_provider.dart';
+import '../../domain/providers/streak_provider.dart';
 import '../../widgets/app_decorated_scaffold.dart';
 import '../../widgets/app_navigation_bar.dart';
 import '../../widgets/quote_card.dart';
 import '../../widgets/streak_badge.dart';
 import '../home/dialogs/mode_dialog.dart';
 import '../home/widgets/fact_block.dart';
+import '../home/widgets/streak_calendar.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -26,6 +27,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
   late final AnimationController _controller;
   late final Animation<Offset> _slide;
   late final Animation<double> _fade;
+  bool _calendarExpanded = false;
 
   @override
   void initState() {
@@ -41,6 +43,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
 
     _fade = CurvedAnimation(parent: _controller, curve: Curves.easeOut);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(streakControllerProvider.notifier).logTodayAndRefresh();
+    });
   }
 
   @override
@@ -52,7 +58,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
   @override
   Widget build(BuildContext context) {
     final dailyContent = ref.watch(dailyContentProvider);
-    final settings = ref.watch(settingsControllerProvider);
+    final streakAsync = ref.watch(currentStreakProvider);
 
     return AppDecoratedScaffold(
       appBar: null,
@@ -126,9 +132,30 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                     ),
                   ),
                   const SizedBox(height: 24),
-                  settings.maybeWhen(
-                    data: (value) => StreakBadge(days: value.streak),
-                    orElse: () => const SizedBox.shrink(),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _calendarExpanded = !_calendarExpanded;
+                      });
+                    },
+                    child: streakAsync.when(
+                      data: (streak) => StreakBadge(
+                        days: streak,
+                        expanded: _calendarExpanded,
+                      ),
+                      loading: () => const StreakBadge(days: 0),
+                      error: (_, __) => const StreakBadge(days: 0),
+                    ),
+                  ),
+                  AnimatedSize(
+                    duration: const Duration(milliseconds: 250),
+                    curve: Curves.easeOut,
+                    child: _calendarExpanded
+                        ? const Padding(
+                            padding: EdgeInsets.only(top: 8),
+                            child: StreakCalendar(),
+                          )
+                        : const SizedBox.shrink(),
                   ),
                   const SizedBox(height: 20),
                   Row(

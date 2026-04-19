@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../data/models/history_fact.dart';
+import 'tts_button.dart';
 import '../../../widgets/category_chip.dart';
 
 class FactBlock extends StatelessWidget {
@@ -90,6 +91,8 @@ class FactBlock extends StatelessWidget {
                   ),
                 ],
               ),
+              const SizedBox(height: 14),
+              TtsButton(contentId: fact.id, text: fact.body),
             ],
           ),
         ),

@@ -38,12 +38,17 @@ class QuoteWidgetProvider : AppWidgetProvider() {
     ) {
       val prefs = context.getSharedPreferences("HomeWidgetPreferences", Context.MODE_PRIVATE)
       val quoteText = prefs.getString("quote_text", "Tageszitat wird geladen...") ?: ""
-      val source = prefs.getString("quote_source", "Das Kapital") ?: ""
-      val explanation = prefs.getString("quote_explanation", "") ?: ""
+      val source = prefs.getString("source", null)
+        ?: prefs.getString("quote_source", "Das Kapital") ?: ""
+      val explanation = prefs.getString("explanation", null)
+        ?: prefs.getString("quote_explanation", "") ?: ""
       val categories = prefs.getString("quote_categories", "") ?: ""
       val streak = prefs.getString("streak", "0") ?: "0"
       val contentType = prefs.getString("content_type", "quote") ?: "quote"
       val header = prefs.getString(
+        "kicker",
+        prefs.getString("widget_header", null)
+      ) ?: prefs.getString(
         "widget_header",
         if (contentType == "fact") "WELTGESCHICHTE" else "DAS KAPITAL",
       ) ?: "DAS KAPITAL"

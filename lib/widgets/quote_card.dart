@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../core/theme/app_colors.dart';
 import '../data/models/quote.dart';
+import '../presentation/home/widgets/tts_button.dart';
 import 'category_chip.dart';
 
 class QuoteCard extends StatelessWidget {
@@ -89,10 +90,16 @@ class QuoteCard extends StatelessWidget {
                           .map((String item) => CategoryChip(label: item))
                           .toList(),
                     ),
-                    if (trailing != null) ...<Widget>[
-                      const SizedBox(height: 12),
-                      trailing!,
-                    ],
+                    const SizedBox(height: 12),
+                    Row(
+                      children: <Widget>[
+                        TtsButton(contentId: quote.id, text: quote.textDe),
+                        if (trailing != null) ...<Widget>[
+                          const SizedBox(width: 12),
+                          Expanded(child: trailing!),
+                        ],
+                      ],
+                    ),
                   ],
                 ),
               ),

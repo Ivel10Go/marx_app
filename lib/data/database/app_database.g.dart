@@ -2242,6 +2242,200 @@ class HistoryFactEntriesCompanion extends UpdateCompanion<HistoryFactEntry> {
   }
 }
 
+class $AppOpenLogTable extends AppOpenLog
+    with TableInfo<$AppOpenLogTable, AppOpenLogData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $AppOpenLogTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _openedAtMeta = const VerificationMeta(
+    'openedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> openedAt = GeneratedColumn<DateTime>(
+    'opened_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, openedAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'app_open_log';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<AppOpenLogData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('opened_at')) {
+      context.handle(
+        _openedAtMeta,
+        openedAt.isAcceptableOrUnknown(data['opened_at']!, _openedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_openedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  AppOpenLogData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return AppOpenLogData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      openedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}opened_at'],
+      )!,
+    );
+  }
+
+  @override
+  $AppOpenLogTable createAlias(String alias) {
+    return $AppOpenLogTable(attachedDatabase, alias);
+  }
+}
+
+class AppOpenLogData extends DataClass implements Insertable<AppOpenLogData> {
+  final int id;
+  final DateTime openedAt;
+  const AppOpenLogData({required this.id, required this.openedAt});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['opened_at'] = Variable<DateTime>(openedAt);
+    return map;
+  }
+
+  AppOpenLogCompanion toCompanion(bool nullToAbsent) {
+    return AppOpenLogCompanion(id: Value(id), openedAt: Value(openedAt));
+  }
+
+  factory AppOpenLogData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return AppOpenLogData(
+      id: serializer.fromJson<int>(json['id']),
+      openedAt: serializer.fromJson<DateTime>(json['openedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'openedAt': serializer.toJson<DateTime>(openedAt),
+    };
+  }
+
+  AppOpenLogData copyWith({int? id, DateTime? openedAt}) =>
+      AppOpenLogData(id: id ?? this.id, openedAt: openedAt ?? this.openedAt);
+  AppOpenLogData copyWithCompanion(AppOpenLogCompanion data) {
+    return AppOpenLogData(
+      id: data.id.present ? data.id.value : this.id,
+      openedAt: data.openedAt.present ? data.openedAt.value : this.openedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AppOpenLogData(')
+          ..write('id: $id, ')
+          ..write('openedAt: $openedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, openedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AppOpenLogData &&
+          other.id == this.id &&
+          other.openedAt == this.openedAt);
+}
+
+class AppOpenLogCompanion extends UpdateCompanion<AppOpenLogData> {
+  final Value<int> id;
+  final Value<DateTime> openedAt;
+  const AppOpenLogCompanion({
+    this.id = const Value.absent(),
+    this.openedAt = const Value.absent(),
+  });
+  AppOpenLogCompanion.insert({
+    this.id = const Value.absent(),
+    required DateTime openedAt,
+  }) : openedAt = Value(openedAt);
+  static Insertable<AppOpenLogData> custom({
+    Expression<int>? id,
+    Expression<DateTime>? openedAt,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (openedAt != null) 'opened_at': openedAt,
+    });
+  }
+
+  AppOpenLogCompanion copyWith({Value<int>? id, Value<DateTime>? openedAt}) {
+    return AppOpenLogCompanion(
+      id: id ?? this.id,
+      openedAt: openedAt ?? this.openedAt,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (openedAt.present) {
+      map['opened_at'] = Variable<DateTime>(openedAt.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AppOpenLogCompanion(')
+          ..write('id: $id, ')
+          ..write('openedAt: $openedAt')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -2250,10 +2444,12 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $SeenQuotesTable seenQuotes = $SeenQuotesTable(this);
   late final $HistoryFactEntriesTable historyFactEntries =
       $HistoryFactEntriesTable(this);
+  late final $AppOpenLogTable appOpenLog = $AppOpenLogTable(this);
   late final QuoteDao quoteDao = QuoteDao(this as AppDatabase);
   late final HistoryFactDao historyFactDao = HistoryFactDao(
     this as AppDatabase,
   );
+  late final AppOpenLogDao appOpenLogDao = AppOpenLogDao(this as AppDatabase);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -2263,6 +2459,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     favorites,
     seenQuotes,
     historyFactEntries,
+    appOpenLog,
   ];
 }
 
@@ -3385,6 +3582,131 @@ typedef $$HistoryFactEntriesTableProcessedTableManager =
       HistoryFactEntry,
       PrefetchHooks Function()
     >;
+typedef $$AppOpenLogTableCreateCompanionBuilder =
+    AppOpenLogCompanion Function({Value<int> id, required DateTime openedAt});
+typedef $$AppOpenLogTableUpdateCompanionBuilder =
+    AppOpenLogCompanion Function({Value<int> id, Value<DateTime> openedAt});
+
+class $$AppOpenLogTableFilterComposer
+    extends Composer<_$AppDatabase, $AppOpenLogTable> {
+  $$AppOpenLogTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get openedAt => $composableBuilder(
+    column: $table.openedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$AppOpenLogTableOrderingComposer
+    extends Composer<_$AppDatabase, $AppOpenLogTable> {
+  $$AppOpenLogTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get openedAt => $composableBuilder(
+    column: $table.openedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$AppOpenLogTableAnnotationComposer
+    extends Composer<_$AppDatabase, $AppOpenLogTable> {
+  $$AppOpenLogTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get openedAt =>
+      $composableBuilder(column: $table.openedAt, builder: (column) => column);
+}
+
+class $$AppOpenLogTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $AppOpenLogTable,
+          AppOpenLogData,
+          $$AppOpenLogTableFilterComposer,
+          $$AppOpenLogTableOrderingComposer,
+          $$AppOpenLogTableAnnotationComposer,
+          $$AppOpenLogTableCreateCompanionBuilder,
+          $$AppOpenLogTableUpdateCompanionBuilder,
+          (
+            AppOpenLogData,
+            BaseReferences<_$AppDatabase, $AppOpenLogTable, AppOpenLogData>,
+          ),
+          AppOpenLogData,
+          PrefetchHooks Function()
+        > {
+  $$AppOpenLogTableTableManager(_$AppDatabase db, $AppOpenLogTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$AppOpenLogTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$AppOpenLogTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$AppOpenLogTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<DateTime> openedAt = const Value.absent(),
+              }) => AppOpenLogCompanion(id: id, openedAt: openedAt),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required DateTime openedAt,
+              }) => AppOpenLogCompanion.insert(id: id, openedAt: openedAt),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$AppOpenLogTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $AppOpenLogTable,
+      AppOpenLogData,
+      $$AppOpenLogTableFilterComposer,
+      $$AppOpenLogTableOrderingComposer,
+      $$AppOpenLogTableAnnotationComposer,
+      $$AppOpenLogTableCreateCompanionBuilder,
+      $$AppOpenLogTableUpdateCompanionBuilder,
+      (
+        AppOpenLogData,
+        BaseReferences<_$AppDatabase, $AppOpenLogTable, AppOpenLogData>,
+      ),
+      AppOpenLogData,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -3397,6 +3719,8 @@ class $AppDatabaseManager {
       $$SeenQuotesTableTableManager(_db, _db.seenQuotes);
   $$HistoryFactEntriesTableTableManager get historyFactEntries =>
       $$HistoryFactEntriesTableTableManager(_db, _db.historyFactEntries);
+  $$AppOpenLogTableTableManager get appOpenLog =>
+      $$AppOpenLogTableTableManager(_db, _db.appOpenLog);
 }
 
 mixin _$QuoteDaoMixin on DatabaseAccessor<AppDatabase> {
@@ -3407,4 +3731,7 @@ mixin _$QuoteDaoMixin on DatabaseAccessor<AppDatabase> {
 mixin _$HistoryFactDaoMixin on DatabaseAccessor<AppDatabase> {
   $HistoryFactEntriesTable get historyFactEntries =>
       attachedDatabase.historyFactEntries;
+}
+mixin _$AppOpenLogDaoMixin on DatabaseAccessor<AppDatabase> {
+  $AppOpenLogTable get appOpenLog => attachedDatabase.appOpenLog;
 }

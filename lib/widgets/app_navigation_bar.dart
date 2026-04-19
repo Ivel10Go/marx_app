@@ -10,10 +10,19 @@ class AppNavigationBar extends StatelessWidget {
   final int selectedIndex;
 
   static const _destinations = <_NavDestination>[
-    _NavDestination(path: '/', label: 'HEUTE'),
-    _NavDestination(path: '/archive', label: 'ARCHIV'),
-    _NavDestination(path: '/favorites', label: 'FAVORITEN'),
-    _NavDestination(path: '/settings', label: 'EINST.'),
+    _NavDestination(path: '/', label: 'HEUTE', icon: Icons.today_outlined),
+    _NavDestination(
+      path: '/archive',
+      label: 'ARCHIV',
+      icon: Icons.library_books_outlined,
+    ),
+    _NavDestination(
+      path: '/favorites',
+      label: 'FAVORITEN',
+      icon: Icons.favorite_border_rounded,
+    ),
+    _NavDestination(path: '/quiz', label: 'QUIZ', icon: Icons.quiz_outlined),
+    _NavDestination(path: '/settings', label: 'EINST.', icon: Icons.tune),
   ];
 
   @override
@@ -36,6 +45,14 @@ class AppNavigationBar extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
+                    Icon(
+                      destination.icon,
+                      size: 16,
+                      color: isActive
+                          ? AppColors.paper
+                          : const Color(0xFF666666),
+                    ),
+                    const SizedBox(height: 2),
                     Text(
                       destination.label,
                       style: GoogleFonts.ibmPlexSans(
@@ -63,7 +80,12 @@ class AppNavigationBar extends StatelessWidget {
 }
 
 class _NavDestination {
-  const _NavDestination({required this.path, required this.label});
+  const _NavDestination({
+    required this.path,
+    required this.label,
+    required this.icon,
+  });
   final String path;
   final String label;
+  final IconData icon;
 }

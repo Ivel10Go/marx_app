@@ -8,6 +8,7 @@ import '../../data/models/quote.dart';
 import '../../domain/providers/daily_quote_provider.dart';
 import '../../domain/providers/favorites_provider.dart';
 import '../../domain/providers/repository_providers.dart';
+import '../../domain/providers/tts_provider.dart';
 import '../../widgets/app_decorated_scaffold.dart';
 import '../../widgets/category_chip.dart';
 
@@ -20,6 +21,7 @@ class QuoteDetailScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final quoteAsync = ref.watch(quoteByIdProvider(quoteId));
     final favoriteAsync = ref.watch(isFavoriteProvider(quoteId));
+    final ttsState = ref.watch(ttsStateProvider);
 
     return AppDecoratedScaffold(
       appBar: null,
@@ -46,6 +48,31 @@ class QuoteDetailScreen extends ConsumerWidget {
                   child: _BroadsheetButton(
                     onPressed: () => _showSimpleExplanation(context, quote),
                     label: 'ERKLAERUNG',
+                  ),
+                ),
+                const SizedBox(width: 12),
+                SizedBox(
+                  width: 56,
+                  child: Material(
+                    color: ttsState == quote.id
+                        ? AppColors.red
+                        : Colors.transparent,
+                    child: InkWell(
+                      onTap: () => ref
+                          .read(ttsStateProvider.notifier)
+                          .toggleQuote(quote.id, quote),
+                      child: Center(
+                        child: Icon(
+                          ttsState == quote.id
+                              ? Icons.stop_rounded
+                              : Icons.volume_up_outlined,
+                          color: ttsState == quote.id
+                              ? AppColors.redOnRed
+                              : AppColors.ink,
+                          size: 24,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -167,10 +194,7 @@ class QuoteDetailScreen extends ConsumerWidget {
                     ),
                     if (quote.funFact != null) ...<Widget>[
                       const SizedBox(height: 16),
-                      _SectionCard(
-                        title: 'KONTEXT',
-                        body: quote.funFact!,
-                      ),
+                      _SectionCard(title: 'KONTEXT', body: quote.funFact!),
                     ],
                     if (quote.relatedIds.isNotEmpty) ...<Widget>[
                       const SizedBox(height: 16),
@@ -194,10 +218,7 @@ class QuoteDetailScreen extends ConsumerWidget {
 }
 
 class _SectionCard extends StatelessWidget {
-  const _SectionCard({
-    required this.title,
-    required this.body,
-  });
+  const _SectionCard({required this.title, required this.body});
 
   final String title;
   final String body;
@@ -244,10 +265,7 @@ class _SectionCard extends StatelessWidget {
 }
 
 class _BroadsheetButton extends StatelessWidget {
-  const _BroadsheetButton({
-    required this.onPressed,
-    required this.label,
-  });
+  const _BroadsheetButton({required this.onPressed, required this.label});
 
   final VoidCallback onPressed;
   final String label;
@@ -325,9 +343,7 @@ void _showSimpleExplanation(BuildContext context, Quote quote) {
     context: context,
     isScrollControlled: true,
     backgroundColor: AppColors.paper,
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.zero,
-    ),
+    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
     builder: (context) {
       return Padding(
         padding: const EdgeInsets.fromLTRB(20, 20, 20, 24),

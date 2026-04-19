@@ -6,6 +6,7 @@ import '../../presentation/detail/quote_detail_screen.dart';
 import '../../presentation/favorites/favorites_screen.dart';
 import '../../presentation/home/home_screen.dart';
 import '../../presentation/onboarding/onboarding_screen.dart';
+import '../../presentation/quiz/quiz_screen.dart';
 import '../../presentation/settings/settings_screen.dart';
 
 final initialRouteProvider = Provider<String>((Ref ref) => '/');
@@ -38,6 +39,11 @@ final appRouterProvider = Provider<GoRouter>((Ref ref) {
         path: '/favorites',
         name: 'favorites',
         builder: (context, state) => const FavoritesScreen(),
+      ),
+      GoRoute(
+        path: '/quiz',
+        name: 'quiz',
+        builder: (context, state) => const QuizScreen(),
       ),
       GoRoute(
         path: '/settings',

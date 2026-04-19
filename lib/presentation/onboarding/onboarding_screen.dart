@@ -3,9 +3,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../core/services/notification_service.dart';
 import '../../core/theme/app_colors.dart';
-import '../../domain/providers/settings_provider.dart';
+import '../../data/models/user_profile.dart';
+import '../../domain/providers/user_profile_provider.dart';
 import '../../widgets/app_decorated_scaffold.dart';
+import 'pages/interests_page.dart';
+import 'pages/notification_permission_page.dart';
+import 'pages/political_leaning_page.dart';
+import 'pages/welcome_page.dart';
 
 class OnboardingScreen extends ConsumerStatefulWidget {
   const OnboardingScreen({super.key});
@@ -17,27 +23,10 @@ class OnboardingScreen extends ConsumerStatefulWidget {
 class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   final PageController _pageController = PageController();
   int _index = 0;
+  final Set<String> _selectedInterests = <String>{};
+  PoliticalLeaning _leaning = PoliticalLeaning.neutral;
 
-  static const _pages = <({String title, String body, IconData icon})>[
-    (
-      title: 'Willkommen bei Das Kapital',
-      body:
-          'Jeden Tag ein Zitat, ruhig gesetzt wie eine Seite in einer edlen Ausgabe.',
-      icon: Icons.library_books_rounded,
-    ),
-    (
-      title: 'Benachrichtigungen',
-      body:
-          'Zur gewaehlten Uhrzeit erscheint der erste Satz des Tages direkt auf dem Sperrbildschirm.',
-      icon: Icons.notifications_active,
-    ),
-    (
-      title: 'Widgets auf dem Homescreen',
-      body:
-          'Ein Widget bringt das Zitat in Blickweite, ohne die Stille des Lesens zu unterbrechen.',
-      icon: Icons.library_books_outlined,
-    ),
-  ];
+  static const _pageCount = 4;
 
   @override
   void dispose() {
@@ -45,12 +34,37 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     super.dispose();
   }
 
+  Future<void> _next() async {
+    if (_index == 2 && _selectedInterests.isEmpty) {
+      setState(() {});
+      return;
+    }
+
+    if (_index == _pageCount - 1) {
+      await ref
+          .read(userProfileProvider.notifier)
+          .saveProfile(
+            historicalInterests: _selectedInterests.toList(),
+            politicalLeaning: _leaning,
+          );
+      ref.invalidate(userProfileProvider);
+      if (mounted) {
+        context.go('/');
+      }
+      return;
+    }
+
+    await _pageController.nextPage(
+      duration: const Duration(milliseconds: 260),
+      curve: Curves.easeOut,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return AppDecoratedScaffold(
       child: Column(
         children: <Widget>[
-          // Header
           Container(
             color: AppColors.paper,
             padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
@@ -61,15 +75,15 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      'EINFUEHRUNG',
+                      'ONBOARDING',
                       style: GoogleFonts.playfairDisplay(
-                        fontSize: 28,
+                        fontSize: 30,
                         fontWeight: FontWeight.w700,
                         color: AppColors.ink,
                       ),
                     ),
                     Text(
-                      '${_index + 1}/${_pages.length}',
+                      '${_index + 1}/$_pageCount',
                       style: GoogleFonts.ibmPlexSans(
                         fontSize: 10,
                         fontWeight: FontWeight.w700,
@@ -82,12 +96,11 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 const SizedBox(height: 12),
                 Container(width: 40, height: 2, color: AppColors.red),
                 const SizedBox(height: 12),
-                // Progress bar
                 Container(
                   height: 1,
                   color: AppColors.rule,
                   child: FractionallySizedBox(
-                    widthFactor: (_index + 1) / _pages.length,
+                    widthFactor: (_index + 1) / _pageCount,
                     child: Container(color: AppColors.red),
                   ),
                 ),
@@ -95,113 +108,67 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
             ),
           ),
           Expanded(
-            child: PageView.builder(
+            child: PageView(
               controller: _pageController,
-              itemCount: _pages.length,
+              physics: const NeverScrollableScrollPhysics(),
               onPageChanged: (int value) {
                 setState(() {
                   _index = value;
                 });
               },
-              itemBuilder: (context, index) {
-                final page = _pages[index];
-                return Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 32,
-                  ),
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      color: AppColors.paper,
-                      border: Border(
-                        left: BorderSide(color: AppColors.ink, width: 1),
-                        right: BorderSide(color: AppColors.ink, width: 1),
-                        bottom: BorderSide(color: AppColors.ink, width: 1),
-                      ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(28),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Container(
-                            width: 80,
-                            height: 80,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: AppColors.ink,
-                                width: 1,
-                              ),
-                            ),
-                            child: Center(
-                              child: Icon(page.icon,
-                                  size: 40, color: AppColors.red),
-                            ),
-                          ),
-                          const SizedBox(height: 28),
-                          Text(
-                            page.title,
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.playfairDisplay(
-                              fontSize: 24,
-                              fontWeight: FontWeight.w700,
-                              color: AppColors.ink,
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                          Text(
-                            page.body,
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.ibmPlexSans(
-                              fontSize: 12,
-                              color: AppColors.ink,
-                              height: 1.6,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              },
+              children: <Widget>[
+                const WelcomePage(),
+                NotificationPermissionPage(
+                  onAllow: () => NotificationService.instance.initialize(),
+                  onSkip: _next,
+                ),
+                InterestsPage(
+                  selected: _selectedInterests,
+                  onToggle: (String value) {
+                    setState(() {
+                      if (_selectedInterests.contains(value)) {
+                        _selectedInterests.remove(value);
+                      } else {
+                        _selectedInterests.add(value);
+                      }
+                    });
+                  },
+                ),
+                PoliticalLeaningPage(
+                  selected: _leaning,
+                  onSelect: (PoliticalLeaning value) {
+                    setState(() {
+                      _leaning = value;
+                    });
+                  },
+                  onSkip: () {
+                    setState(() {
+                      _leaning = PoliticalLeaning.neutral;
+                    });
+                  },
+                ),
+              ],
             ),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 12, 20, 20),
             child: Row(
               children: <Widget>[
-                Expanded(
-                  child: _BroadsheetOutlineButton(
-                    onPressed: () async {
-                      await ref
-                          .read(settingsControllerProvider.notifier)
-                          .markOnboardingSeen();
-                      if (context.mounted) {
-                        context.go('/');
-                      }
-                    },
-                    label: 'UEBERSPRINGEN',
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: _BroadsheetButton(
-                    onPressed: () async {
-                      if (_index == _pages.length - 1) {
-                        await ref
-                            .read(settingsControllerProvider.notifier)
-                            .markOnboardingSeen();
-                        if (context.mounted) {
-                          context.go('/');
-                        }
-                        return;
-                      }
-                      _pageController.nextPage(
+                if (_index > 0)
+                  Expanded(
+                    child: _OutlineActionButton(
+                      label: 'ZURUECK',
+                      onTap: () => _pageController.previousPage(
                         duration: const Duration(milliseconds: 250),
                         curve: Curves.easeOut,
-                      );
-                    },
-                    label: _index == _pages.length - 1 ? 'FERTIG' : 'WEITER',
+                      ),
+                    ),
+                  ),
+                if (_index > 0) const SizedBox(width: 12),
+                Expanded(
+                  child: _ActionButton(
+                    label: _index == _pageCount - 1 ? 'FERTIG' : 'WEITER',
+                    onTap: _next,
                   ),
                 ),
               ],
@@ -213,37 +180,28 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   }
 }
 
-class _BroadsheetButton extends StatelessWidget {
-  const _BroadsheetButton({
-    required this.onPressed,
-    required this.label,
-  });
+class _ActionButton extends StatelessWidget {
+  const _ActionButton({required this.label, required this.onTap});
 
-  final VoidCallback onPressed;
   final String label;
+  final Future<void> Function() onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.ink,
-        border: Border.all(color: AppColors.ink, width: 1),
-      ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: onPressed,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            child: Text(
-              label,
-              textAlign: TextAlign.center,
-              style: GoogleFonts.ibmPlexSans(
-                fontSize: 11,
-                fontWeight: FontWeight.w700,
-                color: AppColors.paper,
-                letterSpacing: 1.2,
-              ),
+    return Material(
+      color: AppColors.ink,
+      child: InkWell(
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          child: Text(
+            label,
+            textAlign: TextAlign.center,
+            style: GoogleFonts.ibmPlexSans(
+              fontSize: 11,
+              fontWeight: FontWeight.w700,
+              color: AppColors.paper,
+              letterSpacing: 1.2,
             ),
           ),
         ),
@@ -252,25 +210,20 @@ class _BroadsheetButton extends StatelessWidget {
   }
 }
 
-class _BroadsheetOutlineButton extends StatelessWidget {
-  const _BroadsheetOutlineButton({
-    required this.onPressed,
-    required this.label,
-  });
+class _OutlineActionButton extends StatelessWidget {
+  const _OutlineActionButton({required this.label, required this.onTap});
 
-  final VoidCallback onPressed;
   final String label;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: AppColors.ink, width: 1),
-      ),
+      decoration: BoxDecoration(border: Border.all(color: AppColors.ink)),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: onPressed,
+          onTap: onTap,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             child: Text(
