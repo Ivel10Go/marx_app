@@ -8,6 +8,8 @@ import '../../domain/providers/archive_provider.dart';
 import '../../widgets/app_decorated_scaffold.dart';
 import '../../widgets/app_navigation_bar.dart';
 import '../../widgets/quote_card.dart';
+import '../home/widgets/fact_block.dart';
+import 'widgets/archive_filter_chips.dart';
 
 class ArchiveScreen extends ConsumerWidget {
   const ArchiveScreen({super.key});
@@ -43,6 +45,45 @@ class ArchiveScreen extends ConsumerWidget {
             ),
           ),
           Padding(
+            padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
+            child: Row(
+              children: <Widget>[
+                _ArchiveTabButton(
+                  label: 'ALLE',
+                  active: ref.watch(archiveTabProvider) == ArchiveTab.all,
+                  onTap: () {
+                    ref.read(archiveTabProvider.notifier).state =
+                        ArchiveTab.all;
+                    ref.read(archiveActiveFiltersProvider.notifier).state =
+                        <String>{};
+                  },
+                ),
+                const SizedBox(width: 16),
+                _ArchiveTabButton(
+                  label: 'MARX',
+                  active: ref.watch(archiveTabProvider) == ArchiveTab.marx,
+                  onTap: () {
+                    ref.read(archiveTabProvider.notifier).state =
+                        ArchiveTab.marx;
+                    ref.read(archiveActiveFiltersProvider.notifier).state =
+                        <String>{};
+                  },
+                ),
+                const SizedBox(width: 16),
+                _ArchiveTabButton(
+                  label: 'GESCHICHTE',
+                  active: ref.watch(archiveTabProvider) == ArchiveTab.history,
+                  onTap: () {
+                    ref.read(archiveTabProvider.notifier).state =
+                        ArchiveTab.history;
+                    ref.read(archiveActiveFiltersProvider.notifier).state =
+                        <String>{};
+                  },
+                ),
+              ],
+            ),
+          ),
+          Padding(
             padding: const EdgeInsets.fromLTRB(20, 16, 20, 14),
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
@@ -72,10 +113,14 @@ class ArchiveScreen extends ConsumerWidget {
               ),
             ),
           ),
+          const Padding(
+            padding: EdgeInsets.fromLTRB(20, 0, 20, 8),
+            child: ArchiveFilterChips(),
+          ),
           Expanded(
             child: archiveAsync.when(
-              data: (quotes) {
-                if (quotes.isEmpty) {
+              data: (items) {
+                if (items.isEmpty) {
                   return Center(
                     child: Text(
                       'Keine Treffer. Probiere einen Werk- oder Begriffsfilter.',
@@ -86,15 +131,26 @@ class ArchiveScreen extends ConsumerWidget {
                 }
                 return ListView.builder(
                   padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
-                  itemCount: quotes.length,
+                  itemCount: items.length,
                   itemBuilder: (context, index) {
-                    final quote = quotes[index];
+                    final item = items[index];
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 12),
-                      child: QuoteCard(
-                        quote: quote,
-                        onTap: () => context.push('/detail/${quote.id}'),
-                      ),
+                      child: item.isQuote
+                          ? QuoteCard(
+                              quote: item.quote!,
+                              onTap: () =>
+                                  context.push('/detail/${item.quote!.id}'),
+                            )
+                          : FactBlock(
+                              fact: item.fact!,
+                              onRelatedQuoteTap:
+                                  item.fact!.relatedQuoteIds.isNotEmpty
+                                  ? () => context.push(
+                                      '/detail/${item.fact!.relatedQuoteIds.first}',
+                                    )
+                                  : null,
+                            ),
                     );
                   },
                 );
@@ -108,6 +164,48 @@ class ArchiveScreen extends ConsumerWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _ArchiveTabButton extends StatelessWidget {
+  const _ArchiveTabButton({
+    required this.label,
+    required this.active,
+    required this.onTap,
+  });
+
+  final String label;
+  final bool active;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              label,
+              style: GoogleFonts.ibmPlexSans(
+                fontSize: 11,
+                fontWeight: active ? FontWeight.w700 : FontWeight.w500,
+                letterSpacing: 1.0,
+                color: active ? AppColors.ink : AppColors.inkMuted,
+              ),
+            ),
+            const SizedBox(height: 6),
+            Container(
+              width: 56,
+              height: 2,
+              color: active ? AppColors.red : Colors.transparent,
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -6,6 +6,7 @@ import '../../core/theme/app_colors.dart';
 import '../../domain/providers/settings_provider.dart';
 import '../../widgets/app_decorated_scaffold.dart';
 import '../../widgets/app_navigation_bar.dart';
+import 'widgets/mode_selector.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -46,6 +47,11 @@ class SettingsScreen extends ConsumerWidget {
                 return ListView(
                   padding: const EdgeInsets.fromLTRB(20, 20, 20, 24),
                   children: <Widget>[
+                    _SettingsGroup(
+                      title: 'TÄGLICHER INHALT',
+                      children: <Widget>[const ModeSelector()],
+                    ),
+                    const SizedBox(height: 24),
                     _SettingsGroup(
                       title: 'DARSTELLUNG',
                       children: <Widget>[

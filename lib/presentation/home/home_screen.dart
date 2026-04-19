@@ -5,12 +5,14 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../core/services/notification_service.dart';
 import '../../core/theme/app_colors.dart';
-import '../../domain/providers/daily_quote_provider.dart';
+import '../../domain/providers/daily_content_provider.dart';
 import '../../domain/providers/settings_provider.dart';
 import '../../widgets/app_decorated_scaffold.dart';
 import '../../widgets/app_navigation_bar.dart';
 import '../../widgets/quote_card.dart';
 import '../../widgets/streak_badge.dart';
+import '../home/dialogs/mode_dialog.dart';
+import '../home/widgets/fact_block.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -49,14 +51,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    final dailyQuote = ref.watch(dailyQuoteProvider);
+    final dailyContent = ref.watch(dailyContentProvider);
     final settings = ref.watch(settingsControllerProvider);
 
     return AppDecoratedScaffold(
       appBar: null,
       bottomNavigationBar: const AppNavigationBar(selectedIndex: 0),
       child: RefreshIndicator(
-        onRefresh: () async => ref.invalidate(dailyQuoteProvider),
+        onRefresh: () async => ref.invalidate(dailyContentProvider),
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
@@ -67,13 +69,20 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(
-                    'DAS KAPITAL',
-                    style: GoogleFonts.playfairDisplay(
-                      fontSize: 32,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.ink,
-                      letterSpacing: -0.5,
+                  GestureDetector(
+                    onTap: () => showDialog(
+                      context: context,
+                      builder: (BuildContext dialogContext) =>
+                          ModeDialog(onModeSelected: (mode) {}),
+                    ),
+                    child: Text(
+                      'DAS KAPITAL',
+                      style: GoogleFonts.playfairDisplay(
+                        fontSize: 32,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.ink,
+                        letterSpacing: -0.5,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -86,24 +95,25 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  dailyQuote.when(
-                    data: (quote) {
-                      if (quote == null) {
-                        return const _EmptyStateCard(
-                          icon: Icons.hourglass_empty_rounded,
-                          title: 'Noch kein Tageszitat',
-                          body:
-                              'Die App lädt den Korpus und bereitet das erste Zitat vor.',
-                        );
-                      }
-
+                  dailyContent.when(
+                    data: (content) {
                       return FadeTransition(
                         opacity: _fade,
                         child: SlideTransition(
                           position: _slide,
-                          child: QuoteCard(
-                            quote: quote,
-                            onTap: () => context.push('/detail/${quote.id}'),
+                          child: content.when(
+                            quote: (quote) => QuoteCard(
+                              quote: quote,
+                              onTap: () => context.push('/detail/${quote.id}'),
+                            ),
+                            fact: (fact) => FactBlock(
+                              fact: fact,
+                              onRelatedQuoteTap: fact.relatedQuoteIds.isNotEmpty
+                                  ? () => context.push(
+                                      '/detail/${fact.relatedQuoteIds.first}',
+                                    )
+                                  : null,
+                            ),
                           ),
                         ),
                       );
@@ -147,9 +157,19 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                   const SizedBox(height: 12),
                   _BroadsheetOutlineButton(
                     onPressed: () async {
-                      final current = ref.read(dailyQuoteProvider).valueOrNull;
+                      final current = ref
+                          .read(dailyContentProvider)
+                          .valueOrNull;
                       if (current != null) {
-                        await NotificationService.instance.showDailyQuote(current);
+                        final quote = current.when(
+                          quote: (q) => q,
+                          fact: (_) => null,
+                        );
+                        if (quote != null) {
+                          await NotificationService.instance.showDailyQuote(
+                            quote,
+                          );
+                        }
                       }
                     },
                     label: 'BENACHRICHTIGUNG TESTEN',
@@ -271,15 +291,9 @@ class _EmptyStateCard extends StatelessWidget {
         children: <Widget>[
           Icon(icon, color: AppColors.red),
           const SizedBox(height: 12),
-          Text(
-            title,
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
+          Text(title, style: Theme.of(context).textTheme.titleMedium),
           const SizedBox(height: 6),
-          Text(
-            body,
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
+          Text(body, style: Theme.of(context).textTheme.bodyMedium),
         ],
       ),
     );

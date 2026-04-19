@@ -3,6 +3,8 @@ import SwiftUI
 
 struct QuoteEntry: TimelineEntry {
     let date: Date
+    let contentType: String
+    let widgetHeader: String
     let quoteText: String
     let quoteSource: String
     let quoteExplanation: String
@@ -16,6 +18,8 @@ struct QuoteProvider: TimelineProvider {
     func placeholder(in context: Context) -> QuoteEntry {
         QuoteEntry(
             date: Date(),
+            contentType: "quote",
+            widgetHeader: "DAS KAPITAL",
             quoteText: "Ein Gespenst geht um in Europa...",
             quoteSource: "Kommunistisches Manifest, 1848",
             quoteExplanation: "Taegliches Zitat mit kurzer Erklaerung.",
@@ -38,6 +42,8 @@ struct QuoteProvider: TimelineProvider {
         let defaults = UserDefaults(suiteName: suiteName)
         return QuoteEntry(
             date: Date(),
+            contentType: defaults?.string(forKey: "content_type") ?? "quote",
+            widgetHeader: defaults?.string(forKey: "widget_header") ?? "DAS KAPITAL",
             quoteText: defaults?.string(forKey: "quote_text") ?? "Tageszitat wird geladen...",
             quoteSource: defaults?.string(forKey: "quote_source") ?? "Das Kapital",
             quoteExplanation: defaults?.string(forKey: "quote_explanation") ?? "",
@@ -111,7 +117,7 @@ struct QuoteWidgetEntryView: View {
             Color(red: 0.93, green: 0.91, blue: 0.87)
 
             VStack(spacing: 0) {
-                Text("DAS KAPITAL")
+                Text(entry.widgetHeader)
                     .font(.system(size: 9, weight: .bold, design: .default))
                     .kerning(1.1)
                     .foregroundColor(.white)
@@ -123,7 +129,7 @@ struct QuoteWidgetEntryView: View {
                 VStack(alignment: .leading, spacing: 8) {
                     Text(entry.quoteText)
                         .font(.system(size: quoteFont, weight: .regular, design: .serif))
-                        .italic()
+                        .italic(entry.contentType == "quote")
                         .foregroundColor(Color(red: 0.10, green: 0.10, blue: 0.10))
                         .lineLimit(quoteLineLimit)
 
@@ -131,7 +137,7 @@ struct QuoteWidgetEntryView: View {
                         .fill(Color(red: 0.77, green: 0.12, blue: 0.12))
                         .frame(width: 24, height: 2)
 
-                        if showExplanation {
+                    if showExplanation {
                         Text(entry.quoteExplanation)
                             .font(.system(size: 11, weight: .regular, design: .default))
                             .foregroundColor(Color(red: 0.33, green: 0.33, blue: 0.33))

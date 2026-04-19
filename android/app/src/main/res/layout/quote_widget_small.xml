@@ -7,6 +7,7 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/quote_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#C41E1E"
@@ -26,7 +27,7 @@
         android:padding="8dp">
 
         <TextView
-            android:id="@+id/quote_text"
+            android:id="@+id/quote_text_italic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
@@ -35,6 +36,18 @@
             android:textColor="#1A1A1A"
             android:textSize="12sp"
             android:textStyle="italic" />
+
+        <TextView
+            android:id="@+id/fact_text_normal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="serif"
+            android:maxLines="2"
+            android:textColor="#1A1A1A"
+            android:textSize="12sp"
+            android:textStyle="normal"
+            android:visibility="gone" />
 
         <TextView
             android:layout_width="22dp"

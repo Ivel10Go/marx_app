@@ -30,3 +30,27 @@ class SeenQuotes extends Table {
   TextColumn get quoteId => text()();
   DateTimeColumn get seenAt => dateTime().withDefault(currentDateAndTime)();
 }
+
+class HistoryFactEntries extends Table {
+  TextColumn get id => text()();
+  TextColumn get headline => text()();
+  TextColumn get body => text()();
+  TextColumn get dateDisplay => text()();
+  TextColumn get dateIso => text()();
+  IntColumn get dayOfYear => integer()();
+  TextColumn get era => text()();
+  TextColumn get region => text()();
+  TextColumn get categoryCsv => text()();
+  TextColumn get difficulty => text()();
+  TextColumn get person => text().nullable()();
+  TextColumn get personRole => text().nullable()();
+  TextColumn get connectionToMarx => text()();
+  TextColumn get relatedQuoteIdsCsv => text()();
+  TextColumn get funFact => text().nullable()();
+  TextColumn get source => text().nullable()();
+  BoolColumn get todayInHistory =>
+      boolean().withDefault(const Constant(false))();
+
+  @override
+  Set<Column<Object>> get primaryKey => <Column<Object>>{id};
+}
