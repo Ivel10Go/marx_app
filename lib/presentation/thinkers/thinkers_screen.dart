@@ -117,7 +117,7 @@ class _TypeTabButton extends StatelessWidget {
             ),
             const SizedBox(height: 6),
             Container(
-              width: label.length * 6.5,
+              width: 56,
               height: 2,
               color: active ? AppColors.red : Colors.transparent,
             ),
