@@ -1,0 +1,322 @@
+[
+  {
+    "id": "plato_001",
+    "author": "Platon",
+    "author_type": "philosopher",
+    "text_de": "Unwissenheit ist die Wurzel des Übels.",
+    "source": "Menon",
+    "year": -380
+  },
+  {
+    "id": "plato_002",
+    "author": "Platon",
+    "author_type": "philosopher",
+    "text_de": "Der Anfang ist der wichtigste Teil jedes Werkes.",
+    "source": "Der Staat",
+    "year": -375
+  },
+  {
+    "id": "plato_003",
+    "author": "Platon",
+    "author_type": "philosopher",
+    "text_de": "Gute Menschen brauchen keine Gesetze, um zu sagen, wie sie handeln sollen, und schlechte Menschen werden Wege finden, Gesetze zu umgehen.",
+    "source": "Der Staat",
+    "year": -375
+  },
+  {
+    "id": "aristotle_001",
+    "author": "Aristoteles",
+    "author_type": "philosopher",
+    "text_de": "Der Mensch ist von Natur aus ein politisches Lebewesen.",
+    "source": "Politik",
+    "year": -335
+  },
+  {
+    "id": "aristotle_002",
+    "author": "Aristoteles",
+    "author_type": "philosopher",
+    "text_de": "Wir sind das, was wir wiederholt tun. Hervorragendes ist also keine Handlung, sondern eine Gewohnheit.",
+    "source": "Nikomachische Ethik",
+    "year": -340
+  },
+  {
+    "id": "aristotle_003",
+    "author": "Aristoteles",
+    "author_type": "philosopher",
+    "text_de": "Das Ganze ist mehr als die Summe seiner Teile.",
+    "source": "Metaphysik",
+    "year": -350
+  },
+  {
+    "id": "kant_001",
+    "author": "Immanuel Kant",
+    "author_type": "philosopher",
+    "text_de": "Handle nur nach derjenigen Maxime, durch die du zugleich wollen kannst, dass sie ein allgemeines Gesetz werde.",
+    "source": "Grundlegung zur Metaphysik der Sitten",
+    "year": 1785
+  },
+  {
+    "id": "kant_002",
+    "author": "Immanuel Kant",
+    "author_type": "philosopher",
+    "text_de": "Habe Mut, dich deines eigenen Verstandes zu bedienen!",
+    "source": "Beantwortung der Frage: Was ist Aufklärung?",
+    "year": 1784
+  },
+  {
+    "id": "kant_003",
+    "author": "Immanuel Kant",
+    "author_type": "philosopher",
+    "text_de": "Der Mensch ist das einzige Geschöpf, das erzogen werden muss.",
+    "source": "Über Pädagogik",
+    "year": 1803
+  },
+  {
+    "id": "hegel_001",
+    "author": "Georg Wilhelm Friedrich Hegel",
+    "author_type": "philosopher",
+    "text_de": "Das Wirkliche ist vernünftig, und das Vernünftige ist wirklich.",
+    "source": "Grundlinien der Philosophie des Rechts",
+    "year": 1820
+  },
+  {
+    "id": "hegel_002",
+    "author": "Georg Wilhelm Friedrich Hegel",
+    "author_type": "philosopher",
+    "text_de": "Die Geschichte ist nichts anderes als die Entwicklung des Bewusstseins der Freiheit.",
+    "source": "Vorlesungen über die Philosophie der Geschichte",
+    "year": 1837
+  },
+  {
+    "id": "hegel_003",
+    "author": "Georg Wilhelm Friedrich Hegel",
+    "author_type": "philosopher",
+    "text_de": "Wir lernen aus der Geschichte, dass die Menschen aus der Geschichte nichts lernen.",
+    "source": "Vorlesungen über die Philosophie der Geschichte",
+    "year": 1837
+  },
+  {
+    "id": "nietzsche_001",
+    "author": "Friedrich Nietzsche",
+    "author_type": "philosopher",
+    "text_de": "Alles, was mich nicht umbringt, macht mich stärker.",
+    "source": "Götzen-Dämmerung",
+    "year": 1889
+  },
+  {
+    "id": "nietzsche_002",
+    "author": "Friedrich Nietzsche",
+    "author_type": "philosopher",
+    "text_de": "Ohne Musik wäre das Leben ein Irrtum.",
+    "source": "Götzen-Dämmerung",
+    "year": 1889
+  },
+  {
+    "id": "nietzsche_003",
+    "author": "Friedrich Nietzsche",
+    "author_type": "philosopher",
+    "text_de": "Es gibt keine Tatsachen, nur Interpretationen.",
+    "source": "Nachgelassene Fragmente",
+    "year": 1886
+  },
+  {
+    "id": "schopenhauer_001",
+    "author": "Arthur Schopenhauer",
+    "author_type": "philosopher",
+    "text_de": "Der Reichtum gleicht dem Salzwasser: je mehr man trinkt, desto durstiger wird man.",
+    "source": "Aphorismen zur Lebensweisheit",
+    "year": 1851
+  },
+  {
+    "id": "schopenhauer_002",
+    "author": "Arthur Schopenhauer",
+    "author_type": "philosopher",
+    "text_de": "Talent trifft ein Ziel, das sonst niemand treffen kann; Genie trifft ein Ziel, das sonst niemand sehen kann.",
+    "source": "Die Welt als Wille und Vorstellung",
+    "year": 1819
+  },
+  {
+    "id": "schopenhauer_003",
+    "author": "Arthur Schopenhauer",
+    "author_type": "philosopher",
+    "text_de": "Jeder Mensch hält die Grenzen seines Gesichtskreises für die Grenzen der Welt.",
+    "source": "Parerga und Paralipomena",
+    "year": 1851
+  },
+  {
+    "id": "voltaire_001",
+    "author": "Voltaire",
+    "author_type": "philosopher",
+    "text_de": "Ich mag verdammen, was du sagst, aber ich werde dein Recht, es zu sagen, bis zum Tod verteidigen.",
+    "source": "Briefe über die Engländer",
+    "year": 1734
+  },
+  {
+    "id": "voltaire_002",
+    "author": "Voltaire",
+    "author_type": "philosopher",
+    "text_de": "Wenn Gott uns nach seinem Bilde erschaffen hat, haben wir es ihm reichlich vergolten.",
+    "source": "Notizbücher",
+    "year": 1764
+  },
+  {
+    "id": "rousseau_001",
+    "author": "Jean-Jacques Rousseau",
+    "author_type": "philosopher",
+    "text_de": "Der Mensch wird frei geboren, und überall liegt er in Ketten.",
+    "source": "Vom Gesellschaftsvertrag",
+    "year": 1762
+  },
+  {
+    "id": "rousseau_002",
+    "author": "Jean-Jacques Rousseau",
+    "author_type": "philosopher",
+    "text_de": "Die erste Person, die ein Stück Land eingezäunt hat und auf die Idee kam zu sagen: Das gehört mir, und genug einfältige Leute fand, die es glaubten, war der wirkliche Gründer der bürgerlichen Gesellschaft.",
+    "source": "Abhandlung über den Ursprung der Ungleichheit",
+    "year": 1755
+  },
+  {
+    "id": "spinoza_001",
+    "author": "Baruch de Spinoza",
+    "author_type": "philosopher",
+    "text_de": "Frieden ist nicht die Abwesenheit von Krieg, er ist eine Tugend, eine Geisteshaltung, eine Tendenz zu Wohlwollen, Vertrauen und Gerechtigkeit.",
+    "source": "Politischer Traktat",
+    "year": 1677
+  },
+  {
+    "id": "spinoza_002",
+    "author": "Baruch de Spinoza",
+    "author_type": "philosopher",
+    "text_de": "Glücklich ist derjenige, der anderen etwas Gutes hinterlässt.",
+    "source": "Ethik",
+    "year": 1677
+  },
+  {
+    "id": "locke_001",
+    "author": "John Locke",
+    "author_type": "philosopher",
+    "text_de": "Wo es kein Gesetz gibt, gibt es keine Freiheit.",
+    "source": "Zweite Abhandlung über die Regierung",
+    "year": 1689
+  },
+  {
+    "id": "locke_002",
+    "author": "John Locke",
+    "author_type": "philosopher",
+    "text_de": "Der Verstand aller Menschen ist anfangs eine leere Tafel, und alles, was sich darin befindet, stammt aus der Erfahrung.",
+    "source": "Essay über den menschlichen Verstand",
+    "year": 1689
+  },
+  {
+    "id": "lenin_001",
+    "author": "Wladimir Iljitsch Lenin",
+    "author_type": "politician",
+    "text_de": "Vertrauen ist gut, Kontrolle ist besser.",
+    "source": "Politische Reden",
+    "year": 1917
+  },
+  {
+    "id": "lenin_002",
+    "author": "Wladimir Iljitsch Lenin",
+    "author_type": "politician",
+    "text_de": "Der Imperialismus ist das höchste Stadium des Kapitalismus.",
+    "source": "Der Imperialismus als höchstes Stadium des Kapitalismus",
+    "year": 1916
+  },
+  {
+    "id": "lenin_003",
+    "author": "Wladimir Iljitsch Lenin",
+    "author_type": "politician",
+    "text_de": "Es gibt keine absolute Wahrheit, nur eine in ihrer historischen Entwicklung begriffene.",
+    "source": "Materialismus und Empiriokritizismus",
+    "year": 1909
+  },
+  {
+    "id": "luxemburg_001",
+    "author": "Rosa Luxemburg",
+    "author_type": "politician",
+    "text_de": "Freiheit ist immer die Freiheit des Andersdenkenden.",
+    "source": "Die russische Revolution",
+    "year": 1918
+  },
+  {
+    "id": "luxemburg_002",
+    "author": "Rosa Luxemburg",
+    "author_type": "politician",
+    "text_de": "Ohne allgemeine Wahlen, ungehemmte Presse- und Redefreiheit, freien Meinungskampf erstirbt das Leben in jeder öffentlichen Institution, wird zum Scheinleben.",
+    "source": "Die russische Revolution",
+    "year": 1918
+  },
+  {
+    "id": "luxemburg_003",
+    "author": "Rosa Luxemburg",
+    "author_type": "politician",
+    "text_de": "Wer sich nicht bewegt, spürt seine Fesseln nicht.",
+    "source": "Gesammelte Schriften",
+    "year": 1913
+  },
+  {
+    "id": "lincoln_001",
+    "author": "Abraham Lincoln",
+    "author_type": "politician",
+    "text_de": "Man kann alle Leute eine Zeit lang täuschen und einige Leute alle Zeit, aber man kann nicht alle Leute alle Zeit täuschen.",
+    "source": "Rede in Clinton",
+    "year": 1858
+  },
+  {
+    "id": "lincoln_002",
+    "author": "Abraham Lincoln",
+    "author_type": "politician",
+    "text_de": "Das Recht zu wählen wird den Menschen von denen verweigert, die die Unterdrückung weniger fürchten als den politischen Wandel.",
+    "source": "Briefe und Reden",
+    "year": 1863
+  },
+  {
+    "id": "napoleon_001",
+    "author": "Napoleon Bonaparte",
+    "author_type": "politician",
+    "text_de": "Unmöglich ist ein Wort, das man nur im Wörterbuch der Narren findet.",
+    "source": "Briefe",
+    "year": 1813
+  },
+  {
+    "id": "napoleon_002",
+    "author": "Napoleon Bonaparte",
+    "author_type": "politician",
+    "text_de": "Ein Führer ist ein Händler der Hoffnung.",
+    "source": "Maximen und Gedanken",
+    "year": 1820
+  },
+  {
+    "id": "bismarck_001",
+    "author": "Otto von Bismarck",
+    "author_type": "politician",
+    "text_de": "Die Politik ist die Kunst des Möglichen.",
+    "source": "Interview mit Friedrich Meyer von Waldeck",
+    "year": 1867
+  },
+  {
+    "id": "bismarck_002",
+    "author": "Otto von Bismarck",
+    "author_type": "politician",
+    "text_de": "Die großen Fragen der Zeit werden nicht durch Reden und Mehrheitsbeschlüsse entschieden, sondern durch Eisen und Blut.",
+    "source": "Rede vor dem preußischen Abgeordnetenhaus",
+    "year": 1862
+  },
+  {
+    "id": "robespierre_001",
+    "author": "Maximilien de Robespierre",
+    "author_type": "politician",
+    "text_de": "Die heimliche Triebfeder des Volksregiments in der Revolution ist zugleich Tugend und Schrecken.",
+    "source": "Über die Prinzipien der politischen Moral",
+    "year": 1794
+  },
+  {
+    "id": "robespierre_002",
+    "author": "Maximilien de Robespierre",
+    "author_type": "politician",
+    "text_de": "Der Überbringer des Lichts setzt die Finsternis dem Tode gleich.",
+    "source": "Reden vor dem Nationalkonvent",
+    "year": 1793
+  }
+]

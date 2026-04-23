@@ -31,7 +31,7 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
 
     if (session.questions.isEmpty) {
       return const AppDecoratedScaffold(
-        bottomNavigationBar: AppNavigationBar(selectedIndex: 3),
+        bottomNavigationBar: AppNavigationBar(selectedIndex: 4),
         child: Center(child: CircularProgressIndicator()),
       );
     }
@@ -60,7 +60,7 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
     final progress = (session.currentIndex + 1) / 10;
 
     return AppDecoratedScaffold(
-      bottomNavigationBar: const AppNavigationBar(selectedIndex: 3),
+      bottomNavigationBar: const AppNavigationBar(selectedIndex: 4),
       child: ListView(
         padding: const EdgeInsets.fromLTRB(20, 16, 20, 28),
         children: <Widget>[
