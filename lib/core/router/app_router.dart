@@ -8,6 +8,7 @@ import '../../presentation/home/home_screen.dart';
 import '../../presentation/onboarding/onboarding_screen.dart';
 import '../../presentation/quiz/quiz_screen.dart';
 import '../../presentation/settings/settings_screen.dart';
+import '../../presentation/thinkers/thinkers_screen.dart';
 
 final initialRouteProvider = Provider<String>((Ref ref) => '/');
 
@@ -34,6 +35,11 @@ final appRouterProvider = Provider<GoRouter>((Ref ref) {
         path: '/archive',
         name: 'archive',
         builder: (context, state) => const ArchiveScreen(),
+      ),
+      GoRoute(
+        path: '/thinkers',
+        name: 'thinkers',
+        builder: (context, state) => const ThinkersScreen(),
       ),
       GoRoute(
         path: '/favorites',

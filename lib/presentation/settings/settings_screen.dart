@@ -18,7 +18,7 @@ class SettingsScreen extends ConsumerWidget {
 
     return AppDecoratedScaffold(
       appBar: null,
-      bottomNavigationBar: const AppNavigationBar(selectedIndex: 4),
+      bottomNavigationBar: const AppNavigationBar(selectedIndex: 5),
       child: Column(
         children: <Widget>[
           // Masthead

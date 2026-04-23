@@ -17,6 +17,11 @@ class AppNavigationBar extends StatelessWidget {
       icon: Icons.library_books_outlined,
     ),
     _NavDestination(
+      path: '/thinkers',
+      label: 'DENKER',
+      icon: Icons.psychology_outlined,
+    ),
+    _NavDestination(
       path: '/favorites',
       label: 'FAVORITEN',
       icon: Icons.favorite_border_rounded,
