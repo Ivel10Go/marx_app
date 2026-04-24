@@ -2,6 +2,8 @@ import 'dart:convert';
 
 enum PoliticalLeaning { left, centerLeft, neutral, liberal, conservative }
 
+enum QuoteDiscoveryMode { interests, manual }
+
 class InterestOption {
   const InterestOption({
     required this.id,
@@ -31,6 +33,8 @@ class UserProfile {
   const UserProfile({
     required this.historicalInterests,
     required this.politicalLeaning,
+    required this.quoteDiscoveryMode,
+    required this.selectedSources,
     required this.onboardingCompleted,
     required this.onboardingDate,
   });
@@ -39,6 +43,8 @@ class UserProfile {
 
   final List<String> historicalInterests;
   final PoliticalLeaning politicalLeaning;
+  final QuoteDiscoveryMode quoteDiscoveryMode;
+  final List<String> selectedSources;
   final bool onboardingCompleted;
   final DateTime? onboardingDate;
 
@@ -46,6 +52,8 @@ class UserProfile {
     return const UserProfile(
       historicalInterests: <String>[],
       politicalLeaning: PoliticalLeaning.neutral,
+      quoteDiscoveryMode: QuoteDiscoveryMode.interests,
+      selectedSources: <String>[],
       onboardingCompleted: false,
       onboardingDate: null,
     );
@@ -54,12 +62,16 @@ class UserProfile {
   UserProfile copyWith({
     List<String>? historicalInterests,
     PoliticalLeaning? politicalLeaning,
+    QuoteDiscoveryMode? quoteDiscoveryMode,
+    List<String>? selectedSources,
     bool? onboardingCompleted,
     DateTime? onboardingDate,
   }) {
     return UserProfile(
       historicalInterests: historicalInterests ?? this.historicalInterests,
       politicalLeaning: politicalLeaning ?? this.politicalLeaning,
+      quoteDiscoveryMode: quoteDiscoveryMode ?? this.quoteDiscoveryMode,
+      selectedSources: selectedSources ?? this.selectedSources,
       onboardingCompleted: onboardingCompleted ?? this.onboardingCompleted,
       onboardingDate: onboardingDate ?? this.onboardingDate,
     );
@@ -69,6 +81,8 @@ class UserProfile {
     return <String, dynamic>{
       'historical_interests': historicalInterests,
       'political_leaning': politicalLeaning.name,
+      'quote_discovery_mode': quoteDiscoveryMode.name,
+      'selected_sources': selectedSources,
       'onboarding_completed': onboardingCompleted,
       'onboarding_date': onboardingDate?.toIso8601String(),
     };
@@ -84,6 +98,13 @@ class UserProfile {
       politicalLeaning: PoliticalLeaning.values.byName(
         (json['political_leaning'] as String?) ?? PoliticalLeaning.neutral.name,
       ),
+      quoteDiscoveryMode: QuoteDiscoveryMode.values.byName(
+        (json['quote_discovery_mode'] as String?) ??
+            QuoteDiscoveryMode.interests.name,
+      ),
+      selectedSources:
+          (json['selected_sources'] as List<dynamic>? ?? <dynamic>[])
+              .cast<String>(),
       onboardingCompleted: (json['onboarding_completed'] as bool?) ?? false,
       onboardingDate: _tryParseDate(json['onboarding_date'] as String?),
     );

@@ -9,6 +9,7 @@ import '../../domain/providers/daily_quote_provider.dart';
 import '../../domain/providers/favorites_provider.dart';
 import '../../domain/providers/repository_providers.dart';
 import '../../widgets/app_decorated_scaffold.dart';
+import '../../widgets/adaptive_quote_text.dart';
 import '../../widgets/category_chip.dart';
 
 class QuoteDetailScreen extends ConsumerWidget {
@@ -131,8 +132,11 @@ class QuoteDetailScreen extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     // Quote text
-                    Text(
-                      quote.textDe,
+                    AdaptiveQuoteText(
+                      text: quote.textDe,
+                      minFontSize: 28,
+                      maxFontSize: 42,
+                      maxLines: 9,
                       style: Theme.of(context).textTheme.displayLarge,
                     ),
                     const SizedBox(height: 14),

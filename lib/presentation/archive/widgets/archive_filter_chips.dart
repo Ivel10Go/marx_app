@@ -17,40 +17,47 @@ class ArchiveFilterChips extends ConsumerWidget {
       return const SizedBox.shrink();
     }
 
-    return Wrap(
-      spacing: 8,
-      runSpacing: 8,
-      children: options.map((String option) {
-        final isSelected = active.contains(option);
-        return FilterChip(
-          label: Text(
-            option.toUpperCase(),
-            style: GoogleFonts.ibmPlexSans(
-              fontSize: 10,
-              fontWeight: FontWeight.w600,
-              color: isSelected ? AppColors.paper : AppColors.ink,
-              letterSpacing: 0.8,
+    return SizedBox(
+      height: 42,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        itemCount: options.length,
+        separatorBuilder: (_, __) => const SizedBox(width: 8),
+        itemBuilder: (context, index) {
+          final option = options[index];
+          final isSelected = active.contains(option);
+          return FilterChip(
+            label: Text(
+              option.toUpperCase(),
+              style: GoogleFonts.ibmPlexSans(
+                fontSize: 10,
+                fontWeight: FontWeight.w600,
+                color: isSelected ? AppColors.paper : AppColors.ink,
+                letterSpacing: 0.8,
+              ),
             ),
-          ),
-          selected: isSelected,
-          onSelected: (bool selected) {
-            final next = <String>{...active};
-            if (selected) {
-              next.add(option);
-            } else {
-              next.remove(option);
-            }
-            ref.read(archiveActiveFiltersProvider.notifier).state = next;
-          },
-          backgroundColor: AppColors.paper,
-          selectedColor: AppColors.ink,
-          side: const BorderSide(color: AppColors.ink, width: 1),
-          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-          showCheckmark: false,
-          visualDensity: VisualDensity.compact,
-          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        );
-      }).toList(),
+            selected: isSelected,
+            onSelected: (bool selected) {
+              final next = <String>{...active};
+              if (selected) {
+                next.add(option);
+              } else {
+                next.remove(option);
+              }
+              ref.read(archiveActiveFiltersProvider.notifier).state = next;
+            },
+            backgroundColor: AppColors.paper,
+            selectedColor: AppColors.ink,
+            side: const BorderSide(color: AppColors.ink, width: 1),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.zero,
+            ),
+            showCheckmark: false,
+            visualDensity: VisualDensity.compact,
+            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          );
+        },
+      ),
     );
   }
 }

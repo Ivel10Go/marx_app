@@ -26,8 +26,6 @@ class AppNavigationBar extends StatelessWidget {
       label: 'FAVORITEN',
       icon: Icons.favorite_border_rounded,
     ),
-    _NavDestination(path: '/quiz', label: 'QUIZ', icon: Icons.quiz_outlined),
-    _NavDestination(path: '/settings', label: 'EINST.', icon: Icons.tune),
   ];
 
   @override

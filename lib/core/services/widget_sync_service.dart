@@ -11,7 +11,7 @@ abstract final class WidgetSyncService {
     await content.when(
       quote: (quote) async {
         await HomeWidget.saveWidgetData<String>('content_type', 'quote');
-        await HomeWidget.saveWidgetData<String>('widget_header', 'DAS KAPITAL');
+        await HomeWidget.saveWidgetData<String>('widget_header', 'ZITATATLAS');
         await HomeWidget.saveWidgetData<String>('quote_text', quote.textDe);
         await HomeWidget.saveWidgetData<String>(
           'quote_source',

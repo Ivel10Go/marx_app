@@ -79,7 +79,7 @@ class NotificationService {
     final firstSentence = _extractFirstSentence(quote.textDe);
     await _plugin.show(
       quote.id.hashCode,
-      'Das Kapital - Tageszitat',
+      'Zitatatlas - Tageszitat',
       firstSentence,
       details,
       payload: 'quote:${quote.id}',

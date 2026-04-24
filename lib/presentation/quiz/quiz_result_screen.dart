@@ -40,7 +40,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   @override
   Widget build(BuildContext context) {
     return AppDecoratedScaffold(
-      bottomNavigationBar: const AppNavigationBar(selectedIndex: 4),
+      bottomNavigationBar: const AppNavigationBar(selectedIndex: -1),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(20, 20, 20, 24),
         child: Column(

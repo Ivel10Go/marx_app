@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'adaptive_quote_text.dart';
 import '../core/theme/app_colors.dart';
 import '../data/models/quote.dart';
 import '../presentation/home/widgets/tts_button.dart';
@@ -64,8 +65,11 @@ class QuoteCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     // Zitat-Text
-                    Text(
-                      quote.textDe,
+                    AdaptiveQuoteText(
+                      text: quote.textDe,
+                      minFontSize: 24,
+                      maxFontSize: 34,
+                      maxLines: 7,
                       style: Theme.of(context).textTheme.displayMedium,
                     ),
                     const SizedBox(height: 14),

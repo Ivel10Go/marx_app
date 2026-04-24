@@ -65,7 +65,7 @@ class ShareCardRenderer {
               Align(
                 alignment: Alignment.bottomRight,
                 child: Text(
-                  'Das Kapital',
+                  'Zitatatlas',
                   style: GoogleFonts.inter(
                     fontSize: 28,
                     letterSpacing: 0.8,

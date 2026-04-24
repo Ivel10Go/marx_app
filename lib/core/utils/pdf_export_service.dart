@@ -89,7 +89,7 @@ class PdfExportService {
       crossAxisAlignment: pw.CrossAxisAlignment.start,
       children: <pw.Widget>[
         pw.Text(
-          'DAS KAPITAL',
+          'ZITATATLAS',
           style: pw.TextStyle(font: fonts.sansBold, fontSize: 28, color: _ink),
         ),
         pw.SizedBox(height: 8),

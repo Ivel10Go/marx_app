@@ -6,9 +6,11 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../core/services/notification_service.dart';
 import '../../core/theme/app_colors.dart';
 import '../../data/models/user_profile.dart';
+import '../../domain/providers/quote_sources_provider.dart';
 import '../../domain/providers/user_profile_provider.dart';
 import '../../widgets/app_decorated_scaffold.dart';
 import 'pages/interests_page.dart';
+import 'pages/quote_discovery_page.dart';
 import 'pages/notification_permission_page.dart';
 import 'pages/political_leaning_page.dart';
 import 'pages/welcome_page.dart';
@@ -24,9 +26,12 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   final PageController _pageController = PageController();
   int _index = 0;
   final Set<String> _selectedInterests = <String>{};
+  final Set<String> _selectedSources = <String>{};
   PoliticalLeaning _leaning = PoliticalLeaning.neutral;
+  QuoteDiscoverySelection _quoteDiscoverySelection =
+      QuoteDiscoverySelection.interests;
 
-  static const _pageCount = 4;
+  static const _pageCount = 5;
 
   @override
   void dispose() {
@@ -46,6 +51,11 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           .saveProfile(
             historicalInterests: _selectedInterests.toList(),
             politicalLeaning: _leaning,
+            quoteDiscoveryMode:
+                _quoteDiscoverySelection == QuoteDiscoverySelection.manual
+                ? QuoteDiscoveryMode.manual
+                : QuoteDiscoveryMode.interests,
+            selectedSources: _selectedSources.toList(),
           );
       ref.invalidate(userProfileProvider);
       if (mounted) {
@@ -62,6 +72,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final sourcesAsync = ref.watch(availableQuoteSourcesProvider);
+
     return AppDecoratedScaffold(
       child: Column(
         children: <Widget>[
@@ -130,6 +142,26 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                         _selectedInterests.remove(value);
                       } else {
                         _selectedInterests.add(value);
+                      }
+                    });
+                  },
+                ),
+                QuoteDiscoveryPage(
+                  mode: _quoteDiscoverySelection,
+                  sources: _selectedSources,
+                  availableSources:
+                      sourcesAsync.valueOrNull ?? const <String>[],
+                  onModeChanged: (QuoteDiscoverySelection value) {
+                    setState(() {
+                      _quoteDiscoverySelection = value;
+                    });
+                  },
+                  onToggleSource: (String value) {
+                    setState(() {
+                      if (_selectedSources.contains(value)) {
+                        _selectedSources.remove(value);
+                      } else {
+                        _selectedSources.add(value);
                       }
                     });
                   },

@@ -20,7 +20,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
   static const _pages = <({String title, String body, IconData icon})>[
     (
-      title: 'Willkommen bei Das Kapital',
+      title: 'Willkommen bei Zitatatlas',
       body:
           'Jeden Tag ein Zitat, ruhig gesetzt wie eine Seite in einer edlen Ausgabe.',
       icon: Icons.library_books_rounded,

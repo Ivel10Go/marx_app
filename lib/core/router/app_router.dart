@@ -2,9 +2,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../presentation/archive/archive_screen.dart';
-import '../../presentation/detail/quote_detail_screen.dart';
+import '../../presentation/detail/quote_detail_screen_new.dart';
 import '../../presentation/favorites/favorites_screen.dart';
 import '../../presentation/home/home_screen.dart';
+import '../../presentation/games/games_screen.dart';
 import '../../presentation/onboarding/onboarding_screen.dart';
 import '../../presentation/quiz/quiz_screen.dart';
 import '../../presentation/settings/settings_screen.dart';
@@ -50,6 +51,11 @@ final appRouterProvider = Provider<GoRouter>((Ref ref) {
         path: '/quiz',
         name: 'quiz',
         builder: (context, state) => const QuizScreen(),
+      ),
+      GoRoute(
+        path: '/games',
+        name: 'games',
+        builder: (context, state) => const GamesScreen(),
       ),
       GoRoute(
         path: '/settings',

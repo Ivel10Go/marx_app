@@ -23,6 +23,7 @@ class QuizScreen extends ConsumerStatefulWidget {
 
 class _QuizScreenState extends ConsumerState<QuizScreen> {
   bool _timerStartedForIndex = false;
+  bool _quizStarted = false;
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +32,93 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
 
     if (session.questions.isEmpty) {
       return const AppDecoratedScaffold(
-        bottomNavigationBar: AppNavigationBar(selectedIndex: 4),
+        bottomNavigationBar: AppNavigationBar(selectedIndex: -1),
         child: Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    if (!_quizStarted) {
+      return AppDecoratedScaffold(
+        bottomNavigationBar: const AppNavigationBar(selectedIndex: -1),
+        child: ListView(
+          padding: const EdgeInsets.fromLTRB(20, 16, 20, 28),
+          children: <Widget>[
+            Container(
+              color: AppColors.red,
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+              child: Text(
+                'QUIZ',
+                style: GoogleFonts.ibmPlexSans(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.redOnRed,
+                  letterSpacing: 1.3,
+                ),
+              ),
+            ),
+            const SizedBox(height: 14),
+            Container(
+              padding: const EdgeInsets.all(18),
+              decoration: BoxDecoration(
+                color: AppColors.paper,
+                border: Border.all(color: AppColors.rule, width: 1),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    'Starte das Zitat-Quiz',
+                    style: GoogleFonts.playfairDisplay(
+                      fontSize: 22,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.ink,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    'Du bekommst 10 Fragen. Erst nach dem Start läuft die Zeit.',
+                    style: GoogleFonts.ibmPlexSans(
+                      fontSize: 11,
+                      color: AppColors.inkLight,
+                      height: 1.5,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  SizedBox(
+                    width: double.infinity,
+                    child: Material(
+                      color: AppColors.ink,
+                      child: InkWell(
+                        onTap: () {
+                          setState(() {
+                            _quizStarted = true;
+                          });
+                          _startTimer();
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 12,
+                          ),
+                          child: Text(
+                            'QUIZ STARTEN',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.ibmPlexSans(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.paper,
+                              letterSpacing: 1.2,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       );
     }
 
@@ -42,7 +128,9 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
         onRestart: () async {
           await ref.read(quizProvider.notifier).restart();
           _timerStartedForIndex = false;
-          _startTimer();
+          setState(() {
+            _quizStarted = false;
+          });
         },
       );
     }
@@ -60,7 +148,7 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
     final progress = (session.currentIndex + 1) / 10;
 
     return AppDecoratedScaffold(
-      bottomNavigationBar: const AppNavigationBar(selectedIndex: 4),
+      bottomNavigationBar: const AppNavigationBar(selectedIndex: -1),
       child: ListView(
         padding: const EdgeInsets.fromLTRB(20, 16, 20, 28),
         children: <Widget>[

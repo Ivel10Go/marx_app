@@ -25,11 +25,15 @@ class UserProfileNotifier extends StateNotifier<UserProfile> {
   Future<void> saveProfile({
     required List<String> historicalInterests,
     required PoliticalLeaning politicalLeaning,
+    QuoteDiscoveryMode quoteDiscoveryMode = QuoteDiscoveryMode.interests,
+    List<String> selectedSources = const <String>[],
     bool onboardingCompleted = true,
   }) async {
     final next = UserProfile(
       historicalInterests: historicalInterests,
       politicalLeaning: politicalLeaning,
+      quoteDiscoveryMode: quoteDiscoveryMode,
+      selectedSources: selectedSources,
       onboardingCompleted: onboardingCompleted,
       onboardingDate: DateTime.now(),
     );
@@ -44,6 +48,16 @@ class UserProfileNotifier extends StateNotifier<UserProfile> {
 
   Future<void> updatePoliticalLeaning(PoliticalLeaning leaning) async {
     final next = state.copyWith(politicalLeaning: leaning);
+    await _persist(next);
+  }
+
+  Future<void> updateQuoteDiscoveryMode(QuoteDiscoveryMode mode) async {
+    final next = state.copyWith(quoteDiscoveryMode: mode);
+    await _persist(next);
+  }
+
+  Future<void> updateSelectedSources(List<String> sources) async {
+    final next = state.copyWith(selectedSources: sources);
     await _persist(next);
   }
 

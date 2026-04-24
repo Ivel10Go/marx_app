@@ -25,7 +25,7 @@ class WelcomePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                'Das Kapital',
+                'Zitatatlas',
                 style: GoogleFonts.playfairDisplay(
                   fontSize: 40,
                   fontWeight: FontWeight.w700,
@@ -46,7 +46,7 @@ class WelcomePage extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               Text(
-                'Die App verbindet Marx-Zitate mit Weltgeschichte in einer ruhigen Tagesausgabe.',
+                'Die App verbindet Zitate mit einer ruhigen, personalisierten Tagesausgabe.',
                 textAlign: TextAlign.center,
                 style: GoogleFonts.ibmPlexSans(
                   fontSize: 11,
@@ -56,7 +56,7 @@ class WelcomePage extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                'Du entscheidest, welche Themen im Feed haeufiger auftauchen.',
+                'Du entscheidest, welche Quellen und Themen im Feed haeufiger auftauchen.',
                 textAlign: TextAlign.center,
                 style: GoogleFonts.ibmPlexSans(
                   fontSize: 11,

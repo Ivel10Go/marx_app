@@ -6,7 +6,6 @@ import '../../core/theme/app_colors.dart';
 import '../../domain/providers/settings_provider.dart';
 import '../../widgets/app_decorated_scaffold.dart';
 import '../../widgets/app_navigation_bar.dart';
-import 'widgets/mode_selector.dart';
 import 'widgets/profile_section.dart';
 
 class SettingsScreen extends ConsumerWidget {
@@ -18,7 +17,7 @@ class SettingsScreen extends ConsumerWidget {
 
     return AppDecoratedScaffold(
       appBar: null,
-      bottomNavigationBar: const AppNavigationBar(selectedIndex: 5),
+      bottomNavigationBar: const AppNavigationBar(selectedIndex: -1),
       child: Column(
         children: <Widget>[
           // Masthead
@@ -48,11 +47,6 @@ class SettingsScreen extends ConsumerWidget {
                 return ListView(
                   padding: const EdgeInsets.fromLTRB(20, 20, 20, 24),
                   children: <Widget>[
-                    _SettingsGroup(
-                      title: 'TÄGLICHER INHALT',
-                      children: <Widget>[const ModeSelector()],
-                    ),
-                    const SizedBox(height: 24),
                     const ProfileSection(),
                     const SizedBox(height: 24),
                     _SettingsGroup(

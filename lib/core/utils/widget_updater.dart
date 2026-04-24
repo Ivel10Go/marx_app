@@ -9,7 +9,7 @@ class WidgetUpdater {
 
   static Future<void> updateWithQuote(Quote quote, int streak) async {
     await HomeWidget.saveWidgetData('content_type', 'quote');
-    await HomeWidget.saveWidgetData('kicker', 'DAS KAPITAL · ZITAT');
+    await HomeWidget.saveWidgetData('kicker', 'ZITATATLAS · ZITAT');
     await HomeWidget.saveWidgetData('quote_text', quote.textDe);
     await HomeWidget.saveWidgetData(
       'source',

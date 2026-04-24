@@ -30,16 +30,8 @@ void workmanagerCallbackDispatcher() {
 
       final prefs = await SharedPreferences.getInstance();
       final streak = prefs.getInt(SettingsKeys.streak) ?? 0;
-      final appModeName = prefs.getString('app_mode') ?? AppMode.marx.name;
-      final mode = AppMode.values.firstWhere(
-        (AppMode item) => item.name == appModeName,
-        orElse: () => AppMode.marx,
-      );
-
       final content = await _resolveDailyContent(
-        mode: mode,
         quoteRepository: quoteRepository,
-        historyRepository: historyRepository,
       );
 
       if (content == null) {
@@ -64,32 +56,10 @@ void workmanagerCallbackDispatcher() {
 }
 
 Future<DailyContent?> _resolveDailyContent({
-  required AppMode mode,
   required QuoteRepository quoteRepository,
-  required HistoryRepository historyRepository,
 }) async {
-  switch (mode) {
-    case AppMode.marx:
-      final quote = await quoteRepository.getDailyQuote();
-      return quote == null ? null : DailyContent.quote(quote: quote);
-    case AppMode.history:
-      final fact = await historyRepository.getDailyHistoryFact();
-      return fact == null ? null : DailyContent.fact(fact: fact);
-    case AppMode.mixed:
-      final issueNumber = _getIssueNumber();
-      if (issueNumber.isOdd) {
-        final quote = await quoteRepository.getDailyQuote();
-        return quote == null ? null : DailyContent.quote(quote: quote);
-      }
-      final fact = await historyRepository.getDailyHistoryFact();
-      return fact == null ? null : DailyContent.fact(fact: fact);
-  }
-}
-
-int _getIssueNumber() {
-  final now = DateTime.now();
-  final epoch = DateTime(2000, 1, 1);
-  return now.difference(epoch).inDays;
+  final quote = await quoteRepository.getDailyQuote();
+  return quote == null ? null : DailyContent.quote(quote: quote);
 }
 
 abstract final class BackgroundTasksService {
