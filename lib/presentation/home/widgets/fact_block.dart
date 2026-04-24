@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../core/theme/app_colors.dart';
+import '../../../core/utils/share_card_renderer.dart';
 import '../../../data/models/history_fact.dart';
 import 'tts_button.dart';
 import '../../../widgets/category_chip.dart';
@@ -23,18 +24,35 @@ class FactBlock extends StatelessWidget {
         Container(
           color: AppColors.red,
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          child: Text(
-            fact.todayInHistory
-                ? 'WELTGESCHICHTE · HEUTE VOR ${_yearsAgo(fact.dateIso)} JAHREN'
-                : 'WELTGESCHICHTE · ${fact.dateDisplay.toUpperCase()}',
-            style: GoogleFonts.ibmPlexSans(
-              fontSize: 9,
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
-              letterSpacing: 1.2,
-            ),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Expanded(
+                child: Text(
+                  fact.todayInHistory
+                      ? 'WELTGESCHICHTE · HEUTE VOR ${_yearsAgo(fact.dateIso)} JAHREN'
+                      : 'WELTGESCHICHTE · ${fact.dateDisplay.toUpperCase()}',
+                  style: GoogleFonts.ibmPlexSans(
+                    fontSize: 9,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                    letterSpacing: 1.2,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              GestureDetector(
+                onTap: () async {
+                  await ShareCardRenderer().shareHistoryFact(fact, context);
+                },
+                child: const Icon(
+                  Icons.ios_share_rounded,
+                  size: 14,
+                  color: Colors.white,
+                ),
+              ),
+            ],
           ),
         ),
 

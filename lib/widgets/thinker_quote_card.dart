@@ -3,59 +3,61 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../core/theme/app_colors.dart';
 import '../core/utils/share_card_renderer.dart';
-import '../data/models/quote.dart';
-import '../presentation/home/widgets/tts_button.dart';
-import 'category_chip.dart';
+import '../data/models/thinker_quote.dart';
 
-class QuoteCard extends StatelessWidget {
-  const QuoteCard({required this.quote, this.trailing, this.onTap, super.key});
+class ThinkerQuoteCard extends StatelessWidget {
+  const ThinkerQuoteCard({required this.thinkerQuote, this.onTap, super.key});
 
-  final Quote quote;
-  final Widget? trailing;
+  final ThinkerQuote thinkerQuote;
   final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
+    final yearLabel = thinkerQuote.year < 0
+        ? '${thinkerQuote.year.abs()} v. Chr.'
+        : '${thinkerQuote.year}';
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-        // Kicker-Band (rot)
+        // Kicker band
         Container(
-          color: AppColors.red,
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+          color: AppColors.ink,
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Expanded(
-                child: Text(
-                  '${quote.source.toUpperCase()} · ${quote.year}',
-                  style: GoogleFonts.ibmPlexSans(
-                    fontSize: 9,
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.redOnRed,
-                    letterSpacing: 1.8,
-                  ),
+              Text(
+                'DENKER · $yearLabel',
+                style: GoogleFonts.ibmPlexSans(
+                  fontSize: 9,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.paper,
+                  letterSpacing: 1.8,
                 ),
               ),
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Text(
-                    quote.chapter,
+                    thinkerQuote.source.toUpperCase(),
                     style: GoogleFonts.ibmPlexSans(
                       fontSize: 8,
-                      color: AppColors.redOnRed.withValues(alpha: 0.7),
+                      color: AppColors.paper.withValues(alpha: 0.7),
                     ),
                   ),
                   const SizedBox(width: 8),
                   GestureDetector(
                     onTap: () async {
-                      await ShareCardRenderer().shareQuote(quote, context);
+                      await ShareCardRenderer().shareThinkerQuote(
+                        thinkerQuote,
+                        context,
+                      );
                     },
-                    child: const Icon(
+                    child: Icon(
                       Icons.ios_share_rounded,
                       size: 14,
-                      color: AppColors.redOnRed,
+                      color: AppColors.paper,
                     ),
                   ),
                 ],
@@ -63,7 +65,7 @@ class QuoteCard extends StatelessWidget {
             ],
           ),
         ),
-        // Hauptkarte
+        // Main card
         Container(
           decoration: const BoxDecoration(
             color: AppColors.paper,
@@ -82,42 +84,43 @@ class QuoteCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    // Zitat-Text
-                    Text(
-                      quote.textDe,
-                      style: Theme.of(context).textTheme.displayMedium,
+                    // Author badge
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 3,
+                      ),
+                      color: AppColors.ink,
+                      child: Text(
+                        thinkerQuote.author.toUpperCase(),
+                        style: GoogleFonts.ibmPlexSans(
+                          fontSize: 8,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.paper,
+                          letterSpacing: 1.4,
+                        ),
+                      ),
                     ),
                     const SizedBox(height: 14),
-                    // Rote Linie
+                    Text(
+                      '»${thinkerQuote.textDe}«',
+                      style: GoogleFonts.playfairDisplay(
+                        fontSize: 21,
+                        fontStyle: FontStyle.italic,
+                        color: AppColors.ink,
+                        height: 1.65,
+                        letterSpacing: 0.1,
+                      ),
+                    ),
+                    const SizedBox(height: 14),
                     Container(width: 28, height: 2, color: AppColors.red),
                     const SizedBox(height: 10),
-                    // Attribution
                     Text(
-                      '— ${quote.source}',
+                      '— ${thinkerQuote.author}, ${thinkerQuote.source}',
                       style: GoogleFonts.playfairDisplay(
                         fontSize: 11,
                         color: AppColors.inkLight,
                       ),
-                    ),
-                    const SizedBox(height: 14),
-                    // Tags
-                    Wrap(
-                      spacing: 6,
-                      runSpacing: 6,
-                      children: quote.category
-                          .take(3)
-                          .map((String item) => CategoryChip(label: item))
-                          .toList(),
-                    ),
-                    const SizedBox(height: 12),
-                    Row(
-                      children: <Widget>[
-                        TtsButton(contentId: quote.id, text: quote.textDe),
-                        if (trailing != null) ...<Widget>[
-                          const SizedBox(width: 12),
-                          Expanded(child: trailing!),
-                        ],
-                      ],
                     ),
                   ],
                 ),
