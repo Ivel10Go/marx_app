@@ -6,14 +6,18 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../core/services/notification_service.dart';
 import '../../core/services/widget_sync_service.dart';
 import '../../core/theme/app_colors.dart';
+import '../../core/theme/godmode_colors.dart';
 import '../../data/models/daily_content.dart';
 import '../../domain/providers/app_mode_provider.dart';
 import '../../domain/providers/daily_content_provider.dart';
 import '../../domain/providers/streak_provider.dart';
-import '../../widgets/app_decorated_scaffold.dart';
 import '../../widgets/app_navigation_bar.dart';
+import '../../widgets/godmode_quote_card.dart';
 import '../../widgets/quote_card.dart';
+import '../../widgets/skeleton_card.dart';
 import '../../widgets/streak_badge.dart';
+import '../../widgets/thinker_quote_card.dart';
+import '../home/dialogs/mode_dialog.dart';
 import '../home/widgets/fact_block.dart';
 import '../home/widgets/streak_calendar.dart';
 
@@ -60,12 +64,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
   void _showModeDialog(BuildContext context) {
     showDialog<void>(
       context: context,
-      builder: (BuildContext dialogContext) => _ModeDialog(
+      builder: (BuildContext dialogContext) => ModeDialog(
         currentMode: ref.read(appModeNotifierProvider),
         onModeSelected: (mode) async {
           await ref.read(appModeNotifierProvider.notifier).set(mode);
-          // Invalidate daily content so the home screen refreshes
           ref.invalidate(dailyContentProvider);
+          _controller.reset();
+          _controller.forward();
         },
       ),
     );
@@ -76,6 +81,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
     final dailyContent = ref.watch(dailyContentProvider);
     final streakAsync = ref.watch(currentStreakProvider);
     final mode = ref.watch(appModeNotifierProvider);
+    final isGodmode = mode == AppMode.godmode;
 
     // Sync widget whenever daily content and streak are available
     ref.listen(dailyContentProvider, (_, next) {
@@ -84,210 +90,225 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
           WidgetSyncService.syncDailyContent(
             content: next.value!,
             streakCount: streak,
+            modeBadge: isGodmode ? '☭ GODMODE' : null,
           );
         });
       }
     });
 
-    return AppDecoratedScaffold(
-      appBar: null,
-      bottomNavigationBar: const AppNavigationBar(selectedIndex: 0),
-      child: RefreshIndicator(
-        onRefresh: () async => ref.invalidate(dailyContentProvider),
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            // Masthead
-            Container(
-              color: AppColors.paper,
-              padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Expanded(
-                        child: Text(
-                          'DAS KAPITAL',
-                          style: GoogleFonts.playfairDisplay(
-                            fontSize: 32,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.ink,
-                            letterSpacing: -0.5,
-                          ),
-                        ),
-                      ),
-                      // Mode selector button
-                      GestureDetector(
-                        onTap: () => _showModeDialog(context),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 5,
-                          ),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: AppColors.ink, width: 1),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              Text(
-                                _modeLabelShort(mode),
-                                style: GoogleFonts.ibmPlexSans(
-                                  fontSize: 9,
-                                  fontWeight: FontWeight.w700,
-                                  color: AppColors.ink,
-                                  letterSpacing: 1.2,
+    final bgColor = isGodmode ? GodmodeColors.background : AppColors.paper;
+    final headerBg = isGodmode ? GodmodeColors.surface : AppColors.paper;
+    final inkColor = isGodmode ? GodmodeColors.text : AppColors.ink;
+    final accentColor = isGodmode ? GodmodeColors.accent : AppColors.red;
+
+    return Scaffold(
+      backgroundColor: bgColor,
+      bottomNavigationBar: AppNavigationBar(
+        selectedIndex: 0,
+        isGodmode: isGodmode,
+      ),
+      body: SafeArea(
+        child: RefreshIndicator(
+          color: accentColor,
+          onRefresh: () async {
+            ref.invalidate(dailyContentProvider);
+            _controller.reset();
+            await _controller.forward().orCancel;
+          },
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              // Masthead
+              Container(
+                color: headerBg,
+                padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Expanded(
+                          child: isGodmode
+                              ? _GodmodeMasthead()
+                              : Text(
+                                  'DAS KAPITAL',
+                                  style: GoogleFonts.playfairDisplay(
+                                    fontSize: 32,
+                                    fontWeight: FontWeight.w700,
+                                    color: inkColor,
+                                    letterSpacing: -0.5,
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(width: 4),
-                              const Icon(
-                                Icons.unfold_more,
-                                size: 12,
-                                color: AppColors.ink,
-                              ),
-                            ],
+                        ),
+                        // Mode selector button
+                        GestureDetector(
+                          onTap: () => _showModeDialog(context),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 5,
+                            ),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: accentColor, width: 1),
+                              color: isGodmode
+                                  ? GodmodeColors.card
+                                  : Colors.transparent,
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Text(
+                                  _modeLabelShort(mode),
+                                  style: GoogleFonts.ibmPlexSans(
+                                    fontSize: 9,
+                                    fontWeight: FontWeight.w700,
+                                    color: accentColor,
+                                    letterSpacing: 1.2,
+                                  ),
+                                ),
+                                const SizedBox(width: 4),
+                                Icon(
+                                  Icons.unfold_more,
+                                  size: 12,
+                                  color: accentColor,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
+                      ],
+                    ),
+                    const SizedBox(height: 6),
+                    // Issue number + date
+                    Text(
+                      _issueLabel(),
+                      style: GoogleFonts.ibmPlexSans(
+                        fontSize: 10,
+                        color: isGodmode
+                            ? GodmodeColors.textMuted
+                            : AppColors.inkMuted,
+                        letterSpacing: 0.8,
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  Container(width: 40, height: 2, color: AppColors.red),
-                ],
+                    ),
+                    const SizedBox(height: 12),
+                    Container(width: 40, height: 2, color: accentColor),
+                  ],
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 24, 20, 24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  dailyContent.when(
-                    data: (content) {
-                      return FadeTransition(
-                        opacity: _fade,
-                        child: SlideTransition(
-                          position: _slide,
-                          child: content.when(
-                            quote: (quote) => QuoteCard(
-                              quote: quote,
-                              onTap: () =>
-                                  context.push('/detail/${quote.id}'),
-                            ),
-                            fact: (fact) => FactBlock(
-                              fact: fact,
-                              onRelatedQuoteTap:
-                                  fact.relatedQuoteIds.isNotEmpty
-                                  ? () => context.push(
-                                      '/detail/${fact.relatedQuoteIds.first}',
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 24, 20, 24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    dailyContent.when(
+                      data: (content) {
+                        return FadeTransition(
+                          opacity: _fade,
+                          child: SlideTransition(
+                            position: _slide,
+                            child: content.when(
+                              quote: (quote) => isGodmode
+                                  ? GodmodeQuoteCard(
+                                      quote: quote,
+                                      onTap: () =>
+                                          context.push('/detail/${quote.id}'),
                                     )
-                                  : null,
+                                  : QuoteCard(
+                                      quote: quote,
+                                      onTap: () =>
+                                          context.push('/detail/${quote.id}'),
+                                    ),
+                              fact: (fact) => FactBlock(
+                                fact: fact,
+                                onRelatedQuoteTap:
+                                    fact.relatedQuoteIds.isNotEmpty
+                                    ? () => context.push(
+                                        '/detail/${fact.relatedQuoteIds.first}',
+                                      )
+                                    : null,
+                              ),
+                              thinkerQuote: (tq) => ThinkerQuoteCard(
+                                thinkerQuote: tq,
+                              ),
                             ),
                           ),
-                        ),
-                      );
-                    },
-                    loading: () => const _LoadingCard(),
-                    error: (error, _) => _EmptyStateCard(
-                      icon: Icons.error_outline_rounded,
-                      title: 'Ladevorgang fehlgeschlagen',
-                      body: '$error',
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _calendarExpanded = !_calendarExpanded;
-                      });
-                    },
-                    child: streakAsync.when(
-                      data: (streak) => StreakBadge(
-                        days: streak,
-                        expanded: _calendarExpanded,
-                      ),
-                      loading: () => const StreakBadge(days: 0),
-                      error: (_, __) => const StreakBadge(days: 0),
-                    ),
-                  ),
-                  AnimatedSize(
-                    duration: const Duration(milliseconds: 250),
-                    curve: Curves.easeOut,
-                    child: _calendarExpanded
-                        ? const Padding(
-                            padding: EdgeInsets.only(top: 8),
-                            child: StreakCalendar(),
-                          )
-                        : const SizedBox.shrink(),
-                  ),
-                  const SizedBox(height: 20),
-                  // Navigation buttons row 1
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: _BroadsheetButton(
-                          onPressed: () => context.push('/archive'),
-                          label: 'ARCHIV',
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: _BroadsheetButton(
-                          onPressed: () => context.push('/favorites'),
-                          label: 'FAVORITEN',
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  // Navigation buttons row 2
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: _BroadsheetButton(
-                          onPressed: () => context.push('/thinkers'),
-                          label: 'DENKER',
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: _BroadsheetButton(
-                          onPressed: () => context.push('/quiz'),
-                          label: 'QUIZ',
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  _BroadsheetButton(
-                    onPressed: () => context.push('/onboarding'),
-                    label: 'EINFÜHRUNG',
-                    fullWidth: true,
-                  ),
-                  const SizedBox(height: 12),
-                  _BroadsheetOutlineButton(
-                    onPressed: () async {
-                      final current =
-                          ref.read(dailyContentProvider).valueOrNull;
-                      if (current != null) {
-                        final quote = current.when(
-                          quote: (q) => q,
-                          fact: (_) => null,
                         );
-                        if (quote != null) {
-                          await NotificationService.instance.showDailyQuote(
-                            quote,
+                      },
+                      loading: () => const SkeletonCard(),
+                      error: (error, _) => _EmptyStateCard(
+                        icon: Icons.error_outline_rounded,
+                        title: 'Ladevorgang fehlgeschlagen',
+                        body: '$error',
+                        isGodmode: isGodmode,
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _calendarExpanded = !_calendarExpanded;
+                        });
+                      },
+                      child: streakAsync.when(
+                        data: (streak) => StreakBadge(
+                          days: streak,
+                          expanded: _calendarExpanded,
+                          isGodmode: isGodmode,
+                        ),
+                        loading: () => const StreakBadge(days: 0),
+                        error: (_, __) => const StreakBadge(days: 0),
+                      ),
+                    ),
+                    AnimatedSize(
+                      duration: const Duration(milliseconds: 250),
+                      curve: Curves.easeOut,
+                      child: _calendarExpanded
+                          ? const Padding(
+                              padding: EdgeInsets.only(top: 8),
+                              child: StreakCalendar(),
+                            )
+                          : const SizedBox.shrink(),
+                    ),
+                    const SizedBox(height: 20),
+                    // 2×2 navigation grid
+                    _NavGrid(isGodmode: isGodmode),
+                    const SizedBox(height: 12),
+                    // Refresh button
+                    _RefreshButton(
+                      isGodmode: isGodmode,
+                      onPressed: () {
+                        ref.invalidate(dailyContentProvider);
+                        _controller.reset();
+                        _controller.forward();
+                      },
+                    ),
+                    const SizedBox(height: 12),
+                    _BroadsheetOutlineButton(
+                      onPressed: () async {
+                        final current =
+                            ref.read(dailyContentProvider).valueOrNull;
+                        if (current != null) {
+                          final quote = current.when(
+                            quote: (q) => q,
+                            fact: (_) => null,
+                            thinkerQuote: (_) => null,
                           );
+                          if (quote != null) {
+                            await NotificationService.instance.showDailyQuote(
+                              quote,
+                            );
+                          }
                         }
-                      }
-                    },
-                    label: 'BENACHRICHTIGUNG TESTEN',
-                  ),
-                ],
+                      },
+                      label: 'BENACHRICHTIGUNG TESTEN',
+                      isGodmode: isGodmode,
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -301,203 +322,211 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
         return 'GESCHICHTE';
       case AppMode.mixed:
         return 'GEMISCHT';
+      case AppMode.godmode:
+        return '☭ GODMODE';
     }
+  }
+
+  String _issueLabel() {
+    final now = DateTime.now();
+    final epoch = DateTime(2000, 1, 1);
+    final issue = now.difference(epoch).inDays;
+    final months = <String>[
+      'Januar', 'Februar', 'März', 'April', 'Mai', 'Juni',
+      'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember',
+    ];
+    final formatted = '${now.day}. ${months[now.month - 1]} ${now.year}';
+    return 'AUSGABE $issue · $formatted';
   }
 }
 
-class _ModeDialog extends StatelessWidget {
-  const _ModeDialog({
-    required this.currentMode,
-    required this.onModeSelected,
-  });
+// Godmode pulsing masthead
+class _GodmodeMasthead extends StatefulWidget {
+  @override
+  State<_GodmodeMasthead> createState() => _GodmodeMastheadState();
+}
 
-  final AppMode currentMode;
-  final void Function(AppMode) onModeSelected;
+class _GodmodeMastheadState extends State<_GodmodeMasthead>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _pulse;
+  late final Animation<double> _anim;
+
+  @override
+  void initState() {
+    super.initState();
+    _pulse = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1500),
+    )..repeat(reverse: true);
+    _anim = CurvedAnimation(parent: _pulse, curve: Curves.easeInOut);
+  }
+
+  @override
+  void dispose() {
+    _pulse.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      backgroundColor: AppColors.paper,
-      title: Text(
-        'AUSGABE WÄHLEN',
-        style: GoogleFonts.ibmPlexSans(
-          fontSize: 13,
-          fontWeight: FontWeight.w700,
-          color: AppColors.red,
-          letterSpacing: 1.5,
-        ),
+    return AnimatedBuilder(
+      animation: _anim,
+      builder: (context, _) {
+        return Text(
+          '☭ MARX GODMODE',
+          style: GoogleFonts.ibmPlexSans(
+            fontSize: 22,
+            fontWeight: FontWeight.w800,
+            color: Color.lerp(
+              GodmodeColors.accent,
+              Colors.white,
+              _anim.value * 0.4,
+            ),
+            letterSpacing: 1.5,
+            shadows: <Shadow>[
+              Shadow(
+                color: GodmodeColors.accent
+                    .withValues(alpha: 0.3 + 0.5 * _anim.value),
+                blurRadius: 8,
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+
+// 2×2 navigation grid
+class _NavGrid extends StatelessWidget {
+  const _NavGrid({required this.isGodmode});
+
+  final bool isGodmode;
+
+  @override
+  Widget build(BuildContext context) {
+    final tiles = <_NavTile>[
+      _NavTile(
+        icon: Icons.library_books_outlined,
+        label: 'ARCHIV',
+        path: '/archive',
       ),
-      content: SizedBox(
-        width: double.maxFinite,
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: AppMode.values.expand<Widget>((AppMode mode) {
-              final isLast = mode == AppMode.values.last;
-              return <Widget>[
-                _ModeOption(
-                  mode: mode,
-                  selected: mode == currentMode,
-                  title: _getModeTitle(mode),
-                  subtitle: _getModeSubtitle(mode),
-                  onTap: () {
-                    onModeSelected(mode);
-                    Navigator.of(context).pop();
-                  },
-                ),
-                if (!isLast)
-                  Container(
-                    height: 1,
-                    color: AppColors.ink,
-                    margin: const EdgeInsets.symmetric(vertical: 12),
+      _NavTile(
+        icon: Icons.favorite_border_rounded,
+        label: 'FAVORITEN',
+        path: '/favorites',
+      ),
+      _NavTile(
+        icon: Icons.psychology_outlined,
+        label: 'DENKER',
+        path: '/thinkers',
+      ),
+      _NavTile(icon: Icons.quiz_outlined, label: 'QUIZ', path: '/quiz'),
+    ];
+
+    return GridView.count(
+      crossAxisCount: 2,
+      shrinkWrap: true,
+      mainAxisSpacing: 10,
+      crossAxisSpacing: 10,
+      childAspectRatio: 2.8,
+      physics: const NeverScrollableScrollPhysics(),
+      children: tiles.map((tile) {
+        return _NavGridButton(tile: tile, isGodmode: isGodmode);
+      }).toList(),
+    );
+  }
+}
+
+class _NavTile {
+  const _NavTile({
+    required this.icon,
+    required this.label,
+    required this.path,
+  });
+  final IconData icon;
+  final String label;
+  final String path;
+}
+
+class _NavGridButton extends StatelessWidget {
+  const _NavGridButton({required this.tile, required this.isGodmode});
+
+  final _NavTile tile;
+  final bool isGodmode;
+
+  @override
+  Widget build(BuildContext context) {
+    final bgColor = isGodmode ? GodmodeColors.card : AppColors.ink;
+    final fgColor = isGodmode ? GodmodeColors.text : AppColors.paper;
+    final borderColor = isGodmode ? GodmodeColors.accent : AppColors.ink;
+
+    return Container(
+      decoration: BoxDecoration(
+        color: bgColor,
+        border: Border.all(color: borderColor, width: 1),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () => context.push(tile.path),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(tile.icon, size: 14, color: fgColor),
+                const SizedBox(width: 6),
+                Text(
+                  tile.label,
+                  style: GoogleFonts.ibmPlexSans(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w700,
+                    color: fgColor,
+                    letterSpacing: 1.2,
                   ),
-              ];
-            }).toList(),
+                ),
+              ],
+            ),
           ),
         ),
       ),
-      contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 24),
-      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-    );
-  }
-
-  String _getModeTitle(AppMode mode) {
-    switch (mode) {
-      case AppMode.marx:
-        return 'Marx & Engels';
-      case AppMode.history:
-        return 'Weltgeschichte';
-      case AppMode.mixed:
-        return 'Gemischt';
-    }
-  }
-
-  String _getModeSubtitle(AppMode mode) {
-    switch (mode) {
-      case AppMode.marx:
-        return 'Zitate aus den Originalwerken';
-      case AppMode.history:
-        return 'Kuratierte Fakten & Ereignisse';
-      case AppMode.mixed:
-        return 'Täglich abwechselnd';
-    }
-  }
-}
-
-class _ModeOption extends StatelessWidget {
-  const _ModeOption({
-    required this.mode,
-    required this.selected,
-    required this.title,
-    required this.subtitle,
-    required this.onTap,
-  });
-
-  final AppMode mode;
-  final bool selected;
-  final String title;
-  final String subtitle;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(right: 12, top: 3),
-              child: Container(
-                width: 18,
-                height: 18,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(color: AppColors.ink, width: 1.5),
-                ),
-                child: selected
-                    ? Center(
-                        child: Container(
-                          width: 10,
-                          height: 10,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: AppColors.red,
-                          ),
-                        ),
-                      )
-                    : null,
-              ),
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    title,
-                    style: GoogleFonts.playfairDisplay(
-                      fontSize: 16,
-                      fontWeight:
-                          selected ? FontWeight.w700 : FontWeight.w400,
-                      color: AppColors.ink,
-                      height: 1.4,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    subtitle,
-                    style: GoogleFonts.ibmPlexSans(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                      color: AppColors.ink.withValues(alpha: 0.6),
-                      height: 1.4,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
 
-class _BroadsheetButton extends StatelessWidget {
-  const _BroadsheetButton({
-    required this.onPressed,
-    required this.label,
-    this.fullWidth = false,
-  });
-
+class _RefreshButton extends StatelessWidget {
+  const _RefreshButton({required this.isGodmode, required this.onPressed});
+  final bool isGodmode;
   final VoidCallback onPressed;
-  final String label;
-  final bool fullWidth;
 
   @override
   Widget build(BuildContext context) {
+    final bgColor = isGodmode ? GodmodeColors.accent : AppColors.red;
     return Container(
-      decoration: BoxDecoration(
-        color: AppColors.ink,
-        border: Border.all(color: AppColors.ink, width: 1),
-      ),
+      decoration: BoxDecoration(color: bgColor),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
           onTap: onPressed,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            child: Text(
-              label,
-              textAlign: TextAlign.center,
-              style: GoogleFonts.ibmPlexSans(
-                fontSize: 11,
-                fontWeight: FontWeight.w700,
-                color: AppColors.paper,
-                letterSpacing: 1.2,
-              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(Icons.refresh_rounded, size: 14, color: Colors.white),
+                const SizedBox(width: 6),
+                Text(
+                  'NEUE AUSGABE',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.ibmPlexSans(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white,
+                    letterSpacing: 1.2,
+                  ),
+                ),
+              ],
             ),
           ),
         ),
@@ -510,16 +539,21 @@ class _BroadsheetOutlineButton extends StatelessWidget {
   const _BroadsheetOutlineButton({
     required this.onPressed,
     required this.label,
+    required this.isGodmode,
   });
 
   final VoidCallback onPressed;
   final String label;
+  final bool isGodmode;
 
   @override
   Widget build(BuildContext context) {
+    final borderColor = isGodmode ? GodmodeColors.accent : AppColors.ink;
+    final textColor = isGodmode ? GodmodeColors.text : AppColors.ink;
+
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: AppColors.ink, width: 1),
+        border: Border.all(color: borderColor, width: 1),
       ),
       child: Material(
         color: Colors.transparent,
@@ -533,7 +567,7 @@ class _BroadsheetOutlineButton extends StatelessWidget {
               style: GoogleFonts.ibmPlexSans(
                 fontSize: 11,
                 fontWeight: FontWeight.w700,
-                color: AppColors.ink,
+                color: textColor,
                 letterSpacing: 1.2,
               ),
             ),
@@ -549,49 +583,53 @@ class _EmptyStateCard extends StatelessWidget {
     required this.icon,
     required this.title,
     required this.body,
+    required this.isGodmode,
   });
 
   final IconData icon;
   final String title;
   final String body;
+  final bool isGodmode;
 
   @override
   Widget build(BuildContext context) {
+    final bgColor = isGodmode ? GodmodeColors.card : AppColors.paper;
+    final textColor = isGodmode ? GodmodeColors.text : AppColors.ink;
+    final borderColor = isGodmode ? GodmodeColors.accent : AppColors.ink;
+    final accentColor = isGodmode ? GodmodeColors.accent : AppColors.red;
+
     return Container(
       padding: const EdgeInsets.all(20),
-      decoration: const BoxDecoration(
-        color: AppColors.paper,
+      decoration: BoxDecoration(
+        color: bgColor,
         border: Border(
-          left: BorderSide(color: AppColors.ink, width: 1),
-          right: BorderSide(color: AppColors.ink, width: 1),
-          bottom: BorderSide(color: AppColors.ink, width: 1),
+          left: BorderSide(color: borderColor, width: 1),
+          right: BorderSide(color: borderColor, width: 1),
+          bottom: BorderSide(color: borderColor, width: 1),
         ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Icon(icon, color: AppColors.red),
+          Icon(icon, color: accentColor),
           const SizedBox(height: 12),
-          Text(title, style: Theme.of(context).textTheme.titleMedium),
+          Text(
+            title,
+            style: GoogleFonts.ibmPlexSans(
+              fontSize: 13,
+              fontWeight: FontWeight.w700,
+              color: textColor,
+            ),
+          ),
           const SizedBox(height: 6),
-          Text(body, style: Theme.of(context).textTheme.bodyMedium),
+          Text(
+            body,
+            style: GoogleFonts.ibmPlexSans(
+              fontSize: 11,
+              color: isGodmode ? GodmodeColors.textMuted : AppColors.inkLight,
+            ),
+          ),
         ],
-      ),
-    );
-  }
-}
-
-class _LoadingCard extends StatelessWidget {
-  const _LoadingCard();
-
-  @override
-  Widget build(BuildContext context) {
-    return const SizedBox(
-      height: 220,
-      child: Center(
-        child: CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(AppColors.red),
-        ),
       ),
     );
   }

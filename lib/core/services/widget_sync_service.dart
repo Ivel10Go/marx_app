@@ -7,11 +7,15 @@ abstract final class WidgetSyncService {
   static Future<void> syncDailyContent({
     required DailyContent content,
     required int streakCount,
+    String? modeBadge,
   }) async {
     await content.when(
       quote: (quote) async {
         await HomeWidget.saveWidgetData<String>('content_type', 'quote');
-        await HomeWidget.saveWidgetData<String>('widget_header', 'DAS KAPITAL');
+        await HomeWidget.saveWidgetData<String>(
+          'widget_header',
+          modeBadge ?? 'DAS KAPITAL',
+        );
         await HomeWidget.saveWidgetData<String>('quote_text', quote.textDe);
         await HomeWidget.saveWidgetData<String>(
           'quote_source',
@@ -25,6 +29,8 @@ abstract final class WidgetSyncService {
           'quote_categories',
           quote.category.join(', '),
         );
+        await HomeWidget.saveWidgetData<String>('quote_author', quote.source);
+        await HomeWidget.saveWidgetData<String>('quote_id', quote.id);
       },
       fact: (fact) async {
         await HomeWidget.saveWidgetData<String>('content_type', 'fact');
@@ -46,10 +52,34 @@ abstract final class WidgetSyncService {
             ...fact.category,
           ].where((item) => item.trim().isNotEmpty).join(', '),
         );
+        await HomeWidget.saveWidgetData<String>('quote_author', fact.headline);
+        await HomeWidget.saveWidgetData<String>('quote_id', fact.id);
+      },
+      thinkerQuote: (tq) async {
+        await HomeWidget.saveWidgetData<String>('content_type', 'thinker');
+        await HomeWidget.saveWidgetData<String>(
+          'widget_header',
+          'DENKER · ${tq.author.toUpperCase()}',
+        );
+        await HomeWidget.saveWidgetData<String>('quote_text', tq.textDe);
+        await HomeWidget.saveWidgetData<String>(
+          'quote_source',
+          '${tq.author}, ${tq.year}',
+        );
+        await HomeWidget.saveWidgetData<String>(
+          'quote_explanation',
+          tq.source,
+        );
+        await HomeWidget.saveWidgetData<String>('quote_categories', tq.source);
+        await HomeWidget.saveWidgetData<String>('quote_author', tq.author);
+        await HomeWidget.saveWidgetData<String>('quote_id', tq.id);
       },
     );
 
     await HomeWidget.saveWidgetData<String>('streak', streakCount.toString());
+    if (modeBadge != null) {
+      await HomeWidget.saveWidgetData<String>('mode_badge', modeBadge);
+    }
 
     await HomeWidget.updateWidget(
       androidName: 'QuoteWidgetProvider',

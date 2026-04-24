@@ -3,11 +3,17 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../core/theme/app_colors.dart';
+import '../core/theme/godmode_colors.dart';
 
 class AppNavigationBar extends StatelessWidget {
-  const AppNavigationBar({required this.selectedIndex, super.key});
+  const AppNavigationBar({
+    required this.selectedIndex,
+    this.isGodmode = false,
+    super.key,
+  });
 
   final int selectedIndex;
+  final bool isGodmode;
 
   static const _destinations = <_NavDestination>[
     _NavDestination(path: '/', label: 'HEUTE', icon: Icons.today_outlined),
@@ -23,17 +29,21 @@ class AppNavigationBar extends StatelessWidget {
     ),
     _NavDestination(
       path: '/favorites',
-      label: 'FAVORITEN',
+      label: '★',
       icon: Icons.favorite_border_rounded,
     ),
     _NavDestination(path: '/quiz', label: 'QUIZ', icon: Icons.quiz_outlined),
-    _NavDestination(path: '/settings', label: 'EINST.', icon: Icons.tune),
+    _NavDestination(path: '/settings', label: '⚙', icon: Icons.tune),
   ];
 
   @override
   Widget build(BuildContext context) {
+    final bgColor = isGodmode ? GodmodeColors.surface : AppColors.ink;
+    final activeColor = isGodmode ? GodmodeColors.accent : AppColors.paper;
+    const inactiveColor = Color(0xFF666666);
+
     return Container(
-      color: AppColors.ink,
+      color: bgColor,
       child: SafeArea(
         top: false,
         child: Padding(
@@ -53,9 +63,7 @@ class AppNavigationBar extends StatelessWidget {
                     Icon(
                       destination.icon,
                       size: 16,
-                      color: isActive
-                          ? AppColors.paper
-                          : const Color(0xFF666666),
+                      color: isActive ? activeColor : inactiveColor,
                     ),
                     const SizedBox(height: 2),
                     Text(
@@ -63,15 +71,19 @@ class AppNavigationBar extends StatelessWidget {
                       style: GoogleFonts.ibmPlexSans(
                         fontSize: 11,
                         fontWeight: FontWeight.w700,
-                        color: isActive
-                            ? AppColors.paper
-                            : const Color(0xFF666666),
+                        color: isActive ? activeColor : inactiveColor,
                         letterSpacing: 1.2,
                       ),
                     ),
                     if (isActive) ...<Widget>[
                       const SizedBox(height: 4),
-                      Container(width: 24, height: 1, color: AppColors.red),
+                      Container(
+                        width: 24,
+                        height: 1,
+                        color: isGodmode
+                            ? GodmodeColors.accent
+                            : AppColors.red,
+                      ),
                     ],
                   ],
                 ),
