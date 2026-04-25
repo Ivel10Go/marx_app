@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../core/theme/app_colors.dart';
 import '../../data/models/daily_content.dart';
+import '../../data/models/home_content_mode.dart';
 import '../../domain/providers/admin_access_provider.dart';
 import '../../domain/providers/app_mode_provider.dart';
 import '../../domain/providers/daily_content_provider.dart';
@@ -110,6 +111,15 @@ class SettingsScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: 12),
                 Container(width: 40, height: 2, color: AppColors.red),
+                const SizedBox(height: 10),
+                Text(
+                  'Steuere, was du taeglich siehst und wie du lernst.',
+                  style: GoogleFonts.ibmPlexSans(
+                    fontSize: 11,
+                    color: AppColors.inkLight,
+                    height: 1.5,
+                  ),
+                ),
               ],
             ),
           ),
@@ -119,8 +129,88 @@ class SettingsScreen extends ConsumerWidget {
                 return ListView(
                   padding: const EdgeInsets.fromLTRB(20, 20, 20, 24),
                   children: <Widget>[
+                    const _SettingsHeroCard(),
+                    const SizedBox(height: 16),
                     const ProfileSection(),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 20),
+                    _SettingsGroup(
+                      title: 'STARTBILDSCHIRM',
+                      children: <Widget>[
+                        Text(
+                          'Waehle, ob du heute ein Zitat, einen historischen Fun-Fact oder beides im Zufallsmodus sehen willst.',
+                          style: GoogleFonts.ibmPlexSans(
+                            fontSize: 11,
+                            color: AppColors.inkLight,
+                            height: 1.5,
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: _SettingsChoiceButton(
+                                label: 'ZITATE',
+                                subtitle: 'Tageszitat mit Kontext',
+                                selected:
+                                    settings.homeContentMode ==
+                                    HomeContentMode.quotes,
+                                onTap: () async {
+                                  await ref
+                                      .read(settingsControllerProvider.notifier)
+                                      .setHomeContentMode(
+                                        HomeContentMode.quotes,
+                                      );
+                                  ref.invalidate(dailyContentProvider);
+                                },
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: _SettingsChoiceButton(
+                                label: 'FUN FACTS',
+                                subtitle: 'Historische Wissenshappen',
+                                selected:
+                                    settings.homeContentMode ==
+                                    HomeContentMode.facts,
+                                onTap: () async {
+                                  await ref
+                                      .read(settingsControllerProvider.notifier)
+                                      .setHomeContentMode(
+                                        HomeContentMode.facts,
+                                      );
+                                  ref.invalidate(dailyContentProvider);
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: _SettingsChoiceButton(
+                                label: 'ZUFALL',
+                                subtitle: 'Abwechselnd Zitat/Fun-Fact',
+                                selected:
+                                    settings.homeContentMode ==
+                                    HomeContentMode.mixed,
+                                onTap: () async {
+                                  await ref
+                                      .read(settingsControllerProvider.notifier)
+                                      .setHomeContentMode(
+                                        HomeContentMode.mixed,
+                                      );
+                                  ref.invalidate(dailyContentProvider);
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 14),
+                        _SettingsModePreview(mode: settings.homeContentMode),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
                     _SettingsGroup(
                       title: 'DARSTELLUNG',
                       children: <Widget>[
@@ -219,7 +309,7 @@ class SettingsScreen extends ConsumerWidget {
                                   ),
                                   const SizedBox(height: 4),
                                   Text(
-                                    'Bei Aktivierung wird das Tageszitat jeden Tag zur Uhrzeit geplant.',
+                                    'Bei Aktivierung wird dein Tagesinhalt (Zitat oder Fact) jeden Tag zur Uhrzeit geplant.',
                                     style: GoogleFonts.ibmPlexSans(
                                       fontSize: 10,
                                       color: AppColors.inkLight,
@@ -566,6 +656,254 @@ class _SettingsGroup extends StatelessWidget {
             const SizedBox(height: 16),
             ...children,
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _SettingsHeroCard extends StatelessWidget {
+  const _SettingsHeroCard();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: AppColors.paper,
+        border: Border.all(color: AppColors.ink, width: 1),
+      ),
+      child: Row(
+        children: <Widget>[
+          Container(
+            width: 36,
+            height: 36,
+            decoration: const BoxDecoration(
+              color: AppColors.red,
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(
+              Icons.tune_rounded,
+              color: Colors.white,
+              size: 18,
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              'Passe den Feed an: Zitate fuer Tiefe, Facts fuer schnelles historisches Lernen oder Zufall fuer Abwechslung.',
+              style: GoogleFonts.ibmPlexSans(
+                fontSize: 11,
+                fontWeight: FontWeight.w500,
+                color: AppColors.ink,
+                height: 1.5,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SettingsModePreview extends StatelessWidget {
+  const _SettingsModePreview({required this.mode});
+
+  final HomeContentMode mode;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: AppColors.paper,
+        border: Border.all(color: AppColors.ink, width: 1),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            'VORSCHAU',
+            style: GoogleFonts.ibmPlexSans(
+              fontSize: 10,
+              fontWeight: FontWeight.w700,
+              color: AppColors.ink,
+              letterSpacing: 1.2,
+            ),
+          ),
+          const SizedBox(height: 8),
+          AnimatedSwitcher(
+            duration: const Duration(milliseconds: 260),
+            switchInCurve: Curves.easeOut,
+            switchOutCurve: Curves.easeOut,
+            transitionBuilder: (Widget child, Animation<double> animation) {
+              return FadeTransition(
+                opacity: animation,
+                child: SizeTransition(
+                  sizeFactor: animation,
+                  axisAlignment: -1,
+                  child: child,
+                ),
+              );
+            },
+            child: _previewTileForMode(mode),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _previewTileForMode(HomeContentMode mode) {
+    switch (mode) {
+      case HomeContentMode.quotes:
+        return _PreviewTile(
+          key: const ValueKey<String>('quotes'),
+          kicker: 'ZITATATLAS',
+          title: 'Tageszitat mit Einordnung',
+          subtitle: 'Ideal fuer konzentriertes Lesen mit Kontext.',
+        );
+      case HomeContentMode.facts:
+        return _PreviewTile(
+          key: const ValueKey<String>('facts'),
+          kicker: 'WELTGESCHICHTE',
+          title: 'Historischer Fun-Fact',
+          subtitle: 'Kurzer Wissenshappen fuer nebenbei Lernen.',
+        );
+      case HomeContentMode.mixed:
+        return _PreviewTile(
+          key: const ValueKey<String>('mixed'),
+          kicker: 'ZUFALLSMODUS',
+          title: 'Abwechslung pro Tag',
+          subtitle: 'App zeigt wechselnd Zitat oder Fun-Fact.',
+        );
+    }
+  }
+}
+
+class _PreviewTile extends StatelessWidget {
+  const _PreviewTile({
+    required this.kicker,
+    required this.title,
+    required this.subtitle,
+    super.key,
+  });
+
+  final String kicker;
+  final String title;
+  final String subtitle;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      key: key,
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: AppColors.paperDark,
+        border: Border.all(color: AppColors.rule, width: 1),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            kicker,
+            style: GoogleFonts.ibmPlexSans(
+              fontSize: 9,
+              fontWeight: FontWeight.w700,
+              color: AppColors.red,
+              letterSpacing: 1.2,
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            title,
+            style: GoogleFonts.playfairDisplay(
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
+              color: AppColors.ink,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            subtitle,
+            style: GoogleFonts.ibmPlexSans(
+              fontSize: 10,
+              color: AppColors.inkLight,
+              height: 1.4,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SettingsChoiceButton extends StatelessWidget {
+  const _SettingsChoiceButton({
+    required this.label,
+    required this.subtitle,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final String label;
+  final String subtitle;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 180),
+          curve: Curves.easeOut,
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: selected ? AppColors.ink : AppColors.paper,
+            border: Border.all(color: AppColors.ink, width: 1),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Text(
+                      label,
+                      style: GoogleFonts.ibmPlexSans(
+                        fontSize: 10,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: 1.0,
+                        color: selected ? AppColors.paper : AppColors.ink,
+                      ),
+                    ),
+                  ),
+                  Icon(
+                    selected
+                        ? Icons.check_circle_rounded
+                        : Icons.radio_button_unchecked_rounded,
+                    size: 16,
+                    color: selected ? AppColors.red : AppColors.inkLight,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              Text(
+                subtitle,
+                style: GoogleFonts.ibmPlexSans(
+                  fontSize: 10,
+                  height: 1.4,
+                  color: selected
+                      ? AppColors.paper.withValues(alpha: 0.9)
+                      : AppColors.inkLight,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

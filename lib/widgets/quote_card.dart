@@ -12,6 +12,7 @@ class QuoteCard extends StatelessWidget {
     required this.quote,
     this.trailing,
     this.onTap,
+    this.onLongPress,
     this.onShare,
     super.key,
   });
@@ -19,6 +20,7 @@ class QuoteCard extends StatelessWidget {
   final Quote quote;
   final Widget? trailing;
   final VoidCallback? onTap;
+  final VoidCallback? onLongPress;
   final VoidCallback? onShare;
 
   @override
@@ -86,6 +88,7 @@ class QuoteCard extends StatelessWidget {
             color: Colors.transparent,
             child: InkWell(
               onTap: onTap,
+              onLongPress: onLongPress,
               child: Padding(
                 padding: const EdgeInsets.all(20),
                 child: Column(

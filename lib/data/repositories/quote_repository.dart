@@ -30,6 +30,12 @@ class QuoteRepository {
         throw FormatException('Quote entry at index $index is not an object');
       }
 
+      final rawId = item['id'];
+      if (rawId is String && seenIds.contains(rawId.trim())) {
+        // Keep the first occurrence and ignore duplicate seed rows.
+        continue;
+      }
+
       _validateSeedEntry(item, index: index, seenIds: seenIds);
       parsed.add(item);
     }
@@ -142,15 +148,15 @@ class QuoteRepository {
     );
   }
 
+
+
   void _validateSeedEntry(
     Map<String, dynamic> item, {
     required int index,
     required Set<String> seenIds,
   }) {
     final id = _requiredString(item, 'id', index);
-    if (!seenIds.add(id)) {
-      throw FormatException('Duplicate quote id "$id" at index $index');
-    }
+    seenIds.add(id);
 
     _requiredString(item, 'text_de', index);
     _requiredString(item, 'text_original', index);
@@ -161,7 +167,7 @@ class QuoteRepository {
     _requiredString(item, 'explanation_short', index);
     _requiredString(item, 'explanation_long', index);
     _requiredStringList(item, 'category', index);
-    _requiredStringList(item, 'related_ids', index);
+    _requiredStringList(item, 'related_ids', index, allowEmpty: true);
 
     final yearValue = item['year'];
     if (yearValue is! num) {
@@ -187,8 +193,9 @@ class QuoteRepository {
   List<String> _requiredStringList(
     Map<String, dynamic> item,
     String key,
-    int index,
-  ) {
+    int index, {
+    bool allowEmpty = false,
+  }) {
     final value = item[key];
     if (value is! List<dynamic>) {
       throw FormatException('Missing or invalid list "$key" at index $index');
@@ -200,7 +207,7 @@ class QuoteRepository {
         .where((String entry) => entry.isNotEmpty)
         .toList();
 
-    if (casted.isEmpty) {
+    if (!allowEmpty && casted.isEmpty) {
       throw FormatException('List "$key" must not be empty at index $index');
     }
     return casted;

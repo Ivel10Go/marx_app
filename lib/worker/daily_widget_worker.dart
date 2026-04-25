@@ -4,6 +4,7 @@ import 'package:workmanager/workmanager.dart';
 import '../core/constants/settings_keys.dart';
 import '../data/database/app_database.dart';
 import '../data/models/daily_content.dart';
+import '../data/models/home_content_mode.dart';
 import '../data/models/user_profile.dart';
 import '../data/repositories/history_repository.dart';
 import '../data/repositories/quote_repository.dart';
@@ -29,9 +30,14 @@ void callbackDispatcher() {
       final prefs = await SharedPreferences.getInstance();
       final streak = prefs.getInt(SettingsKeys.streak) ?? 0;
       final appMode = _resolveAppMode(prefs.getString('app_mode'));
+      final homeContentMode = HomeContentMode.fromStorage(
+        prefs.getString(SettingsKeys.homeContentMode),
+      );
       final profile = _resolveProfile(prefs.getString(UserProfile.storageKey));
       final content = await _resolveDailyContent(
         quoteRepository: quoteRepository,
+        historyRepository: historyRepository,
+        homeContentMode: homeContentMode,
         appMode: appMode,
         profile: profile,
       );
@@ -52,12 +58,16 @@ void callbackDispatcher() {
 
 Future<DailyContent?> _resolveDailyContent({
   required QuoteRepository quoteRepository,
+  required HistoryRepository historyRepository,
+  required HomeContentMode homeContentMode,
   required AppMode appMode,
   required UserProfile profile,
 }) async {
   final resolver = DailyContentResolver();
   return resolver.resolveDailyContentFromRepository(
     quoteRepository: quoteRepository,
+    historyRepository: historyRepository,
+    homeContentMode: homeContentMode,
     appMode: appMode,
     profile: profile,
   );

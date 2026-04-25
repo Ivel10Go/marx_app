@@ -229,6 +229,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                               ),
                               onTap: () =>
                                   _showQuoteInsightSheet(context, quote),
+                              onLongPress: () =>
+                                  _showQuoteInsightSheet(context, quote),
                             ),
                             fact: (fact) => FactBlock(
                               fact: fact,
@@ -521,8 +523,6 @@ class _ThinkerQuoteCard extends StatelessWidget {
 
 extension on _HomeScreenState {
   Future<void> _showQuoteInsightSheet(BuildContext context, Quote quote) async {
-    final isLongQuote = _isLongQuote(quote.textDe);
-
     await showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -538,29 +538,26 @@ extension on _HomeScreenState {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(width: 44, height: 2, color: AppColors.red),
-                  if (isLongQuote) ...<Widget>[
-                    const SizedBox(height: 14),
-                    Text(
-                      'VOLLTEXT',
-                      style: GoogleFonts.ibmPlexSans(
-                        fontSize: 10,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.red,
-                        letterSpacing: 1.2,
-                      ),
+                  const SizedBox(height: 14),
+                  Text(
+                    'VOLLTEXT',
+                    style: GoogleFonts.ibmPlexSans(
+                      fontSize: 10,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.red,
+                      letterSpacing: 1.2,
                     ),
-                    const SizedBox(height: 10),
-                    SelectableText(
-                      quote.textDe,
-                      style: GoogleFonts.playfairDisplay(
-                        fontSize: 18,
-                        fontStyle: FontStyle.italic,
-                        color: AppColors.ink,
-                        height: 1.5,
-                      ),
+                  ),
+                  const SizedBox(height: 10),
+                  SelectableText(
+                    quote.textDe,
+                    style: GoogleFonts.playfairDisplay(
+                      fontSize: 18,
+                      fontStyle: FontStyle.italic,
+                      color: AppColors.ink,
+                      height: 1.5,
                     ),
-                    const SizedBox(height: 14),
-                  ],
+                  ),
                   const SizedBox(height: 14),
                   Text(
                     'ERKLAERUNG',
@@ -649,14 +646,6 @@ extension on _HomeScreenState {
         );
       },
     );
-  }
-
-  bool _isLongQuote(String value) {
-    final words = value
-        .split(RegExp(r'\s+'))
-        .where((part) => part.trim().isNotEmpty)
-        .length;
-    return value.length > 320 || words > 60;
   }
 }
 

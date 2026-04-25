@@ -33,35 +33,52 @@ class AppNavigationBar extends StatelessWidget {
               final destination = entry.value;
               final isActive = index == selectedIndex;
 
-              return GestureDetector(
-                onTap: () => context.go(destination.path),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Icon(
-                      destination.icon,
-                      size: 16,
-                      color: isActive
-                          ? AppColors.paper
-                          : const Color(0xFF666666),
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      destination.label,
-                      style: GoogleFonts.ibmPlexSans(
-                        fontSize: 11,
-                        fontWeight: FontWeight.w700,
-                        color: isActive
-                            ? AppColors.paper
-                            : const Color(0xFF666666),
-                        letterSpacing: 1.2,
+              return Expanded(
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: isActive ? null : () => context.go(destination.path),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 2),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Icon(
+                            destination.icon,
+                            size: 16,
+                            color: isActive
+                                ? AppColors.paper
+                                : const Color(0xFF666666),
+                          ),
+                          const SizedBox(height: 2),
+                          Text(
+                            destination.label,
+                            style: GoogleFonts.ibmPlexSans(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w700,
+                              color: isActive
+                                  ? AppColors.paper
+                                  : const Color(0xFF666666),
+                              letterSpacing: 1.2,
+                            ),
+                          ),
+                          AnimatedOpacity(
+                            duration: const Duration(milliseconds: 180),
+                            curve: Curves.easeOut,
+                            opacity: isActive ? 1 : 0,
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 4),
+                              child: Container(
+                                width: 24,
+                                height: 1,
+                                color: AppColors.red,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    if (isActive) ...<Widget>[
-                      const SizedBox(height: 4),
-                      Container(width: 24, height: 1, color: AppColors.red),
-                    ],
-                  ],
+                  ),
                 ),
               );
             }).toList(),

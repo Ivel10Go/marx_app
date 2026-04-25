@@ -1,3 +1,5 @@
+import com.flutter.gradle.tasks.FlutterTask
+
 plugins {
     id("com.android.application")
     id("kotlin-android")
@@ -42,6 +44,16 @@ android {
 
 flutter {
     source = "../.."
+}
+
+// Work around a Flutter Gradle plugin edge case where empty flavor names are
+// propagated as "-dFlavor=" and can crash compileFlutterBuildDebug.
+tasks.withType<FlutterTask>().configureEach {
+    doFirst {
+        if (flavor.isNullOrBlank()) {
+            flavor = null
+        }
+    }
 }
 
 dependencies {

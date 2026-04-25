@@ -2,6 +2,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../data/database/app_database.dart';
 import '../../data/models/daily_content.dart';
+import '../../data/models/home_content_mode.dart';
 import '../../data/models/user_profile.dart';
 import '../../data/repositories/history_repository.dart';
 import '../../data/repositories/quote_repository.dart';
@@ -31,10 +32,15 @@ abstract final class AppBootstrap {
       final prefs = await SharedPreferences.getInstance();
       final streak = prefs.getInt(SettingsKeys.streak) ?? 0;
       final appMode = _resolveAppMode(prefs.getString('app_mode'));
+      final homeContentMode = HomeContentMode.fromStorage(
+        prefs.getString(SettingsKeys.homeContentMode),
+      );
       final profile = _resolveProfile(prefs.getString(UserProfile.storageKey));
       final resolver = DailyContentResolver();
       final content = await _resolveDailyContent(
         quoteRepository: quoteRepository,
+        historyRepository: historyRepository,
+        homeContentMode: homeContentMode,
         appMode: appMode,
         profile: profile,
         resolver: resolver,
@@ -81,12 +87,16 @@ abstract final class AppBootstrap {
 
   static Future<DailyContent?> _resolveDailyContent({
     required QuoteRepository quoteRepository,
+    required HistoryRepository historyRepository,
+    required HomeContentMode homeContentMode,
     required AppMode appMode,
     required UserProfile profile,
     required DailyContentResolver resolver,
   }) async {
     return resolver.resolveDailyContentFromRepository(
       quoteRepository: quoteRepository,
+      historyRepository: historyRepository,
+      homeContentMode: homeContentMode,
       appMode: appMode,
       profile: profile,
     );

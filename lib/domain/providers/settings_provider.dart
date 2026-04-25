@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/constants/settings_keys.dart';
 import '../../core/services/notification_service.dart';
+import '../../data/models/home_content_mode.dart';
 
 enum DifficultyFilter { all, beginnerOnly, noBeginner }
 
@@ -15,6 +16,7 @@ class SettingsState {
     required this.notificationHour,
     required this.notificationMinute,
     required this.notificationEnabled,
+    required this.homeContentMode,
     required this.streak,
     required this.onboardingSeen,
   });
@@ -25,6 +27,7 @@ class SettingsState {
   final int notificationHour;
   final int notificationMinute;
   final bool notificationEnabled;
+  final HomeContentMode homeContentMode;
   final int streak;
   final bool onboardingSeen;
 
@@ -35,6 +38,7 @@ class SettingsState {
     int? notificationHour,
     int? notificationMinute,
     bool? notificationEnabled,
+    HomeContentMode? homeContentMode,
     int? streak,
     bool? onboardingSeen,
   }) {
@@ -45,6 +49,7 @@ class SettingsState {
       notificationHour: notificationHour ?? this.notificationHour,
       notificationMinute: notificationMinute ?? this.notificationMinute,
       notificationEnabled: notificationEnabled ?? this.notificationEnabled,
+      homeContentMode: homeContentMode ?? this.homeContentMode,
       streak: streak ?? this.streak,
       onboardingSeen: onboardingSeen ?? this.onboardingSeen,
     );
@@ -65,9 +70,18 @@ class SettingsController extends AsyncNotifier<SettingsState> {
       notificationMinute: prefs.getInt(SettingsKeys.notificationMinute) ?? 0,
       notificationEnabled:
           prefs.getBool(SettingsKeys.notificationEnabled) ?? true,
+      homeContentMode: HomeContentMode.fromStorage(
+        prefs.getString(SettingsKeys.homeContentMode),
+      ),
       streak: prefs.getInt(SettingsKeys.streak) ?? 0,
       onboardingSeen: prefs.getBool('settings_onboarding_seen') ?? false,
     );
+  }
+
+  Future<void> setHomeContentMode(HomeContentMode mode) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(SettingsKeys.homeContentMode, mode.name);
+    state = AsyncData(state.requireValue.copyWith(homeContentMode: mode));
   }
 
   Future<void> setThemeMode(ThemeMode mode) async {
