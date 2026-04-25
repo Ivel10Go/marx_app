@@ -14,9 +14,28 @@ class QuoteRepository {
 
   Future<void> ensureSeeded() async {
     final raw = await rootBundle.loadString('assets/quotes.json');
-    final decoded = jsonDecode(raw) as List<dynamic>;
-    final quotes = decoded
-        .map((dynamic item) => Quote.fromJson(item as Map<String, dynamic>))
+    final decoded = jsonDecode(raw);
+    if (decoded is! List<dynamic>) {
+      throw const FormatException(
+        'assets/quotes.json must contain a JSON array',
+      );
+    }
+
+    final parsed = <Map<String, dynamic>>[];
+    final seenIds = <String>{};
+
+    for (var index = 0; index < decoded.length; index++) {
+      final item = decoded[index];
+      if (item is! Map<String, dynamic>) {
+        throw FormatException('Quote entry at index $index is not an object');
+      }
+
+      _validateSeedEntry(item, index: index, seenIds: seenIds);
+      parsed.add(item);
+    }
+
+    final quotes = parsed
+        .map((Map<String, dynamic> item) => Quote.fromJson(item))
         .toList();
 
     await _db.quoteDao.upsertQuotes(quotes.map(_toCompanion).toList());
@@ -121,5 +140,69 @@ class QuoteRepository {
       relatedIds: related,
       funFact: row.funFact,
     );
+  }
+
+  void _validateSeedEntry(
+    Map<String, dynamic> item, {
+    required int index,
+    required Set<String> seenIds,
+  }) {
+    final id = _requiredString(item, 'id', index);
+    if (!seenIds.add(id)) {
+      throw FormatException('Duplicate quote id "$id" at index $index');
+    }
+
+    _requiredString(item, 'text_de', index);
+    _requiredString(item, 'text_original', index);
+    _requiredString(item, 'source', index);
+    _requiredString(item, 'chapter', index);
+    _requiredString(item, 'difficulty', index);
+    _requiredString(item, 'series', index);
+    _requiredString(item, 'explanation_short', index);
+    _requiredString(item, 'explanation_long', index);
+    _requiredStringList(item, 'category', index);
+    _requiredStringList(item, 'related_ids', index);
+
+    final yearValue = item['year'];
+    if (yearValue is! num) {
+      throw FormatException(
+        'Missing or invalid numeric "year" at index $index',
+      );
+    }
+
+    final year = yearValue.toInt();
+    if (year < -3000 || year > 2100) {
+      throw FormatException('Implausible year "$year" at index $index');
+    }
+  }
+
+  String _requiredString(Map<String, dynamic> item, String key, int index) {
+    final value = item[key];
+    if (value is! String || value.trim().isEmpty) {
+      throw FormatException('Missing or empty string "$key" at index $index');
+    }
+    return value;
+  }
+
+  List<String> _requiredStringList(
+    Map<String, dynamic> item,
+    String key,
+    int index,
+  ) {
+    final value = item[key];
+    if (value is! List<dynamic>) {
+      throw FormatException('Missing or invalid list "$key" at index $index');
+    }
+
+    final casted = value
+        .whereType<String>()
+        .map((String entry) => entry.trim())
+        .where((String entry) => entry.isNotEmpty)
+        .toList();
+
+    if (casted.isEmpty) {
+      throw FormatException('List "$key" must not be empty at index $index');
+    }
+    return casted;
   }
 }

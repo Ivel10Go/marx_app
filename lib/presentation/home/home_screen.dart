@@ -3,18 +3,22 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../core/services/notification_service.dart';
 import '../../core/services/widget_sync_service.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/utils/share_card_renderer.dart';
+import '../../data/models/daily_content.dart';
 import '../../data/models/quote.dart';
+import '../../data/models/thinker_quote.dart';
+import '../../domain/providers/admin_access_provider.dart';
 import '../../domain/providers/daily_content_provider.dart';
+import '../../domain/providers/app_mode_provider.dart';
 import '../../domain/providers/streak_provider.dart';
 import '../../widgets/app_decorated_scaffold.dart';
 import '../../widgets/app_navigation_bar.dart';
 import '../../widgets/adaptive_quote_text.dart';
 import '../../widgets/quote_card.dart';
 import '../../widgets/streak_badge.dart';
+import '../home/dialogs/mode_dialog.dart';
 import '../home/widgets/fact_block.dart';
 import '../home/widgets/streak_calendar.dart';
 
@@ -58,10 +62,44 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
     super.dispose();
   }
 
+  Future<void> _setMode(AppMode mode) async {
+    await ref.read(appModeNotifierProvider.notifier).set(mode);
+    ref.invalidate(dailyContentProvider);
+    if (!mounted) {
+      return;
+    }
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Modus gewechselt: ${_modeLabel(mode)}'),
+        duration: const Duration(seconds: 2),
+      ),
+    );
+  }
+
+  String _modeLabel(AppMode mode) {
+    switch (mode) {
+      case AppMode.public:
+        return 'Für alle';
+      case AppMode.adminMarx:
+        return 'Marx-Modus';
+    }
+  }
+
+  Future<void> _showModeDialog() async {
+    await showDialog<void>(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return ModeDialog(onModeSelected: _setMode);
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final dailyContent = ref.watch(dailyContentProvider);
     final streakAsync = ref.watch(currentStreakProvider);
+    final appMode = ref.watch(appModeNotifierProvider);
+    final isAdmin = ref.watch(adminAccessProvider);
     // Sync widget whenever daily content and streak are available
     ref.listen(dailyContentProvider, (_, next) {
       if (next.hasValue) {
@@ -69,6 +107,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
           WidgetSyncService.syncDailyContent(
             content: next.value!,
             streakCount: streak,
+            modeLabel: appMode.name.toUpperCase(),
           );
         });
       }
@@ -82,7 +121,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
-            // Masthead
             Container(
               color: AppColors.paper,
               padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
@@ -90,7 +128,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: <Widget>[
                       Expanded(
                         child: Column(
@@ -107,7 +145,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              'Taeglich ein Zitat, klar kuratiert.',
+                              _mastheadSubtitle(),
                               style: GoogleFonts.ibmPlexSans(
                                 fontSize: 10,
                                 fontWeight: FontWeight.w600,
@@ -127,6 +165,47 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                   ),
                   const SizedBox(height: 12),
                   Container(width: 40, height: 2, color: AppColors.red),
+                  const SizedBox(height: 12),
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: isAdmin
+                            ? _BroadsheetOutlineButton(
+                                onPressed: _showModeDialog,
+                                label: _modeLabel(appMode),
+                              )
+                            : Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: AppColors.ink,
+                                    width: 1,
+                                  ),
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                  vertical: 12,
+                                ),
+                                child: Text(
+                                  'PERSONALISIERT',
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.ibmPlexSans(
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.w700,
+                                    color: AppColors.ink,
+                                    letterSpacing: 1.2,
+                                  ),
+                                ),
+                              ),
+                      ),
+                      if (isAdmin) ...<Widget>[
+                        const SizedBox(width: 10),
+                        _BroadsheetButton(
+                          onPressed: () => context.push('/admin'),
+                          label: 'ADMIN',
+                        ),
+                      ],
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -144,16 +223,25 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                           child: content.when(
                             quote: (quote) => QuoteCard(
                               quote: quote,
-                              onTap: () => _showQuotePreview(context, quote),
+                              onShare: () => ShareCardRenderer().shareQuote(
+                                quote,
+                                context,
+                              ),
+                              onTap: () =>
+                                  _showQuoteInsightSheet(context, quote),
                             ),
                             fact: (fact) => FactBlock(
                               fact: fact,
+                              onShareTap: () =>
+                                  ShareCardRenderer().shareFact(fact, context),
                               onRelatedQuoteTap: fact.relatedQuoteIds.isNotEmpty
                                   ? () => context.push(
                                       '/detail/${fact.relatedQuoteIds.first}',
                                     )
                                   : null,
                             ),
+                            thinkerQuote: (ThinkerQuote quote) =>
+                                _ThinkerQuoteCard(quote: quote),
                           ),
                         ),
                       );
@@ -193,27 +281,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                   ),
                   const SizedBox(height: 20),
                   _QuickAccessSection(
-                    onArchiveTap: () => context.push('/archive'),
-                    onFavoritesTap: () => context.push('/favorites'),
-                    onThinkersTap: () => context.push('/thinkers'),
-                    onQuizTap: () => context.push('/quiz'),
-                    onGamesTap: () => context.push('/games'),
-                    onOnboardingTap: () => context.push('/onboarding'),
-                    onNotificationTestTap: () async {
-                      final current = ref
-                          .read(dailyContentProvider)
-                          .valueOrNull;
-                      if (current != null) {
-                        final quote = current.when(
-                          quote: (q) => q,
-                          fact: (_) => null,
-                        );
-                        if (quote != null) {
-                          await NotificationService.instance.showDailyQuote(
-                            quote,
-                          );
-                        }
-                      }
+                    onAdminTap: isAdmin ? () => context.push('/admin') : null,
+                    onNewIssueTap: () async {
+                      ref.invalidate(dailyContentProvider);
+                      ref
+                          .read(streakControllerProvider.notifier)
+                          .logTodayAndRefresh();
                     },
                   ),
                 ],
@@ -302,58 +375,15 @@ class _BroadsheetOutlineButton extends StatelessWidget {
 
 class _QuickAccessSection extends StatelessWidget {
   const _QuickAccessSection({
-    required this.onArchiveTap,
-    required this.onFavoritesTap,
-    required this.onThinkersTap,
-    required this.onQuizTap,
-    required this.onGamesTap,
-    required this.onOnboardingTap,
-    required this.onNotificationTestTap,
+    required this.onAdminTap,
+    required this.onNewIssueTap,
   });
 
-  final VoidCallback onArchiveTap;
-  final VoidCallback onFavoritesTap;
-  final VoidCallback onThinkersTap;
-  final VoidCallback onQuizTap;
-  final VoidCallback onGamesTap;
-  final VoidCallback onOnboardingTap;
-  final VoidCallback onNotificationTestTap;
+  final VoidCallback? onAdminTap;
+  final VoidCallback onNewIssueTap;
 
   @override
   Widget build(BuildContext context) {
-    const entries = <_QuickAccessEntry>[
-      _QuickAccessEntry(
-        title: 'Archiv',
-        description: 'Ältere Zitate schnell finden',
-        icon: Icons.library_books_outlined,
-      ),
-      _QuickAccessEntry(
-        title: 'Favoriten',
-        description: 'Gespeicherte Inhalte ansehen',
-        icon: Icons.favorite_border_rounded,
-      ),
-      _QuickAccessEntry(
-        title: 'Denker',
-        description: 'Autorinnen und Autoren entdecken',
-        icon: Icons.psychology_outlined,
-      ),
-      _QuickAccessEntry(
-        title: 'Quiz',
-        description: 'Wissen direkt testen',
-        icon: Icons.quiz_outlined,
-      ),
-      _QuickAccessEntry(
-        title: 'Minigames',
-        description: 'Kurze spielerische Pausen',
-        icon: Icons.sports_esports_outlined,
-      ),
-      _QuickAccessEntry(
-        title: 'Einführung',
-        description: 'App und Funktionen erkunden',
-        icon: Icons.school_outlined,
-      ),
-    ];
-
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(16),
@@ -369,7 +399,7 @@ class _QuickAccessSection extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  'SCHNELLZUGRIFF',
+                  'AKTIONEN',
                   style: GoogleFonts.ibmPlexSans(
                     fontSize: 11,
                     fontWeight: FontWeight.w700,
@@ -379,7 +409,7 @@ class _QuickAccessSection extends StatelessWidget {
                 ),
               ),
               Text(
-                'Links zu den wichtigsten Bereichen',
+                'Heute im Fokus',
                 style: GoogleFonts.ibmPlexSans(
                   fontSize: 10,
                   color: AppColors.inkLight,
@@ -387,53 +417,20 @@ class _QuickAccessSection extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 14),
-          LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints) {
-              final tileWidth = (constraints.maxWidth - 12) / 2;
-
-              return Wrap(
-                spacing: 12,
-                runSpacing: 12,
-                children: <Widget>[
-                  _QuickAccessTile(
-                    width: tileWidth,
-                    entry: entries[0],
-                    onTap: onArchiveTap,
-                  ),
-                  _QuickAccessTile(
-                    width: tileWidth,
-                    entry: entries[1],
-                    onTap: onFavoritesTap,
-                  ),
-                  _QuickAccessTile(
-                    width: tileWidth,
-                    entry: entries[2],
-                    onTap: onThinkersTap,
-                  ),
-                  _QuickAccessTile(
-                    width: tileWidth,
-                    entry: entries[3],
-                    onTap: onQuizTap,
-                  ),
-                  _QuickAccessTile(
-                    width: tileWidth,
-                    entry: entries[4],
-                    onTap: onGamesTap,
-                  ),
-                  _QuickAccessTile(
-                    width: tileWidth,
-                    entry: entries[5],
-                    onTap: onOnboardingTap,
-                  ),
-                ],
-              );
-            },
-          ),
           const SizedBox(height: 12),
-          _BroadsheetOutlineButton(
-            onPressed: onNotificationTestTap,
-            label: 'BENACHRICHTIGUNG TESTEN',
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: _BroadsheetOutlineButton(
+                  onPressed: onNewIssueTap,
+                  label: 'NEUE AUSGABE',
+                ),
+              ),
+              if (onAdminTap != null) ...<Widget>[
+                const SizedBox(width: 10),
+                _BroadsheetButton(onPressed: onAdminTap!, label: 'ADMIN'),
+              ],
+            ],
           ),
         ],
       ),
@@ -441,79 +438,91 @@ class _QuickAccessSection extends StatelessWidget {
   }
 }
 
-class _QuickAccessTile extends StatelessWidget {
-  const _QuickAccessTile({
-    required this.width,
-    required this.entry,
-    required this.onTap,
-  });
+class _ThinkerQuoteCard extends StatelessWidget {
+  const _ThinkerQuoteCard({required this.quote});
 
-  final double width;
-  final _QuickAccessEntry entry;
-  final VoidCallback onTap;
+  final ThinkerQuote quote;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: width,
-      child: Container(
-        decoration: BoxDecoration(
-          color: AppColors.paperDark,
-          border: Border.all(color: AppColors.rule, width: 1),
+    return Container(
+      decoration: const BoxDecoration(
+        color: AppColors.paper,
+        border: Border(
+          left: BorderSide(color: AppColors.ink, width: 1),
+          right: BorderSide(color: AppColors.ink, width: 1),
+          bottom: BorderSide(color: AppColors.ink, width: 1),
         ),
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            onTap: onTap,
-            child: Padding(
-              padding: const EdgeInsets.all(14),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Icon(entry.icon, color: AppColors.red, size: 20),
-                  const SizedBox(height: 12),
-                  Text(
-                    entry.title,
-                    style: GoogleFonts.ibmPlexSans(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.ink,
-                    ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: AppColors.paperDark,
+                    border: Border.all(color: AppColors.rule, width: 1),
+                    shape: BoxShape.circle,
                   ),
-                  const SizedBox(height: 6),
-                  Text(
-                    entry.description,
-                    style: GoogleFonts.ibmPlexSans(
-                      fontSize: 10,
-                      height: 1.3,
-                      color: AppColors.inkLight,
-                    ),
+                  child: Icon(
+                    Icons.person_outline,
+                    color: AppColors.red,
+                    size: 20,
                   ),
-                ],
-              ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        quote.author.toUpperCase(),
+                        style: GoogleFonts.ibmPlexSans(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.ink,
+                          letterSpacing: 1.0,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        '${quote.source} · ${quote.year}',
+                        style: GoogleFonts.ibmPlexSans(
+                          fontSize: 10,
+                          color: AppColors.inkLight,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ),
+            const SizedBox(height: 16),
+            AdaptiveQuoteText(
+              text: quote.textDe,
+              minFontSize: 22,
+              maxFontSize: 30,
+              maxLines: 7,
+              style: Theme.of(context).textTheme.displayMedium,
+            ),
+            const SizedBox(height: 12),
+            Container(width: 28, height: 2, color: AppColors.red),
+          ],
         ),
       ),
     );
   }
 }
 
-class _QuickAccessEntry {
-  const _QuickAccessEntry({
-    required this.title,
-    required this.description,
-    required this.icon,
-  });
-
-  final String title;
-  final String description;
-  final IconData icon;
-}
-
 extension on _HomeScreenState {
-  Future<void> _showQuotePreview(BuildContext context, Quote quote) async {
+  Future<void> _showQuoteInsightSheet(BuildContext context, Quote quote) async {
+    final isLongQuote = _isLongQuote(quote.textDe);
+
     await showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -523,72 +532,131 @@ extension on _HomeScreenState {
         return SafeArea(
           child: Padding(
             padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(width: 44, height: 2, color: AppColors.red),
-                const SizedBox(height: 16),
-                Text(
-                  'VORSCHAU',
-                  style: GoogleFonts.ibmPlexSans(
-                    fontSize: 10,
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.red,
-                    letterSpacing: 1.2,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                AdaptiveQuoteText(
-                  text: quote.textDe,
-                  minFontSize: 24,
-                  maxFontSize: 34,
-                  maxLines: 8,
-                  style: GoogleFonts.playfairDisplay(
-                    fontSize: 34,
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.ink,
-                    height: 1.35,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                Text(
-                  '— ${quote.source} · ${quote.year}',
-                  style: GoogleFonts.ibmPlexSans(
-                    fontSize: 11,
-                    color: AppColors.inkLight,
-                  ),
-                ),
-                const SizedBox(height: 18),
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: _BroadsheetOutlineButton(
-                        onPressed: () {
-                          Navigator.of(sheetContext).pop();
-                          context.push('/detail/${quote.id}');
-                        },
-                        label: 'DETAIL',
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(width: 44, height: 2, color: AppColors.red),
+                  if (isLongQuote) ...<Widget>[
+                    const SizedBox(height: 14),
+                    Text(
+                      'VOLLTEXT',
+                      style: GoogleFonts.ibmPlexSans(
+                        fontSize: 10,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.red,
+                        letterSpacing: 1.2,
                       ),
                     ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: _BroadsheetButton(
-                        onPressed: () {
-                          Navigator.of(sheetContext).pop();
-                          ShareCardRenderer().shareQuote(quote, context);
-                        },
-                        label: 'TEILEN',
+                    const SizedBox(height: 10),
+                    SelectableText(
+                      quote.textDe,
+                      style: GoogleFonts.playfairDisplay(
+                        fontSize: 18,
+                        fontStyle: FontStyle.italic,
+                        color: AppColors.ink,
+                        height: 1.5,
+                      ),
+                    ),
+                    const SizedBox(height: 14),
+                  ],
+                  const SizedBox(height: 14),
+                  Text(
+                    'ERKLAERUNG',
+                    style: GoogleFonts.ibmPlexSans(
+                      fontSize: 10,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.red,
+                      letterSpacing: 1.2,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    quote.explanationShort,
+                    style: GoogleFonts.ibmPlexSans(
+                      fontSize: 12,
+                      color: AppColors.ink,
+                      height: 1.6,
+                    ),
+                  ),
+                  const SizedBox(height: 14),
+                  Text(
+                    'KONTEXT',
+                    style: GoogleFonts.ibmPlexSans(
+                      fontSize: 10,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.ink,
+                      letterSpacing: 1.2,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    quote.explanationLong,
+                    style: GoogleFonts.ibmPlexSans(
+                      fontSize: 11,
+                      color: AppColors.ink,
+                      height: 1.6,
+                    ),
+                  ),
+                  if (quote.funFact != null &&
+                      quote.funFact!.trim().isNotEmpty) ...<Widget>[
+                    const SizedBox(height: 14),
+                    Text(
+                      'HINWEIS',
+                      style: GoogleFonts.ibmPlexSans(
+                        fontSize: 10,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.ink,
+                        letterSpacing: 1.2,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      quote.funFact!,
+                      style: GoogleFonts.ibmPlexSans(
+                        fontSize: 11,
+                        color: AppColors.inkLight,
+                        height: 1.6,
                       ),
                     ),
                   ],
-                ),
-              ],
+                  const SizedBox(height: 18),
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: _BroadsheetOutlineButton(
+                          onPressed: () {
+                            Navigator.of(sheetContext).pop();
+                            ShareCardRenderer().shareQuote(quote, context);
+                          },
+                          label: 'TEILEN',
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: _BroadsheetButton(
+                          onPressed: () => Navigator.of(sheetContext).pop(),
+                          label: 'SCHLIESSEN',
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         );
       },
     );
+  }
+
+  bool _isLongQuote(String value) {
+    final words = value
+        .split(RegExp(r'\s+'))
+        .where((part) => part.trim().isNotEmpty)
+        .length;
+    return value.length > 320 || words > 60;
   }
 }
 
@@ -634,13 +702,75 @@ class _LoadingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(
-      height: 220,
-      child: Center(
-        child: CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(AppColors.red),
+    return Container(
+      decoration: const BoxDecoration(
+        color: AppColors.paper,
+        border: Border(
+          left: BorderSide(color: AppColors.ink, width: 1),
+          right: BorderSide(color: AppColors.ink, width: 1),
+          bottom: BorderSide(color: AppColors.ink, width: 1),
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Container(height: 10, width: 120, color: AppColors.paperDark),
+            const SizedBox(height: 16),
+            Container(
+              height: 18,
+              width: double.infinity,
+              color: AppColors.paperDark,
+            ),
+            const SizedBox(height: 8),
+            Container(height: 18, width: 240, color: AppColors.paperDark),
+            const SizedBox(height: 12),
+            Container(width: 28, height: 2, color: AppColors.red),
+            const SizedBox(height: 14),
+            Container(height: 12, width: 140, color: AppColors.paperDark),
+            const SizedBox(height: 14),
+            Wrap(
+              spacing: 6,
+              runSpacing: 6,
+              children: const <Widget>[
+                _SkeletonChip(),
+                _SkeletonChip(),
+                _SkeletonChip(),
+              ],
+            ),
+          ],
         ),
       ),
     );
   }
+}
+
+class _SkeletonChip extends StatelessWidget {
+  const _SkeletonChip();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(width: 56, height: 20, color: AppColors.paperDark);
+  }
+}
+
+String _mastheadSubtitle() {
+  final now = DateTime.now();
+  final monthNames = <String>[
+    'Januar',
+    'Februar',
+    'Maerz',
+    'April',
+    'Mai',
+    'Juni',
+    'Juli',
+    'August',
+    'September',
+    'Oktober',
+    'November',
+    'Dezember',
+  ];
+  final issueNumber = now.difference(DateTime(2000, 1, 1)).inDays;
+  return '${now.day}. ${monthNames[now.month - 1]} ${now.year} · Ausgabe $issueNumber';
 }

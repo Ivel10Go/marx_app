@@ -38,32 +38,40 @@ class QuoteWidgetProvider : AppWidgetProvider() {
     ) {
       val prefs = context.getSharedPreferences("HomeWidgetPreferences", Context.MODE_PRIVATE)
       val quoteText = prefs.getString("quote_text", "Tageszitat wird geladen...") ?: ""
-      val source = prefs.getString("source", null)
-        ?: prefs.getString("quote_source", "Das Kapital") ?: ""
-      val explanation = prefs.getString("explanation", null)
-        ?: prefs.getString("quote_explanation", "") ?: ""
+      val quoteAuthor = prefs.getString("quote_author", "") ?: ""
+      val source = prefs.getString("quote_source", null)
+        ?: prefs.getString("source", "Zitatatlas") ?: ""
+      val explanation = prefs.getString("quote_explanation", null)
+        ?: prefs.getString("explanation", "") ?: ""
       val categories = prefs.getString("quote_categories", "") ?: ""
       val streak = prefs.getString("streak", "0") ?: "0"
       val contentType = prefs.getString("content_type", "quote") ?: "quote"
+      val widgetMode = prefs.getString("widget_mode", "PUBLIC") ?: "PUBLIC"
       val header = prefs.getString(
-        "kicker",
-        prefs.getString("widget_header", null)
+        "widget_header",
+        prefs.getString("kicker", null)
       ) ?: prefs.getString(
         "widget_header",
-        if (contentType == "fact") "WELTGESCHICHTE" else "DAS KAPITAL",
-      ) ?: "DAS KAPITAL"
+        if (contentType == "fact") "WELTGESCHICHTE" else "ZITATATLAS",
+      ) ?: "ZITATATLAS"
 
       val options = appWidgetManager.getAppWidgetOptions(appWidgetId)
       val minHeight = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT)
 
       val layout = when {
-        minHeight >= 180 -> R.layout.quote_widget_large
-        minHeight >= 110 -> R.layout.quote_widget_medium
+        minHeight >= 110 -> R.layout.quote_widget_v2
         else -> R.layout.quote_widget_small
       }
 
       val views = RemoteViews(context.packageName, layout)
       views.setTextViewText(R.id.quote_header, header)
+      if (layout != R.layout.quote_widget_small) {
+        views.setTextViewText(R.id.widget_mode, widgetMode)
+        views.setTextViewText(R.id.quote_author, quoteAuthor)
+        views.setInt(R.id.quote_text_italic, "setMaxLines", 5)
+        views.setInt(R.id.fact_text_normal, "setMaxLines", 4)
+        views.setInt(R.id.quote_explanation, "setMaxLines", 2)
+      }
       views.setTextViewText(R.id.quote_text_italic, quoteText)
       views.setTextViewText(R.id.fact_text_normal, quoteText)
       views.setTextViewText(R.id.quote_source, source.uppercase(Locale.GERMAN))
@@ -80,13 +88,27 @@ class QuoteWidgetProvider : AppWidgetProvider() {
 
       if (layout != R.layout.quote_widget_small) {
         views.setTextViewText(R.id.quote_explanation, explanation)
-      }
-      if (layout == R.layout.quote_widget_large) {
         views.setTextViewText(R.id.quote_categories, categories)
         views.setTextViewText(R.id.quote_streak, "LEKTUERE · TAG $streak")
+        views.setViewVisibility(
+          R.id.quote_explanation,
+          if (explanation.isBlank()) View.GONE else View.VISIBLE,
+        )
+        views.setViewVisibility(
+          R.id.quote_categories,
+          if (categories.isBlank()) View.GONE else View.VISIBLE,
+        )
+        views.setViewVisibility(
+          R.id.quote_author,
+          if (quoteAuthor.isBlank()) View.GONE else View.VISIBLE,
+        )
       }
 
       val openIntent = Intent(context, MainActivity::class.java)
+      openIntent.putExtra(
+        "launch_route",
+        prefs.getString("launch_route", "/") ?: "/",
+      )
       val pendingIntent = PendingIntent.getActivity(
         context,
         appWidgetId,

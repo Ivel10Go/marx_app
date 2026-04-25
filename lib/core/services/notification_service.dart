@@ -1,5 +1,9 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:timezone/data/latest_all.dart' as tz_data;
+import 'package:timezone/timezone.dart' as tz;
 
+import '../constants/settings_keys.dart';
 import '../../data/models/quote.dart';
 
 class NotificationService {
@@ -10,17 +14,23 @@ class NotificationService {
   static const _channelId = 'daily_quote_channel';
   static const _channelName = 'Taegliches Zitat';
   static const _channelDescription = 'Benachrichtigungen fuer das Tageszitat.';
+  static const _dailyReminderId = 120001;
+  static const _instantDailyQuoteId = 120002;
 
   final FlutterLocalNotificationsPlugin _plugin =
       FlutterLocalNotificationsPlugin();
 
   String? _launchQuoteId;
+  String? _launchRoute;
   bool _initialized = false;
+  bool _timeZonesInitialized = false;
 
   Future<void> initialize() async {
     if (_initialized) {
       return;
     }
+
+    _initializeTimeZonesIfNeeded();
 
     const androidInit = AndroidInitializationSettings('@mipmap/ic_launcher');
     const iosInit = DarwinInitializationSettings();
@@ -33,15 +43,13 @@ class NotificationService {
     await _plugin.initialize(
       initSettings,
       onDidReceiveNotificationResponse: (NotificationResponse response) {
-        _launchQuoteId = _payloadToQuoteId(response.payload);
+        _storeLaunchPayload(response.payload);
       },
     );
 
     final launchDetails = await _plugin.getNotificationAppLaunchDetails();
     if (launchDetails?.didNotificationLaunchApp ?? false) {
-      _launchQuoteId = _payloadToQuoteId(
-        launchDetails?.notificationResponse?.payload,
-      );
+      _storeLaunchPayload(launchDetails?.notificationResponse?.payload);
     }
 
     await _plugin
@@ -54,6 +62,12 @@ class NotificationService {
   }
 
   String consumeLaunchRoute() {
+    final route = _launchRoute;
+    _launchRoute = null;
+    if (route != null && route.isNotEmpty) {
+      return route;
+    }
+
     final id = _launchQuoteId;
     _launchQuoteId = null;
     if (id == null || id.isEmpty) {
@@ -76,14 +90,67 @@ class NotificationService {
       iOS: DarwinNotificationDetails(),
     );
 
+    await _plugin.cancel(_instantDailyQuoteId);
     final firstSentence = _extractFirstSentence(quote.textDe);
     await _plugin.show(
-      quote.id.hashCode,
+      _instantDailyQuoteId,
       'Zitatatlas - Tageszitat',
       firstSentence,
       details,
       payload: 'quote:${quote.id}',
     );
+  }
+
+  Future<void> scheduleDailyReminder({
+    required int hour,
+    required int minute,
+    bool enabled = true,
+  }) async {
+    await initialize();
+    await _plugin.cancel(_dailyReminderId);
+
+    if (!enabled) {
+      return;
+    }
+
+    const details = NotificationDetails(
+      android: AndroidNotificationDetails(
+        _channelId,
+        _channelName,
+        channelDescription: _channelDescription,
+        importance: Importance.high,
+        priority: Priority.high,
+      ),
+      iOS: DarwinNotificationDetails(),
+    );
+
+    final nextTrigger = _nextInstanceOfTime(hour: hour, minute: minute);
+
+    await _plugin.zonedSchedule(
+      _dailyReminderId,
+      'Zitatatlas - Tageszitat',
+      'Dein naechstes Tageszitat wartet auf dich.',
+      nextTrigger,
+      details,
+      payload: 'route:/',
+      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+      matchDateTimeComponents: DateTimeComponents.time,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+    );
+  }
+
+  Future<void> cancelDailyReminder() async {
+    await initialize();
+    await _plugin.cancel(_dailyReminderId);
+  }
+
+  Future<void> scheduleDailyReminderFromSettings() async {
+    final prefs = await SharedPreferences.getInstance();
+    final hour = prefs.getInt(SettingsKeys.notificationHour) ?? 7;
+    final minute = prefs.getInt(SettingsKeys.notificationMinute) ?? 0;
+    final enabled = prefs.getBool(SettingsKeys.notificationEnabled) ?? true;
+    await scheduleDailyReminder(hour: hour, minute: minute, enabled: enabled);
   }
 
   String _extractFirstSentence(String text) {
@@ -100,5 +167,43 @@ class NotificationService {
       return null;
     }
     return payload.substring('quote:'.length);
+  }
+
+  String? _payloadToRoute(String? payload) {
+    if (payload == null || !payload.startsWith('route:')) {
+      return null;
+    }
+    return payload.substring('route:'.length);
+  }
+
+  void _storeLaunchPayload(String? payload) {
+    _launchQuoteId = _payloadToQuoteId(payload);
+    _launchRoute = _payloadToRoute(payload);
+  }
+
+  void _initializeTimeZonesIfNeeded() {
+    if (_timeZonesInitialized) {
+      return;
+    }
+    tz_data.initializeTimeZones();
+    _timeZonesInitialized = true;
+  }
+
+  tz.TZDateTime _nextInstanceOfTime({required int hour, required int minute}) {
+    final now = tz.TZDateTime.now(tz.local);
+    var scheduled = tz.TZDateTime(
+      tz.local,
+      now.year,
+      now.month,
+      now.day,
+      hour,
+      minute,
+    );
+
+    if (!scheduled.isAfter(now)) {
+      scheduled = scheduled.add(const Duration(days: 1));
+    }
+
+    return scheduled;
   }
 }

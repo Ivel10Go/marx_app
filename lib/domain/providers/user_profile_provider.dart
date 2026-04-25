@@ -27,6 +27,7 @@ class UserProfileNotifier extends StateNotifier<UserProfile> {
     required PoliticalLeaning politicalLeaning,
     QuoteDiscoveryMode quoteDiscoveryMode = QuoteDiscoveryMode.interests,
     List<String> selectedSources = const <String>[],
+    bool isAdmin = false,
     bool onboardingCompleted = true,
   }) async {
     final next = UserProfile(
@@ -34,6 +35,7 @@ class UserProfileNotifier extends StateNotifier<UserProfile> {
       politicalLeaning: politicalLeaning,
       quoteDiscoveryMode: quoteDiscoveryMode,
       selectedSources: selectedSources,
+      isAdmin: isAdmin,
       onboardingCompleted: onboardingCompleted,
       onboardingDate: DateTime.now(),
     );
@@ -58,6 +60,11 @@ class UserProfileNotifier extends StateNotifier<UserProfile> {
 
   Future<void> updateSelectedSources(List<String> sources) async {
     final next = state.copyWith(selectedSources: sources);
+    await _persist(next);
+  }
+
+  Future<void> updateAdminAccess(bool isAdmin) async {
+    final next = state.copyWith(isAdmin: isAdmin);
     await _persist(next);
   }
 

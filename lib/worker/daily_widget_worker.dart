@@ -2,10 +2,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:workmanager/workmanager.dart';
 
 import '../core/constants/settings_keys.dart';
-import '../core/utils/widget_updater.dart';
 import '../data/database/app_database.dart';
+import '../data/models/daily_content.dart';
+import '../data/models/user_profile.dart';
 import '../data/repositories/history_repository.dart';
 import '../data/repositories/quote_repository.dart';
+import '../domain/services/daily_content_resolver.dart';
+import '../core/services/widget_sync_service.dart';
 
 const taskName = 'dailyWidgetUpdate';
 
@@ -25,9 +28,19 @@ void callbackDispatcher() {
 
       final prefs = await SharedPreferences.getInstance();
       final streak = prefs.getInt(SettingsKeys.streak) ?? 0;
-      final quote = await quoteRepository.getDailyQuote();
-      if (quote != null) {
-        await WidgetUpdater.updateWithQuote(quote, streak);
+      final appMode = _resolveAppMode(prefs.getString('app_mode'));
+      final profile = _resolveProfile(prefs.getString(UserProfile.storageKey));
+      final content = await _resolveDailyContent(
+        quoteRepository: quoteRepository,
+        appMode: appMode,
+        profile: profile,
+      );
+      if (content != null) {
+        await WidgetSyncService.syncDailyContent(
+          content: content,
+          streakCount: streak,
+          modeLabel: appMode.name.toUpperCase(),
+        );
       }
     } finally {
       await db.close();
@@ -35,6 +48,45 @@ void callbackDispatcher() {
 
     return true;
   });
+}
+
+Future<DailyContent?> _resolveDailyContent({
+  required QuoteRepository quoteRepository,
+  required AppMode appMode,
+  required UserProfile profile,
+}) async {
+  final resolver = DailyContentResolver();
+  return resolver.resolveDailyContentFromRepository(
+    quoteRepository: quoteRepository,
+    appMode: appMode,
+    profile: profile,
+  );
+}
+
+AppMode _resolveAppMode(String? stored) {
+  switch (stored) {
+    case 'adminMarx':
+    case 'godmode':
+      return AppMode.adminMarx;
+    case 'public':
+    case 'marx':
+    case 'history':
+    case 'mixed':
+    default:
+      return AppMode.public;
+  }
+}
+
+UserProfile _resolveProfile(String? raw) {
+  if (raw == null || raw.isEmpty) {
+    return UserProfile.initial();
+  }
+
+  try {
+    return UserProfile.fromJsonString(raw);
+  } catch (_) {
+    return UserProfile.initial();
+  }
 }
 
 Future<void> registerDailyWidgetTask() async {

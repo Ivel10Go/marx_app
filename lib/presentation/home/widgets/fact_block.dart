@@ -7,10 +7,16 @@ import 'tts_button.dart';
 import '../../../widgets/category_chip.dart';
 
 class FactBlock extends StatelessWidget {
-  const FactBlock({required this.fact, this.onRelatedQuoteTap, super.key});
+  const FactBlock({
+    required this.fact,
+    this.onRelatedQuoteTap,
+    this.onShareTap,
+    super.key,
+  });
 
   final HistoryFact fact;
   final VoidCallback? onRelatedQuoteTap;
+  final VoidCallback? onShareTap;
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +98,36 @@ class FactBlock extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 14),
-              TtsButton(contentId: fact.id, text: fact.body),
+              Row(
+                children: <Widget>[
+                  TtsButton(contentId: fact.id, text: fact.body),
+                  const SizedBox(width: 12),
+                  if (onShareTap != null)
+                    OutlinedButton.icon(
+                      onPressed: onShareTap,
+                      style: OutlinedButton.styleFrom(
+                        side: const BorderSide(color: AppColors.ink, width: 1),
+                        foregroundColor: AppColors.ink,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 10,
+                        ),
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.zero,
+                        ),
+                      ),
+                      icon: const Icon(Icons.ios_share_rounded, size: 16),
+                      label: Text(
+                        'TEILEN',
+                        style: GoogleFonts.ibmPlexSans(
+                          fontSize: 11,
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: 1.0,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
             ],
           ),
         ),

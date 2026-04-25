@@ -2,22 +2,30 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../presentation/archive/archive_screen.dart';
+import '../../presentation/admin/admin_dashboard_screen.dart';
 import '../../presentation/detail/quote_detail_screen_new.dart';
 import '../../presentation/favorites/favorites_screen.dart';
 import '../../presentation/home/home_screen.dart';
-import '../../presentation/games/games_screen.dart';
 import '../../presentation/onboarding/onboarding_screen.dart';
 import '../../presentation/quiz/quiz_screen.dart';
 import '../../presentation/settings/settings_screen.dart';
 import '../../presentation/thinkers/thinkers_screen.dart';
+import '../../domain/providers/admin_access_provider.dart';
 
 final initialRouteProvider = Provider<String>((Ref ref) => '/');
 
 final appRouterProvider = Provider<GoRouter>((Ref ref) {
   final initialRoute = ref.watch(initialRouteProvider);
+  final isAdmin = ref.watch(adminAccessProvider);
 
   return GoRouter(
     initialLocation: initialRoute,
+    redirect: (context, state) {
+      if (state.matchedLocation == '/admin' && !isAdmin) {
+        return '/';
+      }
+      return null;
+    },
     routes: <RouteBase>[
       GoRoute(
         path: '/',
@@ -53,14 +61,14 @@ final appRouterProvider = Provider<GoRouter>((Ref ref) {
         builder: (context, state) => const QuizScreen(),
       ),
       GoRoute(
-        path: '/games',
-        name: 'games',
-        builder: (context, state) => const GamesScreen(),
-      ),
-      GoRoute(
         path: '/settings',
         name: 'settings',
         builder: (context, state) => const SettingsScreen(),
+      ),
+      GoRoute(
+        path: '/admin',
+        name: 'admin',
+        builder: (context, state) => const AdminDashboardScreen(),
       ),
       GoRoute(
         path: '/onboarding',

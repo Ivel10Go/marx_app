@@ -5,6 +5,7 @@ import '../../data/models/daily_content.dart';
 import '../../data/models/user_profile.dart';
 import '../../data/repositories/history_repository.dart';
 import '../../data/repositories/quote_repository.dart';
+import '../../domain/services/daily_content_resolver.dart';
 import '../constants/settings_keys.dart';
 import '../services/background_tasks_service.dart';
 import '../services/notification_service.dart';
@@ -29,14 +30,21 @@ abstract final class AppBootstrap {
 
       final prefs = await SharedPreferences.getInstance();
       final streak = prefs.getInt(SettingsKeys.streak) ?? 0;
+      final appMode = _resolveAppMode(prefs.getString('app_mode'));
+      final profile = _resolveProfile(prefs.getString(UserProfile.storageKey));
+      final resolver = DailyContentResolver();
       final content = await _resolveDailyContent(
         quoteRepository: quoteRepository,
+        appMode: appMode,
+        profile: profile,
+        resolver: resolver,
       );
 
       if (content != null) {
         await WidgetSyncService.syncDailyContent(
           content: content,
           streakCount: streak,
+          modeLabel: appMode.name.toUpperCase(),
         );
       }
     } finally {
@@ -44,6 +52,7 @@ abstract final class AppBootstrap {
     }
 
     await BackgroundTasksService.initialize();
+    await NotificationService.instance.scheduleDailyReminderFromSettings();
 
     final settings = await SharedPreferences.getInstance();
     final profileRaw = settings.getString(UserProfile.storageKey);
@@ -72,8 +81,40 @@ abstract final class AppBootstrap {
 
   static Future<DailyContent?> _resolveDailyContent({
     required QuoteRepository quoteRepository,
+    required AppMode appMode,
+    required UserProfile profile,
+    required DailyContentResolver resolver,
   }) async {
-    final quote = await quoteRepository.getDailyQuote();
-    return quote == null ? null : DailyContent.quote(quote: quote);
+    return resolver.resolveDailyContentFromRepository(
+      quoteRepository: quoteRepository,
+      appMode: appMode,
+      profile: profile,
+    );
+  }
+
+  static UserProfile _resolveProfile(String? raw) {
+    if (raw == null || raw.isEmpty) {
+      return UserProfile.initial();
+    }
+
+    try {
+      return UserProfile.fromJsonString(raw);
+    } catch (_) {
+      return UserProfile.initial();
+    }
+  }
+
+  static AppMode _resolveAppMode(String? stored) {
+    switch (stored) {
+      case 'adminMarx':
+      case 'godmode':
+        return AppMode.adminMarx;
+      case 'public':
+      case 'marx':
+      case 'history':
+      case 'mixed':
+      default:
+        return AppMode.public;
+    }
   }
 }

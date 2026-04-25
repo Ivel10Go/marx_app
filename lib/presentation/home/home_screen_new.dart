@@ -121,28 +121,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                     orElse: () => const SizedBox.shrink(),
                   ),
                   const SizedBox(height: 20),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: _BroadsheetButton(
-                          onPressed: () => context.push('/archive'),
-                          label: 'ARCHIV',
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: _BroadsheetButton(
-                          onPressed: () => context.push('/favorites'),
-                          label: 'FAVORITEN',
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
                   _BroadsheetButton(
-                    onPressed: () => context.push('/onboarding'),
-                    label: 'EINFÜHRUNG',
-                    fullWidth: true,
+                    onPressed: () async => ref.invalidate(dailyQuoteProvider),
+                    label: 'NEUE AUSGABE',
                   ),
                   const SizedBox(height: 12),
                   _BroadsheetOutlineButton(
@@ -167,15 +148,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
 }
 
 class _BroadsheetButton extends StatelessWidget {
-  const _BroadsheetButton({
-    required this.onPressed,
-    required this.label,
-    this.fullWidth = false,
-  });
+  const _BroadsheetButton({required this.onPressed, required this.label});
 
   final VoidCallback onPressed;
   final String label;
-  final bool fullWidth;
 
   @override
   Widget build(BuildContext context) {

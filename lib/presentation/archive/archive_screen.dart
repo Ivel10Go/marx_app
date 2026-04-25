@@ -20,7 +20,7 @@ class ArchiveScreen extends ConsumerWidget {
 
     return AppDecoratedScaffold(
       appBar: null,
-      bottomNavigationBar: const AppNavigationBar(selectedIndex: 1),
+      bottomNavigationBar: const AppNavigationBar(selectedIndex: -1),
       child: Column(
         children: <Widget>[
           // Masthead

@@ -1,0 +1,62 @@
+[
+  {
+    "group_id": "kapital",
+    "title": "Das Kapital. Kritik der politischen Oekonomie",
+    "author": "Karl Marx",
+    "publication_year": 1867,
+    "primary_source": true,
+    "public_domain": true,
+    "reference": "MEW Band 23",
+    "notes": "Quellenbasis fuer quote-series \"kapital\"."
+  },
+  {
+    "group_id": "manifest",
+    "title": "Manifest der Kommunistischen Partei",
+    "author": "Karl Marx, Friedrich Engels",
+    "publication_year": 1848,
+    "primary_source": true,
+    "public_domain": true,
+    "reference": "MEW Band 4",
+    "notes": "Quellenbasis fuer quote-series \"manifest\"."
+  },
+  {
+    "group_id": "antiduehring",
+    "title": "Herrn Eugen Duehrings Umwaelzung der Wissenschaft (Anti-Duehring)",
+    "author": "Friedrich Engels",
+    "publication_year": 1878,
+    "primary_source": true,
+    "public_domain": true,
+    "reference": "MEW Band 20",
+    "notes": "Quellenbasis fuer quote-series \"antiduehring\"."
+  },
+  {
+    "group_id": "feuerbach",
+    "title": "Ludwig Feuerbach und der Ausgang der klassischen deutschen Philosophie",
+    "author": "Friedrich Engels",
+    "publication_year": 1886,
+    "primary_source": true,
+    "public_domain": true,
+    "reference": "MEW Band 21",
+    "notes": "Quellenbasis fuer quote-series \"feuerbach\"."
+  },
+  {
+    "group_id": "brumaire",
+    "title": "Der achtzehnte Brumaire des Louis Bonaparte",
+    "author": "Karl Marx",
+    "publication_year": 1852,
+    "primary_source": true,
+    "public_domain": true,
+    "reference": "MEW Band 8",
+    "notes": "Quellenbasis fuer quote-series \"brumaire\"."
+  },
+  {
+    "group_id": "misc",
+    "title": "Verschiedene gemeinfreie Schriften (Marx/Engels)",
+    "author": "Karl Marx, Friedrich Engels",
+    "publication_year": 1840,
+    "primary_source": true,
+    "public_domain": true,
+    "reference": "MEW Sammelstellen",
+    "notes": "Sammelgruppe fuer manuell kuratierte Einzelstellen."
+  }
+]

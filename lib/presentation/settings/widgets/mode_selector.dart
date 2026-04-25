@@ -83,23 +83,19 @@ class ModeSelector extends ConsumerWidget {
 
   String _getModeTitle(AppMode mode) {
     switch (mode) {
-      case AppMode.marx:
-        return 'Marx & Engels';
-      case AppMode.history:
-        return 'Weltgeschichte';
-      case AppMode.mixed:
-        return 'Gemischt';
+      case AppMode.public:
+        return 'Für alle';
+      case AppMode.adminMarx:
+        return 'Marx-Modus';
     }
   }
 
   String _getModeSubtitle(AppMode mode) {
     switch (mode) {
-      case AppMode.marx:
-        return 'Zitate aus den Originalwerken';
-      case AppMode.history:
-        return 'Kuratierte Fakten & Ereignisse';
-      case AppMode.mixed:
-        return 'Täglich abwechselnd';
+      case AppMode.public:
+        return 'Personalisierte Tageszitate';
+      case AppMode.adminMarx:
+        return 'Nur für interne Admin-Nutzung';
     }
   }
 }

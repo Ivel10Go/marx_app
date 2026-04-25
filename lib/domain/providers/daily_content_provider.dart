@@ -1,10 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'dart:math';
 
 import '../../data/models/daily_content.dart';
-import '../../data/models/quote.dart';
-import '../../data/models/user_profile.dart';
+import '../services/daily_content_resolver.dart';
 import '../services/personalization_service.dart';
+import 'app_mode_provider.dart';
 import 'repository_providers.dart';
 import 'user_profile_provider.dart';
 
@@ -14,63 +13,27 @@ final personalizationServiceProvider = Provider<PersonalizationService>((
   return PersonalizationService();
 });
 
+final dailyContentResolverProvider = Provider<DailyContentResolver>((Ref ref) {
+  return DailyContentResolver(
+    personalization: ref.watch(personalizationServiceProvider),
+  );
+});
+
 final dailyContentProvider = FutureProvider<DailyContent>((Ref ref) async {
   await ref.watch(initialSeedProvider.future);
+  final appMode = ref.watch(appModeNotifierProvider);
   final profile = ref.watch(userProfileProvider);
   final quoteRepository = ref.watch(quoteRepositoryProvider);
-  final personalization = ref.watch(personalizationServiceProvider);
-  final issueNumber = _getIssueNumber();
-
-  final allQuotes = await quoteRepository.watchAllQuotes().first;
-
-  final candidates = _candidateQuotes(allQuotes, profile);
-  final quote = _pickWeightedQuote(
-    candidates.isEmpty ? allQuotes : candidates,
-    profile,
-    issueNumber,
-    personalization,
+  final resolver = ref.watch(dailyContentResolverProvider);
+  final content = await resolver.resolveDailyContentFromRepository(
+    quoteRepository: quoteRepository,
+    appMode: appMode,
+    profile: profile,
   );
 
-  if (quote == null) {
+  if (content == null) {
     throw Exception('No quote content available');
   }
 
-  return DailyContent.quote(quote: quote);
+  return content;
 });
-
-List<Quote> _candidateQuotes(List<Quote> all, UserProfile profile) {
-  if (profile.quoteDiscoveryMode != QuoteDiscoveryMode.manual) {
-    return all;
-  }
-
-  if (profile.selectedSources.isEmpty) {
-    return all;
-  }
-
-  final selected = profile.selectedSources
-      .map((value) => value.toLowerCase())
-      .toSet();
-  return all
-      .where((quote) => selected.contains(quote.source.toLowerCase()))
-      .toList();
-}
-
-Quote? _pickWeightedQuote(
-  List<Quote> all,
-  UserProfile profile,
-  int issueNumber,
-  PersonalizationService personalization,
-) {
-  if (all.isEmpty) {
-    return null;
-  }
-  final weighted = personalization.getWeightedQuotes(all, profile);
-  final random = Random(issueNumber + 11);
-  return weighted[random.nextInt(weighted.length)];
-}
-
-int _getIssueNumber() {
-  final now = DateTime.now();
-  final epoch = DateTime(2000, 1, 1);
-  return now.difference(epoch).inDays;
-}

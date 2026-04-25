@@ -35,6 +35,7 @@ class UserProfile {
     required this.politicalLeaning,
     required this.quoteDiscoveryMode,
     required this.selectedSources,
+    required this.isAdmin,
     required this.onboardingCompleted,
     required this.onboardingDate,
   });
@@ -45,6 +46,7 @@ class UserProfile {
   final PoliticalLeaning politicalLeaning;
   final QuoteDiscoveryMode quoteDiscoveryMode;
   final List<String> selectedSources;
+  final bool isAdmin;
   final bool onboardingCompleted;
   final DateTime? onboardingDate;
 
@@ -54,6 +56,7 @@ class UserProfile {
       politicalLeaning: PoliticalLeaning.neutral,
       quoteDiscoveryMode: QuoteDiscoveryMode.interests,
       selectedSources: <String>[],
+      isAdmin: false,
       onboardingCompleted: false,
       onboardingDate: null,
     );
@@ -64,6 +67,7 @@ class UserProfile {
     PoliticalLeaning? politicalLeaning,
     QuoteDiscoveryMode? quoteDiscoveryMode,
     List<String>? selectedSources,
+    bool? isAdmin,
     bool? onboardingCompleted,
     DateTime? onboardingDate,
   }) {
@@ -72,6 +76,7 @@ class UserProfile {
       politicalLeaning: politicalLeaning ?? this.politicalLeaning,
       quoteDiscoveryMode: quoteDiscoveryMode ?? this.quoteDiscoveryMode,
       selectedSources: selectedSources ?? this.selectedSources,
+      isAdmin: isAdmin ?? this.isAdmin,
       onboardingCompleted: onboardingCompleted ?? this.onboardingCompleted,
       onboardingDate: onboardingDate ?? this.onboardingDate,
     );
@@ -83,6 +88,7 @@ class UserProfile {
       'political_leaning': politicalLeaning.name,
       'quote_discovery_mode': quoteDiscoveryMode.name,
       'selected_sources': selectedSources,
+      'is_admin': isAdmin,
       'onboarding_completed': onboardingCompleted,
       'onboarding_date': onboardingDate?.toIso8601String(),
     };
@@ -105,6 +111,7 @@ class UserProfile {
       selectedSources:
           (json['selected_sources'] as List<dynamic>? ?? <dynamic>[])
               .cast<String>(),
+      isAdmin: (json['is_admin'] as bool?) ?? false,
       onboardingCompleted: (json['onboarding_completed'] as bool?) ?? false,
       onboardingDate: _tryParseDate(json['onboarding_date'] as String?),
     );

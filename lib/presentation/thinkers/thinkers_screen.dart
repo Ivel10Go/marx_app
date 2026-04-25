@@ -24,64 +24,66 @@ class ThinkersScreen extends ConsumerWidget {
         }
       },
       child: AppDecoratedScaffold(
-      appBar: null,
-      bottomNavigationBar: const AppNavigationBar(selectedIndex: 2),
-      child: Column(
-        children: <Widget>[
-          // Masthead
-          Container(
-            color: AppColors.paper,
-            padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  'DENKER',
-                  style: GoogleFonts.playfairDisplay(
-                    fontSize: 32,
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.ink,
-                    letterSpacing: -0.5,
+        appBar: null,
+        bottomNavigationBar: const AppNavigationBar(selectedIndex: -1),
+        child: Column(
+          children: <Widget>[
+            // Masthead
+            Container(
+              color: AppColors.paper,
+              padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    'DENKER',
+                    style: GoogleFonts.playfairDisplay(
+                      fontSize: 32,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.ink,
+                      letterSpacing: -0.5,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 12),
-                Container(width: 40, height: 2, color: AppColors.red),
-                const SizedBox(height: 16),
-                // Type toggle
-                Row(
-                  children: <Widget>[
-                    _TypeTabButton(
-                      label: 'PHILOSOPHEN',
-                      active: selectedType == ThinkerType.philosopher,
-                      onTap: () {
-                        ref.read(thinkerTypeProvider.notifier).state =
-                            ThinkerType.philosopher;
-                        ref.read(selectedAuthorProvider.notifier).state = null;
-                      },
-                    ),
-                    const SizedBox(width: 20),
-                    _TypeTabButton(
-                      label: 'POLITIKER',
-                      active: selectedType == ThinkerType.politician,
-                      onTap: () {
-                        ref.read(thinkerTypeProvider.notifier).state =
-                            ThinkerType.politician;
-                        ref.read(selectedAuthorProvider.notifier).state = null;
-                      },
-                    ),
-                  ],
-                ),
-              ],
+                  const SizedBox(height: 12),
+                  Container(width: 40, height: 2, color: AppColors.red),
+                  const SizedBox(height: 16),
+                  // Type toggle
+                  Row(
+                    children: <Widget>[
+                      _TypeTabButton(
+                        label: 'PHILOSOPHEN',
+                        active: selectedType == ThinkerType.philosopher,
+                        onTap: () {
+                          ref.read(thinkerTypeProvider.notifier).state =
+                              ThinkerType.philosopher;
+                          ref.read(selectedAuthorProvider.notifier).state =
+                              null;
+                        },
+                      ),
+                      const SizedBox(width: 20),
+                      _TypeTabButton(
+                        label: 'POLITIKER',
+                        active: selectedType == ThinkerType.politician,
+                        onTap: () {
+                          ref.read(thinkerTypeProvider.notifier).state =
+                              ThinkerType.politician;
+                          ref.read(selectedAuthorProvider.notifier).state =
+                              null;
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-          Expanded(
-            child: selectedAuthor == null
-                ? _AuthorList(type: selectedType)
-                : _QuoteList(author: selectedAuthor),
-          ),
-        ],
+            Expanded(
+              child: selectedAuthor == null
+                  ? _AuthorList(type: selectedType)
+                  : _QuoteList(author: selectedAuthor),
+            ),
+          ],
+        ),
       ),
-    ),
     );
   }
 }
@@ -226,8 +228,7 @@ class _QuoteList extends ConsumerWidget {
         Container(
           color: AppColors.paperDark,
           child: InkWell(
-            onTap: () =>
-                ref.read(selectedAuthorProvider.notifier).state = null,
+            onTap: () => ref.read(selectedAuthorProvider.notifier).state = null,
             child: Padding(
               padding: const EdgeInsets.fromLTRB(12, 10, 20, 10),
               child: Row(

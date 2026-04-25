@@ -7,79 +7,145 @@ import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../../data/models/history_fact.dart';
 import '../../data/models/quote.dart';
 
 class ShareCardRenderer {
   final ScreenshotController _controller = ScreenshotController();
 
   Future<void> shareQuote(Quote quote, BuildContext context) async {
-    final scheme = Theme.of(context).colorScheme;
+    try {
+      final scheme = Theme.of(context).colorScheme;
 
-    final image = await _controller.captureFromWidget(
-      Material(
-        child: Container(
-          width: 1080,
-          height: 1350,
-          padding: const EdgeInsets.all(28),
-          color: scheme.surface,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              const Spacer(),
-              Text(
-                quote.textDe,
-                style: GoogleFonts.lora(
-                  fontSize: 58,
-                  fontStyle: FontStyle.italic,
-                  height: 1.7,
-                  color: scheme.onSurface,
-                ),
-              ),
-              const SizedBox(height: 28),
-              Container(height: 1, width: 220, color: scheme.primary),
-              const SizedBox(height: 24),
-              Text(
-                quote.source,
-                style: GoogleFonts.lora(
-                  fontSize: 34,
-                  color: scheme.onSurface.withValues(alpha: 0.82),
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'Karl Marx & Friedrich Engels',
-                style: GoogleFonts.lora(
-                  fontSize: 30,
-                  color: scheme.onSurface.withValues(alpha: 0.72),
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                '${quote.year}',
-                style: GoogleFonts.lora(
-                  fontSize: 30,
-                  color: scheme.onSurface.withValues(alpha: 0.72),
-                ),
-              ),
-              const Spacer(),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: Text(
-                  'Zitatatlas',
-                  style: GoogleFonts.inter(
-                    fontSize: 28,
-                    letterSpacing: 0.8,
-                    color: scheme.onSurface.withValues(alpha: 0.45),
+      final image = await _controller.captureFromWidget(
+        Material(
+          child: Container(
+            width: 1080,
+            height: 1350,
+            padding: const EdgeInsets.all(28),
+            color: scheme.surface,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                const Spacer(),
+                Text(
+                  quote.textDe,
+                  style: GoogleFonts.lora(
+                    fontSize: 58,
+                    fontStyle: FontStyle.italic,
+                    height: 1.7,
+                    color: scheme.onSurface,
                   ),
                 ),
-              ),
-            ],
+                const SizedBox(height: 28),
+                Container(height: 1, width: 220, color: scheme.primary),
+                const SizedBox(height: 24),
+                Text(
+                  quote.source,
+                  style: GoogleFonts.lora(
+                    fontSize: 34,
+                    color: scheme.onSurface.withValues(alpha: 0.82),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Karl Marx & Friedrich Engels',
+                  style: GoogleFonts.lora(
+                    fontSize: 30,
+                    color: scheme.onSurface.withValues(alpha: 0.72),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  '${quote.year}',
+                  style: GoogleFonts.lora(
+                    fontSize: 30,
+                    color: scheme.onSurface.withValues(alpha: 0.72),
+                  ),
+                ),
+                const Spacer(),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Text(
+                    'Zitatatlas',
+                    style: GoogleFonts.inter(
+                      fontSize: 28,
+                      letterSpacing: 0.8,
+                      color: scheme.onSurface.withValues(alpha: 0.45),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      );
 
-    await _shareBytes(image);
+      await _shareBytes(image);
+    } catch (_) {
+      await Share.share('"${quote.textDe}" – ${quote.source}, ${quote.year}');
+    }
+  }
+
+  Future<void> shareFact(HistoryFact fact, BuildContext context) async {
+    try {
+      final scheme = Theme.of(context).colorScheme;
+
+      final image = await _controller.captureFromWidget(
+        Material(
+          child: Container(
+            width: 1080,
+            height: 1350,
+            padding: const EdgeInsets.all(28),
+            color: scheme.surface,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                const Spacer(),
+                Text(
+                  fact.headline,
+                  style: GoogleFonts.lora(
+                    fontSize: 52,
+                    fontWeight: FontWeight.w700,
+                    height: 1.35,
+                    color: scheme.onSurface,
+                  ),
+                ),
+                const SizedBox(height: 26),
+                Container(height: 1, width: 220, color: scheme.primary),
+                const SizedBox(height: 22),
+                Text(
+                  fact.body,
+                  style: GoogleFonts.lora(
+                    fontSize: 28,
+                    height: 1.45,
+                    color: scheme.onSurface.withValues(alpha: 0.86),
+                  ),
+                  maxLines: 8,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const Spacer(),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Text(
+                    'Zitatatlas',
+                    style: GoogleFonts.inter(
+                      fontSize: 28,
+                      letterSpacing: 0.8,
+                      color: scheme.onSurface.withValues(alpha: 0.45),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+
+      await _shareBytes(image);
+    } catch (_) {
+      await Share.share('"${fact.headline}" – ${fact.dateDisplay}');
+    }
   }
 
   Future<void> _shareBytes(Uint8List bytes) async {

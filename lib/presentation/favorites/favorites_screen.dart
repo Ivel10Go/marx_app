@@ -19,7 +19,7 @@ class FavoritesScreen extends ConsumerWidget {
 
     return AppDecoratedScaffold(
       appBar: null,
-      bottomNavigationBar: const AppNavigationBar(selectedIndex: 3),
+      bottomNavigationBar: const AppNavigationBar(selectedIndex: -1),
       child: Column(
         children: <Widget>[
           // Masthead

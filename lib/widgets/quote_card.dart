@@ -8,14 +8,23 @@ import '../presentation/home/widgets/tts_button.dart';
 import 'category_chip.dart';
 
 class QuoteCard extends StatelessWidget {
-  const QuoteCard({required this.quote, this.trailing, this.onTap, super.key});
+  const QuoteCard({
+    required this.quote,
+    this.trailing,
+    this.onTap,
+    this.onShare,
+    super.key,
+  });
 
   final Quote quote;
   final Widget? trailing;
   final VoidCallback? onTap;
+  final VoidCallback? onShare;
 
   @override
   Widget build(BuildContext context) {
+    final isLongQuote = _isLongQuote(quote.textDe);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
@@ -24,17 +33,35 @@ class QuoteCard extends StatelessWidget {
           color: AppColors.red,
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text(
-                '${quote.source.toUpperCase()} · ${quote.year}',
-                style: GoogleFonts.ibmPlexSans(
-                  fontSize: 9,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.redOnRed,
-                  letterSpacing: 1.8,
+              Expanded(
+                child: Text(
+                  '${quote.source.toUpperCase()} · ${quote.year}',
+                  style: GoogleFonts.ibmPlexSans(
+                    fontSize: 9,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.redOnRed,
+                    letterSpacing: 1.8,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
+              if (onShare != null) ...<Widget>[
+                IconButton(
+                  onPressed: onShare,
+                  icon: const Icon(Icons.ios_share_rounded),
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(
+                    minWidth: 28,
+                    minHeight: 28,
+                  ),
+                  iconSize: 16,
+                  color: AppColors.redOnRed,
+                  tooltip: 'Teilen',
+                ),
+                const SizedBox(width: 4),
+              ],
               Text(
                 quote.chapter,
                 style: GoogleFonts.ibmPlexSans(
@@ -67,11 +94,23 @@ class QuoteCard extends StatelessWidget {
                     // Zitat-Text
                     AdaptiveQuoteText(
                       text: quote.textDe,
-                      minFontSize: 24,
-                      maxFontSize: 34,
-                      maxLines: 7,
+                      minFontSize: isLongQuote ? 20 : 24,
+                      maxFontSize: isLongQuote ? 30 : 34,
+                      maxLines: isLongQuote ? 6 : 7,
                       style: Theme.of(context).textTheme.displayMedium,
                     ),
+                    if (isLongQuote) ...<Widget>[
+                      const SizedBox(height: 8),
+                      Text(
+                        'Langes Zitat gekuerzt - tippen fuer Volltext',
+                        style: GoogleFonts.ibmPlexSans(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.inkLight,
+                          letterSpacing: 0.2,
+                        ),
+                      ),
+                    ],
                     const SizedBox(height: 14),
                     // Rote Linie
                     Container(width: 28, height: 2, color: AppColors.red),
@@ -98,6 +137,29 @@ class QuoteCard extends StatelessWidget {
                     Row(
                       children: <Widget>[
                         TtsButton(contentId: quote.id, text: quote.textDe),
+                        if (onTap != null) ...<Widget>[
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: Text(
+                              isLongQuote
+                                  ? 'Tippen fuer Volltext und Erklaerung'
+                                  : 'Tippen fuer Erklaerung und Kontext',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: GoogleFonts.ibmPlexSans(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.red,
+                                letterSpacing: 0.4,
+                              ),
+                            ),
+                          ),
+                          const Icon(
+                            Icons.chevron_right_rounded,
+                            size: 18,
+                            color: AppColors.red,
+                          ),
+                        ],
                         if (trailing != null) ...<Widget>[
                           const SizedBox(width: 12),
                           Expanded(child: trailing!),
@@ -112,5 +174,13 @@ class QuoteCard extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  bool _isLongQuote(String value) {
+    final words = value
+        .split(RegExp(r'\s+'))
+        .where((part) => part.trim().isNotEmpty)
+        .length;
+    return value.length > 320 || words > 60;
   }
 }

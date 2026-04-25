@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/constants/settings_keys.dart';
+import '../../core/services/notification_service.dart';
 
 enum DifficultyFilter { all, beginnerOnly, noBeginner }
 
@@ -13,6 +14,7 @@ class SettingsState {
     required this.difficultyFilter,
     required this.notificationHour,
     required this.notificationMinute,
+    required this.notificationEnabled,
     required this.streak,
     required this.onboardingSeen,
   });
@@ -22,6 +24,7 @@ class SettingsState {
   final DifficultyFilter difficultyFilter;
   final int notificationHour;
   final int notificationMinute;
+  final bool notificationEnabled;
   final int streak;
   final bool onboardingSeen;
 
@@ -31,6 +34,7 @@ class SettingsState {
     DifficultyFilter? difficultyFilter,
     int? notificationHour,
     int? notificationMinute,
+    bool? notificationEnabled,
     int? streak,
     bool? onboardingSeen,
   }) {
@@ -40,6 +44,7 @@ class SettingsState {
       difficultyFilter: difficultyFilter ?? this.difficultyFilter,
       notificationHour: notificationHour ?? this.notificationHour,
       notificationMinute: notificationMinute ?? this.notificationMinute,
+      notificationEnabled: notificationEnabled ?? this.notificationEnabled,
       streak: streak ?? this.streak,
       onboardingSeen: onboardingSeen ?? this.onboardingSeen,
     );
@@ -58,6 +63,8 @@ class SettingsController extends AsyncNotifier<SettingsState> {
       ),
       notificationHour: prefs.getInt(SettingsKeys.notificationHour) ?? 7,
       notificationMinute: prefs.getInt(SettingsKeys.notificationMinute) ?? 0,
+      notificationEnabled:
+          prefs.getBool(SettingsKeys.notificationEnabled) ?? true,
       streak: prefs.getInt(SettingsKeys.streak) ?? 0,
       onboardingSeen: prefs.getBool('settings_onboarding_seen') ?? false,
     );
@@ -90,6 +97,31 @@ class SettingsController extends AsyncNotifier<SettingsState> {
         notificationHour: time.hour,
         notificationMinute: time.minute,
       ),
+    );
+
+    await NotificationService.instance.scheduleDailyReminder(
+      hour: time.hour,
+      minute: time.minute,
+      enabled: state.requireValue.notificationEnabled,
+    );
+  }
+
+  Future<void> setNotificationEnabled(bool enabled) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(SettingsKeys.notificationEnabled, enabled);
+    state = AsyncData(
+      state.requireValue.copyWith(notificationEnabled: enabled),
+    );
+
+    if (!enabled) {
+      await NotificationService.instance.cancelDailyReminder();
+      return;
+    }
+
+    await NotificationService.instance.scheduleDailyReminder(
+      hour: state.requireValue.notificationHour,
+      minute: state.requireValue.notificationMinute,
+      enabled: true,
     );
   }
 
