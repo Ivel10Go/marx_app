@@ -12,6 +12,7 @@ import '../../domain/providers/daily_content_provider.dart';
 import '../../domain/providers/settings_provider.dart';
 import '../../widgets/app_decorated_scaffold.dart';
 import '../../widgets/app_navigation_bar.dart';
+import '../loading/app_loading_screen.dart';
 import 'widgets/profile_section.dart';
 
 class SettingsScreen extends ConsumerWidget {
@@ -43,7 +44,7 @@ class SettingsScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  'Demnaechst verfuegbar:',
+                  'Demnächst verfügbar:',
                   style: GoogleFonts.playfairDisplay(
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
@@ -52,7 +53,7 @@ class SettingsScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: 12),
                 const _PremiumFeatureRow(
-                  title: 'Tiefere Erklaerungen',
+                  title: 'Tiefere Erklärungen',
                   subtitle: 'Mehrschichtige Einordnung jedes Tageszitats',
                 ),
                 const SizedBox(height: 10),
@@ -63,7 +64,7 @@ class SettingsScreen extends ConsumerWidget {
                 const SizedBox(height: 10),
                 const _PremiumFeatureRow(
                   title: 'Smart-Reminder',
-                  subtitle: 'Spaced-Learning Hinweise fuer nachhaltiges Lernen',
+                  subtitle: 'Spaced-Learning Hinweise für nachhaltiges Lernen',
                 ),
                 const SizedBox(height: 18),
                 SizedBox(
@@ -90,7 +91,7 @@ class SettingsScreen extends ConsumerWidget {
 
     return AppDecoratedScaffold(
       appBar: null,
-      bottomNavigationBar: const AppNavigationBar(selectedIndex: 1),
+      bottomNavigationBar: const AppNavigationBar(selectedIndex: 2),
       child: Column(
         children: <Widget>[
           // Masthead
@@ -113,7 +114,7 @@ class SettingsScreen extends ConsumerWidget {
                 Container(width: 40, height: 2, color: AppColors.red),
                 const SizedBox(height: 10),
                 Text(
-                  'Steuere, was du taeglich siehst und wie du lernst.',
+                  'Steuere, was du täglich siehst und wie du lernst.',
                   style: GoogleFonts.ibmPlexSans(
                     fontSize: 11,
                     color: AppColors.inkLight,
@@ -137,7 +138,7 @@ class SettingsScreen extends ConsumerWidget {
                       title: 'STARTBILDSCHIRM',
                       children: <Widget>[
                         Text(
-                          'Waehle, ob du heute ein Zitat, einen historischen Fun-Fact oder beides im Zufallsmodus sehen willst.',
+                          'Wähle, ob du heute ein Zitat, einen historischen Fun-Fact oder beides im Zufallsmodus sehen willst.',
                           style: GoogleFonts.ibmPlexSans(
                             fontSize: 11,
                             color: AppColors.inkLight,
@@ -250,7 +251,7 @@ class SettingsScreen extends ConsumerWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              'Erklaerungssprache',
+                              'Erklärungssprache',
                               style: GoogleFonts.ibmPlexSans(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w600,
@@ -300,7 +301,7 @@ class SettingsScreen extends ConsumerWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Text(
-                                    'Taeglich aktiv',
+                                    'Täglich aktiv',
                                     style: GoogleFonts.ibmPlexSans(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w600,
@@ -383,7 +384,7 @@ class SettingsScreen extends ConsumerWidget {
                       title: 'PREMIUM',
                       children: <Widget>[
                         Text(
-                          'Dezentes Upgrade fuer mehr Lerntiefe. Basisfunktionen bleiben frei.',
+                          'Dezentes Upgrade für mehr Lerntiefe. Basisfunktionen bleiben frei.',
                           style: GoogleFonts.ibmPlexSans(
                             fontSize: 11,
                             color: AppColors.inkLight,
@@ -506,6 +507,15 @@ class SettingsScreen extends ConsumerWidget {
                     _SettingsGroup(
                       title: 'WARTUNG',
                       children: <Widget>[
+                        SizedBox(
+                          width: double.infinity,
+                          child: _SettingsActionButton(
+                            label: 'EINFÜHRUNG ERNEUT ANSEHEN',
+                            filled: false,
+                            onTap: () => context.push('/onboarding'),
+                          ),
+                        ),
+                        const SizedBox(height: 16),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
@@ -560,7 +570,7 @@ class SettingsScreen extends ConsumerWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Text(
-                                  'Streak zuruecksetzen',
+                                  'Streak zurücksetzen',
                                   style: GoogleFonts.ibmPlexSans(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w600,
@@ -600,8 +610,9 @@ class SettingsScreen extends ConsumerWidget {
                 );
               },
               loading: () => const Center(
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(AppColors.red),
+                child: AppLoadingScreen(
+                  title: 'Einstellungen werden geladen',
+                  subtitle: 'Profil, Modus und Benachrichtigungen …',
                 ),
               ),
               error: (error, _) => Center(child: Text('Fehler: $error')),
@@ -631,32 +642,43 @@ class _SettingsGroup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: AppColors.paper,
-        border: Border(
-          left: BorderSide(color: AppColors.ink, width: 1),
-          right: BorderSide(color: AppColors.ink, width: 1),
-          bottom: BorderSide(color: AppColors.ink, width: 1),
-        ),
+        border: Border.all(color: AppColors.ink, width: 1),
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+            color: AppColors.ink.withValues(alpha: 0.04),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            width: double.infinity,
+            color: AppColors.red,
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 7),
+            child: Text(
               title,
               style: GoogleFonts.ibmPlexSans(
                 fontSize: 10,
                 fontWeight: FontWeight.w700,
                 letterSpacing: 1.2,
-                color: AppColors.ink,
+                color: Colors.white,
               ),
             ),
-            const SizedBox(height: 16),
-            ...children,
-          ],
-        ),
+          ),
+          Container(height: 1, color: AppColors.rule),
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[...children],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -669,33 +691,34 @@ class _SettingsHeroCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: AppColors.paper,
         border: Border.all(color: AppColors.ink, width: 1),
       ),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            width: 36,
-            height: 36,
-            decoration: const BoxDecoration(
-              color: AppColors.red,
-              shape: BoxShape.circle,
-            ),
-            child: const Icon(
-              Icons.tune_rounded,
-              color: Colors.white,
-              size: 18,
+            color: AppColors.red,
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Text(
+              'PERSÖNLICHER FEED',
+              style: GoogleFonts.ibmPlexSans(
+                fontSize: 10,
+                fontWeight: FontWeight.w700,
+                color: Colors.white,
+                letterSpacing: 1.2,
+              ),
             ),
           ),
-          const SizedBox(width: 12),
-          Expanded(
+          Padding(
+            padding: const EdgeInsets.all(16),
             child: Text(
-              'Passe den Feed an: Zitate fuer Tiefe, Facts fuer schnelles historisches Lernen oder Zufall fuer Abwechslung.',
+              'Passe den Feed an: Zitate für Tiefe, Fakten für schnelles historisches Lernen oder Zufall für Abwechslung.',
               style: GoogleFonts.ibmPlexSans(
-                fontSize: 11,
-                fontWeight: FontWeight.w500,
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
                 color: AppColors.ink,
                 height: 1.5,
               ),
@@ -762,14 +785,14 @@ class _SettingsModePreview extends StatelessWidget {
           key: const ValueKey<String>('quotes'),
           kicker: 'ZITATATLAS',
           title: 'Tageszitat mit Einordnung',
-          subtitle: 'Ideal fuer konzentriertes Lesen mit Kontext.',
+          subtitle: 'Ideal für konzentriertes Lesen mit Kontext.',
         );
       case HomeContentMode.facts:
         return _PreviewTile(
           key: const ValueKey<String>('facts'),
           kicker: 'WELTGESCHICHTE',
           title: 'Historischer Fun-Fact',
-          subtitle: 'Kurzer Wissenshappen fuer nebenbei Lernen.',
+          subtitle: 'Kurzer Wissenshappen für nebenbei Lernen.',
         );
       case HomeContentMode.mixed:
         return _PreviewTile(
@@ -854,6 +877,9 @@ class _SettingsChoiceButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final selectedBg = AppColors.red.withValues(alpha: 0.1);
+    final selectedBorder = AppColors.red.withValues(alpha: 0.85);
+
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -863,12 +889,21 @@ class _SettingsChoiceButton extends StatelessWidget {
           curve: Curves.easeOut,
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: selected ? AppColors.ink : AppColors.paper,
-            border: Border.all(color: AppColors.ink, width: 1),
+            color: selected ? selectedBg : AppColors.paper,
+            border: Border.all(
+              color: selected ? selectedBorder : AppColors.ink,
+              width: selected ? 1.4 : 1,
+            ),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              Container(
+                height: 4,
+                width: double.infinity,
+                color: selected ? AppColors.red : AppColors.rule,
+              ),
+              const SizedBox(height: 10),
               Row(
                 children: <Widget>[
                   Expanded(
@@ -878,18 +913,26 @@ class _SettingsChoiceButton extends StatelessWidget {
                         fontSize: 10,
                         fontWeight: FontWeight.w700,
                         letterSpacing: 1.0,
-                        color: selected ? AppColors.paper : AppColors.ink,
+                        color: selected ? AppColors.ink : AppColors.ink,
                       ),
                     ),
                   ),
                   Icon(
                     selected
-                        ? Icons.check_circle_rounded
-                        : Icons.radio_button_unchecked_rounded,
+                        ? Icons.check_box_rounded
+                        : Icons.crop_square_rounded,
                     size: 16,
                     color: selected ? AppColors.red : AppColors.inkLight,
                   ),
                 ],
+              ),
+              const SizedBox(height: 10),
+              Container(
+                height: 1,
+                width: double.infinity,
+                color: selected
+                    ? AppColors.paper.withValues(alpha: 0.25)
+                    : AppColors.rule,
               ),
               const SizedBox(height: 8),
               Text(
@@ -898,7 +941,7 @@ class _SettingsChoiceButton extends StatelessWidget {
                   fontSize: 10,
                   height: 1.4,
                   color: selected
-                      ? AppColors.paper.withValues(alpha: 0.9)
+                      ? AppColors.ink.withValues(alpha: 0.78)
                       : AppColors.inkLight,
                 ),
               ),
@@ -923,10 +966,13 @@ class _SettingsActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bg = filled ? AppColors.red : Colors.transparent;
+    final border = filled ? AppColors.redDark : AppColors.ink;
+
     return Container(
       decoration: BoxDecoration(
-        color: filled ? AppColors.ink : Colors.transparent,
-        border: Border.all(color: AppColors.ink, width: 1),
+        color: bg,
+        border: Border.all(color: border, width: 1),
       ),
       child: Material(
         color: Colors.transparent,

@@ -12,6 +12,7 @@ import '../../data/models/thinker_quote.dart';
 import '../../domain/providers/admin_access_provider.dart';
 import '../../domain/providers/daily_content_provider.dart';
 import '../../domain/providers/app_mode_provider.dart';
+import '../../domain/providers/repository_providers.dart';
 import '../../domain/providers/streak_provider.dart';
 import '../../widgets/app_decorated_scaffold.dart';
 import '../../widgets/app_navigation_bar.dart';
@@ -174,25 +175,45 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                                 onPressed: _showModeDialog,
                                 label: _modeLabel(appMode),
                               )
-                            : Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: AppColors.ink,
-                                    width: 1,
-                                  ),
-                                ),
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 16,
-                                  vertical: 12,
-                                ),
-                                child: Text(
-                                  'PERSONALISIERT',
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.ibmPlexSans(
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.w700,
-                                    color: AppColors.ink,
-                                    letterSpacing: 1.2,
+                            : Material(
+                                color: Colors.transparent,
+                                child: InkWell(
+                                  borderRadius: BorderRadius.zero,
+                                  onTap: () => context.push('/settings'),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: AppColors.ink,
+                                        width: 1,
+                                      ),
+                                    ),
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 16,
+                                      vertical: 12,
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: <Widget>[
+                                        Text(
+                                          'PERSONALISIERT',
+                                          textAlign: TextAlign.center,
+                                          style: GoogleFonts.ibmPlexSans(
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.w700,
+                                            color: AppColors.ink,
+                                            letterSpacing: 1.2,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 4),
+                                        const Icon(
+                                          Icons.chevron_right_rounded,
+                                          size: 16,
+                                          color: AppColors.inkMuted,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
@@ -256,20 +277,18 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                     ),
                   ),
                   const SizedBox(height: 24),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _calendarExpanded = !_calendarExpanded;
-                      });
-                    },
-                    child: streakAsync.when(
-                      data: (streak) => StreakBadge(
-                        days: streak,
-                        expanded: _calendarExpanded,
-                      ),
-                      loading: () => const StreakBadge(days: 0),
-                      error: (_, __) => const StreakBadge(days: 0),
+                  streakAsync.when(
+                    data: (streak) => StreakBadge(
+                      days: streak,
+                      expanded: _calendarExpanded,
+                      onTap: () {
+                        setState(() {
+                          _calendarExpanded = !_calendarExpanded;
+                        });
+                      },
                     ),
+                    loading: () => const StreakBadge(days: 0),
+                    error: (_, __) => const StreakBadge(days: 0),
                   ),
                   AnimatedSize(
                     duration: const Duration(milliseconds: 250),
@@ -284,12 +303,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                   const SizedBox(height: 20),
                   _QuickAccessSection(
                     onAdminTap: isAdmin ? () => context.push('/admin') : null,
-                    onNewIssueTap: () async {
-                      ref.invalidate(dailyContentProvider);
-                      ref
-                          .read(streakControllerProvider.notifier)
-                          .logTodayAndRefresh();
-                    },
                   ),
                 ],
               ),
@@ -341,10 +354,12 @@ class _BroadsheetOutlineButton extends StatelessWidget {
   const _BroadsheetOutlineButton({
     required this.onPressed,
     required this.label,
+    this.leadingIcon,
   });
 
   final VoidCallback onPressed;
   final String label;
+  final IconData? leadingIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -355,18 +370,29 @@ class _BroadsheetOutlineButton extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
+          borderRadius: BorderRadius.zero,
           onTap: onPressed,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            child: Text(
-              label,
-              textAlign: TextAlign.center,
-              style: GoogleFonts.ibmPlexSans(
-                fontSize: 11,
-                fontWeight: FontWeight.w700,
-                color: AppColors.ink,
-                letterSpacing: 1.2,
-              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                if (leadingIcon != null) ...<Widget>[
+                  Icon(leadingIcon, size: 16, color: AppColors.ink),
+                  const SizedBox(width: 8),
+                ],
+                Text(
+                  label,
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.ibmPlexSans(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.ink,
+                    letterSpacing: 1.2,
+                  ),
+                ),
+              ],
             ),
           ),
         ),
@@ -376,13 +402,9 @@ class _BroadsheetOutlineButton extends StatelessWidget {
 }
 
 class _QuickAccessSection extends StatelessWidget {
-  const _QuickAccessSection({
-    required this.onAdminTap,
-    required this.onNewIssueTap,
-  });
+  const _QuickAccessSection({required this.onAdminTap});
 
   final VoidCallback? onAdminTap;
-  final VoidCallback onNewIssueTap;
 
   @override
   Widget build(BuildContext context) {
@@ -422,14 +444,7 @@ class _QuickAccessSection extends StatelessWidget {
           const SizedBox(height: 12),
           Row(
             children: <Widget>[
-              Expanded(
-                child: _BroadsheetOutlineButton(
-                  onPressed: onNewIssueTap,
-                  label: 'NEUE AUSGABE',
-                ),
-              ),
               if (onAdminTap != null) ...<Widget>[
-                const SizedBox(width: 10),
                 _BroadsheetButton(onPressed: onAdminTap!, label: 'ADMIN'),
               ],
             ],

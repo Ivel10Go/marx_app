@@ -21,6 +21,12 @@ class FactBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final hasRelatedQuotes = fact.relatedQuoteIds.isNotEmpty;
+    final punchline = fact.funFact?.trim().isNotEmpty == true
+        ? fact.funFact!.trim()
+        : fact.headline;
+    final quickContext = fact.funFact?.trim().isNotEmpty == true
+        ? fact.headline
+        : _firstSentence(fact.body);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -51,35 +57,97 @@ class FactBlock extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              // Headline (NOT italic)
-              Text(
-                fact.headline,
-                style: GoogleFonts.playfairDisplay(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w700,
-                  fontStyle: FontStyle.normal,
-                  color: AppColors.ink,
-                  letterSpacing: -0.3,
-                  height: 1.65,
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(14),
+                decoration: BoxDecoration(
+                  color: AppColors.paperDark,
+                  border: Border.all(color: AppColors.rule, width: 1),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      'HISTORISCHER KERN',
+                      style: GoogleFonts.ibmPlexSans(
+                        fontSize: 9,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.red,
+                        letterSpacing: 1.2,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      punchline,
+                      style: GoogleFonts.playfairDisplay(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                        fontStyle: FontStyle.italic,
+                        color: AppColors.ink,
+                        height: 1.45,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Container(
+                      width: double.infinity,
+                      height: 1,
+                      color: AppColors.rule,
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      quickContext,
+                      style: GoogleFonts.ibmPlexSans(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.inkLight,
+                        letterSpacing: 0.2,
+                        height: 1.4,
+                      ),
+                    ),
+                  ],
                 ),
               ),
 
-              const SizedBox(height: 20),
+              const SizedBox(height: 14),
 
-              // Body text
+              Text(
+                fact.headline,
+                style: GoogleFonts.ibmPlexSans(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.ink,
+                  letterSpacing: 0.8,
+                ),
+              ),
+
+              const SizedBox(height: 14),
+
               Text(
                 fact.body,
                 style: GoogleFonts.playfairDisplay(
-                  fontSize: 14,
+                  fontSize: 13,
                   fontWeight: FontWeight.w400,
                   fontStyle: FontStyle.normal,
                   color: AppColors.ink,
-                  letterSpacing: -0.2,
-                  height: 1.65,
+                  height: 1.55,
                 ),
               ),
 
-              const SizedBox(height: 20),
+              if (fact.funFact != null &&
+                  fact.funFact!.trim().isNotEmpty) ...<Widget>[
+                const SizedBox(height: 14),
+                Text(
+                  'EINORDNUNG',
+                  style: GoogleFonts.ibmPlexSans(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.red,
+                    letterSpacing: 1.2,
+                  ),
+                ),
+              ],
+
+              const SizedBox(height: 18),
 
               // Red divider line
               Container(width: 28, height: 2, color: AppColors.red),
@@ -204,4 +272,18 @@ class FactBlock extends StatelessWidget {
 
   String _capitalize(String s) =>
       s.isEmpty ? s : s[0].toUpperCase() + s.substring(1);
+
+  String _firstSentence(String text) {
+    final normalized = text.trim();
+    if (normalized.isEmpty) {
+      return '';
+    }
+
+    final dotIndex = normalized.indexOf('.');
+    if (dotIndex <= 0) {
+      return normalized;
+    }
+
+    return normalized.substring(0, dotIndex + 1);
+  }
 }

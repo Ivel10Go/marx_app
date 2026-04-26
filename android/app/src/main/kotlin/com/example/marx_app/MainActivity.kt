@@ -8,8 +8,13 @@ class MainActivity : FlutterActivity() {
 		super.onCreate(savedInstanceState)
 	}
 
+	override fun onNewIntent(intent: android.content.Intent) {
+		super.onNewIntent(intent)
+		setIntent(intent)
+	}
+
 	override fun getInitialRoute(): String {
 		val route = intent?.getStringExtra("launch_route")
-		return route?.takeIf { it.isNotBlank() } ?: super.getInitialRoute().orEmpty()
+		return route?.takeIf { it.isNotBlank() } ?: super.getInitialRoute() ?: "/"
 	}
 }

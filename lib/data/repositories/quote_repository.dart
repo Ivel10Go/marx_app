@@ -92,6 +92,22 @@ class QuoteRepository {
     return _fromEntry(row);
   }
 
+  Future<Quote?> getNextQuote() async {
+    final allIds = await _db.quoteDao.getAllQuoteIds();
+    final id = await QuoteScheduler.pickNextId(allIds);
+    if (id == null) {
+      return null;
+    }
+
+    final row = await _db.quoteDao.getQuoteById(id);
+    if (row == null) {
+      return null;
+    }
+
+    await _db.quoteDao.markSeen(id);
+    return _fromEntry(row);
+  }
+
   Future<void> addFavorite(String quoteId) => _db.quoteDao.addFavorite(quoteId);
 
   Future<void> removeFavorite(String quoteId) =>
@@ -147,8 +163,6 @@ class QuoteRepository {
       funFact: row.funFact,
     );
   }
-
-
 
   void _validateSeedEntry(
     Map<String, dynamic> item, {

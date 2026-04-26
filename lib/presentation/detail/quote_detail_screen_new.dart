@@ -12,13 +12,49 @@ import '../../widgets/app_decorated_scaffold.dart';
 import '../../widgets/adaptive_quote_text.dart';
 import '../../widgets/category_chip.dart';
 
-class QuoteDetailScreen extends ConsumerWidget {
+class QuoteDetailScreen extends ConsumerStatefulWidget {
   const QuoteDetailScreen({required this.quoteId, super.key});
 
   final String quoteId;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<QuoteDetailScreen> createState() => _QuoteDetailScreenState();
+}
+
+class _QuoteDetailScreenState extends ConsumerState<QuoteDetailScreen> {
+  late final ScrollController _scrollController;
+  String? _lastOpenedQuoteId;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController(keepScrollOffset: false);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final quoteId = widget.quoteId;
+    if (_lastOpenedQuoteId != quoteId) {
+      _lastOpenedQuoteId = quoteId;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted || !_scrollController.hasClients) {
+          return;
+        }
+        _scrollController.jumpTo(0);
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final quoteId = widget.quoteId;
     final quoteAsync = ref.watch(quoteByIdProvider(quoteId));
     final favoriteAsync = ref.watch(isFavoriteProvider(quoteId));
 
@@ -97,6 +133,7 @@ class QuoteDetailScreen extends ConsumerWidget {
           }
 
           return ListView(
+            controller: _scrollController,
             padding: EdgeInsets.zero,
             children: <Widget>[
               // Masthead

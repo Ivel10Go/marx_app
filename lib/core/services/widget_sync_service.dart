@@ -29,20 +29,28 @@ abstract final class WidgetSyncService {
         final route = fact.relatedQuoteIds.isNotEmpty
             ? '/detail/${fact.relatedQuoteIds.first}'
             : '/';
+        final factLead = fact.funFact?.trim().isNotEmpty == true
+            ? fact.funFact!.trim()
+            : fact.headline;
         await _saveCommon(
           contentType: 'fact',
           header: 'WELTGESCHICHTE',
           modeLabel: modeLabel ?? 'PUBLIC',
           author: 'Geschichte',
           launchRoute: route,
-          quoteText: fact.headline,
+          quoteText: factLead,
           source: fact.dateDisplay,
-          explanation: fact.body,
+          explanation: fact.headline,
           categories: [
             fact.era,
             fact.region,
             ...fact.category,
           ].where((String item) => item.trim().isNotEmpty).join(', '),
+        );
+        await HomeWidget.saveWidgetData<String>('fact_headline', fact.headline);
+        await HomeWidget.saveWidgetData<String>(
+          'fact_fun_fact',
+          fact.funFact ?? '',
         );
       },
       thinkerQuote: (ThinkerQuote quote) async {

@@ -3,37 +3,71 @@
     android:id="@+id/quote_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EDE8DF"
+    android:background="#F4EFE6"
     android:orientation="vertical">
-
-    <TextView
-        android:id="@+id/quote_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#C41E1E"
-        android:paddingStart="12dp"
-        android:paddingTop="4dp"
-        android:paddingEnd="12dp"
-        android:paddingBottom="4dp"
-        android:text="DAS KAPITAL"
-        android:textColor="#FFFFFF"
-        android:textSize="9sp"
-        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="12dp">
+        android:padding="14dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/quote_header"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="ZITATATLAS"
+                android:textColor="#1A1A1A"
+                android:textSize="9sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/widget_mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#C41E1E"
+                android:paddingStart="7dp"
+                android:paddingTop="3dp"
+                android:paddingEnd="7dp"
+                android:paddingBottom="3dp"
+                android:text="HEUTE"
+                android:textColor="#FFFFFF"
+                android:textSize="8sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:background="#2A2A2A" />
+
+        <TextView
+            android:id="@+id/quote_author"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="#555555"
+            android:textSize="8sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/quote_text_italic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="serif"
-            android:maxLines="4"
+            android:layout_marginTop="10dp"
+            android:maxLines="5"
             android:textColor="#1A1A1A"
-            android:textSize="14sp"
+            android:textSize="15sp"
             android:textStyle="italic" />
 
         <TextView
@@ -41,40 +75,61 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="serif"
-            android:maxLines="4"
+            android:layout_marginTop="10dp"
+            android:maxLines="5"
             android:textColor="#1A1A1A"
-            android:textSize="14sp"
+            android:textSize="15sp"
             android:textStyle="normal"
             android:visibility="gone" />
 
-        <TextView
+        <View
             android:layout_width="24dp"
             android:layout_height="2dp"
-            android:layout_marginTop="8dp"
-            android:background="#C41E1E"
-            android:text="" />
+            android:layout_marginTop="10dp"
+            android:background="#C41E1E" />
 
         <TextView
             android:id="@+id/quote_explanation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="sans-serif"
             android:maxLines="2"
             android:textColor="#555555"
-            android:textSize="11sp" />
+            android:textSize="10sp" />
 
         <TextView
             android:id="@+id/quote_source"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:ellipsize="end"
+            android:layout_marginTop="10dp"
             android:fontFamily="sans-serif"
             android:maxLines="1"
             android:textAllCaps="true"
             android:textColor="#1A1A1A"
-            android:textSize="10sp"
+            android:textSize="9sp"
             android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/quote_categories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:maxLines="1"
+            android:textAllCaps="true"
+            android:textColor="#555555"
+            android:textSize="8sp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/quote_streak"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textAllCaps="true"
+            android:textColor="#C41E1E"
+            android:textSize="8sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
     </LinearLayout>
 </LinearLayout>

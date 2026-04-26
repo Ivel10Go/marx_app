@@ -37,20 +37,25 @@ class WidgetUpdater {
     int streak, {
     String modeLabel = 'HISTORY',
   }) async {
+    final factLead = fact.funFact?.trim().isNotEmpty == true
+        ? fact.funFact!.trim()
+        : fact.headline;
     await HomeWidget.saveWidgetData('content_type', 'fact');
     await HomeWidget.saveWidgetData('kicker', 'WELTGESCHICHTE · HEUTE');
     await HomeWidget.saveWidgetData('widget_mode', modeLabel);
     await HomeWidget.saveWidgetData('quote_author', 'Geschichte');
+    await HomeWidget.saveWidgetData('fact_headline', fact.headline);
+    await HomeWidget.saveWidgetData('fact_fun_fact', fact.funFact ?? '');
     await HomeWidget.saveWidgetData(
       'launch_route',
       fact.relatedQuoteIds.isNotEmpty
           ? '/detail/${fact.relatedQuoteIds.first}'
           : '/',
     );
-    await HomeWidget.saveWidgetData('quote_text', fact.body);
+    await HomeWidget.saveWidgetData('quote_text', factLead);
     await HomeWidget.saveWidgetData('source', fact.dateDisplay.toUpperCase());
     await HomeWidget.saveWidgetData('streak', 'Tag $streak');
-    await HomeWidget.saveWidgetData('explanation', fact.connectionToMarx);
+    await HomeWidget.saveWidgetData('explanation', fact.headline);
     await _triggerUpdate();
   }
 

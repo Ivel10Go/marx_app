@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'adaptive_quote_text.dart';
 import '../core/theme/app_colors.dart';
 import '../data/models/quote.dart';
+import '../domain/providers/favorites_provider.dart';
+import '../domain/providers/repository_providers.dart';
 import '../presentation/home/widgets/tts_button.dart';
 import 'category_chip.dart';
 
-class QuoteCard extends StatelessWidget {
+class QuoteCard extends ConsumerWidget {
   const QuoteCard({
     required this.quote,
     this.trailing,
@@ -24,8 +27,10 @@ class QuoteCard extends StatelessWidget {
   final VoidCallback? onShare;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final isLongQuote = _isLongQuote(quote.textDe);
+    final isFavoriteAsync = ref.watch(isFavoriteProvider(quote.id));
+    final isFavorite = isFavoriteAsync.valueOrNull ?? false;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -94,6 +99,36 @@ class QuoteCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: IconButton(
+                        onPressed: () async {
+                          final repo = ref.read(quoteRepositoryProvider);
+                          if (isFavorite) {
+                            await repo.removeFavorite(quote.id);
+                            return;
+                          }
+                          await repo.addFavorite(quote.id);
+                        },
+                        icon: Icon(
+                          isFavorite ? Icons.favorite : Icons.favorite_border,
+                          size: 18,
+                          color: isFavorite
+                              ? AppColors.red
+                              : AppColors.inkLight,
+                        ),
+                        splashRadius: 18,
+                        padding: EdgeInsets.zero,
+                        constraints: const BoxConstraints(
+                          minWidth: 28,
+                          minHeight: 28,
+                        ),
+                        tooltip: isFavorite
+                            ? 'Aus Favoriten entfernen'
+                            : 'Zu Favoriten',
+                      ),
+                    ),
+                    const SizedBox(height: 4),
                     // Zitat-Text
                     AdaptiveQuoteText(
                       text: quote.textDe,
@@ -105,7 +140,7 @@ class QuoteCard extends StatelessWidget {
                     if (isLongQuote) ...<Widget>[
                       const SizedBox(height: 8),
                       Text(
-                        'Langes Zitat gekuerzt - tippen fuer Volltext',
+                        'Langes Zitat gekürzt – tippen für Volltext',
                         style: GoogleFonts.ibmPlexSans(
                           fontSize: 10,
                           fontWeight: FontWeight.w600,
@@ -145,8 +180,8 @@ class QuoteCard extends StatelessWidget {
                           Expanded(
                             child: Text(
                               isLongQuote
-                                  ? 'Tippen fuer Volltext und Erklaerung'
-                                  : 'Tippen fuer Erklaerung und Kontext',
+                                  ? 'Tippen für Volltext und Erklärung'
+                                  : 'Tippen für Erklärung und Kontext',
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.ibmPlexSans(

@@ -75,40 +75,6 @@ class QuoteDetailScreen extends ConsumerWidget {
                     ),
                   ),
                 ),
-                const SizedBox(width: 12),
-                favoriteAsync.when(
-                  data: (isFavorite) {
-                    return SizedBox(
-                      width: 48,
-                      child: Material(
-                        color: isFavorite ? AppColors.red : Colors.transparent,
-                        child: InkWell(
-                          onTap: () async {
-                            final repo = ref.read(quoteRepositoryProvider);
-                            if (isFavorite) {
-                              await repo.removeFavorite(quoteId);
-                            } else {
-                              await repo.addFavorite(quoteId);
-                            }
-                          },
-                          child: Center(
-                            child: Icon(
-                              isFavorite
-                                  ? Icons.favorite_rounded
-                                  : Icons.favorite_border_rounded,
-                              color: isFavorite
-                                  ? AppColors.redOnRed
-                                  : AppColors.ink,
-                              size: 20,
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                  loading: () => const SizedBox.shrink(),
-                  error: (_, __) => const SizedBox.shrink(),
-                ),
               ],
             ),
           );
@@ -123,6 +89,7 @@ class QuoteDetailScreen extends ConsumerWidget {
           }
 
           return ListView(
+            key: ValueKey('quote-detail-${quote.id}'),
             padding: EdgeInsets.zero,
             children: <Widget>[
               // Masthead
@@ -171,6 +138,22 @@ class QuoteDetailScreen extends ConsumerWidget {
                         fontSize: 12,
                         color: AppColors.inkLight,
                       ),
+                    ),
+                    const SizedBox(height: 14),
+                    favoriteAsync.when(
+                      data: (isFavorite) => _FavoriteButton(
+                        isFavorite: isFavorite,
+                        onTap: () async {
+                          final repo = ref.read(quoteRepositoryProvider);
+                          if (isFavorite) {
+                            await repo.removeFavorite(quoteId);
+                          } else {
+                            await repo.addFavorite(quoteId);
+                          }
+                        },
+                      ),
+                      loading: () => const SizedBox.shrink(),
+                      error: (_, __) => const SizedBox.shrink(),
                     ),
                     const SizedBox(height: 20),
                     // Tags
@@ -258,6 +241,54 @@ class _SectionCard extends StatelessWidget {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _FavoriteButton extends StatelessWidget {
+  const _FavoriteButton({required this.isFavorite, required this.onTap});
+
+  final bool isFavorite;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: AppColors.ink, width: 1),
+      ),
+      child: Material(
+        color: isFavorite ? AppColors.red : Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.zero,
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Icon(
+                  isFavorite
+                      ? Icons.bookmark_rounded
+                      : Icons.bookmark_border_rounded,
+                  size: 18,
+                  color: isFavorite ? AppColors.redOnRed : AppColors.ink,
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  'MERKEN',
+                  style: GoogleFonts.ibmPlexSans(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w700,
+                    color: isFavorite ? AppColors.redOnRed : AppColors.ink,
+                    letterSpacing: 1.0,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

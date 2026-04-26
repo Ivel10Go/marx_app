@@ -21,6 +21,7 @@ class ProfileSection extends ConsumerWidget {
         )
         .map((InterestOption option) => option.label)
         .toList();
+    final interestsSummary = _formatInterestsSummary(interests);
 
     return _SettingsGroup(
       title: 'MEIN PROFIL',
@@ -28,7 +29,7 @@ class ProfileSection extends ConsumerWidget {
       children: <Widget>[
         _ProfileRow(
           label: 'Interessen',
-          value: interests.isEmpty ? 'Nicht gesetzt' : interests.join(', '),
+          value: interestsSummary,
           onTap: () => _showInterestsSheet(context, ref, profile),
         ),
         const SizedBox(height: 14),
@@ -55,7 +56,7 @@ class ProfileSection extends ConsumerWidget {
         GestureDetector(
           onTap: () => _confirmReset(context, ref),
           child: Text(
-            'Profil zuruecksetzen',
+            'Profil zurücksetzen',
             style: GoogleFonts.ibmPlexSans(
               fontSize: 11,
               fontWeight: FontWeight.w600,
@@ -123,7 +124,7 @@ class ProfileSection extends ConsumerWidget {
                   const SizedBox(height: 16),
                   if (selectedMode == QuoteDiscoveryMode.manual) ...<Widget>[
                     Text(
-                      'QUELLEN AUSWAEHLEN',
+                      'QUELLEN AUSWÄHLEN',
                       style: GoogleFonts.ibmPlexSans(
                         fontSize: 10,
                         fontWeight: FontWeight.w700,
@@ -145,7 +146,7 @@ class ProfileSection extends ConsumerWidget {
                               final isActive = selectedSources.contains(source);
                               return Material(
                                 color: isActive
-                                    ? AppColors.ink
+                                    ? AppColors.red.withValues(alpha: 0.1)
                                     : AppColors.paper,
                                 child: InkWell(
                                   onTap: () {
@@ -165,7 +166,7 @@ class ProfileSection extends ConsumerWidget {
                                     decoration: BoxDecoration(
                                       border: Border.all(
                                         color: isActive
-                                            ? AppColors.ink
+                                            ? AppColors.red
                                             : AppColors.rule,
                                       ),
                                     ),
@@ -178,18 +179,18 @@ class ProfileSection extends ConsumerWidget {
                                               fontSize: 11,
                                               fontWeight: FontWeight.w600,
                                               color: isActive
-                                                  ? AppColors.paper
+                                                  ? AppColors.ink
                                                   : AppColors.ink,
                                             ),
                                           ),
                                         ),
                                         Icon(
                                           isActive
-                                              ? Icons.check_circle
+                                              ? Icons.check_box_rounded
                                               : Icons.circle_outlined,
                                           size: 18,
                                           color: isActive
-                                              ? AppColors.redOnRed
+                                              ? AppColors.red
                                               : AppColors.inkMuted,
                                         ),
                                       ],
@@ -248,6 +249,7 @@ class ProfileSection extends ConsumerWidget {
     UserProfile profile,
   ) async {
     final selected = profile.historicalInterests.toSet();
+    var searchQuery = '';
 
     await showModalBottomSheet<void>(
       context: context,
@@ -272,36 +274,174 @@ class ProfileSection extends ConsumerWidget {
                     ),
                   ),
                   const SizedBox(height: 12),
-                  Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
-                    children: availableInterests.map((InterestOption option) {
-                      final isActive = selected.contains(option.id);
-                      return FilterChip(
-                        selected: isActive,
-                        onSelected: (_) {
+                  TextField(
+                    onChanged: (value) {
+                      setSheetState(() {
+                        searchQuery = value.trim();
+                      });
+                    },
+                    style: GoogleFonts.ibmPlexSans(fontSize: 12),
+                    decoration: InputDecoration(
+                      hintText: 'Interesse suchen …',
+                      hintStyle: GoogleFonts.ibmPlexSans(
+                        fontSize: 12,
+                        color: AppColors.inkMuted,
+                      ),
+                      prefixIcon: const Icon(Icons.search, size: 18),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 10,
+                      ),
+                      border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.zero,
+                      ),
+                      enabledBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.zero,
+                        borderSide: BorderSide(color: AppColors.rule),
+                      ),
+                      focusedBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.zero,
+                        borderSide: BorderSide(color: AppColors.ink),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Text(
+                          '${selected.length} ausgewählt',
+                          style: GoogleFonts.ibmPlexSans(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.inkLight,
+                          ),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
                           setSheetState(() {
-                            if (isActive) {
-                              selected.remove(option.id);
-                            } else {
-                              selected.add(option.id);
-                            }
+                            selected
+                              ..clear()
+                              ..addAll(
+                                availableInterests.map(
+                                  (InterestOption option) => option.id,
+                                ),
+                              );
                           });
                         },
-                        label: Text('${option.icon} ${option.label}'),
-                        selectedColor: AppColors.red.withValues(alpha: 0.14),
-                        checkmarkColor: AppColors.red,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.zero,
-                        ),
-                      );
-                    }).toList(),
+                        child: const Text('Alle'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          setSheetState(() {
+                            selected.clear();
+                          });
+                        },
+                        child: const Text('Keine'),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 6),
+                  SizedBox(
+                    height: 260,
+                    child: Builder(
+                      builder: (context) {
+                        final query = searchQuery.toLowerCase();
+                        final visibleInterests = availableInterests
+                            .where(
+                              (InterestOption option) =>
+                                  query.isEmpty ||
+                                  option.label.toLowerCase().contains(query),
+                            )
+                            .toList();
+
+                        if (visibleInterests.isEmpty) {
+                          return Center(
+                            child: Text(
+                              'Keine Treffer.',
+                              style: GoogleFonts.ibmPlexSans(
+                                fontSize: 11,
+                                color: AppColors.inkMuted,
+                              ),
+                            ),
+                          );
+                        }
+
+                        return ListView.separated(
+                          itemCount: visibleInterests.length,
+                          separatorBuilder: (_, __) =>
+                              const SizedBox(height: 8),
+                          itemBuilder: (context, index) {
+                            final option = visibleInterests[index];
+                            final isActive = selected.contains(option.id);
+                            return Material(
+                              color: isActive
+                                  ? AppColors.red.withValues(alpha: 0.1)
+                                  : AppColors.paper,
+                              child: InkWell(
+                                onTap: () {
+                                  setSheetState(() {
+                                    if (isActive) {
+                                      selected.remove(option.id);
+                                    } else {
+                                      selected.add(option.id);
+                                    }
+                                  });
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 12,
+                                    vertical: 10,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: isActive
+                                          ? AppColors.red
+                                          : AppColors.rule,
+                                      width: 1,
+                                    ),
+                                  ),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Text(option.icon),
+                                      const SizedBox(width: 10),
+                                      Expanded(
+                                        child: Text(
+                                          option.label,
+                                          style: GoogleFonts.ibmPlexSans(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w600,
+                                            color: isActive
+                                                ? AppColors.ink
+                                                : AppColors.ink,
+                                          ),
+                                        ),
+                                      ),
+                                      Icon(
+                                        isActive
+                                            ? Icons.check_box_rounded
+                                            : Icons.circle_outlined,
+                                        size: 18,
+                                        color: isActive
+                                            ? AppColors.red
+                                            : AppColors.inkMuted,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    ),
                   ),
                   if (selected.isEmpty)
                     Padding(
                       padding: const EdgeInsets.only(top: 8),
                       child: Text(
-                        'Mindestens ein Interesse auswaehlen.',
+                        'Mindestens ein Interesse auswählen.',
                         style: GoogleFonts.ibmPlexSans(
                           fontSize: 10,
                           color: AppColors.red,
@@ -384,9 +524,9 @@ class ProfileSection extends ConsumerWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Profil zuruecksetzen?'),
+          title: const Text('Profil zurücksetzen?'),
           content: const Text(
-            'Interessen und politische Haltung werden geloescht. Onboarding wird erneut gezeigt.',
+            'Interessen und politische Haltung werden gelöscht. Onboarding wird erneut gezeigt.',
           ),
           actions: <Widget>[
             TextButton(
@@ -395,7 +535,7 @@ class ProfileSection extends ConsumerWidget {
             ),
             TextButton(
               onPressed: () => Navigator.of(context).pop(true),
-              child: const Text('Zuruecksetzen'),
+              child: const Text('Zurücksetzen'),
             ),
           ],
         );
@@ -429,6 +569,18 @@ class ProfileSection extends ConsumerWidget {
       case QuoteDiscoveryMode.manual:
         return 'Manuell';
     }
+  }
+
+  String _formatInterestsSummary(List<String> interests) {
+    if (interests.isEmpty) {
+      return 'Nicht gesetzt';
+    }
+
+    if (interests.length <= 2) {
+      return interests.join(', ');
+    }
+
+    return '${interests.take(2).join(', ')} +${interests.length - 2}';
   }
 }
 
@@ -495,14 +647,16 @@ class _DiscoveryTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final activeBg = AppColors.red.withValues(alpha: 0.1);
+
     return Material(
-      color: active ? AppColors.ink : AppColors.paper,
+      color: active ? activeBg : AppColors.paper,
       child: InkWell(
         onTap: onTap,
         child: Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            border: Border.all(color: active ? AppColors.ink : AppColors.rule),
+            border: Border.all(color: active ? AppColors.red : AppColors.rule),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -512,7 +666,7 @@ class _DiscoveryTile extends StatelessWidget {
                 style: GoogleFonts.playfairDisplay(
                   fontSize: 15,
                   fontWeight: FontWeight.w700,
-                  color: active ? AppColors.paper : AppColors.ink,
+                  color: AppColors.ink,
                 ),
               ),
               const SizedBox(height: 4),
@@ -521,7 +675,7 @@ class _DiscoveryTile extends StatelessWidget {
                 style: GoogleFonts.ibmPlexSans(
                   fontSize: 11,
                   color: active
-                      ? AppColors.paper.withValues(alpha: 0.8)
+                      ? AppColors.ink.withValues(alpha: 0.8)
                       : AppColors.inkLight,
                 ),
               ),

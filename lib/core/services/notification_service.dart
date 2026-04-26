@@ -12,8 +12,8 @@ class NotificationService {
   static final NotificationService instance = NotificationService._();
 
   static const _channelId = 'daily_quote_channel';
-  static const _channelName = 'Taegliches Zitat';
-  static const _channelDescription = 'Benachrichtigungen fuer das Tageszitat.';
+  static const _channelName = 'Tägliches Zitat';
+  static const _channelDescription = 'Benachrichtigungen für das Tageszitat.';
   static const _dailyReminderId = 120001;
   static const _instantDailyQuoteId = 120002;
 

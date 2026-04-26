@@ -33,6 +33,26 @@ abstract final class QuoteScheduler {
     return next;
   }
 
+  static Future<String?> pickNextId(List<String> allIds) async {
+    if (allIds.isEmpty) {
+      return null;
+    }
+
+    final prefs = await SharedPreferences.getInstance();
+    final today = _normalizeDate(DateTime.now()).toIso8601String();
+
+    var pool = prefs.getStringList(_keyPool) ?? <String>[];
+    if (pool.isEmpty) {
+      pool = List<String>.from(allIds)..shuffle(Random());
+    }
+
+    final next = pool.removeAt(0);
+    await prefs.setStringList(_keyPool, pool);
+    await prefs.setString(_keyCurrent, next);
+    await prefs.setString(_keyCurrentDate, today);
+    return next;
+  }
+
   static DateTime _normalizeDate(DateTime input) {
     return DateTime(input.year, input.month, input.day);
   }
