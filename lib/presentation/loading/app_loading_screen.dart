@@ -106,9 +106,8 @@ class _AppLoadingScreenState extends State<AppLoadingScreen>
                             child: Container(
                               width: 52,
                               height: 52,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 color: AppColors.red,
-                                borderRadius: BorderRadius.circular(12),
                               ),
                               child: const Icon(
                                 Icons.auto_stories_rounded,
@@ -141,18 +140,16 @@ class _AppLoadingScreenState extends State<AppLoadingScreen>
                         ),
                       ),
                       const SizedBox(height: 16),
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(999),
-                        child: LinearProgressIndicator(
-                          minHeight: 12,
-                          value: displayProgress,
-                          backgroundColor: AppColors.rule.withValues(
-                            alpha: 0.65,
-                          ),
-                          valueColor: const AlwaysStoppedAnimation<Color>(
-                            AppColors.red,
-                          ),
+                      LinearProgressIndicator(
+                        minHeight: 12,
+                        value: displayProgress,
+                        borderRadius: BorderRadius.zero,
+                        backgroundColor: AppColors.rule.withValues(alpha: 0.65),
+                        valueColor: const AlwaysStoppedAnimation<Color>(
+                          AppColors.red,
                         ),
+                        stopIndicatorColor: Colors.transparent,
+                        stopIndicatorRadius: 0,
                       ),
                       const SizedBox(height: 8),
                       Align(
