@@ -318,5 +318,213 @@
     "text_de": "Der Überbringer des Lichts setzt die Finsternis dem Tode gleich.",
     "source": "Reden vor dem Nationalkonvent",
     "year": 1793
+  },
+  {
+    "id": "nietzsche_004",
+    "author": "Friedrich Nietzsche",
+    "author_type": "philosopher",
+    "text_de": "Werde, wer du bist.",
+    "source": "Ecce Homo",
+    "year": 1908
+  },
+  {
+    "id": "nietzsche_005",
+    "author": "Friedrich Nietzsche",
+    "author_type": "philosopher",
+    "text_de": "Die Wahrheit ist häufiger lügen als die Lüge.",
+    "source": "Jenseits von Gut und Böse",
+    "year": 1886
+  },
+  {
+    "id": "nietzsche_006",
+    "author": "Friedrich Nietzsche",
+    "author_type": "philosopher",
+    "text_de": "Ich lehre euch den Übermenschen. Der Mensch ist etwas, das überwunden werden soll.",
+    "source": "Also sprach Zarathustra",
+    "year": 1885
+  },
+  {
+    "id": "nietzsche_007",
+    "author": "Friedrich Nietzsche",
+    "author_type": "philosopher",
+    "text_de": "Der Glaube ist ein Instinkt, ein moralischer Instinkt.",
+    "source": "Morgenröte",
+    "year": 1881
+  },
+  {
+    "id": "nietzsche_008",
+    "author": "Friedrich Nietzsche",
+    "author_type": "philosopher",
+    "text_de": "Wer lange in Abgründe blickt, in den blickt der Abgrund auch zurück.",
+    "source": "Jenseits von Gut und Böse",
+    "year": 1886
+  },
+  {
+    "id": "kierkegaard_001",
+    "author": "Søren Kierkegaard",
+    "author_type": "philosopher",
+    "text_de": "Das Leben kann nur rückwärts verstanden werden, muss aber vorwärts gelebt werden.",
+    "source": "Gesammelte Werke",
+    "year": 1843
+  },
+  {
+    "id": "kierkegaard_002",
+    "author": "Søren Kierkegaard",
+    "author_type": "philosopher",
+    "text_de": "Die wahrhafte Freiheit ist: vor Gott einsam vor sich selbst zu stehen.",
+    "source": "Die Krankheit zum Tode",
+    "year": 1849
+  },
+  {
+    "id": "kierkegaard_003",
+    "author": "Søren Kierkegaard",
+    "author_type": "philosopher",
+    "text_de": "In unserem Zeitalter haben wir vergessen, dass es sowohl ein Übermaß an Genuss als auch einen Übermaß an Schmerz gibt.",
+    "source": "Der Augenblick",
+    "year": 1848
+  },
+  {
+    "id": "heidegger_001",
+    "author": "Martin Heidegger",
+    "author_type": "philosopher",
+    "text_de": "Die Sprache ist das Haus des Seins.",
+    "source": "Über den Humanismus",
+    "year": 1947
+  },
+  {
+    "id": "heidegger_002",
+    "author": "Martin Heidegger",
+    "author_type": "philosopher",
+    "text_de": "Die Angst ist das Grundbefinden schlechthin.",
+    "source": "Sein und Zeit",
+    "year": 1927
+  },
+  {
+    "id": "wittgenstein_001",
+    "author": "Ludwig Wittgenstein",
+    "author_type": "philosopher",
+    "text_de": "Worüber man nicht sprechen kann, darüber muss man schweigen.",
+    "source": "Tractatus Logico-Philosophicus",
+    "year": 1921
+  },
+  {
+    "id": "wittgenstein_002",
+    "author": "Ludwig Wittgenstein",
+    "author_type": "philosopher",
+    "text_de": "Die Philosophie ist kein Gebilde von Lehrsätzen, sondern eine Aktivität.",
+    "source": "Tractatus Logico-Philosophicus",
+    "year": 1921
+  },
+  {
+    "id": "schelling_001",
+    "author": "Friedrich Wilhelm Joseph Schelling",
+    "author_type": "philosopher",
+    "text_de": "Kunst ist Zeugnis für das Höchste, dessen der Mensch fähig ist.",
+    "source": "Philosophie der Kunst",
+    "year": 1859
+  },
+  {
+    "id": "schelling_002",
+    "author": "Friedrich Wilhelm Joseph Schelling",
+    "author_type": "philosopher",
+    "text_de": "Natur ist das sichtbar gewordene Geist, und Geist ist die unsichtbar gewordene Natur.",
+    "source": "System des Idealismus",
+    "year": 1800
+  },
+  {
+    "id": "fichte_001",
+    "author": "Johann Gottlieb Fichte",
+    "author_type": "philosopher",
+    "text_de": "Der Mensch handelt, und durch sein Handeln wird er das, was er ist.",
+    "source": "Die Bestimmung des Menschen",
+    "year": 1800
+  },
+  {
+    "id": "fichte_002",
+    "author": "Johann Gottlieb Fichte",
+    "author_type": "philosopher",
+    "text_de": "Ich bin darum, weil ich mich selbst bedingt habe.",
+    "source": "Wissenschaftslehre",
+    "year": 1807
+  },
+  {
+    "id": "herder_001",
+    "author": "Johann Gottfried Herder",
+    "author_type": "philosopher",
+    "text_de": "Die Geschichte der Menschheit ist die Geschichte ihrer Bildung.",
+    "source": "Ideen zur Philosophie der Geschichte der Menschheit",
+    "year": 1784
+  },
+  {
+    "id": "schopenhauer_004",
+    "author": "Arthur Schopenhauer",
+    "author_type": "philosopher",
+    "text_de": "Man kann sein Leben als Kunstwerk betrachten. Wer ein kluger Mann sein will, wird versuchen, sein Leben zu einem ästhetischen Ganzen zu gestalten.",
+    "source": "Die Welt als Wille und Vorstellung",
+    "year": 1819
+  },
+  {
+    "id": "schopenhauer_005",
+    "author": "Arthur Schopenhauer",
+    "author_type": "philosopher",
+    "text_de": "Der Mensch kann tun, was er will, aber er kann nicht wollen, was er will.",
+    "source": "Die Welt als Wille und Vorstellung",
+    "year": 1819
+  },
+  {
+    "id": "comte_001",
+    "author": "Auguste Comte",
+    "author_type": "philosopher",
+    "text_de": "Liebe als Prinzip und Ordnung als Basis; Fortschritt als Ziel.",
+    "source": "Système de politique positive",
+    "year": 1851
+  },
+  {
+    "id": "mill_001",
+    "author": "John Stuart Mill",
+    "author_type": "philosopher",
+    "text_de": "Es ist besser, ein unzufriedener Mensch zu sein, als ein zufriedenes Schwein; besser, Sokrates unzufrieden als ein Narr zufrieden.",
+    "source": "Utilitarismus",
+    "year": 1863
+  },
+  {
+    "id": "mill_002",
+    "author": "John Stuart Mill",
+    "author_type": "philosopher",
+    "text_de": "Die einzige Freiheit, die der Bezeichnung würdig ist, ist die, die eigenen Neigungen zu verfolgen, solange man nicht anderen schadet.",
+    "source": "Über die Freiheit",
+    "year": 1859
+  },
+  {
+    "id": "bentham_001",
+    "author": "Jeremy Bentham",
+    "author_type": "philosopher",
+    "text_de": "Das größtmögliche Glück für die größtmögliche Zahl.",
+    "source": "Introduction to the Principles of Morals and Legislation",
+    "year": 1789
+  },
+  {
+    "id": "bacon_001",
+    "author": "Francis Bacon",
+    "author_type": "philosopher",
+    "text_de": "Wissen ist Macht.",
+    "source": "Novum Organum",
+    "year": 1620
+  },
+  {
+    "id": "descartes_001",
+    "author": "René Descartes",
+    "author_type": "philosopher",
+    "text_de": "Ich denke, also bin ich.",
+    "source": "Discourse on Method",
+    "year": 1637
+  },
+  {
+    "id": "descartes_002",
+    "author": "René Descartes",
+    "author_type": "philosopher",
+    "text_de": "Die Überzeugungen, die wir am längsten bewahrt haben, sind solche, die wir überhaupt nicht zu untersuchen gewagt haben.",
+    "source": "Meditations",
+    "year": 1641
   }
 ]

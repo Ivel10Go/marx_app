@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:home_widget/home_widget.dart';
 
 import 'app.dart';
 import 'core/bootstrap/app_bootstrap.dart';
@@ -12,7 +11,6 @@ import 'worker/daily_widget_worker.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await HomeWidget.setAppGroupId('group.com.example.marx_app');
   await registerDailyWidgetTask();
 
   runApp(const _BootstrapGateApp());
@@ -36,58 +34,130 @@ class _BootstrapGateAppState extends State<_BootstrapGateApp> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<AppBootstrapResult>(
-      future: _bootstrapFuture,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState != ConnectionState.done) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            theme: AppTheme.light,
-            home: const AppLoadingScreen(),
-          );
-        }
+    return StreamBuilder<AppBootstrapProgress>(
+      stream: AppBootstrap.progressStream,
+      initialData: const AppBootstrapProgress(
+        progress: 0.06,
+        message: 'Start wird vorbereitet ...',
+      ),
+      builder: (context, progressSnapshot) {
+        return FutureBuilder<AppBootstrapResult>(
+          future: _bootstrapFuture,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState != ConnectionState.done) {
+              debugPrint(
+                '[UI] Bootstrap still loading... (state: ${snapshot.connectionState})',
+              );
+              final progressData = progressSnapshot.data;
+              return MaterialApp(
+                debugShowCheckedModeBanner: false,
+                theme: AppTheme.light,
+                home: AppLoadingScreen(
+                  subtitle:
+                      progressData?.message ?? 'Inhalte werden vorbereitet ...',
+                  progress: progressData?.progress,
+                ),
+              );
+            }
 
-        if (snapshot.hasError || !snapshot.hasData) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            theme: AppTheme.light,
-            home: Scaffold(
-              backgroundColor: Colors.white,
-              body: Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(24),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      const Icon(
-                        Icons.error_outline,
-                        size: 40,
-                        color: Colors.red,
+            if (snapshot.hasError) {
+              debugPrint('[UI] Bootstrap error: ${snapshot.error}');
+              return MaterialApp(
+                debugShowCheckedModeBanner: false,
+                theme: AppTheme.light,
+                home: Scaffold(
+                  backgroundColor: Colors.white,
+                  body: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(24),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          const Icon(
+                            Icons.error_outline,
+                            size: 40,
+                            color: Colors.red,
+                          ),
+                          const SizedBox(height: 12),
+                          const Text('Start fehlgeschlagen.'),
+                          const SizedBox(height: 8),
+                          Text(
+                            'Fehler: ${snapshot.error}',
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(height: 16),
+                          ElevatedButton(
+                            onPressed: () {
+                              debugPrint('[UI] User clicked retry');
+                              setState(() {
+                                _bootstrapFuture = AppBootstrap.initialize();
+                              });
+                            },
+                            child: const Text('Erneut versuchen'),
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 12),
-                      const Text('Start fehlgeschlagen.'),
-                      const SizedBox(height: 8),
-                      ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            _bootstrapFuture = AppBootstrap.initialize();
-                          });
-                        },
-                        child: const Text('Erneut versuchen'),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
-              ),
-            ),
-          );
-        }
+              );
+            }
 
-        return ProviderScope(
-          overrides: <Override>[
-            initialRouteProvider.overrideWithValue(snapshot.data!.initialRoute),
-          ],
-          child: const DasKapitalApp(),
+            if (!snapshot.hasData) {
+              debugPrint('[UI] Bootstrap completed but no data returned');
+              return MaterialApp(
+                debugShowCheckedModeBanner: false,
+                theme: AppTheme.light,
+                home: Scaffold(
+                  backgroundColor: Colors.white,
+                  body: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(24),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          const Icon(
+                            Icons.error_outline,
+                            size: 40,
+                            color: Colors.red,
+                          ),
+                          const SizedBox(height: 12),
+                          const Text('Start fehlgeschlagen.'),
+                          const SizedBox(height: 8),
+                          const SizedBox(height: 16),
+                          ElevatedButton(
+                            onPressed: () {
+                              debugPrint('[UI] User clicked retry');
+                              setState(() {
+                                _bootstrapFuture = AppBootstrap.initialize();
+                              });
+                            },
+                            child: const Text('Erneut versuchen'),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            }
+
+            debugPrint(
+              '[UI] Bootstrap completed successfully. Route: ${snapshot.data!.initialRoute}',
+            );
+            return ProviderScope(
+              overrides: <Override>[
+                initialRouteProvider.overrideWithValue(
+                  snapshot.data!.initialRoute,
+                ),
+              ],
+              child: const DasKapitalApp(),
+            );
+          },
         );
       },
     );

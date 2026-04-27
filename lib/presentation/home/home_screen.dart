@@ -12,7 +12,6 @@ import '../../data/models/thinker_quote.dart';
 import '../../domain/providers/admin_access_provider.dart';
 import '../../domain/providers/daily_content_provider.dart';
 import '../../domain/providers/app_mode_provider.dart';
-import '../../domain/providers/repository_providers.dart';
 import '../../domain/providers/streak_provider.dart';
 import '../../widgets/app_decorated_scaffold.dart';
 import '../../widgets/app_navigation_bar.dart';
@@ -354,12 +353,10 @@ class _BroadsheetOutlineButton extends StatelessWidget {
   const _BroadsheetOutlineButton({
     required this.onPressed,
     required this.label,
-    this.leadingIcon,
   });
 
   final VoidCallback onPressed;
   final String label;
-  final IconData? leadingIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -378,10 +375,6 @@ class _BroadsheetOutlineButton extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
-                if (leadingIcon != null) ...<Widget>[
-                  Icon(leadingIcon, size: 16, color: AppColors.ink),
-                  const SizedBox(width: 8),
-                ],
                 Text(
                   label,
                   textAlign: TextAlign.center,

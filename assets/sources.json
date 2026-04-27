@@ -58,5 +58,115 @@
     "public_domain": true,
     "reference": "MEW Sammelstellen",
     "notes": "Sammelgruppe fuer manuell kuratierte Einzelstellen."
+  },
+  {
+    "group_id": "nietzsche",
+    "title": "Gesammelte Werke von Friedrich Nietzsche",
+    "author": "Friedrich Nietzsche",
+    "publication_year": 1885,
+    "primary_source": true,
+    "public_domain": true,
+    "reference": "Nietzsche Werke Kritische Gesamtausgabe",
+    "notes": "Sammlung authentischer Nietzsche-Zitate aus verschiedenen Werken: Also sprach Zarathustra, Jenseits von Gut und Böse, Götzen-Dämmerung, Ecce Homo, Morgenröte."
+  },
+  {
+    "group_id": "kierkegaard",
+    "title": "Gesammelte Werke von Søren Kierkegaard",
+    "author": "Søren Kierkegaard",
+    "publication_year": 1843,
+    "primary_source": true,
+    "public_domain": true,
+    "reference": "Kierkegaards Samlede Værker",
+    "notes": "Authentische Kierkegaard-Zitate aus Gesammelten Werken, Die Krankheit zum Tode und Der Augenblick."
+  },
+  {
+    "group_id": "heidegger",
+    "title": "Gesammelte Werke von Martin Heidegger",
+    "author": "Martin Heidegger",
+    "publication_year": 1927,
+    "primary_source": true,
+    "public_domain": false,
+    "reference": "Gesamtausgabe",
+    "notes": "Authentische Zitate aus Sein und Zeit (1927) und Über den Humanismus (1947)."
+  },
+  {
+    "group_id": "wittgenstein",
+    "title": "Tractatus Logico-Philosophicus",
+    "author": "Ludwig Wittgenstein",
+    "publication_year": 1921,
+    "primary_source": true,
+    "public_domain": true,
+    "reference": "Wittgenstein Nachlass",
+    "notes": "Philosophische Aphorismen, zentral fuer analytische Philosophie."
+  },
+  {
+    "group_id": "schelling",
+    "title": "Gesammelte Werke von Friedrich Wilhelm Joseph Schelling",
+    "author": "Friedrich Wilhelm Joseph Schelling",
+    "publication_year": 1800,
+    "primary_source": true,
+    "public_domain": true,
+    "reference": "Sämtliche Werke",
+    "notes": "Authentische Zitate aus System des Idealismus und Philosophie der Kunst."
+  },
+  {
+    "group_id": "fichte",
+    "title": "Gesammelte Werke von Johann Gottlieb Fichte",
+    "author": "Johann Gottlieb Fichte",
+    "publication_year": 1800,
+    "primary_source": true,
+    "public_domain": true,
+    "reference": "Sämtliche Werke",
+    "notes": "Authentische Zitate aus Die Bestimmung des Menschen und Wissenschaftslehre."
+  },
+  {
+    "group_id": "herder",
+    "title": "Ideen zur Philosophie der Geschichte der Menschheit",
+    "author": "Johann Gottfried Herder",
+    "publication_year": 1784,
+    "primary_source": true,
+    "public_domain": true,
+    "reference": "Sämtliche Werke",
+    "notes": "Fundamentales Werk zur Geschichtsphilosophie und Kulturtheorie."
+  },
+  {
+    "group_id": "mill",
+    "title": "Gesammelte Werke von John Stuart Mill",
+    "author": "John Stuart Mill",
+    "publication_year": 1859,
+    "primary_source": true,
+    "public_domain": true,
+    "reference": "Collected Works of John Stuart Mill",
+    "notes": "Authentische Zitate aus Über die Freiheit und Utilitarismus."
+  },
+  {
+    "group_id": "bentham",
+    "title": "Introduction to the Principles of Morals and Legislation",
+    "author": "Jeremy Bentham",
+    "publication_year": 1789,
+    "primary_source": true,
+    "public_domain": true,
+    "reference": "Works of Jeremy Bentham",
+    "notes": "Klassisches utilitaristisches Werk, Grundlage der Glücksformel."
+  },
+  {
+    "group_id": "bacon",
+    "title": "Novum Organum",
+    "author": "Francis Bacon",
+    "publication_year": 1620,
+    "primary_source": true,
+    "public_domain": true,
+    "reference": "Bacon Collected Works",
+    "notes": "Philosophische Grundlegung der wissenschaftlichen Methode."
+  },
+  {
+    "group_id": "descartes",
+    "title": "Gesammelte Werke von René Descartes",
+    "author": "René Descartes",
+    "publication_year": 1637,
+    "primary_source": true,
+    "public_domain": true,
+    "reference": "Oeuvres de Descartes",
+    "notes": "Authentische Zitate aus Discourse on Method und Meditations - Grundwerk der neuzeitlichen Philosophie."
   }
 ]

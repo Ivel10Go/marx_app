@@ -13,8 +13,10 @@ import java.util.Locale
 
 class QuoteWidgetProvider : AppWidgetProvider() {
   override fun onReceive(context: Context, intent: Intent) {
+    Log.d(LOG_TAG, "onReceive called with action: ${intent.action}")
     super.onReceive(context, intent)
     if (intent.action == AppWidgetManager.ACTION_APPWIDGET_UPDATE) {
+      Log.d(LOG_TAG, "Refreshing all widgets")
       refreshAll(context)
     }
   }
@@ -24,6 +26,7 @@ class QuoteWidgetProvider : AppWidgetProvider() {
     appWidgetManager: AppWidgetManager,
     appWidgetIds: IntArray,
   ) {
+    Log.d(LOG_TAG, "onUpdate called for ${appWidgetIds.size} widgets")
     appWidgetIds.forEach { widgetId ->
       updateWidget(context, appWidgetManager, widgetId)
     }
@@ -35,6 +38,7 @@ class QuoteWidgetProvider : AppWidgetProvider() {
     appWidgetId: Int,
     newOptions: android.os.Bundle,
   ) {
+    Log.d(LOG_TAG, "onAppWidgetOptionsChanged called for widget $appWidgetId")
     super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions)
     updateWidget(context, appWidgetManager, appWidgetId)
   }
@@ -43,9 +47,11 @@ class QuoteWidgetProvider : AppWidgetProvider() {
     private const val LOG_TAG = "QuoteWidgetProvider"
 
     fun refreshAll(context: Context) {
+      Log.d(LOG_TAG, "refreshAll called")
       val manager = AppWidgetManager.getInstance(context)
       val componentName = ComponentName(context, QuoteWidgetProvider::class.java)
       val ids = manager.getAppWidgetIds(componentName)
+      Log.d(LOG_TAG, "Found ${ids.size} widget instances to refresh")
       ids.forEach { id ->
         updateWidget(context, manager, id)
       }
@@ -56,9 +62,11 @@ class QuoteWidgetProvider : AppWidgetProvider() {
       appWidgetManager: AppWidgetManager,
       appWidgetId: Int,
     ) {
+      Log.d(LOG_TAG, "updateWidget called for widget $appWidgetId")
       try {
         val prefs = context.getSharedPreferences("HomeWidgetPreferences", Context.MODE_PRIVATE)
         val quoteText = prefs.getString("quote_text", "Tageszitat wird geladen …") ?: ""
+        Log.d(LOG_TAG, "Loaded quote_text from SharedPreferences")
         val quoteAuthor = prefs.getString("quote_author", "") ?: ""
         val source = prefs.getString("quote_source", null)
           ?: prefs.getString("source", "Zitatatlas") ?: ""
@@ -122,38 +130,21 @@ class QuoteWidgetProvider : AppWidgetProvider() {
           if (isFact) View.VISIBLE else View.GONE,
         )
 
-        if (layout != R.layout.quote_widget_small) {
-          views.setTextViewText(R.id.quote_explanation, explanation)
-          views.setTextViewText(R.id.quote_categories, categories)
-          views.setTextViewText(R.id.quote_streak, "LEKTÜRE · TAG $streak")
-          views.setViewVisibility(
-            R.id.quote_explanation,
-            if (explanation.isBlank()) View.GONE else View.VISIBLE,
-          )
-          views.setViewVisibility(
-            R.id.quote_categories,
-            if (categories.isBlank()) View.GONE else View.VISIBLE,
-          )
-          views.setViewVisibility(
-            R.id.quote_author,
-            if (quoteAuthor.isBlank()) View.GONE else View.VISIBLE,
-          )
-        } else {
-          views.setTextViewText(R.id.quote_explanation, explanation)
-          views.setTextViewText(R.id.quote_categories, categories)
-          views.setViewVisibility(
-            R.id.quote_explanation,
-            if (explanation.isBlank()) View.GONE else View.VISIBLE,
-          )
-          views.setViewVisibility(
-            R.id.quote_categories,
-            if (categories.isBlank()) View.GONE else View.VISIBLE,
-          )
-          views.setViewVisibility(
-            R.id.quote_author,
-            if (quoteAuthor.isBlank()) View.GONE else View.VISIBLE,
-          )
-        }
+        views.setTextViewText(R.id.quote_explanation, explanation)
+        views.setTextViewText(R.id.quote_categories, categories)
+        views.setTextViewText(R.id.quote_streak, "LEKTÜRE · TAG $streak")
+        views.setViewVisibility(
+          R.id.quote_explanation,
+          if (explanation.isBlank()) View.GONE else View.VISIBLE,
+        )
+        views.setViewVisibility(
+          R.id.quote_categories,
+          if (categories.isBlank()) View.GONE else View.VISIBLE,
+        )
+        views.setViewVisibility(
+          R.id.quote_author,
+          if (quoteAuthor.isBlank()) View.GONE else View.VISIBLE,
+        )
 
         val openIntent = Intent(context, MainActivity::class.java)
         openIntent.putExtra(
@@ -169,6 +160,7 @@ class QuoteWidgetProvider : AppWidgetProvider() {
         views.setOnClickPendingIntent(R.id.quote_root, pendingIntent)
 
         appWidgetManager.updateAppWidget(appWidgetId, views)
+        Log.d(LOG_TAG, "Widget $appWidgetId successfully updated with primary layout")
       } catch (e: Exception) {
         Log.e(LOG_TAG, "Widget render failed for id=$appWidgetId, using fallback", e)
         val fallbackViews = RemoteViews(context.packageName, R.layout.quote_widget_v2)
@@ -187,6 +179,7 @@ class QuoteWidgetProvider : AppWidgetProvider() {
         )
         fallbackViews.setOnClickPendingIntent(R.id.quote_root, fallbackPendingIntent)
         appWidgetManager.updateAppWidget(appWidgetId, fallbackViews)
+        Log.d(LOG_TAG, "Widget $appWidgetId updated with fallback layout")
       }
     }
   }
