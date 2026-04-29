@@ -11,6 +11,10 @@ class MainActivity : FlutterActivity() {
 	override fun onNewIntent(intent: android.content.Intent) {
 		super.onNewIntent(intent)
 		setIntent(intent)
+		val route = intent.getStringExtra("launch_route")?.takeIf { it.isNotBlank() }
+		if (route != null) {
+			flutterEngine?.navigationChannel?.pushRoute(route)
+		}
 	}
 
 	override fun getInitialRoute(): String {

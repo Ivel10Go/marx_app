@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -11,7 +13,15 @@ import 'core/services/background_tasks_service.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await BackgroundTasksService.initialize();
+  unawaited(
+    BackgroundTasksService.initialize().catchError((
+      Object error,
+      StackTrace stackTrace,
+    ) {
+      debugPrint('[Bootstrap] Background task init failed: $error');
+      debugPrintStack(stackTrace: stackTrace);
+    }),
+  );
 
   runApp(const _BootstrapGateApp());
 }

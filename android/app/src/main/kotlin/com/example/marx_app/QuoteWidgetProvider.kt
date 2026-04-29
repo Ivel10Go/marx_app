@@ -90,7 +90,7 @@ class QuoteWidgetProvider : AppWidgetProvider() {
         val minHeight = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT)
 
         val layout = when {
-          minHeight <= 0 -> R.layout.quote_widget_medium
+          minHeight <= 0 -> R.layout.quote_widget_small
           minHeight >= 150 -> R.layout.quote_widget_large
           minHeight >= 90 -> R.layout.quote_widget_medium
           else -> R.layout.quote_widget_small

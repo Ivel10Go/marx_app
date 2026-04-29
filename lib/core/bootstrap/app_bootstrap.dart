@@ -27,8 +27,8 @@ class _IsolateDailyContent {
   final String appMode;
 }
 
-/// Top-level function for isolate computation - CRITICAL PATH ONLY
-/// Returns daily content for widget sync, but defers the sync itself
+/// Top-level function for isolate computation - background warm-up only.
+/// Returns daily content for widget sync after startup.
 Future<_IsolateDailyContent> _initializeDatabaseInIsolate(_) async {
   final db = AppDatabase();
   final stopwatch = Stopwatch()..start();
@@ -145,7 +145,6 @@ abstract final class AppBootstrap {
   }
 
   static Future<AppBootstrapResult> initialize() async {
-    final bootstrapStart = Stopwatch()..start();
     try {
       debugPrint('[Bootstrap] Starting app bootstrap...');
       _emitProgress(0.05, 'Start wird vorbereitet ...');
@@ -154,46 +153,24 @@ abstract final class AppBootstrap {
       final fontStart = Stopwatch()..start();
       debugPrint('[Bootstrap] Initializing fonts...');
       _emitProgress(0.10, 'Schriftarten werden geladen ...');
-      
-      GoogleFonts.config.allowRuntimeFetching = false; // Use local fonts only
+
+      // Fallback to runtime fetching when bundled font files are not present.
+      // This avoids crashes like "font ... was not found in application assets".
+      GoogleFonts.config.allowRuntimeFetching = true;
       AppTheme.initializeTextStyles(); // Preload all text styles
-      
+
       fontStart.stop();
-      debugPrint('[Bootstrap] Fonts initialized in ${fontStart.elapsedMilliseconds}ms');
+      debugPrint(
+        '[Bootstrap] Fonts initialized in ${fontStart.elapsedMilliseconds}ms',
+      );
       _emitProgress(0.15, 'Benachrichtigungen werden vorbereitet ...');
 
-      // Initialize notification service in parallel (non-blocking)
-      // This runs in the background and doesn't block app loading
-      final notificationFuture = _initializeNotificationService();
+      unawaited(_initializeNotificationService());
 
-      // Run critical database initialization in isolate
-      final databaseStart = Stopwatch()..start();
-      debugPrint('[Bootstrap] Running database initialization in isolate...');
-      _emitProgress(0.25, 'Datenbank und Inhalte werden geladen ...');
-      final dailyContentData = await compute(_initializeDatabaseInIsolate, null)
-          .timeout(
-            const Duration(seconds: 30),
-            onTimeout: () {
-              debugPrint(
-                '[Bootstrap] WARNING: Database initialization timed out',
-              );
-              return _IsolateDailyContent(
-                content: null,
-                streakCount: 0,
-                appMode: 'PUBLIC',
-              );
-            },
-          );
-      databaseStart.stop();
-      debugPrint(
-        '[Bootstrap] Database initialization completed in ${databaseStart.elapsedMilliseconds}ms',
-      );
-      _emitProgress(0.75, 'Inhalte sind bereit ...');
-
-      // Determine initial route (critical path)
+      // Determine initial route from persisted settings only.
       final routeStart = Stopwatch()..start();
       debugPrint('[Bootstrap] Determining initial route...');
-      _emitProgress(0.85, 'Startseite wird bestimmt ...');
+      _emitProgress(0.30, 'Startseite wird bestimmt ...');
       final settings = await SharedPreferences.getInstance();
       final profileRaw = settings.getString(UserProfile.storageKey);
       final onboardingSeen = _resolveOnboardingSeen(profileRaw);
@@ -209,20 +186,20 @@ abstract final class AppBootstrap {
       );
       _emitProgress(1.0, 'Fertig ...');
 
-      bootstrapStart.stop();
       debugPrint(
-        '[Bootstrap] ✓ Critical bootstrap completed in ${bootstrapStart.elapsedMilliseconds}ms. Initial route: $initialRoute',
+        '[Bootstrap] ✓ Critical bootstrap completed quickly. Initial route: $initialRoute',
       );
 
-      // Schedule deferred operations to run after app loads
-      _scheduleDeferredOperations(dailyContentData);
-      notificationFuture.ignore(); // Let it complete in background
+      // Schedule deferred operations to run after app becomes visible.
+      _scheduleDeferredOperations();
 
       return AppBootstrapResult(
         initialRoute: initialRoute,
-        dailyContent: dailyContentData.content,
-        streakCount: dailyContentData.streakCount,
-        modeLabel: dailyContentData.appMode,
+        dailyContent: null,
+        streakCount: settings.getInt(SettingsKeys.streak) ?? 0,
+        modeLabel: _resolveAppMode(
+          settings.getString('app_mode'),
+        ).name.toUpperCase(),
       );
     } catch (e, st) {
       _emitProgress(1.0, 'Start fehlgeschlagen');
@@ -260,13 +237,30 @@ abstract final class AppBootstrap {
   }
 
   /// Schedule deferred operations to run after app displays (non-blocking)
-  static void _scheduleDeferredOperations(
-    _IsolateDailyContent dailyContentData,
-  ) {
+  static void _scheduleDeferredOperations() {
     // Run all deferred operations asynchronously after a short delay
     Future.delayed(const Duration(milliseconds: 500), () async {
       try {
-        // Sync widget if content is available
+        // Warm the database and sync the widget without blocking startup.
+        final warmupStart = Stopwatch()..start();
+        debugPrint('[Deferred] Warming up data for widget sync...');
+        final dailyContentData =
+            await compute(_initializeDatabaseInIsolate, null).timeout(
+              const Duration(seconds: 30),
+              onTimeout: () {
+                debugPrint('[Deferred] WARNING: Database warm-up timed out');
+                return _IsolateDailyContent(
+                  content: null,
+                  streakCount: 0,
+                  appMode: 'PUBLIC',
+                );
+              },
+            );
+        warmupStart.stop();
+        debugPrint(
+          '[Deferred] Data warm-up completed in ${warmupStart.elapsedMilliseconds}ms',
+        );
+
         if (dailyContentData.content != null) {
           final syncStart = Stopwatch()..start();
           debugPrint('[Deferred] Syncing widget...');
