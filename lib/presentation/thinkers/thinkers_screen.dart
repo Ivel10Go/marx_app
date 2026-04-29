@@ -16,6 +16,7 @@ class ThinkersScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedType = ref.watch(thinkerTypeProvider);
     final selectedAuthor = ref.watch(selectedAuthorProvider);
+    final scheme = Theme.of(context).colorScheme;
 
     return PopScope(
       canPop: selectedAuthor == null,
@@ -31,7 +32,7 @@ class ThinkersScreen extends ConsumerWidget {
           children: <Widget>[
             // Masthead
             Container(
-              color: AppColors.paper,
+              color: scheme.surface,
               padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,12 +42,12 @@ class ThinkersScreen extends ConsumerWidget {
                     style: GoogleFonts.playfairDisplay(
                       fontSize: 32,
                       fontWeight: FontWeight.w700,
-                      color: AppColors.ink,
+                      color: scheme.onSurface,
                       letterSpacing: -0.5,
                     ),
                   ),
                   const SizedBox(height: 12),
-                  Container(width: 40, height: 2, color: AppColors.red),
+                  Container(width: 40, height: 2, color: scheme.primary),
                   const SizedBox(height: 16),
                   // Type toggle
                   Row(

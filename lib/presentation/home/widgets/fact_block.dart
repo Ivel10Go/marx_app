@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/utils/image_loader.dart';
 import '../../../data/models/history_fact.dart';
@@ -22,25 +21,18 @@ class FactBlock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
     final hasRelatedQuotes = fact.relatedQuoteIds.isNotEmpty;
-    final punchline = fact.funFact?.trim().isNotEmpty == true
-        ? fact.funFact!.trim()
-        : fact.headline;
-    final quickContext = fact.funFact?.trim().isNotEmpty == true
-        ? fact.headline
-        : _firstSentence(fact.body);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         // Kicker-Band
         Container(
-          color: AppColors.red,
+          color: scheme.primary,
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Text(
-            fact.todayInHistory
-                ? 'WELTGESCHICHTE · HEUTE VOR ${_yearsAgo(fact.dateIso)} JAHREN'
-                : 'WELTGESCHICHTE · ${fact.dateDisplay.toUpperCase()}',
+            'WELTGESCHICHTE · ${fact.dateDisplay.toUpperCase()}',
             style: AppTheme.factBlockKicker,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -62,17 +54,16 @@ class FactBlock extends StatelessWidget {
 
         // Body container
         Container(
-          color: AppColors.paper,
+          color: scheme.surface,
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(14),
                 decoration: BoxDecoration(
-                  color: AppColors.paperDark,
-                  border: Border.all(color: AppColors.rule, width: 1),
+                  color: scheme.surface.withOpacity(0.95),
+                  border: Border.all(color: scheme.outline, width: 1),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,15 +73,18 @@ class FactBlock extends StatelessWidget {
                       style: AppTheme.factBlockKickerRed,
                     ),
                     const SizedBox(height: 8),
-                    Text(punchline, style: AppTheme.factBlockPunchline),
+                    Text(
+                      fact.funFact?.trim().isNotEmpty == true
+                          ? fact.funFact!.trim()
+                          : fact.headline,
+                      style: AppTheme.factBlockPunchline,
+                    ),
                     const SizedBox(height: 12),
                     Container(
                       width: double.infinity,
                       height: 1,
-                      color: AppColors.rule,
+                      color: scheme.outline,
                     ),
-                    const SizedBox(height: 10),
-                    Text(quickContext, style: AppTheme.factBlockQuickContext),
                   ],
                 ),
               ),
@@ -112,7 +106,7 @@ class FactBlock extends StatelessWidget {
               const SizedBox(height: 18),
 
               // Red divider line
-              Container(width: 28, height: 2, color: AppColors.red),
+              Container(width: 28, height: 2, color: scheme.primary),
 
               const SizedBox(height: 16),
 
@@ -136,11 +130,11 @@ class FactBlock extends StatelessWidget {
                     OutlinedButton.icon(
                       onPressed: onShareTap,
                       style: OutlinedButton.styleFrom(
-                        side: const BorderSide(color: AppColors.ink, width: 1),
-                        foregroundColor: AppColors.ink,
+                        side: BorderSide(color: scheme.onSurface, width: 1),
+                        foregroundColor: scheme.onSurface,
                         padding: const EdgeInsets.symmetric(
                           horizontal: 12,
-                          vertical: 10,
+                          vertical: 8,
                         ),
                         shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.zero,
@@ -164,17 +158,16 @@ class FactBlock extends StatelessWidget {
 
         // Marxistische Einordnung section
         Container(
-          color: AppColors.paper.withValues(alpha: 0.7),
+          color: scheme.surface.withOpacity(0.7),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
                 'MARXISTISCHE EINORDNUNG',
                 style: GoogleFonts.ibmPlexSans(
                   fontSize: 11,
                   fontWeight: FontWeight.w600,
-                  color: AppColors.ink,
+                  color: scheme.onSurface,
                   letterSpacing: 1.2,
                 ),
               ),
@@ -184,7 +177,7 @@ class FactBlock extends StatelessWidget {
                 style: GoogleFonts.playfairDisplay(
                   fontSize: 13,
                   fontWeight: FontWeight.w400,
-                  color: AppColors.ink,
+                  color: scheme.onSurface,
                   height: 1.6,
                 ),
               ),
@@ -193,19 +186,21 @@ class FactBlock extends StatelessWidget {
         ),
 
         // Related quote button
-        if (hasRelatedQuotes)
+        if (hasRelatedQuotes) ...<Widget>[
           Padding(
             padding: const EdgeInsets.fromLTRB(24, 20, 24, 0),
             child: ElevatedButton(
               onPressed: onRelatedQuoteTap,
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.red,
-                foregroundColor: Colors.white,
+                backgroundColor: scheme.primary,
+                foregroundColor: scheme.onPrimary,
                 padding: const EdgeInsets.symmetric(
                   horizontal: 16,
                   vertical: 12,
                 ),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.zero,
+                ),
               ),
               child: Text(
                 'VERWANDTES ZITAT LESEN →',
@@ -217,35 +212,11 @@ class FactBlock extends StatelessWidget {
               ),
             ),
           ),
+        ],
       ],
     );
   }
 
-  String _yearsAgo(String dateIso) {
-    try {
-      final date = DateTime.parse(dateIso);
-      final now = DateTime.now();
-      final years = now.year - date.year;
-      return years.toString();
-    } catch (e) {
-      return '?';
-    }
-  }
-
   String _capitalize(String s) =>
       s.isEmpty ? s : s[0].toUpperCase() + s.substring(1);
-
-  String _firstSentence(String text) {
-    final normalized = text.trim();
-    if (normalized.isEmpty) {
-      return '';
-    }
-
-    final dotIndex = normalized.indexOf('.');
-    if (dotIndex <= 0) {
-      return normalized;
-    }
-
-    return normalized.substring(0, dotIndex + 1);
-  }
 }

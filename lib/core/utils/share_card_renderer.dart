@@ -91,25 +91,27 @@ class _SharePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
     return Material(
-      color: AppColors.paper,
+      color: scheme.surface,
       child: Container(
         width: 1080,
         height: 1350,
-        color: AppColors.paper,
+        color: scheme.surface,
         padding: const EdgeInsets.all(40),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Container(
-              color: AppColors.red,
+              color: scheme.primary,
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               child: Text(
                 kicker,
                 style: GoogleFonts.ibmPlexSans(
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
-                  color: Colors.white,
+                  color: scheme.onPrimary,
                   letterSpacing: 1.4,
                 ),
                 maxLines: 1,
@@ -118,8 +120,8 @@ class _SharePage extends StatelessWidget {
             ),
             Container(
               decoration: BoxDecoration(
-                color: AppColors.paper,
-                border: Border.all(color: AppColors.ink, width: 2),
+                color: scheme.surface,
+                border: Border.all(color: scheme.onSurface, width: 2),
               ),
               padding: const EdgeInsets.all(36),
               child: Column(
@@ -131,7 +133,7 @@ class _SharePage extends StatelessWidget {
                       fontSize: 56,
                       fontWeight: FontWeight.w700,
                       fontStyle: FontStyle.italic,
-                      color: AppColors.ink,
+                      color: scheme.onSurface,
                       height: 1.25,
                     ),
                     maxLines: 8,
@@ -145,7 +147,7 @@ class _SharePage extends StatelessWidget {
                     style: GoogleFonts.ibmPlexSans(
                       fontSize: 24,
                       height: 1.55,
-                      color: AppColors.ink,
+                      color: scheme.onSurface,
                     ),
                     maxLines: 8,
                     overflow: TextOverflow.ellipsis,
@@ -158,7 +160,7 @@ class _SharePage extends StatelessWidget {
                       style: GoogleFonts.ibmPlexSans(
                         fontSize: 14,
                         fontWeight: FontWeight.w700,
-                        color: AppColors.red,
+                        color: scheme.primary,
                         letterSpacing: 1.0,
                       ),
                       maxLines: 1,
@@ -171,7 +173,7 @@ class _SharePage extends StatelessWidget {
                     style: GoogleFonts.ibmPlexSans(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
-                      color: AppColors.inkLight,
+                      color: scheme.onSurface.withOpacity(0.85),
                     ),
                     maxLines: 4,
                     overflow: TextOverflow.ellipsis,
@@ -184,7 +186,7 @@ class _SharePage extends StatelessWidget {
                       style: GoogleFonts.ibmPlexSans(
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
-                        color: AppColors.inkLight.withValues(alpha: 0.55),
+                        color: scheme.onSurface.withOpacity(0.55),
                         letterSpacing: 1.0,
                       ),
                     ),

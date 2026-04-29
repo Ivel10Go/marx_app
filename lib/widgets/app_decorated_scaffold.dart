@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../core/theme/app_colors.dart';
 
 class AppDecoratedScaffold extends StatelessWidget {
   const AppDecoratedScaffold({
@@ -18,9 +17,11 @@ class AppDecoratedScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
     return Scaffold(
       extendBodyBehindAppBar: true,
-      backgroundColor: AppColors.paper,
+      backgroundColor: scheme.surface,
       appBar: appBar,
       floatingActionButton: floatingActionButton,
       bottomNavigationBar: bottomNavigationBar,

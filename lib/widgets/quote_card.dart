@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'adaptive_quote_text.dart';
-import '../core/theme/app_colors.dart';
 import '../core/theme/app_theme.dart';
 import '../data/models/quote.dart';
 import '../domain/providers/favorites_provider.dart';
@@ -35,13 +34,14 @@ class QuoteCard extends ConsumerWidget {
     final isLongQuote = _isLongQuote(quoteText);
     final isFavoriteAsync = ref.watch(isFavoriteProvider(quote.id));
     final isFavorite = isFavoriteAsync.valueOrNull ?? false;
+    final scheme = Theme.of(context).colorScheme;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         // Kicker-Band (rot)
         Container(
-          color: AppColors.red,
+          color: scheme.primary,
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
           child: Row(
             children: <Widget>[
@@ -63,7 +63,7 @@ class QuoteCard extends ConsumerWidget {
                     minHeight: 28,
                   ),
                   iconSize: 16,
-                  color: AppColors.redOnRed,
+                  color: scheme.onPrimary,
                   tooltip: 'Teilen',
                 ),
                 const SizedBox(width: 4),
@@ -72,7 +72,7 @@ class QuoteCard extends ConsumerWidget {
                 quote.chapter,
                 style: GoogleFonts.ibmPlexSans(
                   fontSize: 8,
-                  color: AppColors.redOnRed.withValues(alpha: 0.7),
+                  color: scheme.onPrimary.withOpacity(0.7),
                 ),
               ),
             ],
@@ -80,12 +80,12 @@ class QuoteCard extends ConsumerWidget {
         ),
         // Hauptkarte
         Container(
-          decoration: const BoxDecoration(
-            color: AppColors.paper,
+          decoration: BoxDecoration(
+            color: scheme.surface,
             border: Border(
-              left: BorderSide(color: AppColors.ink, width: 1),
-              right: BorderSide(color: AppColors.ink, width: 1),
-              bottom: BorderSide(color: AppColors.ink, width: 1),
+              left: BorderSide(color: scheme.onSurface, width: 1),
+              right: BorderSide(color: scheme.onSurface, width: 1),
+              bottom: BorderSide(color: scheme.onSurface, width: 1),
             ),
           ),
           child: Material(
@@ -113,8 +113,8 @@ class QuoteCard extends ConsumerWidget {
                           isFavorite ? Icons.favorite : Icons.favorite_border,
                           size: 18,
                           color: isFavorite
-                              ? AppColors.red
-                              : AppColors.inkLight,
+                              ? scheme.primary
+                              : scheme.onSurface.withOpacity(0.6),
                         ),
                         splashRadius: 18,
                         padding: EdgeInsets.zero,
@@ -143,21 +143,21 @@ class QuoteCard extends ConsumerWidget {
                         style: GoogleFonts.ibmPlexSans(
                           fontSize: 10,
                           fontWeight: FontWeight.w600,
-                          color: AppColors.inkLight,
+                          color: scheme.onSurface.withOpacity(0.6),
                           letterSpacing: 0.2,
                         ),
                       ),
                     ],
                     const SizedBox(height: 14),
                     // Rote Linie
-                    Container(width: 28, height: 2, color: AppColors.red),
+                    Container(width: 28, height: 2, color: scheme.primary),
                     const SizedBox(height: 10),
                     // Attribution
                     Text(
                       '— ${quote.source}',
                       style: GoogleFonts.playfairDisplay(
                         fontSize: 11,
-                        color: AppColors.inkLight,
+                        color: scheme.onSurface.withOpacity(0.85),
                       ),
                     ),
                     const SizedBox(height: 14),
@@ -186,15 +186,15 @@ class QuoteCard extends ConsumerWidget {
                               style: GoogleFonts.ibmPlexSans(
                                 fontSize: 10,
                                 fontWeight: FontWeight.w600,
-                                color: AppColors.red,
+                                color: scheme.primary,
                                 letterSpacing: 0.4,
                               ),
                             ),
                           ),
-                          const Icon(
+                          Icon(
                             Icons.chevron_right_rounded,
                             size: 18,
-                            color: AppColors.red,
+                            color: scheme.primary,
                           ),
                         ],
                         if (trailing != null) ...<Widget>[
