@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../core/services/widget_sync_service.dart';
 import '../../core/theme/app_colors.dart';
+import '../../core/theme/app_theme.dart';
 import '../../core/utils/share_card_renderer.dart';
 import '../../data/models/daily_content.dart';
 import '../../data/models/quote.dart';
@@ -52,7 +53,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
     _fade = CurvedAnimation(parent: _controller, curve: Curves.easeOut);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(streakControllerProvider.notifier).logTodayAndRefresh();
+      if (mounted) {
+        ref.read(streakControllerProvider.notifier).logTodayAndRefresh();
+      }
     });
   }
 
@@ -120,6 +123,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
         onRefresh: () async => ref.invalidate(dailyContentProvider),
         child: ListView(
           padding: EdgeInsets.zero,
+          physics: const AlwaysScrollableScrollPhysics(
+            parent: BouncingScrollPhysics(),
+          ),
           children: <Widget>[
             Container(
               color: AppColors.paper,
@@ -134,23 +140,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text(
-                              'ZITATATLAS',
-                              style: GoogleFonts.playfairDisplay(
-                                fontSize: 32,
-                                fontWeight: FontWeight.w700,
-                                color: AppColors.ink,
-                                letterSpacing: -0.5,
-                              ),
-                            ),
+                            Text('ZITATATLAS', style: AppTheme.masthead),
                             const SizedBox(height: 4),
                             Text(
                               _mastheadSubtitle(),
-                              style: GoogleFonts.ibmPlexSans(
-                                fontSize: 10,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.inkLight,
-                              ),
+                              style: AppTheme.mastHeadSubtitle,
                             ),
                           ],
                         ),

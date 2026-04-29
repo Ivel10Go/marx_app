@@ -13,6 +13,7 @@ class Quote {
     required this.explanationLong,
     required this.relatedIds,
     this.funFact,
+    this.imageUrl,
   });
 
   final String id;
@@ -28,6 +29,7 @@ class Quote {
   final String explanationLong;
   final List<String> relatedIds;
   final String? funFact;
+  final String? imageUrl;
 
   factory Quote.fromJson(Map<String, dynamic> json) {
     return Quote(
@@ -44,6 +46,7 @@ class Quote {
       explanationLong: json['explanation_long'] as String,
       relatedIds: (json['related_ids'] as List<dynamic>).cast<String>(),
       funFact: json['fun_fact'] as String?,
+      imageUrl: json['image_url'] as String?,
     );
   }
 
@@ -62,6 +65,7 @@ class Quote {
       'explanation_long': explanationLong,
       'related_ids': relatedIds,
       'fun_fact': funFact,
+      'image_url': imageUrl,
     };
   }
 }

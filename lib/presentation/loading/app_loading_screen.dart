@@ -42,9 +42,7 @@ class _AppLoadingScreenState extends State<AppLoadingScreen>
 
   @override
   Widget build(BuildContext context) {
-    final safeProgress = widget.progress == null
-        ? null
-        : widget.progress!.clamp(0.0, 1.0);
+    final safeProgress = widget.progress?.clamp(0.0, 1.0);
     final displayProgress = safeProgress == null
         ? null
         : (safeProgress == 0.0 ? 0.06 : safeProgress);

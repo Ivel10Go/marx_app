@@ -6,6 +6,7 @@ class ThinkerQuote {
     required this.textDe,
     required this.source,
     required this.year,
+    this.imageUrl,
   });
 
   final String id;
@@ -16,6 +17,7 @@ class ThinkerQuote {
   final String textDe;
   final String source;
   final int year;
+  final String? imageUrl;
 
   bool get isPhilosopher => authorType == 'philosopher';
   bool get isPolitician => authorType == 'politician';
@@ -28,6 +30,7 @@ class ThinkerQuote {
       textDe: json['text_de'] as String,
       source: json['source'] as String,
       year: (json['year'] as num).toInt(),
+      imageUrl: json['image_url'] as String?,
     );
   }
 }

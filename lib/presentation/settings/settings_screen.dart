@@ -8,6 +8,7 @@ import '../../data/models/daily_content.dart';
 import '../../data/models/home_content_mode.dart';
 import '../../domain/providers/admin_access_provider.dart';
 import '../../domain/providers/app_mode_provider.dart';
+import '../../domain/providers/premium_provider.dart';
 import '../../domain/providers/daily_content_provider.dart';
 import '../../domain/providers/settings_provider.dart';
 import '../../widgets/app_decorated_scaffold.dart';
@@ -226,21 +227,55 @@ class SettingsScreen extends ConsumerWidget {
                                 color: AppColors.ink,
                               ),
                             ),
-                            const SizedBox(height: 4),
+                            const SizedBox(height: 8),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
-                                Text(
-                                  'Hell (Broadsheet)',
-                                  style: GoogleFonts.ibmPlexSans(
-                                    fontSize: 10,
-                                    color: AppColors.inkLight,
+                                Expanded(
+                                  child: _ThemeOption(
+                                    label: 'Hell',
+                                    themeMode: ThemeMode.light,
+                                    isSelected:
+                                        settings.themeMode == ThemeMode.light,
+                                    onTap: () {
+                                      ref
+                                          .read(
+                                            settingsControllerProvider.notifier,
+                                          )
+                                          .setThemeMode(ThemeMode.light);
+                                    },
                                   ),
                                 ),
-                                Icon(
-                                  Icons.check_circle,
-                                  color: AppColors.red,
-                                  size: 20,
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: _ThemeOption(
+                                    label: 'Dunkel',
+                                    themeMode: ThemeMode.dark,
+                                    isSelected:
+                                        settings.themeMode == ThemeMode.dark,
+                                    onTap: () {
+                                      ref
+                                          .read(
+                                            settingsControllerProvider.notifier,
+                                          )
+                                          .setThemeMode(ThemeMode.dark);
+                                    },
+                                  ),
+                                ),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: _ThemeOption(
+                                    label: 'System',
+                                    themeMode: ThemeMode.system,
+                                    isSelected:
+                                        settings.themeMode == ThemeMode.system,
+                                    onTap: () {
+                                      ref
+                                          .read(
+                                            settingsControllerProvider.notifier,
+                                          )
+                                          .setThemeMode(ThemeMode.system);
+                                    },
+                                  ),
                                 ),
                               ],
                             ),
@@ -402,6 +437,38 @@ class SettingsScreen extends ConsumerWidget {
                               ),
                             ),
                           ],
+                        ),
+                        const SizedBox(height: 16),
+                        // ─── Premium Test Toggle (DEV) ──────────────
+                        Consumer(
+                          builder: (context, ref, _) {
+                            final isPremium = ref
+                                .watch(isPremiumProvider)
+                                .maybeWhen(
+                                  data: (value) => value,
+                                  orElse: () => false,
+                                );
+                            return Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(
+                                  'Premium Testen',
+                                  style: GoogleFonts.ibmPlexSans(
+                                    fontSize: 10,
+                                    color: AppColors.inkLight,
+                                  ),
+                                ),
+                                Switch(
+                                  value: isPremium,
+                                  onChanged: (value) {
+                                    ref
+                                        .read(isPremiumProvider.notifier)
+                                        .setPremium(value);
+                                  },
+                                ),
+                              ],
+                            );
+                          },
                         ),
                       ],
                     ),
@@ -1042,6 +1109,57 @@ class _PremiumFeatureRow extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _ThemeOption extends StatelessWidget {
+  const _ThemeOption({
+    required this.label,
+    required this.themeMode,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  final String label;
+  final ThemeMode themeMode;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: isSelected ? AppColors.red : AppColors.ink,
+            width: isSelected ? 2 : 1,
+          ),
+          borderRadius: BorderRadius.zero,
+          color: isSelected ? AppColors.paper : Colors.transparent,
+        ),
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            if (isSelected)
+              const Padding(
+                padding: EdgeInsets.only(bottom: 6),
+                child: Icon(Icons.check_circle, color: AppColors.red, size: 16),
+              ),
+            Text(
+              label,
+              textAlign: TextAlign.center,
+              style: GoogleFonts.ibmPlexSans(
+                fontSize: 10,
+                fontWeight: FontWeight.w600,
+                color: AppColors.ink,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

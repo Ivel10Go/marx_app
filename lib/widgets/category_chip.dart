@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../core/theme/app_colors.dart';
+import '../core/theme/app_theme.dart';
 
 class CategoryChip extends StatelessWidget {
   const CategoryChip({required this.label, this.onTap, super.key});
@@ -19,15 +19,7 @@ class CategoryChip extends StatelessWidget {
       ),
       child: GestureDetector(
         onTap: onTap,
-        child: Text(
-          label.toUpperCase(),
-          style: GoogleFonts.ibmPlexSans(
-            fontSize: 9,
-            fontWeight: FontWeight.w700,
-            letterSpacing: 1.2,
-            color: AppColors.ink,
-          ),
-        ),
+        child: Text(label.toUpperCase(), style: AppTheme.categoryChipLabel),
       ),
     );
   }

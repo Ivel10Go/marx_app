@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../core/theme/app_colors.dart';
 import '../../core/utils/share_card_renderer.dart';
+import '../../core/utils/image_loader.dart';
 import '../../data/models/quote.dart';
 import '../../domain/providers/daily_quote_provider.dart';
 import '../../domain/providers/favorites_provider.dart';
@@ -163,6 +164,18 @@ class _QuoteDetailScreenState extends ConsumerState<QuoteDetailScreen> {
                   ],
                 ),
               ),
+              // Featured image if available
+              if (quote.imageUrl != null && quote.imageUrl!.isNotEmpty)
+                CachedImageLoader(
+                  imageUrl: quote.imageUrl!,
+                  width: double.infinity,
+                  height: 300,
+                  fit: BoxFit.cover,
+                  cacheConfig: const ImageCacheConfig(
+                    cacheDurationDays: 7,
+                    maxMemoryCacheSizeMB: 50,
+                  ),
+                ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 24, 20, 24),
                 child: Column(

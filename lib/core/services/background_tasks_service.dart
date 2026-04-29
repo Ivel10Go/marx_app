@@ -106,7 +106,13 @@ UserProfile _resolveProfile(String? raw) {
 }
 
 abstract final class BackgroundTasksService {
+  static bool _initialized = false;
+
   static Future<void> initialize() async {
+    if (_initialized) {
+      return;
+    }
+
     await Workmanager().initialize(workmanagerCallbackDispatcher);
 
     await Workmanager().registerPeriodicTask(
@@ -116,5 +122,7 @@ abstract final class BackgroundTasksService {
       constraints: Constraints(networkType: NetworkType.notRequired),
       existingWorkPolicy: ExistingPeriodicWorkPolicy.replace,
     );
+
+    _initialized = true;
   }
 }

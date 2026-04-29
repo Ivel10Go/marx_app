@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../data/database/app_database.dart';
@@ -11,9 +12,9 @@ import '../../data/repositories/history_repository.dart';
 import '../../data/repositories/quote_repository.dart';
 import '../../domain/services/daily_content_resolver.dart';
 import '../constants/settings_keys.dart';
-import '../services/background_tasks_service.dart';
 import '../services/notification_service.dart';
 import '../services/widget_sync_service.dart';
+import '../theme/app_theme.dart';
 
 class _IsolateDailyContent {
   _IsolateDailyContent({
@@ -149,10 +150,21 @@ abstract final class AppBootstrap {
       debugPrint('[Bootstrap] Starting app bootstrap...');
       _emitProgress(0.05, 'Start wird vorbereitet ...');
 
+      // Initialize fonts early - disable runtime fetching and preload critical fonts
+      final fontStart = Stopwatch()..start();
+      debugPrint('[Bootstrap] Initializing fonts...');
+      _emitProgress(0.10, 'Schriftarten werden geladen ...');
+      
+      GoogleFonts.config.allowRuntimeFetching = false; // Use local fonts only
+      AppTheme.initializeTextStyles(); // Preload all text styles
+      
+      fontStart.stop();
+      debugPrint('[Bootstrap] Fonts initialized in ${fontStart.elapsedMilliseconds}ms');
+      _emitProgress(0.15, 'Benachrichtigungen werden vorbereitet ...');
+
       // Initialize notification service in parallel (non-blocking)
       // This runs in the background and doesn't block app loading
       final notificationFuture = _initializeNotificationService();
-      _emitProgress(0.15, 'Benachrichtigungen werden vorbereitet ...');
 
       // Run critical database initialization in isolate
       final databaseStart = Stopwatch()..start();
@@ -268,21 +280,6 @@ abstract final class AppBootstrap {
             '[Deferred] Widget synced in ${syncStart.elapsedMilliseconds}ms',
           );
         }
-
-        // Initialize background tasks
-        final bgStart = Stopwatch()..start();
-        debugPrint('[Deferred] Initializing background tasks...');
-        await BackgroundTasksService.initialize().timeout(
-          const Duration(seconds: 15),
-          onTimeout: () {
-            debugPrint('[Deferred] WARNING: Background tasks init timed out');
-            return;
-          },
-        );
-        bgStart.stop();
-        debugPrint(
-          '[Deferred] Background tasks initialized in ${bgStart.elapsedMilliseconds}ms',
-        );
 
         // Schedule daily reminders
         final reminderStart = Stopwatch()..start();

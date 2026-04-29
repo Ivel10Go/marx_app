@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'adaptive_quote_text.dart';
 import '../core/theme/app_colors.dart';
+import '../core/theme/app_theme.dart';
 import '../data/models/quote.dart';
 import '../domain/providers/favorites_provider.dart';
 import '../domain/providers/repository_providers.dart';
@@ -44,12 +45,7 @@ class QuoteCard extends ConsumerWidget {
               Expanded(
                 child: Text(
                   '${quote.source.toUpperCase()} · ${quote.year}',
-                  style: GoogleFonts.ibmPlexSans(
-                    fontSize: 9,
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.redOnRed,
-                    letterSpacing: 1.8,
-                  ),
+                  style: AppTheme.quoteCardKicker,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),

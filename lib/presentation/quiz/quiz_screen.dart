@@ -22,7 +22,8 @@ class QuizScreen extends ConsumerStatefulWidget {
 }
 
 class _QuizScreenState extends ConsumerState<QuizScreen> {
-  bool _timerStartedForIndex = false;
+  int? _timerStartedForQuestionIndex;
+  int _quizRunId = 0;
   bool _quizStarted = false;
 
   @override
@@ -93,7 +94,7 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
                           setState(() {
                             _quizStarted = true;
                           });
-                          _startTimer();
+                          _startTimerForQuestion(session.currentIndex);
                         },
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
@@ -126,22 +127,21 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
       return QuizResultScreen(
         score: session.score,
         onRestart: () async {
-          await ref.read(quizProvider.notifier).restart();
-          _timerStartedForIndex = false;
+          _quizRunId++;
+          _timerStartedForQuestionIndex = null;
+          ref.read(quizTimerProvider.notifier).reset();
           setState(() {
             _quizStarted = false;
           });
+          await ref.read(quizProvider.notifier).restart();
         },
       );
     }
 
     final question = session.currentQuestion!;
 
-    if (!_timerStartedForIndex) {
-      _timerStartedForIndex = true;
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        _startTimer();
-      });
+    if (_timerStartedForQuestionIndex != session.currentIndex) {
+      _startTimerForQuestion(session.currentIndex);
     }
 
     final answered = question.selectedIndex != null;
@@ -259,57 +259,70 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
                 isCorrect: isCorrect,
                 isSelectedWrong: isSelectedWrong,
                 onTap: () async {
+                  final runId = _quizRunId;
                   ref.read(quizProvider.notifier).answer(index);
                   ref.read(quizTimerProvider.notifier).reset();
                   await Future<void>.delayed(
                     const Duration(milliseconds: 1500),
                   );
+                  if (!mounted || runId != _quizRunId) {
+                    return;
+                  }
                   await ref.read(quizProvider.notifier).nextQuestion();
-                  _timerStartedForIndex = false;
+                  _timerStartedForQuestionIndex = null;
                 },
               ),
             );
           }),
           const SizedBox(height: 4),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-            decoration: BoxDecoration(
-              color: AppColors.paperDark,
-              border: Border.all(color: AppColors.rule),
-            ),
-            child: Row(
-              children: <Widget>[
-                const Icon(
-                  Icons.military_tech_outlined,
-                  size: 16,
-                  color: AppColors.inkLight,
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  'Punkte: ${session.score}/${session.currentIndex + (answered ? 1 : 0)}',
-                  style: GoogleFonts.ibmPlexSans(
-                    fontSize: 11,
-                    color: AppColors.ink,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
-            ),
-          ),
         ],
       ),
     );
   }
 
+  void _startTimerForQuestion(int questionIndex) {
+    if (_timerStartedForQuestionIndex == questionIndex) {
+      return;
+    }
+
+    _timerStartedForQuestionIndex = questionIndex;
+    final runId = _quizRunId;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || runId != _quizRunId) {
+        return;
+      }
+
+      final session = ref.read(quizProvider);
+      if (!_quizStarted ||
+          session.isComplete ||
+          session.currentIndex != questionIndex) {
+        return;
+      }
+
+      _startTimer();
+    });
+  }
+
   void _startTimer() {
+    final runId = _quizRunId;
+
     ref
         .read(quizTimerProvider.notifier)
         .start(
           onDone: () async {
+            if (!mounted || runId != _quizRunId) {
+              return;
+            }
+
             ref.read(quizProvider.notifier).answerTimeout();
             await Future<void>.delayed(const Duration(milliseconds: 1500));
+            if (!mounted || runId != _quizRunId) {
+              return;
+            }
+
             await ref.read(quizProvider.notifier).nextQuestion();
-            _timerStartedForIndex = false;
+            _timerStartedForQuestionIndex = null;
           },
         );
   }

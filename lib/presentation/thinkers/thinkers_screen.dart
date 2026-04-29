@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../core/theme/app_colors.dart';
+import '../../core/utils/image_loader.dart';
 import '../../data/models/thinker_quote.dart';
 import '../../domain/providers/thinkers_provider.dart';
 import '../../widgets/app_decorated_scaffold.dart';
@@ -339,29 +340,45 @@ class _ThinkerQuoteCard extends StatelessWidget {
               bottom: BorderSide(color: AppColors.ink, width: 1),
             ),
           ),
-          padding: const EdgeInsets.all(18),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Text(
-                '»${quote.textDe}«',
-                style: GoogleFonts.playfairDisplay(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.ink,
-                  height: 1.55,
-                  fontStyle: FontStyle.italic,
+              // Featured image (if available)
+              if (quote.imageUrl != null && quote.imageUrl!.isNotEmpty)
+                CachedImageLoader(
+                  imageUrl: quote.imageUrl!,
+                  height: 180,
+                  fit: BoxFit.cover,
+                  cacheConfig: const ImageCacheConfig(),
                 ),
-              ),
-              const SizedBox(height: 12),
-              Container(width: 24, height: 2, color: AppColors.red),
-              const SizedBox(height: 8),
-              Text(
-                '— ${quote.author}',
-                style: GoogleFonts.ibmPlexSans(
-                  fontSize: 11,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.inkLight,
+              // Quote content
+              Padding(
+                padding: const EdgeInsets.all(18),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      '»${quote.textDe}«',
+                      style: GoogleFonts.playfairDisplay(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.ink,
+                        height: 1.55,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Container(width: 24, height: 2, color: AppColors.red),
+                    const SizedBox(height: 8),
+                    Text(
+                      '— ${quote.author}',
+                      style: GoogleFonts.ibmPlexSans(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.inkLight,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

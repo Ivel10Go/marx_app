@@ -17,6 +17,7 @@ class HistoryFact {
     this.funFact,
     this.source,
     required this.todayInHistory,
+    this.imageUrl,
   });
 
   final String id;
@@ -36,6 +37,7 @@ class HistoryFact {
   final String? funFact;
   final String? source;
   final bool todayInHistory;
+  final String? imageUrl;
 
   factory HistoryFact.fromJson(Map<String, dynamic> json) {
     return HistoryFact(
@@ -57,6 +59,7 @@ class HistoryFact {
       funFact: json['fun_fact'] as String?,
       source: json['source'] as String?,
       todayInHistory: (json['today_in_history'] as bool?) ?? false,
+      imageUrl: json['image_url'] as String?,
     );
   }
 
@@ -79,6 +82,7 @@ class HistoryFact {
       'fun_fact': funFact,
       'source': source,
       'today_in_history': todayInHistory,
+      'image_url': imageUrl,
     };
   }
 }

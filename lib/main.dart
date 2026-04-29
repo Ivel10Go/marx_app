@@ -6,12 +6,12 @@ import 'core/bootstrap/app_bootstrap.dart';
 import 'core/router/app_router.dart';
 import 'core/theme/app_theme.dart';
 import 'presentation/loading/app_loading_screen.dart';
-import 'worker/daily_widget_worker.dart';
+import 'core/services/background_tasks_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await registerDailyWidgetTask();
+  await BackgroundTasksService.initialize();
 
   runApp(const _BootstrapGateApp());
 }

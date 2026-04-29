@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_theme.dart';
+import '../../../core/utils/image_loader.dart';
 import '../../../data/models/history_fact.dart';
 import 'tts_button.dart';
 import '../../../widgets/category_chip.dart';
@@ -39,16 +41,24 @@ class FactBlock extends StatelessWidget {
             fact.todayInHistory
                 ? 'WELTGESCHICHTE · HEUTE VOR ${_yearsAgo(fact.dateIso)} JAHREN'
                 : 'WELTGESCHICHTE · ${fact.dateDisplay.toUpperCase()}',
-            style: GoogleFonts.ibmPlexSans(
-              fontSize: 9,
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
-              letterSpacing: 1.2,
-            ),
+            style: AppTheme.factBlockKicker,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
         ),
+
+        // Featured image
+        if (fact.imageUrl != null && fact.imageUrl!.isNotEmpty)
+          CachedImageLoader(
+            imageUrl: fact.imageUrl!,
+            width: double.infinity,
+            height: 220,
+            fit: BoxFit.cover,
+            cacheConfig: const ImageCacheConfig(
+              cacheDurationDays: 7,
+              maxMemoryCacheSizeMB: 50,
+            ),
+          ),
 
         // Body container
         Container(
@@ -69,24 +79,10 @@ class FactBlock extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       'HISTORISCHER KERN',
-                      style: GoogleFonts.ibmPlexSans(
-                        fontSize: 9,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.red,
-                        letterSpacing: 1.2,
-                      ),
+                      style: AppTheme.factBlockKickerRed,
                     ),
                     const SizedBox(height: 8),
-                    Text(
-                      punchline,
-                      style: GoogleFonts.playfairDisplay(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700,
-                        fontStyle: FontStyle.italic,
-                        color: AppColors.ink,
-                        height: 1.45,
-                      ),
-                    ),
+                    Text(punchline, style: AppTheme.factBlockPunchline),
                     const SizedBox(height: 12),
                     Container(
                       width: double.infinity,
@@ -94,57 +90,23 @@ class FactBlock extends StatelessWidget {
                       color: AppColors.rule,
                     ),
                     const SizedBox(height: 10),
-                    Text(
-                      quickContext,
-                      style: GoogleFonts.ibmPlexSans(
-                        fontSize: 11,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.inkLight,
-                        letterSpacing: 0.2,
-                        height: 1.4,
-                      ),
-                    ),
+                    Text(quickContext, style: AppTheme.factBlockQuickContext),
                   ],
                 ),
               ),
 
               const SizedBox(height: 14),
 
-              Text(
-                fact.headline,
-                style: GoogleFonts.ibmPlexSans(
-                  fontSize: 11,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.ink,
-                  letterSpacing: 0.8,
-                ),
-              ),
+              Text(fact.headline, style: AppTheme.factBlockHeadline),
 
               const SizedBox(height: 14),
 
-              Text(
-                fact.body,
-                style: GoogleFonts.playfairDisplay(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w400,
-                  fontStyle: FontStyle.normal,
-                  color: AppColors.ink,
-                  height: 1.55,
-                ),
-              ),
+              Text(fact.body, style: AppTheme.factBlockBody),
 
               if (fact.funFact != null &&
                   fact.funFact!.trim().isNotEmpty) ...<Widget>[
                 const SizedBox(height: 14),
-                Text(
-                  'EINORDNUNG',
-                  style: GoogleFonts.ibmPlexSans(
-                    fontSize: 10,
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.red,
-                    letterSpacing: 1.2,
-                  ),
-                ),
+                Text('EINORDNUNG', style: AppTheme.factBlockLabel),
               ],
 
               const SizedBox(height: 18),

@@ -32,6 +32,10 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
 
   Future<void> _load() async {
     final prefs = await SharedPreferences.getInstance();
+    if (!mounted) {
+      return;
+    }
+
     setState(() {
       _highscore = prefs.getInt('quiz_highscore') ?? 0;
     });

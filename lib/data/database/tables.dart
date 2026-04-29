@@ -23,12 +23,28 @@ class Favorites extends Table {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get quoteId => text()();
   DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  @override
+  List<String> get customConstraints => <String>[
+    // Index on quoteId for faster lookups when checking if a quote is favorite
+    // (used by watchIsFavorite()) and for JOIN operations with quoteEntries
+    'CREATE INDEX IF NOT EXISTS idx_favorites_quote_id ON favorites(quote_id)'
+  ];
 }
 
 class SeenQuotes extends Table {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get quoteId => text()();
   DateTimeColumn get seenAt => dateTime().withDefault(currentDateAndTime)();
+
+  @override
+  List<String> get customConstraints => <String>[
+    // Index on quoteId for faster lookups when checking if a quote has been seen
+    // and for JOIN operations with quoteEntries
+    'CREATE INDEX IF NOT EXISTS idx_seen_quotes_quote_id ON seen_quotes(quote_id)',
+    // Composite index on seenAt DESC for efficient historical queries and sorting
+    'CREATE INDEX IF NOT EXISTS idx_seen_quotes_date_desc ON seen_quotes(seen_at DESC)'
+  ];
 }
 
 class HistoryFactEntries extends Table {

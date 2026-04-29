@@ -16,7 +16,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 3;
+  int get schemaVersion => 4;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -29,6 +29,18 @@ class AppDatabase extends _$AppDatabase {
       }
       if (from < 3) {
         await m.createTable(appOpenLog);
+      }
+      if (from < 4) {
+        // Add indexes for optimized queries on favorites and seen_quotes
+        await m.database.customStatement(
+          'CREATE INDEX IF NOT EXISTS idx_favorites_quote_id ON favorites(quote_id)',
+        );
+        await m.database.customStatement(
+          'CREATE INDEX IF NOT EXISTS idx_seen_quotes_quote_id ON seen_quotes(quote_id)',
+        );
+        await m.database.customStatement(
+          'CREATE INDEX IF NOT EXISTS idx_seen_quotes_date_desc ON seen_quotes(seen_at DESC)',
+        );
       }
     },
   );

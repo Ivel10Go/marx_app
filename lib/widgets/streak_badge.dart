@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../core/theme/app_colors.dart';
+import '../core/theme/app_theme.dart';
 
 class StreakBadge extends StatelessWidget {
   const StreakBadge({
@@ -31,25 +31,9 @@ class StreakBadge extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(
-                'SERIE',
-                style: GoogleFonts.ibmPlexSans(
-                  fontSize: 8,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.redOnRed.withValues(alpha: 0.8),
-                  letterSpacing: 1.4,
-                ),
-              ),
+              Text('SERIE', style: AppTheme.streakBadgeLabel),
               const SizedBox(height: 1),
-              Text(
-                'TAG $days',
-                style: GoogleFonts.ibmPlexSans(
-                  fontSize: 11,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.redOnRed,
-                  letterSpacing: 1.1,
-                ),
-              ),
+              Text('TAG $days', style: AppTheme.streakBadgeValue),
             ],
           ),
           const SizedBox(width: 10),

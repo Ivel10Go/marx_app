@@ -11,8 +11,11 @@ class QuoteDao extends DatabaseAccessor<AppDatabase> with _$QuoteDaoMixin {
   }
 
   Future<List<String>> getAllQuoteIds() async {
-    final rows = await select(quoteEntries).get();
-    return rows.map((QuoteEntry row) => row.id).toList();
+    // Only select id column to avoid loading large text columns unnecessarily
+    final query = selectOnly(quoteEntries)
+      ..addColumns([quoteEntries.id]);
+    final rows = await query.get();
+    return rows.map((row) => row.read(quoteEntries.id)!).toList();
   }
 
   Stream<QuoteEntry?> watchQuoteById(String id) {
