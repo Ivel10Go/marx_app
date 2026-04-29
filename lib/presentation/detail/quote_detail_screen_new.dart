@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../core/providers/purchases_provider.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/utils/share_card_renderer.dart';
 import '../../core/utils/image_loader.dart';
@@ -58,6 +60,7 @@ class _QuoteDetailScreenState extends ConsumerState<QuoteDetailScreen> {
     final quoteId = widget.quoteId;
     final quoteAsync = ref.watch(quoteByIdProvider(quoteId));
     final favoriteAsync = ref.watch(isFavoriteProvider(quoteId));
+    final isPro = ref.watch(isProProvider);
 
     return AppDecoratedScaffold(
       appBar: null,
@@ -215,10 +218,32 @@ class _QuoteDetailScreenState extends ConsumerState<QuoteDetailScreen> {
                       body: quote.explanationShort,
                     ),
                     const SizedBox(height: 16),
-                    _SectionCard(
-                      title: 'AUSFUEHRLICHE ERKLAERUNG',
-                      body: quote.explanationLong,
-                    ),
+                    if (isPro)
+                      _SectionCard(
+                        title: 'AUSFUEHRLICHE ERKLAERUNG',
+                        body: quote.explanationLong,
+                      )
+                    else
+                      _PremiumLockedSection(
+                        title: 'AUSFUEHRLICHE ERKLAERUNG',
+                        teaser:
+                            'Die tiefe Analyse ist Teil von Zitate App Pro.',
+                        onUnlockTap: () => context.push('/premium-features'),
+                      ),
+                    const SizedBox(height: 16),
+                    if (isPro)
+                      _SectionCard(
+                        title: 'LERNSEITE',
+                        body:
+                            'Serie: ${quote.series}\n\nDiese Serie verbindet thematisch verwandte Zitate zu einem Lernpfad.',
+                      )
+                    else
+                      _PremiumLockedSection(
+                        title: 'LERNSEITE',
+                        teaser:
+                            'Kuratierte Lernserien mit roten Faden sind Teil von Zitate App Pro.',
+                        onUnlockTap: () => context.push('/premium-features'),
+                      ),
                     if (quote.funFact != null) ...<Widget>[
                       const SizedBox(height: 16),
                       _SectionCard(title: 'KONTEXT', body: quote.funFact!),
@@ -283,6 +308,70 @@ class _SectionCard extends StatelessWidget {
                 color: AppColors.ink,
                 height: 1.6,
               ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _PremiumLockedSection extends StatelessWidget {
+  const _PremiumLockedSection({
+    required this.title,
+    required this.teaser,
+    required this.onUnlockTap,
+  });
+
+  final String title;
+  final String teaser;
+  final VoidCallback onUnlockTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(
+        color: AppColors.paper,
+        border: Border(
+          left: BorderSide(color: AppColors.ink, width: 1),
+          right: BorderSide(color: AppColors.ink, width: 1),
+          bottom: BorderSide(color: AppColors.ink, width: 1),
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: Text(
+                    '$title · PRO',
+                    style: GoogleFonts.ibmPlexSans(
+                      fontSize: 10,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 1.2,
+                      color: AppColors.ink,
+                    ),
+                  ),
+                ),
+                const Icon(Icons.lock_outline_rounded, size: 16),
+              ],
+            ),
+            const SizedBox(height: 10),
+            Text(
+              teaser,
+              style: GoogleFonts.ibmPlexSans(
+                fontSize: 11,
+                color: AppColors.inkLight,
+                height: 1.6,
+              ),
+            ),
+            const SizedBox(height: 12),
+            _BroadsheetButton(
+              onPressed: onUnlockTap,
+              label: 'PRO FREISCHALTEN',
             ),
           ],
         ),

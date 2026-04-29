@@ -8,11 +8,14 @@ import '../../data/models/daily_content.dart';
 import '../../data/models/home_content_mode.dart';
 import '../../domain/providers/admin_access_provider.dart';
 import '../../domain/providers/app_mode_provider.dart';
-import '../../domain/providers/premium_provider.dart';
+import '../../core/providers/test_auth_provider.dart';
+import '../../core/providers/purchases_provider.dart';
+import '../../core/services/purchases_service.dart';
 import '../../domain/providers/daily_content_provider.dart';
 import '../../domain/providers/settings_provider.dart';
 import '../../widgets/app_decorated_scaffold.dart';
 import '../../widgets/app_navigation_bar.dart';
+import '../paywall/test_paywall_popup.dart';
 import '../loading/app_loading_screen.dart';
 import 'widgets/profile_section.dart';
 
@@ -89,6 +92,11 @@ class SettingsScreen extends ConsumerWidget {
     final settingsAsync = ref.watch(settingsControllerProvider);
     final appMode = ref.watch(appModeNotifierProvider);
     final isAdmin = ref.watch(adminAccessProvider);
+    final isPro = ref.watch(isProProvider);
+    final isTestLoggedIn = ref
+        .watch(testAuthProvider)
+        .maybeWhen(data: (value) => value, orElse: () => false);
+    final testUserIdAsync = ref.watch(testAuthUserIdProvider);
 
     return AppDecoratedScaffold(
       appBar: null,
@@ -412,6 +420,46 @@ class SettingsScreen extends ConsumerWidget {
                             ],
                           ),
                         ),
+                        const SizedBox(height: 14),
+                        SizedBox(
+                          width: double.infinity,
+                          child: _SettingsActionButton(
+                            label: 'SMART ZEIT (PRO)',
+                            filled: isPro,
+                            onTap: () async {
+                              if (!isPro) {
+                                if (!context.mounted) {
+                                  return;
+                                }
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      'Smart-Reminder ist Teil von Zitate App Pro.',
+                                    ),
+                                  ),
+                                );
+                                context.push('/purchase');
+                                return;
+                              }
+
+                              final suggested = _recommendedReminderTime();
+                              await ref
+                                  .read(settingsControllerProvider.notifier)
+                                  .setNotificationTime(suggested);
+
+                              if (!context.mounted) {
+                                return;
+                              }
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'Smart-Reminder gesetzt auf ${suggested.hour.toString().padLeft(2, '0')}:${suggested.minute.toString().padLeft(2, '0')}',
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
                       ],
                     ),
                     const SizedBox(height: 20),
@@ -431,44 +479,140 @@ class SettingsScreen extends ConsumerWidget {
                           children: <Widget>[
                             Expanded(
                               child: _SettingsActionButton(
-                                label: 'MEHR ERFAHREN',
+                                label: isPro
+                                    ? 'ABO VERWALTEN'
+                                    : 'PRO FREISCHALTEN',
                                 filled: false,
-                                onTap: () => _showPremiumTeaserSheet(context),
+                                onTap: () async {
+                                  if (!isPro) {
+                                    context.push('/purchase');
+                                    return;
+                                  }
+
+                                  try {
+                                    await PurchasesService.instance
+                                        .presentCustomerCenter();
+                                  } catch (_) {
+                                    if (context.mounted) {
+                                      context.push('/purchase');
+                                    }
+                                  }
+                                },
                               ),
                             ),
                           ],
                         ),
-                        const SizedBox(height: 16),
-                        // ─── Premium Test Toggle (DEV) ──────────────
-                        Consumer(
-                          builder: (context, ref, _) {
-                            final isPremium = ref
-                                .watch(isPremiumProvider)
-                                .maybeWhen(
-                                  data: (value) => value,
-                                  orElse: () => false,
-                                );
-                            return Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Text(
-                                  'Premium Testen',
-                                  style: GoogleFonts.ibmPlexSans(
-                                    fontSize: 10,
-                                    color: AppColors.inkLight,
-                                  ),
+                        const SizedBox(height: 10),
+                        Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: _SettingsActionButton(
+                                label: 'TEST PAYWALL POPUP',
+                                filled: false,
+                                onTap: () async {
+                                  await showTestPaywallPopup(
+                                    context,
+                                    onTestLogin: () async {
+                                      await ref
+                                          .read(testAuthProvider.notifier)
+                                          .login(userId: 'test_user_001');
+                                      if (context.mounted) {
+                                        ScaffoldMessenger.of(
+                                          context,
+                                        ).showSnackBar(
+                                          const SnackBar(
+                                            content: Text(
+                                              'Test Login erfolgreich.',
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                    },
+                                    onTestUnlock: () {
+                                      context.push('/purchase');
+                                    },
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Expanded(
+                              child: Text(
+                                isTestLoggedIn
+                                    ? 'Test-Login: Angemeldet (${testUserIdAsync.valueOrNull ?? 'test_user_001'})'
+                                    : 'Test-Login: Nicht angemeldet',
+                                style: GoogleFonts.ibmPlexSans(
+                                  fontSize: 10,
+                                  color: AppColors.inkLight,
                                 ),
-                                Switch(
-                                  value: isPremium,
-                                  onChanged: (value) {
-                                    ref
-                                        .read(isPremiumProvider.notifier)
-                                        .setPremium(value);
-                                  },
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: isTestLoggedIn
+                                  ? () => ref
+                                        .read(testAuthProvider.notifier)
+                                        .logout()
+                                  : null,
+                              child: const Text('TEST LOGOUT'),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 8),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: TextButton(
+                            onPressed: () => _showPremiumTeaserSheet(context),
+                            child: const Text('Features ansehen'),
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: TextButton(
+                            onPressed: () => context.push('/premium-features'),
+                            child: const Text('Probe Features testen'),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              'Abo-Status',
+                              style: GoogleFonts.ibmPlexSans(
+                                fontSize: 11,
+                                color: AppColors.inkLight,
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 5,
+                              ),
+                              decoration: BoxDecoration(
+                                color: isPro ? AppColors.red : AppColors.paper,
+                                border: Border.all(
+                                  color: isPro ? AppColors.red : AppColors.ink,
+                                  width: 1,
                                 ),
-                              ],
-                            );
-                          },
+                              ),
+                              child: Text(
+                                isPro ? 'ZITATE APP PRO' : 'FREE',
+                                style: GoogleFonts.ibmPlexSans(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w700,
+                                  letterSpacing: 0.8,
+                                  color: isPro
+                                      ? Colors.white
+                                      : AppColors.inkLight,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -698,6 +842,19 @@ String _modeLabel(AppMode mode) {
     case AppMode.adminMarx:
       return 'Marx-Modus';
   }
+}
+
+TimeOfDay _recommendedReminderTime() {
+  final now = TimeOfDay.now();
+  final minutes = now.hour * 60 + now.minute;
+
+  if (minutes < 11 * 60) {
+    return const TimeOfDay(hour: 19, minute: 0);
+  }
+  if (minutes < 17 * 60) {
+    return const TimeOfDay(hour: 7, minute: 30);
+  }
+  return const TimeOfDay(hour: 8, minute: 0);
 }
 
 class _SettingsGroup extends StatelessWidget {

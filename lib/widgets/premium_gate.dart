@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../core/providers/purchases_provider.dart';
 import '../core/theme/app_colors.dart';
-import '../domain/providers/premium_provider.dart';
 
 class PremiumGate extends ConsumerWidget {
   const PremiumGate({
@@ -19,20 +20,15 @@ class PremiumGate extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isPremiumAsync = ref.watch(isPremiumProvider);
+    final isPremium = ref.watch(isProProvider);
 
-    return isPremiumAsync.when(
-      data: (isPremium) {
-        if (isPremium) {
-          return child;
-        }
-        return _PremiumTeaser(
-          featureName: featureName,
-          featureDescription: featureDescription,
-        );
-      },
-      loading: () => const Center(child: CircularProgressIndicator()),
-      error: (err, stack) => Center(child: Text('Error: $err')),
+    if (isPremium) {
+      return child;
+    }
+
+    return _PremiumTeaser(
+      featureName: featureName,
+      featureDescription: featureDescription,
     );
   }
 }
@@ -99,14 +95,7 @@ class _PremiumTeaser extends StatelessWidget {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      // TODO: Navigate to Premium screen
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text(
-                            'Premium-Freischaltung nicht implementiert',
-                          ),
-                        ),
-                      );
+                      context.push('/purchase');
                     },
                     child: Text(
                       'PREMIUM FREISCHALTEN',
