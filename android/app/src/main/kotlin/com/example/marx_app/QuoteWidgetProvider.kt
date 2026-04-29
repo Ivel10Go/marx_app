@@ -86,37 +86,17 @@ class QuoteWidgetProvider : AppWidgetProvider() {
             else -> "ZITATATLAS"
           }
 
-        val options = appWidgetManager.getAppWidgetOptions(appWidgetId)
-        val minHeight = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT)
-
-        val layout = when {
-          minHeight <= 0 -> R.layout.quote_widget_small
-          minHeight >= 150 -> R.layout.quote_widget_large
-          minHeight >= 90 -> R.layout.quote_widget_medium
-          else -> R.layout.quote_widget_small
-        }
+        // Use a conservative compatibility layout first. This avoids launcher
+        // RemoteViews inflation failures on stricter hosts.
+        val layout = R.layout.quote_widget_compat
 
         val views = RemoteViews(context.packageName, layout)
         views.setTextViewText(R.id.quote_header, header)
         views.setTextViewText(R.id.widget_mode, widgetMode)
-        if (layout != R.layout.quote_widget_small) {
-          views.setTextViewText(R.id.quote_author, quoteAuthor)
-          views.setInt(
-            R.id.quote_text_italic,
-            "setMaxLines",
-            if (layout == R.layout.quote_widget_large) 6 else 5,
-          )
-          views.setInt(
-            R.id.fact_text_normal,
-            "setMaxLines",
-            if (layout == R.layout.quote_widget_large) 6 else 5,
-          )
-          views.setInt(
-            R.id.quote_explanation,
-            "setMaxLines",
-            if (layout == R.layout.quote_widget_large) 4 else 2,
-          )
-        }
+        views.setTextViewText(R.id.quote_author, quoteAuthor)
+        views.setInt(R.id.quote_text_italic, "setMaxLines", 6)
+        views.setInt(R.id.fact_text_normal, "setMaxLines", 6)
+        views.setInt(R.id.quote_explanation, "setMaxLines", 3)
 
         views.setTextViewText(R.id.quote_text_italic, quoteText)
         views.setTextViewText(R.id.fact_text_normal, quoteText)
@@ -163,7 +143,7 @@ class QuoteWidgetProvider : AppWidgetProvider() {
         Log.d(LOG_TAG, "Widget $appWidgetId successfully updated with primary layout")
       } catch (e: Exception) {
         Log.e(LOG_TAG, "Widget render failed for id=$appWidgetId, using fallback", e)
-        val fallbackViews = RemoteViews(context.packageName, R.layout.quote_widget_v2)
+        val fallbackViews = RemoteViews(context.packageName, R.layout.quote_widget_compat)
         fallbackViews.setTextViewText(R.id.quote_header, "ZITATATLAS")
         fallbackViews.setTextViewText(R.id.widget_mode, "PUBLIC")
         fallbackViews.setTextViewText(R.id.quote_text_italic, "Widget wird vorbereitet …")

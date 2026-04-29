@@ -27,26 +27,15 @@ class _IsolateDailyContent {
   final String appMode;
 }
 
-/// Top-level function for isolate computation - background warm-up only.
-/// Returns daily content for widget sync after startup.
+/// Deferred background warm-up (runs after first frame in isolate).
+/// Only resolves content - seeding must be done in main thread first.
 Future<_IsolateDailyContent> _initializeDatabaseInIsolate(_) async {
   final db = AppDatabase();
   final stopwatch = Stopwatch()..start();
   try {
-    debugPrint('[Isolate] Starting database initialization...');
+    debugPrint('[DeferredData] Starting content resolution in isolate...');
     final quoteRepository = QuoteRepository(db);
     final historyRepository = HistoryRepository(db);
-
-    // Seed repositories in parallel
-    final seedStart = Stopwatch()..start();
-    await Future.wait([
-      quoteRepository.ensureSeeded(),
-      historyRepository.ensureSeeded(),
-    ]);
-    seedStart.stop();
-    debugPrint(
-      '[Isolate] Repositories seeded in ${seedStart.elapsedMilliseconds}ms',
-    );
 
     // Fetch preferences (fast operation)
     final prefsStart = Stopwatch()..start();
@@ -61,7 +50,7 @@ Future<_IsolateDailyContent> _initializeDatabaseInIsolate(_) async {
     );
     prefsStart.stop();
     debugPrint(
-      '[Isolate] Preferences fetched in ${prefsStart.elapsedMilliseconds}ms',
+      '[DeferredData] Preferences fetched in ${prefsStart.elapsedMilliseconds}ms',
     );
 
     // Resolve daily content
@@ -77,11 +66,11 @@ Future<_IsolateDailyContent> _initializeDatabaseInIsolate(_) async {
     );
     contentStart.stop();
     debugPrint(
-      '[Isolate] Daily content resolved in ${contentStart.elapsedMilliseconds}ms',
+      '[DeferredData] Daily content resolved in ${contentStart.elapsedMilliseconds}ms',
     );
 
     debugPrint(
-      '[Isolate] Database initialization completed in ${stopwatch.elapsedMilliseconds}ms',
+      '[DeferredData] Database initialization completed in ${stopwatch.elapsedMilliseconds}ms',
     );
 
     return _IsolateDailyContent(
@@ -90,15 +79,15 @@ Future<_IsolateDailyContent> _initializeDatabaseInIsolate(_) async {
       appMode: appMode.name.toUpperCase(),
     );
   } catch (e, st) {
-    debugPrint('[Isolate] ERROR during database initialization: $e');
+    debugPrint('[DeferredData] ERROR during database initialization: $e');
     debugPrintStack(stackTrace: st);
     rethrow;
   } finally {
     try {
       await db.close();
-      debugPrint('[Isolate] Database connection closed');
+      debugPrint('[DeferredData] Database connection closed');
     } catch (e) {
-      debugPrint('[Isolate] ERROR closing database: $e');
+      debugPrint('[DeferredData] ERROR closing database: $e');
     }
   }
 }
@@ -167,6 +156,21 @@ abstract final class AppBootstrap {
 
       unawaited(_initializeNotificationService());
 
+      // Seed repositories early (synchronously in main thread for asset access)
+      final seedStart = Stopwatch()..start();
+      debugPrint('[Bootstrap] Seeding repositories...');
+      _emitProgress(0.20, 'Daten werden geladen ...');
+      final bootstrapDb = AppDatabase();
+      try {
+        await _seedRepositoriesFromAssets(bootstrapDb);
+      } finally {
+        await bootstrapDb.close();
+      }
+      seedStart.stop();
+      debugPrint(
+        '[Bootstrap] Repository seeding completed in ${seedStart.elapsedMilliseconds}ms',
+      );
+
       // Determine initial route from persisted settings only.
       final routeStart = Stopwatch()..start();
       debugPrint('[Bootstrap] Determining initial route...');
@@ -209,6 +213,28 @@ abstract final class AppBootstrap {
     }
   }
 
+  /// Seed all repositories from assets (must run in main thread for rootBundle access).
+  static Future<void> _seedRepositoriesFromAssets(AppDatabase db) async {
+    final seedStart = Stopwatch()..start();
+    debugPrint('[Bootstrap] Seeding repositories from assets...');
+    final quoteRepository = QuoteRepository(db);
+    final historyRepository = HistoryRepository(db);
+
+    await Future.wait([
+      quoteRepository.ensureSeeded(),
+      historyRepository.ensureSeeded(),
+    ]);
+    seedStart.stop();
+    debugPrint(
+      '[Bootstrap] Repositories seeded in ${seedStart.elapsedMilliseconds}ms',
+    );
+
+    // Mark seeding as complete to prevent Riverpod provider from re-seeding
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('app_seeded_v1', true);
+    debugPrint('[Bootstrap] Seeding flag saved for Riverpod cache');
+  }
+
   /// Initialize notification service in background (doesn't block app startup)
   static Future<void> _initializeNotificationService() async {
     try {
@@ -242,8 +268,9 @@ abstract final class AppBootstrap {
     Future.delayed(const Duration(milliseconds: 500), () async {
       try {
         // Warm the database and sync the widget without blocking startup.
+        // Use compute() to avoid database locks in main thread.
         final warmupStart = Stopwatch()..start();
-        debugPrint('[Deferred] Warming up data for widget sync...');
+        debugPrint('[Deferred] Warming up data for widget sync (isolate)...');
         final dailyContentData =
             await compute(_initializeDatabaseInIsolate, null).timeout(
               const Duration(seconds: 30),

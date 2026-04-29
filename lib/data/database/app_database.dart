@@ -22,6 +22,7 @@ class AppDatabase extends _$AppDatabase {
   MigrationStrategy get migration => MigrationStrategy(
     onCreate: (Migrator m) async {
       await m.createAll();
+      await _createPerformanceIndexes(m);
     },
     onUpgrade: (Migrator m, int from, int to) async {
       if (from < 2) {
@@ -31,19 +32,23 @@ class AppDatabase extends _$AppDatabase {
         await m.createTable(appOpenLog);
       }
       if (from < 4) {
-        // Add indexes for optimized queries on favorites and seen_quotes
-        await m.database.customStatement(
-          'CREATE INDEX IF NOT EXISTS idx_favorites_quote_id ON favorites(quote_id)',
-        );
-        await m.database.customStatement(
-          'CREATE INDEX IF NOT EXISTS idx_seen_quotes_quote_id ON seen_quotes(quote_id)',
-        );
-        await m.database.customStatement(
-          'CREATE INDEX IF NOT EXISTS idx_seen_quotes_date_desc ON seen_quotes(seen_at DESC)',
-        );
+        await _createPerformanceIndexes(m);
       }
     },
   );
+
+  Future<void> _createPerformanceIndexes(Migrator m) async {
+    // Indexes must be created as separate statements, not table constraints.
+    await m.database.customStatement(
+      'CREATE INDEX IF NOT EXISTS idx_favorites_quote_id ON favorites(quote_id)',
+    );
+    await m.database.customStatement(
+      'CREATE INDEX IF NOT EXISTS idx_seen_quotes_quote_id ON seen_quotes(quote_id)',
+    );
+    await m.database.customStatement(
+      'CREATE INDEX IF NOT EXISTS idx_seen_quotes_date_desc ON seen_quotes(seen_at DESC)',
+    );
+  }
 }
 
 QueryExecutor _openConnection() {

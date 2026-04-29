@@ -29,7 +29,10 @@ class QuoteCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isLongQuote = _isLongQuote(quote.textDe);
+    final quoteText = quote.textDe.trim().isNotEmpty
+        ? quote.textDe
+        : quote.textOriginal;
+    final isLongQuote = _isLongQuote(quoteText);
     final isFavoriteAsync = ref.watch(isFavoriteProvider(quote.id));
     final isFavorite = isFavoriteAsync.valueOrNull ?? false;
 
@@ -126,7 +129,9 @@ class QuoteCard extends ConsumerWidget {
                               await repo.addFavorite(quote.id);
                             },
                             icon: Icon(
-                              isFavorite ? Icons.favorite : Icons.favorite_border,
+                              isFavorite
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
                               size: 18,
                               color: isFavorite
                                   ? AppColors.red
@@ -146,7 +151,7 @@ class QuoteCard extends ConsumerWidget {
                         const SizedBox(height: 4),
                         // Zitat-Text
                         AdaptiveQuoteText(
-                          text: quote.textDe,
+                          text: quoteText,
                           minFontSize: isLongQuote ? 20 : 24,
                           maxFontSize: isLongQuote ? 30 : 34,
                           maxLines: isLongQuote ? 6 : 7,
@@ -189,7 +194,7 @@ class QuoteCard extends ConsumerWidget {
                         const SizedBox(height: 12),
                         Row(
                           children: <Widget>[
-                            TtsButton(contentId: quote.id, text: quote.textDe),
+                            TtsButton(contentId: quote.id, text: quoteText),
                             if (onTap != null) ...<Widget>[
                               const SizedBox(width: 10),
                               Expanded(

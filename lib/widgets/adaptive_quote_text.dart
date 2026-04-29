@@ -35,7 +35,7 @@ class AdaptiveQuoteText extends StatelessWidget {
           text,
           textAlign: textAlign,
           maxLines: maxLines,
-          overflow: TextOverflow.fade,
+          overflow: TextOverflow.ellipsis,
           softWrap: true,
           style: resolvedStyle.copyWith(fontSize: fontSize),
         );
