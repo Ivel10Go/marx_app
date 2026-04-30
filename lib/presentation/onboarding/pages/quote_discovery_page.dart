@@ -21,15 +21,16 @@ class QuoteDiscoveryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.all(24),
       child: Container(
-        decoration: const BoxDecoration(
-          color: AppColors.paper,
+        decoration: BoxDecoration(
+          color: scheme.surface,
           border: Border(
-            left: BorderSide(color: AppColors.ink, width: 1),
-            right: BorderSide(color: AppColors.ink, width: 1),
-            bottom: BorderSide(color: AppColors.ink, width: 1),
+            left: BorderSide(color: scheme.outline, width: 1),
+            right: BorderSide(color: scheme.outline, width: 1),
+            bottom: BorderSide(color: scheme.outline, width: 1),
           ),
         ),
         child: Padding(
@@ -38,11 +39,11 @@ class QuoteDiscoveryPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                'WIE SOLL AUSGEWAEHLT WERDEN?',
+                'WIE SOLL AUSGEWÄHLT WERDEN?',
                 style: GoogleFonts.ibmPlexSans(
                   fontSize: 10,
                   fontWeight: FontWeight.w700,
-                  color: AppColors.red,
+                  color: scheme.primary,
                   letterSpacing: 1.4,
                 ),
               ),
@@ -51,7 +52,7 @@ class QuoteDiscoveryPage extends StatelessWidget {
                 'Entweder automatisch nach Interessen oder manuell nach Autorinnen und Autoren.',
                 style: GoogleFonts.ibmPlexSans(
                   fontSize: 11,
-                  color: AppColors.inkLight,
+                  color: scheme.onSurfaceVariant,
                   height: 1.45,
                 ),
               ),
@@ -66,7 +67,7 @@ class QuoteDiscoveryPage extends StatelessWidget {
               _ModeChoiceTile(
                 active: mode == QuoteDiscoverySelection.manual,
                 title: 'Manuelle Auswahl',
-                subtitle: 'Waehle Personen, von denen du Zitate sehen willst.',
+                subtitle: 'Wähle Personen, von denen du Zitate sehen willst.',
                 onTap: () => onModeChanged(QuoteDiscoverySelection.manual),
               ),
               const SizedBox(height: 18),
@@ -76,7 +77,7 @@ class QuoteDiscoveryPage extends StatelessWidget {
                   fontSize: 10,
                   fontWeight: FontWeight.w700,
                   letterSpacing: 1.2,
-                  color: AppColors.inkMuted,
+                  color: scheme.onSurfaceVariant,
                 ),
               ),
               const SizedBox(height: 10),
@@ -84,7 +85,7 @@ class QuoteDiscoveryPage extends StatelessWidget {
                 child: availableSources.isEmpty
                     ? Center(
                         child: Text(
-                          'Noch keine Quellen verfuegbar.',
+                          'Noch keine Quellen verfügbar.',
                           style: GoogleFonts.ibmPlexSans(
                             fontSize: 11,
                             color: AppColors.inkLight,
@@ -98,7 +99,9 @@ class QuoteDiscoveryPage extends StatelessWidget {
                           final source = availableSources[index];
                           final isSelected = sources.contains(source);
                           return Material(
-                            color: isSelected ? AppColors.ink : AppColors.paper,
+                            color: isSelected
+                                ? scheme.onSurface
+                                : scheme.surface,
                             child: InkWell(
                               onTap: () => onToggleSource(source),
                               child: Container(
@@ -109,8 +112,8 @@ class QuoteDiscoveryPage extends StatelessWidget {
                                 decoration: BoxDecoration(
                                   border: Border.all(
                                     color: isSelected
-                                        ? AppColors.ink
-                                        : AppColors.rule,
+                                        ? scheme.onSurface
+                                        : scheme.outline,
                                   ),
                                 ),
                                 child: Row(
@@ -122,8 +125,8 @@ class QuoteDiscoveryPage extends StatelessWidget {
                                           fontSize: 11,
                                           fontWeight: FontWeight.w600,
                                           color: isSelected
-                                              ? AppColors.paper
-                                              : AppColors.ink,
+                                              ? scheme.surface
+                                              : scheme.onSurface,
                                         ),
                                       ),
                                     ),
@@ -133,8 +136,8 @@ class QuoteDiscoveryPage extends StatelessWidget {
                                           : Icons.circle_outlined,
                                       size: 18,
                                       color: isSelected
-                                          ? AppColors.redOnRed
-                                          : AppColors.inkMuted,
+                                          ? scheme.primary
+                                          : scheme.onSurfaceVariant,
                                     ),
                                   ],
                                 ),
@@ -169,14 +172,17 @@ class _ModeChoiceTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
     return Material(
-      color: active ? AppColors.ink : AppColors.paper,
+      color: active ? scheme.onSurface : scheme.surface,
       child: InkWell(
         onTap: onTap,
         child: Container(
           padding: const EdgeInsets.all(14),
           decoration: BoxDecoration(
-            border: Border.all(color: active ? AppColors.ink : AppColors.rule),
+            border: Border.all(
+              color: active ? scheme.onSurface : scheme.outline,
+            ),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -186,7 +192,7 @@ class _ModeChoiceTile extends StatelessWidget {
                 style: GoogleFonts.playfairDisplay(
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
-                  color: active ? AppColors.paper : AppColors.ink,
+                  color: active ? scheme.surface : scheme.onSurface,
                 ),
               ),
               const SizedBox(height: 4),
@@ -195,8 +201,8 @@ class _ModeChoiceTile extends StatelessWidget {
                 style: GoogleFonts.ibmPlexSans(
                   fontSize: 11,
                   color: active
-                      ? AppColors.paper.withValues(alpha: 0.8)
-                      : AppColors.inkLight,
+                      ? scheme.surface.withValues(alpha: 0.8)
+                      : scheme.onSurfaceVariant,
                   height: 1.4,
                 ),
               ),

@@ -8,15 +8,16 @@ class WelcomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.all(24),
       child: Container(
-        decoration: const BoxDecoration(
-          color: AppColors.paper,
+        decoration: BoxDecoration(
+          color: scheme.surface,
           border: Border(
-            left: BorderSide(color: AppColors.ink, width: 1),
-            right: BorderSide(color: AppColors.ink, width: 1),
-            bottom: BorderSide(color: AppColors.ink, width: 1),
+            left: BorderSide(color: scheme.outline, width: 1),
+            right: BorderSide(color: scheme.outline, width: 1),
+            bottom: BorderSide(color: scheme.outline, width: 1),
           ),
         ),
         child: Padding(
@@ -29,7 +30,7 @@ class WelcomePage extends StatelessWidget {
                 style: GoogleFonts.playfairDisplay(
                   fontSize: 40,
                   fontWeight: FontWeight.w700,
-                  color: AppColors.ink,
+                  color: scheme.onSurface,
                 ),
               ),
               const SizedBox(height: 12),
@@ -41,7 +42,7 @@ class WelcomePage extends StatelessWidget {
                 style: GoogleFonts.ibmPlexSans(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
-                  color: AppColors.ink,
+                  color: scheme.onSurface,
                 ),
               ),
               const SizedBox(height: 16),
@@ -50,7 +51,7 @@ class WelcomePage extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: GoogleFonts.ibmPlexSans(
                   fontSize: 11,
-                  color: AppColors.inkLight,
+                  color: scheme.onSurfaceVariant,
                   height: 1.6,
                 ),
               ),
@@ -60,7 +61,7 @@ class WelcomePage extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: GoogleFonts.ibmPlexSans(
                   fontSize: 11,
-                  color: AppColors.inkLight,
+                  color: scheme.onSurfaceVariant,
                   height: 1.6,
                 ),
               ),

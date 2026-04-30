@@ -2,7 +2,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../data/models/history_fact.dart';
 import '../../data/models/quote.dart';
+import '../../data/models/user_profile.dart';
+import '../services/personalization_service.dart';
 import 'repository_providers.dart';
+import 'user_profile_provider.dart';
 
 enum ArchiveTab { all, marx, history }
 
@@ -17,6 +20,12 @@ class ArchiveItem {
   bool get isFact => fact != null;
 }
 
+final personalizationServiceProvider = Provider<PersonalizationService>((
+  Ref ref,
+) {
+  return PersonalizationService();
+});
+
 final archiveQueryProvider = StateProvider<String>((Ref ref) => '');
 final archiveTabProvider = StateProvider<ArchiveTab>(
   (Ref ref) => ArchiveTab.all,
@@ -30,15 +39,27 @@ final archivePoolProvider = StreamProvider<List<ArchiveItem>>((Ref ref) async* {
 
   final query = ref.watch(archiveQueryProvider).trim().toLowerCase();
   final tab = ref.watch(archiveTabProvider);
+  final profile = ref.watch(userProfileProvider);
+  final personalization = ref.watch(personalizationServiceProvider);
   final historyRepository = ref.watch(historyRepositoryProvider);
   final facts = await historyRepository.watchAllHistoryFacts().first;
 
   yield* ref.watch(quoteRepositoryProvider).watchAllQuotes().map((
     List<Quote> quotes,
   ) {
+    // Filter quotes based on user profile
+    final profileQuotes = _filterQuotesByProfile(quotes, profile);
+    // Weight quotes based on personalization
+    final weightedQuotes = personalization.getWeightedQuotes(
+      profileQuotes,
+      profile,
+    );
+    // Weight facts based on personalization
+    final weightedFacts = personalization.getWeightedFacts(facts, profile);
+
     final items = <ArchiveItem>[
-      ...quotes.map(ArchiveItem.quote),
-      ...facts.map(ArchiveItem.fact),
+      ...weightedQuotes.map(ArchiveItem.quote),
+      ...weightedFacts.map(ArchiveItem.fact),
     ];
 
     final tabFiltered = items.where((ArchiveItem item) {
@@ -134,4 +155,25 @@ Set<String> _tokensForTab({
     if ((fact.person ?? '').trim().isNotEmpty) fact.person!,
     'FAKT',
   };
+}
+
+List<Quote> _filterQuotesByProfile(List<Quote> all, UserProfile profile) {
+  // If not in manual mode, return all quotes
+  if (profile.quoteDiscoveryMode != QuoteDiscoveryMode.manual) {
+    return all;
+  }
+
+  // If no sources selected, return all quotes
+  if (profile.selectedSources.isEmpty) {
+    return all;
+  }
+
+  // Filter by selected sources
+  final selected = profile.selectedSources
+      .map((String value) => value.toLowerCase())
+      .toSet();
+
+  return all
+      .where((Quote quote) => selected.contains(quote.source.toLowerCase()))
+      .toList();
 }

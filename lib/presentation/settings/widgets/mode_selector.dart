@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../core/theme/app_colors.dart';
 import '../../../data/models/daily_content.dart';
 import '../../../domain/providers/app_mode_provider.dart';
 
@@ -11,6 +10,7 @@ class ModeSelector extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final scheme = Theme.of(context).colorScheme;
     final mode = ref.watch(appModeNotifierProvider);
 
     return Column(
@@ -22,14 +22,14 @@ class ModeSelector extends ConsumerWidget {
           style: GoogleFonts.ibmPlexSans(
             fontSize: 9,
             fontWeight: FontWeight.w700,
-            color: AppColors.red,
+            color: scheme.primary,
             letterSpacing: 1.5,
           ),
         ),
         const SizedBox(height: 12),
 
         // Options
-        ..._buildOptions(context, ref, mode),
+        ..._buildOptions(context, ref, mode, scheme),
 
         // Hint text
         const SizedBox(height: 16),
@@ -38,7 +38,7 @@ class ModeSelector extends ConsumerWidget {
           style: GoogleFonts.ibmPlexSans(
             fontSize: 10,
             fontWeight: FontWeight.w400,
-            color: AppColors.ink.withValues(alpha: 0.6),
+            color: scheme.onSurfaceVariant,
             fontStyle: FontStyle.italic,
           ),
         ),
@@ -50,6 +50,7 @@ class ModeSelector extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref,
     AppMode mode,
+    ColorScheme scheme,
   ) {
     final options = <Widget>[];
 
@@ -63,6 +64,7 @@ class ModeSelector extends ConsumerWidget {
           selected: mode == appMode,
           title: _getModeTitle(appMode),
           subtitle: _getModeSubtitle(appMode),
+          scheme: scheme,
           onTap: () => ref.read(appModeNotifierProvider.notifier).set(appMode),
         ),
       );
@@ -71,7 +73,7 @@ class ModeSelector extends ConsumerWidget {
         options.add(
           Container(
             height: 1,
-            color: AppColors.ink,
+            color: scheme.outline,
             margin: const EdgeInsets.symmetric(vertical: 12),
           ),
         );
@@ -105,6 +107,7 @@ class _ModeOptionTile extends StatelessWidget {
   final bool selected;
   final String title;
   final String subtitle;
+  final ColorScheme scheme;
   final VoidCallback onTap;
 
   const _ModeOptionTile({
@@ -112,6 +115,7 @@ class _ModeOptionTile extends StatelessWidget {
     required this.selected,
     required this.title,
     required this.subtitle,
+    required this.scheme,
     required this.onTap,
   });
 
@@ -132,7 +136,7 @@ class _ModeOptionTile extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
-                    color: AppColors.ink,
+                    color: scheme.outline,
                     width: selected ? 2 : 1.5,
                   ),
                 ),
@@ -143,7 +147,7 @@ class _ModeOptionTile extends StatelessWidget {
                           height: 10,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: AppColors.red,
+                            color: scheme.primary,
                           ),
                         ),
                       )
@@ -159,7 +163,7 @@ class _ModeOptionTile extends StatelessWidget {
                     style: GoogleFonts.playfairDisplay(
                       fontSize: 16,
                       fontWeight: selected ? FontWeight.w700 : FontWeight.w400,
-                      color: AppColors.ink,
+                      color: scheme.onSurface,
                       height: 1.4,
                     ),
                   ),
@@ -169,7 +173,7 @@ class _ModeOptionTile extends StatelessWidget {
                     style: GoogleFonts.ibmPlexSans(
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
-                      color: AppColors.ink.withValues(alpha: 0.6),
+                      color: scheme.onSurfaceVariant,
                       height: 1.3,
                     ),
                   ),

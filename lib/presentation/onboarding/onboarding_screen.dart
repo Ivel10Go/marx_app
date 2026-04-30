@@ -72,13 +72,14 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
     final sourcesAsync = ref.watch(availableQuoteSourcesProvider);
 
     return AppDecoratedScaffold(
       child: Column(
         children: <Widget>[
           Container(
-            color: AppColors.paper,
+            color: scheme.surface,
             padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -91,7 +92,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                       style: GoogleFonts.playfairDisplay(
                         fontSize: 30,
                         fontWeight: FontWeight.w700,
-                        color: AppColors.ink,
+                        color: scheme.onSurface,
                       ),
                     ),
                     Text(
@@ -99,7 +100,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                       style: GoogleFonts.ibmPlexSans(
                         fontSize: 10,
                         fontWeight: FontWeight.w700,
-                        color: AppColors.inkMuted,
+                        color: scheme.onSurfaceVariant,
                         letterSpacing: 1.0,
                       ),
                     ),
@@ -110,7 +111,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 const SizedBox(height: 12),
                 Container(
                   height: 1,
-                  color: AppColors.rule,
+                  color: scheme.outline,
                   child: FractionallySizedBox(
                     widthFactor: (_index + 1) / _pageCount,
                     child: Container(color: AppColors.red),
@@ -220,8 +221,9 @@ class _ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
     return Material(
-      color: AppColors.ink,
+      color: scheme.onSurface,
       child: InkWell(
         onTap: onTap,
         child: Padding(
@@ -232,7 +234,7 @@ class _ActionButton extends StatelessWidget {
             style: GoogleFonts.ibmPlexSans(
               fontSize: 11,
               fontWeight: FontWeight.w700,
-              color: AppColors.paper,
+              color: scheme.surface,
               letterSpacing: 1.2,
             ),
           ),
@@ -250,8 +252,9 @@ class _OutlineActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
     return Container(
-      decoration: BoxDecoration(border: Border.all(color: AppColors.ink)),
+      decoration: BoxDecoration(border: Border.all(color: scheme.outline)),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
@@ -264,7 +267,7 @@ class _OutlineActionButton extends StatelessWidget {
               style: GoogleFonts.ibmPlexSans(
                 fontSize: 11,
                 fontWeight: FontWeight.w700,
-                color: AppColors.ink,
+                color: scheme.onSurface,
                 letterSpacing: 1.2,
               ),
             ),

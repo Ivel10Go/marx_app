@@ -17,6 +17,7 @@ class PurchasePage extends ConsumerStatefulWidget {
 class _PurchasePageState extends ConsumerState<PurchasePage> {
   Offerings? _offerings;
   bool _loading = false;
+  String? _errorMessage;
 
   @override
   void initState() {
@@ -25,12 +26,37 @@ class _PurchasePageState extends ConsumerState<PurchasePage> {
   }
 
   Future<void> _loadOfferings() async {
-    setState(() => _loading = true);
-    final off = await PurchasesService.instance.fetchOfferings();
+    if (!mounted) {
+      return;
+    }
     setState(() {
-      _offerings = off;
-      _loading = false;
+      _loading = true;
+      _errorMessage = null;
     });
+
+    try {
+      final off = await PurchasesService.instance.fetchOfferings();
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _offerings = off;
+      });
+    } catch (e) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _errorMessage = 'Angebote konnten nicht geladen werden: $e';
+      });
+    } finally {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _loading = false;
+      });
+    }
   }
 
   Future<void> _buyPackage(Package pkg) async {
@@ -103,7 +129,19 @@ class _PurchasePageState extends ConsumerState<PurchasePage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   if (isPro) ...[
-                    const Text('Du hast bereits Zitate App Pro.'),
+                    const Text('Du hast bereits Zitate App Pro aktiviert.'),
+                    const SizedBox(height: 12),
+                  ],
+                  if (_errorMessage != null) ...[
+                    Text(
+                      _errorMessage!,
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    const SizedBox(height: 12),
+                    ElevatedButton(
+                      onPressed: _loadOfferings,
+                      child: const Text('Erneut laden'),
+                    ),
                     const SizedBox(height: 12),
                   ],
                   Expanded(

@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../core/constants/settings_keys.dart';
 import '../../core/services/notification_service.dart';
 import '../../data/models/home_content_mode.dart';
+import '../../data/models/user_profile.dart';
 
 enum DifficultyFilter { all, beginnerOnly, noBeginner }
 
@@ -60,6 +61,10 @@ class SettingsController extends AsyncNotifier<SettingsState> {
   @override
   Future<SettingsState> build() async {
     final prefs = await SharedPreferences.getInstance();
+    final profileRaw = prefs.getString(UserProfile.storageKey);
+    final onboardingSeen = profileRaw == null || profileRaw.isEmpty
+        ? false
+        : UserProfile.fromJsonString(profileRaw).onboardingCompleted;
     return SettingsState(
       themeMode: _fromThemeIndex(prefs.getInt(SettingsKeys.themeMode) ?? 0),
       languageCode: prefs.getString(SettingsKeys.languageCode) ?? 'de',
@@ -74,7 +79,9 @@ class SettingsController extends AsyncNotifier<SettingsState> {
         prefs.getString(SettingsKeys.homeContentMode),
       ),
       streak: prefs.getInt(SettingsKeys.streak) ?? 0,
-      onboardingSeen: prefs.getBool('settings_onboarding_seen') ?? false,
+      onboardingSeen:
+          onboardingSeen ||
+          (prefs.getBool('settings_onboarding_seen') ?? false),
     );
   }
 
@@ -148,6 +155,14 @@ class SettingsController extends AsyncNotifier<SettingsState> {
   Future<void> markOnboardingSeen() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('settings_onboarding_seen', true);
+    final raw = prefs.getString(UserProfile.storageKey);
+    final profile = raw == null || raw.isEmpty
+        ? UserProfile.initial()
+        : UserProfile.fromJsonString(raw);
+    await prefs.setString(
+      UserProfile.storageKey,
+      profile.copyWith(onboardingCompleted: true).toJsonString(),
+    );
     state = AsyncData(state.requireValue.copyWith(onboardingSeen: true));
   }
 

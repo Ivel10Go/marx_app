@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../core/theme/app_colors.dart';
@@ -40,6 +41,12 @@ class ProfileSection extends ConsumerWidget {
         ),
         const SizedBox(height: 16),
         _ProfileRow(
+          label: 'Orientierungstest',
+          value: 'Starten',
+          onTap: () => context.push('/political-orientation'),
+        ),
+        const SizedBox(height: 14),
+        _ProfileRow(
           label: 'Zitate auswählen',
           value: _discoveryLabel(profile.quoteDiscoveryMode),
           onTap: () => _showDiscoverySheet(context, ref, profile, sourcesAsync),
@@ -74,13 +81,14 @@ class ProfileSection extends ConsumerWidget {
     UserProfile profile,
     AsyncValue<List<String>> sourcesAsync,
   ) async {
+    final scheme = Theme.of(context).colorScheme;
     final selectedSources = profile.selectedSources.toSet();
     var selectedMode = profile.quoteDiscoveryMode;
 
     await showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
-      backgroundColor: AppColors.paper,
+      backgroundColor: scheme.surface,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
       builder: (BuildContext context) {
         return StatefulBuilder(
@@ -97,6 +105,7 @@ class ProfileSection extends ConsumerWidget {
                       fontSize: 10,
                       fontWeight: FontWeight.w700,
                       letterSpacing: 1.2,
+                      color: scheme.primary,
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -129,7 +138,7 @@ class ProfileSection extends ConsumerWidget {
                         fontSize: 10,
                         fontWeight: FontWeight.w700,
                         letterSpacing: 1.2,
-                        color: AppColors.inkMuted,
+                        color: scheme.onSurfaceVariant,
                       ),
                     ),
                     const SizedBox(height: 10),
@@ -147,7 +156,7 @@ class ProfileSection extends ConsumerWidget {
                               return Material(
                                 color: isActive
                                     ? AppColors.red.withValues(alpha: 0.1)
-                                    : AppColors.paper,
+                                    : scheme.surface,
                                 child: InkWell(
                                   onTap: () {
                                     setSheetState(() {
@@ -167,7 +176,7 @@ class ProfileSection extends ConsumerWidget {
                                       border: Border.all(
                                         color: isActive
                                             ? AppColors.red
-                                            : AppColors.rule,
+                                            : scheme.outline,
                                       ),
                                     ),
                                     child: Row(
@@ -178,9 +187,7 @@ class ProfileSection extends ConsumerWidget {
                                             style: GoogleFonts.ibmPlexSans(
                                               fontSize: 11,
                                               fontWeight: FontWeight.w600,
-                                              color: isActive
-                                                  ? AppColors.ink
-                                                  : AppColors.ink,
+                                              color: scheme.onSurface,
                                             ),
                                           ),
                                         ),
@@ -191,7 +198,7 @@ class ProfileSection extends ConsumerWidget {
                                           size: 18,
                                           color: isActive
                                               ? AppColors.red
-                                              : AppColors.inkMuted,
+                                              : scheme.onSurfaceVariant,
                                         ),
                                       ],
                                     ),
@@ -225,8 +232,8 @@ class ProfileSection extends ConsumerWidget {
                         }
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.ink,
-                        foregroundColor: AppColors.paper,
+                        backgroundColor: scheme.onSurface,
+                        foregroundColor: scheme.surface,
                         shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.zero,
                         ),
@@ -248,13 +255,14 @@ class ProfileSection extends ConsumerWidget {
     WidgetRef ref,
     UserProfile profile,
   ) async {
+    final scheme = Theme.of(context).colorScheme;
     final selected = profile.historicalInterests.toSet();
     var searchQuery = '';
 
     await showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
-      backgroundColor: AppColors.paper,
+      backgroundColor: scheme.surface,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
       builder: (BuildContext context) {
         return StatefulBuilder(
@@ -271,6 +279,7 @@ class ProfileSection extends ConsumerWidget {
                       fontSize: 10,
                       fontWeight: FontWeight.w700,
                       letterSpacing: 1.2,
+                      color: scheme.primary,
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -285,7 +294,7 @@ class ProfileSection extends ConsumerWidget {
                       hintText: 'Interesse suchen …',
                       hintStyle: GoogleFonts.ibmPlexSans(
                         fontSize: 12,
-                        color: AppColors.inkMuted,
+                        color: scheme.onSurfaceVariant,
                       ),
                       prefixIcon: const Icon(Icons.search, size: 18),
                       contentPadding: const EdgeInsets.symmetric(
@@ -314,7 +323,7 @@ class ProfileSection extends ConsumerWidget {
                           style: GoogleFonts.ibmPlexSans(
                             fontSize: 11,
                             fontWeight: FontWeight.w600,
-                            color: AppColors.inkLight,
+                            color: scheme.onSurfaceVariant,
                           ),
                         ),
                       ),
@@ -362,7 +371,7 @@ class ProfileSection extends ConsumerWidget {
                               'Keine Treffer.',
                               style: GoogleFonts.ibmPlexSans(
                                 fontSize: 11,
-                                color: AppColors.inkMuted,
+                                color: scheme.onSurfaceVariant,
                               ),
                             ),
                           );
@@ -412,9 +421,7 @@ class ProfileSection extends ConsumerWidget {
                                           style: GoogleFonts.ibmPlexSans(
                                             fontSize: 12,
                                             fontWeight: FontWeight.w600,
-                                            color: isActive
-                                                ? AppColors.ink
-                                                : AppColors.ink,
+                                            color: scheme.onSurface,
                                           ),
                                         ),
                                       ),
@@ -463,8 +470,8 @@ class ProfileSection extends ConsumerWidget {
                               }
                             },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.ink,
-                        foregroundColor: AppColors.paper,
+                        backgroundColor: scheme.onSurface,
+                        foregroundColor: scheme.surface,
                         shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.zero,
                         ),
@@ -486,9 +493,10 @@ class ProfileSection extends ConsumerWidget {
     WidgetRef ref,
     UserProfile profile,
   ) async {
+    final scheme = Theme.of(context).colorScheme;
     await showModalBottomSheet<void>(
       context: context,
-      backgroundColor: AppColors.paper,
+      backgroundColor: scheme.surface,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
       builder: (BuildContext context) {
         return Padding(
@@ -499,7 +507,10 @@ class ProfileSection extends ConsumerWidget {
               final isSelected = leaning == profile.politicalLeaning;
               return ListTile(
                 contentPadding: EdgeInsets.zero,
-                title: Text(_leaningLabel(leaning)),
+                title: Text(
+                  _leaningLabel(leaning),
+                  style: GoogleFonts.ibmPlexSans(color: scheme.onSurface),
+                ),
                 trailing: isSelected
                     ? const Icon(Icons.check_rounded, color: AppColors.red)
                     : null,
@@ -597,6 +608,7 @@ class _ProfileRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
     return GestureDetector(
       onTap: onTap,
       child: Row(
@@ -607,7 +619,7 @@ class _ProfileRow extends StatelessWidget {
               style: GoogleFonts.ibmPlexSans(
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
-                color: AppColors.ink,
+                color: scheme.onSurface,
               ),
             ),
           ),
@@ -620,7 +632,7 @@ class _ProfileRow extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: GoogleFonts.ibmPlexSans(
                 fontSize: 11,
-                color: AppColors.inkLight,
+                color: scheme.onSurfaceVariant,
               ),
             ),
           ),
@@ -647,16 +659,17 @@ class _DiscoveryTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
     final activeBg = AppColors.red.withValues(alpha: 0.1);
 
     return Material(
-      color: active ? activeBg : AppColors.paper,
+      color: active ? activeBg : scheme.surface,
       child: InkWell(
         onTap: onTap,
         child: Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            border: Border.all(color: active ? AppColors.red : AppColors.rule),
+            border: Border.all(color: active ? AppColors.red : scheme.outline),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -666,7 +679,7 @@ class _DiscoveryTile extends StatelessWidget {
                 style: GoogleFonts.playfairDisplay(
                   fontSize: 15,
                   fontWeight: FontWeight.w700,
-                  color: AppColors.ink,
+                  color: scheme.onSurface,
                 ),
               ),
               const SizedBox(height: 4),
@@ -675,8 +688,8 @@ class _DiscoveryTile extends StatelessWidget {
                 style: GoogleFonts.ibmPlexSans(
                   fontSize: 11,
                   color: active
-                      ? AppColors.ink.withValues(alpha: 0.8)
-                      : AppColors.inkLight,
+                      ? scheme.onSurface.withValues(alpha: 0.8)
+                      : scheme.onSurfaceVariant,
                 ),
               ),
             ],
@@ -700,13 +713,14 @@ class _SettingsGroup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
     return Container(
-      decoration: const BoxDecoration(
-        color: AppColors.paper,
+      decoration: BoxDecoration(
+        color: scheme.surface,
         border: Border(
-          left: BorderSide(color: AppColors.ink, width: 1),
-          right: BorderSide(color: AppColors.ink, width: 1),
-          bottom: BorderSide(color: AppColors.ink, width: 1),
+          left: BorderSide(color: scheme.outline, width: 1),
+          right: BorderSide(color: scheme.outline, width: 1),
+          bottom: BorderSide(color: scheme.outline, width: 1),
         ),
       ),
       child: Padding(

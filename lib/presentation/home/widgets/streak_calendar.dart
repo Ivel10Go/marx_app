@@ -88,7 +88,7 @@ class _StreakCalendarState extends ConsumerState<StreakCalendar> {
             ),
             error: (_, __) => const SizedBox(
               height: 100,
-              child: Center(child: Text('Kalender nicht verfuegbar')),
+              child: Center(child: Text('Kalender nicht verfügbar')),
             ),
           ),
         ],

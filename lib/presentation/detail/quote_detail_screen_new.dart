@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../core/providers/purchases_provider.dart';
 import '../../core/theme/app_colors.dart';
-import '../../core/utils/share_card_renderer.dart';
 import '../../core/utils/image_loader.dart';
+import '../../core/utils/share_card_renderer.dart';
 import '../../data/models/quote.dart';
 import '../../domain/providers/daily_quote_provider.dart';
 import '../../domain/providers/favorites_provider.dart';
 import '../../domain/providers/repository_providers.dart';
-import '../../widgets/app_decorated_scaffold.dart';
+import '../../domain/services/tts_service.dart';
 import '../../widgets/adaptive_quote_text.dart';
+import '../../widgets/app_decorated_scaffold.dart';
 import '../../widgets/category_chip.dart';
 
 class QuoteDetailScreen extends ConsumerStatefulWidget {
@@ -25,42 +24,78 @@ class QuoteDetailScreen extends ConsumerStatefulWidget {
 }
 
 class _QuoteDetailScreenState extends ConsumerState<QuoteDetailScreen> {
-  late final ScrollController _scrollController;
-  String? _lastOpenedQuoteId;
+  late final TtsService _ttsService;
+  bool _audioPlaying = false;
 
   @override
   void initState() {
     super.initState();
-    _scrollController = ScrollController(keepScrollOffset: false);
+    _ttsService = TtsService();
+    _initTts();
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final quoteId = widget.quoteId;
-    if (_lastOpenedQuoteId != quoteId) {
-      _lastOpenedQuoteId = quoteId;
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (!mounted || !_scrollController.hasClients) {
-          return;
-        }
-        _scrollController.jumpTo(0);
+  Future<void> _initTts() async {
+    await _ttsService.init();
+    _ttsService.onPlaybackCompleted = () async {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _audioPlaying = false;
       });
-    }
+    };
   }
 
   @override
   void dispose() {
-    _scrollController.dispose();
+    _ttsService.dispose();
     super.dispose();
+  }
+
+  Future<void> _showExplanation(Quote quote) async {
+    await showModalBottomSheet<void>(
+      context: context,
+      showDragHandle: true,
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      builder: (BuildContext context) {
+        return SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(20, 4, 20, 24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  'KURZERKLAERUNG',
+                  style: GoogleFonts.ibmPlexSans(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 1.2,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  quote.explanationShort,
+                  style: GoogleFonts.ibmPlexSans(fontSize: 12, height: 1.6),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _shareQuote(Quote quote) async {
+    await ShareCardRenderer().shareQuote(quote, context);
   }
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
     final quoteId = widget.quoteId;
     final quoteAsync = ref.watch(quoteByIdProvider(quoteId));
     final favoriteAsync = ref.watch(isFavoriteProvider(quoteId));
-    final isPro = ref.watch(isProProvider);
 
     return AppDecoratedScaffold(
       appBar: null,
@@ -76,16 +111,14 @@ class _QuoteDetailScreenState extends ConsumerState<QuoteDetailScreen> {
               children: <Widget>[
                 Expanded(
                   child: _BroadsheetOutlineButton(
-                    onPressed: () async {
-                      await ShareCardRenderer().shareQuote(quote, context);
-                    },
+                    onPressed: () => _shareQuote(quote),
                     label: 'TEILEN',
                   ),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: _BroadsheetButton(
-                    onPressed: () => _showSimpleExplanation(context, quote),
+                    onPressed: () => _showExplanation(quote),
                     label: 'ERKLAERUNG',
                   ),
                 ),
@@ -112,7 +145,7 @@ class _QuoteDetailScreenState extends ConsumerState<QuoteDetailScreen> {
                                   : Icons.favorite_border_rounded,
                               color: isFavorite
                                   ? AppColors.redOnRed
-                                  : AppColors.ink,
+                                  : scheme.onSurface,
                               size: 20,
                             ),
                           ),
@@ -137,10 +170,8 @@ class _QuoteDetailScreenState extends ConsumerState<QuoteDetailScreen> {
           }
 
           return ListView(
-            controller: _scrollController,
             padding: EdgeInsets.zero,
             children: <Widget>[
-              // Masthead
               Container(
                 color: AppColors.red,
                 padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
@@ -167,7 +198,6 @@ class _QuoteDetailScreenState extends ConsumerState<QuoteDetailScreen> {
                   ],
                 ),
               ),
-              // Featured image if available
               if (quote.imageUrl != null && quote.imageUrl!.isNotEmpty)
                 CachedImageLoader(
                   imageUrl: quote.imageUrl!,
@@ -184,7 +214,6 @@ class _QuoteDetailScreenState extends ConsumerState<QuoteDetailScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    // Quote text
                     AdaptiveQuoteText(
                       text: quote.textDe,
                       minFontSize: 28,
@@ -203,7 +232,6 @@ class _QuoteDetailScreenState extends ConsumerState<QuoteDetailScreen> {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    // Tags
                     Wrap(
                       spacing: 6,
                       runSpacing: 6,
@@ -212,38 +240,27 @@ class _QuoteDetailScreenState extends ConsumerState<QuoteDetailScreen> {
                           .toList(),
                     ),
                     const SizedBox(height: 24),
-                    // Section
                     _SectionCard(
                       title: 'KURZERKLAERUNG',
                       body: quote.explanationShort,
                     ),
                     const SizedBox(height: 16),
-                    if (isPro)
-                      _SectionCard(
-                        title: 'AUSFUEHRLICHE ERKLAERUNG',
-                        body: quote.explanationLong,
-                      )
-                    else
-                      _PremiumLockedSection(
-                        title: 'AUSFUEHRLICHE ERKLAERUNG',
-                        teaser:
-                            'Die tiefe Analyse ist Teil von Zitate App Pro.',
-                        onUnlockTap: () => context.push('/premium-features'),
-                      ),
+                    _SectionCard(
+                      title: 'AUSFUEHRLICHE ERKLAERUNG',
+                      body: quote.explanationLong,
+                    ),
                     const SizedBox(height: 16),
-                    if (isPro)
-                      _SectionCard(
-                        title: 'LERNSEITE',
-                        body:
-                            'Serie: ${quote.series}\n\nDiese Serie verbindet thematisch verwandte Zitate zu einem Lernpfad.',
-                      )
-                    else
-                      _PremiumLockedSection(
-                        title: 'LERNSEITE',
-                        teaser:
-                            'Kuratierte Lernserien mit roten Faden sind Teil von Zitate App Pro.',
-                        onUnlockTap: () => context.push('/premium-features'),
-                      ),
+                    _AudioExplainerSection(
+                      ttsService: _ttsService,
+                      explanationShort: quote.explanationShort,
+                      explanationLong: quote.explanationLong,
+                      audioPlaying: _audioPlaying,
+                      onPlayingChanged: (playing) {
+                        setState(() {
+                          _audioPlaying = playing;
+                        });
+                      },
+                    ),
                     if (quote.funFact != null) ...<Widget>[
                       const SizedBox(height: 16),
                       _SectionCard(title: 'KONTEXT', body: quote.funFact!),
@@ -277,13 +294,15 @@ class _SectionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
     return Container(
       decoration: const BoxDecoration(
-        color: AppColors.paper,
+        color: Colors.transparent,
         border: Border(
-          left: BorderSide(color: AppColors.ink, width: 1),
-          right: BorderSide(color: AppColors.ink, width: 1),
-          bottom: BorderSide(color: AppColors.ink, width: 1),
+          left: BorderSide(color: Colors.transparent, width: 1),
+          right: BorderSide(color: Colors.transparent, width: 1),
+          bottom: BorderSide(color: Colors.transparent, width: 1),
         ),
       ),
       child: Padding(
@@ -297,7 +316,7 @@ class _SectionCard extends StatelessWidget {
                 fontSize: 10,
                 fontWeight: FontWeight.w700,
                 letterSpacing: 1.2,
-                color: AppColors.ink,
+                color: scheme.onSurface,
               ),
             ),
             const SizedBox(height: 10),
@@ -305,73 +324,9 @@ class _SectionCard extends StatelessWidget {
               body,
               style: GoogleFonts.ibmPlexSans(
                 fontSize: 11,
-                color: AppColors.ink,
+                color: scheme.onSurface,
                 height: 1.6,
               ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _PremiumLockedSection extends StatelessWidget {
-  const _PremiumLockedSection({
-    required this.title,
-    required this.teaser,
-    required this.onUnlockTap,
-  });
-
-  final String title;
-  final String teaser;
-  final VoidCallback onUnlockTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        color: AppColors.paper,
-        border: Border(
-          left: BorderSide(color: AppColors.ink, width: 1),
-          right: BorderSide(color: AppColors.ink, width: 1),
-          bottom: BorderSide(color: AppColors.ink, width: 1),
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: Text(
-                    '$title · PRO',
-                    style: GoogleFonts.ibmPlexSans(
-                      fontSize: 10,
-                      fontWeight: FontWeight.w700,
-                      letterSpacing: 1.2,
-                      color: AppColors.ink,
-                    ),
-                  ),
-                ),
-                const Icon(Icons.lock_outline_rounded, size: 16),
-              ],
-            ),
-            const SizedBox(height: 10),
-            Text(
-              teaser,
-              style: GoogleFonts.ibmPlexSans(
-                fontSize: 11,
-                color: AppColors.inkLight,
-                height: 1.6,
-              ),
-            ),
-            const SizedBox(height: 12),
-            _BroadsheetButton(
-              onPressed: onUnlockTap,
-              label: 'PRO FREISCHALTEN',
             ),
           ],
         ),
@@ -388,10 +343,12 @@ class _BroadsheetButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.ink,
-        border: Border.all(color: AppColors.ink, width: 1),
+        color: scheme.onSurface,
+        border: Border.all(color: scheme.outline, width: 1),
       ),
       child: Material(
         color: Colors.transparent,
@@ -405,7 +362,7 @@ class _BroadsheetButton extends StatelessWidget {
               style: GoogleFonts.ibmPlexSans(
                 fontSize: 10,
                 fontWeight: FontWeight.w700,
-                color: AppColors.paper,
+                color: scheme.surface,
                 letterSpacing: 1.0,
               ),
             ),
@@ -427,9 +384,11 @@ class _BroadsheetOutlineButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: AppColors.ink, width: 1),
+        border: Border.all(color: scheme.outline, width: 1),
       ),
       child: Material(
         color: Colors.transparent,
@@ -443,7 +402,7 @@ class _BroadsheetOutlineButton extends StatelessWidget {
               style: GoogleFonts.ibmPlexSans(
                 fontSize: 10,
                 fontWeight: FontWeight.w700,
-                color: AppColors.ink,
+                color: scheme.onSurface,
                 letterSpacing: 1.0,
               ),
             ),
@@ -454,43 +413,69 @@ class _BroadsheetOutlineButton extends StatelessWidget {
   }
 }
 
-void _showSimpleExplanation(BuildContext context, Quote quote) {
-  showModalBottomSheet<void>(
-    context: context,
-    isScrollControlled: true,
-    backgroundColor: AppColors.paper,
-    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-    builder: (context) {
-      return Padding(
-        padding: const EdgeInsets.fromLTRB(20, 20, 20, 24),
+class _AudioExplainerSection extends StatelessWidget {
+  const _AudioExplainerSection({
+    required this.ttsService,
+    required this.explanationShort,
+    required this.explanationLong,
+    required this.audioPlaying,
+    required this.onPlayingChanged,
+  });
+
+  final TtsService ttsService;
+  final String explanationShort;
+  final String explanationLong;
+  final bool audioPlaying;
+  final Function(bool) onPlayingChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
+    return Container(
+      decoration: const BoxDecoration(
+        color: Colors.transparent,
+        border: Border(
+          left: BorderSide(color: Colors.transparent, width: 1),
+          right: BorderSide(color: Colors.transparent, width: 1),
+          bottom: BorderSide(color: Colors.transparent, width: 1),
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              'EINFACHER ERKLAERT',
+              'AUDIO-ERKLAERUNG',
               style: GoogleFonts.ibmPlexSans(
                 fontSize: 10,
                 fontWeight: FontWeight.w700,
                 letterSpacing: 1.2,
-                color: AppColors.inkMuted,
+                color: scheme.onSurface,
               ),
             ),
             const SizedBox(height: 12),
-            Container(width: 20, height: 2, color: AppColors.red),
-            const SizedBox(height: 16),
-            Text(
-              quote.explanationShort,
-              style: GoogleFonts.ibmPlexSans(
-                fontSize: 12,
-                color: AppColors.ink,
-                height: 1.6,
+            ElevatedButton.icon(
+              onPressed: () async {
+                if (audioPlaying) {
+                  await ttsService.stop();
+                  onPlayingChanged(false);
+                  return;
+                }
+                onPlayingChanged(true);
+                await ttsService.speak('$explanationShort $explanationLong');
+              },
+              icon: Icon(
+                audioPlaying
+                    ? Icons.stop_circle_outlined
+                    : Icons.play_circle_outline,
               ),
+              label: Text(audioPlaying ? 'Stoppen' : 'Anhören'),
             ),
-            const SizedBox(height: 20),
           ],
         ),
-      );
-    },
-  );
+      ),
+    );
+  }
 }

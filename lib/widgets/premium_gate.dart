@@ -4,13 +4,12 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../core/providers/purchases_provider.dart';
-import '../core/theme/app_colors.dart';
 
 class PremiumGate extends ConsumerWidget {
   const PremiumGate({
     required this.child,
-    this.featureName = 'Feature',
-    this.featureDescription = 'Dieses Feature ist nur in Premium verfügbar.',
+    this.featureName = 'Pro-Feature',
+    this.featureDescription = 'Dieses Feature ist Teil von Zitate App Pro.',
     super.key,
   });
 
@@ -44,21 +43,23 @@ class _PremiumTeaser extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
     return Container(
-      color: AppColors.paper,
+      color: scheme.surface,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           // ─── Rotes Kicker-Band ──────────────────
           Container(
-            color: AppColors.red,
+            color: scheme.primary,
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
             child: Text(
-              'PREMIUM',
+              'PRO',
               style: GoogleFonts.ibmPlexSans(
                 fontSize: 9,
                 fontWeight: FontWeight.w700,
-                color: AppColors.redOnRed,
+                color: scheme.onPrimary,
                 letterSpacing: 1.8,
               ),
             ),
@@ -79,7 +80,7 @@ class _PremiumTeaser extends StatelessWidget {
                         style: GoogleFonts.playfairDisplay(
                           fontSize: 24,
                           fontWeight: FontWeight.w700,
-                          color: AppColors.ink,
+                          color: scheme.onSurface,
                         ),
                       ),
                       const SizedBox(height: 12),
@@ -88,7 +89,7 @@ class _PremiumTeaser extends StatelessWidget {
                         style: GoogleFonts.ibmPlexSans(
                           fontSize: 13,
                           height: 1.6,
-                          color: AppColors.ink,
+                          color: scheme.onSurface,
                         ),
                       ),
                     ],
@@ -98,7 +99,7 @@ class _PremiumTeaser extends StatelessWidget {
                       context.push('/purchase');
                     },
                     child: Text(
-                      'PREMIUM FREISCHALTEN',
+                      'PRO FREISCHALTEN',
                       style: GoogleFonts.ibmPlexSans(
                         fontSize: 12,
                         fontWeight: FontWeight.w700,

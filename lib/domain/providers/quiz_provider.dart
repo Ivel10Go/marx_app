@@ -5,7 +5,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../data/models/quiz_session.dart';
 import '../../data/models/quote.dart';
+import '../../data/models/user_profile.dart';
+import '../services/personalization_service.dart';
 import 'repository_providers.dart';
+import 'user_profile_provider.dart';
 
 class QuizNotifier extends StateNotifier<QuizSession> {
   QuizNotifier(this._ref) : super(QuizSession.empty()) {
@@ -22,6 +25,8 @@ class QuizNotifier extends StateNotifier<QuizSession> {
 
   Future<QuizSession> _generateSession() async {
     await _ref.read(initialSeedProvider.future);
+    final profile = _ref.read(userProfileProvider);
+    final personalization = PersonalizationService();
     final allQuotes = await _ref
         .read(quoteRepositoryProvider)
         .watchAllQuotes()
@@ -31,24 +36,36 @@ class QuizNotifier extends StateNotifier<QuizSession> {
       return QuizSession.empty();
     }
 
-    final beginner = allQuotes
+    // Filter quotes by profile (same as archive)
+    final profileQuotes = _filterQuotesByProfile(allQuotes, profile);
+    final candidates = profileQuotes.isEmpty ? allQuotes : profileQuotes;
+
+    // Weight quotes by personalization
+    final weightedQuotes = personalization.getWeightedQuotes(
+      candidates,
+      profile,
+    );
+
+    // Group by difficulty
+    final beginner = weightedQuotes
         .where((q) => q.difficulty == 'beginner')
         .toList();
-    final intermediate = allQuotes
+    final intermediate = weightedQuotes
         .where((q) => q.difficulty == 'intermediate')
         .toList();
-    final advanced = allQuotes
+    final advanced = weightedQuotes
         .where((q) => q.difficulty == 'advanced')
         .toList();
 
     final selectedQuotes = <Quote>[];
-    selectedQuotes.addAll(_pick(beginner, 3, allQuotes));
-    selectedQuotes.addAll(_pick(intermediate, 4, allQuotes));
-    selectedQuotes.addAll(_pick(advanced, 3, allQuotes));
+    selectedQuotes.addAll(_pick(beginner, 3, weightedQuotes));
+    selectedQuotes.addAll(_pick(intermediate, 4, weightedQuotes));
+    selectedQuotes.addAll(_pick(advanced, 3, weightedQuotes));
 
     final questions = selectedQuotes.asMap().entries.map((entry) {
       final quote = entry.value;
-      final allSources = allQuotes.map((q) => q.source).toSet().toList();
+      // Use weighted quotes for answer options (personalized too)
+      final allSources = weightedQuotes.map((q) => q.source).toSet().toList();
       final options = <String>{quote.source};
 
       while (options.length < 4 && allSources.isNotEmpty) {
@@ -93,6 +110,27 @@ class QuizNotifier extends StateNotifier<QuizSession> {
       }
     }
     return result;
+  }
+
+  List<Quote> _filterQuotesByProfile(List<Quote> all, UserProfile profile) {
+    // If not in manual mode, return all quotes
+    if (profile.quoteDiscoveryMode != QuoteDiscoveryMode.manual) {
+      return all;
+    }
+
+    // If no sources selected, return all quotes
+    if (profile.selectedSources.isEmpty) {
+      return all;
+    }
+
+    // Filter by selected sources
+    final selected = profile.selectedSources
+        .map((String value) => value.toLowerCase())
+        .toSet();
+
+    return all
+        .where((Quote quote) => selected.contains(quote.source.toLowerCase()))
+        .toList();
   }
 
   void answer(int selectedIndex) {

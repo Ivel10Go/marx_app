@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
 class AppNavigationBar extends StatelessWidget {
   const AppNavigationBar({required this.selectedIndex, super.key});
 
@@ -24,9 +23,11 @@ class AppNavigationBar extends StatelessWidget {
   ];
 
   Future<void> _showMoreSheet(BuildContext context) async {
+    final scheme = Theme.of(context).colorScheme;
+
     await showModalBottomSheet<void>(
       context: context,
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      backgroundColor: scheme.surface,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
       builder: (BuildContext sheetContext) {
         return SafeArea(
@@ -38,6 +39,13 @@ class AppNavigationBar extends StatelessWidget {
                 onTap: () {
                   Navigator.of(sheetContext).pop();
                   context.go('/favorites');
+                },
+              ),
+              _MoreItem(
+                label: 'Wischtest',
+                onTap: () {
+                  Navigator.of(sheetContext).pop();
+                  context.go('/political-orientation');
                 },
               ),
               _MoreItem(
@@ -74,7 +82,7 @@ class AppNavigationBar extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
 
     return Container(
-      color: scheme.secondary,
+      color: scheme.surface,
       child: SafeArea(
         top: false,
         child: Padding(
@@ -109,8 +117,8 @@ class AppNavigationBar extends StatelessWidget {
                             destination.icon,
                             size: 16,
                             color: isActive
-                                ? scheme.onSecondary
-                                : scheme.onSecondary.withOpacity(0.6),
+                                ? scheme.onSurface
+                                : scheme.onSurface.withOpacity(0.6),
                           ),
                           const SizedBox(height: 2),
                           Text(
@@ -118,9 +126,9 @@ class AppNavigationBar extends StatelessWidget {
                             style: GoogleFonts.ibmPlexSans(
                               fontSize: 11,
                               fontWeight: FontWeight.w700,
-                                color: isActive
-                                  ? scheme.onSecondary
-                                  : scheme.onSecondary.withOpacity(0.6),
+                              color: isActive
+                                  ? scheme.onSurface
+                                  : scheme.onSurface.withOpacity(0.6),
                               letterSpacing: 1.2,
                             ),
                           ),
@@ -130,11 +138,11 @@ class AppNavigationBar extends StatelessWidget {
                             opacity: isActive ? 1 : 0,
                             child: Padding(
                               padding: const EdgeInsets.only(top: 4),
-                                child: Container(
-                                  width: 24,
-                                  height: 1,
-                                  color: scheme.primary,
-                                ),
+                              child: Container(
+                                width: 24,
+                                height: 1,
+                                color: scheme.primary,
+                              ),
                             ),
                           ),
                         ],
@@ -189,7 +197,10 @@ class _MoreItem extends StatelessWidget {
             border: Border(
               bottom: isLast
                   ? BorderSide.none
-                  : BorderSide(color: Theme.of(context).colorScheme.outline, width: 1),
+                  : BorderSide(
+                      color: Theme.of(context).colorScheme.outline,
+                      width: 1,
+                    ),
             ),
           ),
           child: Text(

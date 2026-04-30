@@ -99,6 +99,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
     final dailyContent = ref.watch(dailyContentProvider);
     final streakAsync = ref.watch(currentStreakProvider);
     final appMode = ref.watch(appModeNotifierProvider);
@@ -128,7 +129,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
           ),
           children: <Widget>[
             Container(
-              color: AppColors.paper,
+              color: scheme.surface,
               padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -152,7 +153,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                       IconButton(
                         onPressed: () => context.push('/settings'),
                         icon: const Icon(Icons.settings_outlined),
-                        color: AppColors.ink,
+                        color: scheme.onSurface,
                         tooltip: 'Einstellungen',
                       ),
                     ],
@@ -176,7 +177,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                                   child: Container(
                                     decoration: BoxDecoration(
                                       border: Border.all(
-                                        color: AppColors.ink,
+                                        color: scheme.outline,
                                         width: 1,
                                       ),
                                     ),
@@ -195,7 +196,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                                           style: GoogleFonts.ibmPlexSans(
                                             fontSize: 11,
                                             fontWeight: FontWeight.w700,
-                                            color: AppColors.ink,
+                                            color: scheme.onSurface,
                                             letterSpacing: 1.2,
                                           ),
                                         ),
@@ -296,6 +297,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                   const SizedBox(height: 20),
                   _QuickAccessSection(
                     onAdminTap: isAdmin ? () => context.push('/admin') : null,
+                    onOrientationTap: () =>
+                        context.push('/political-orientation'),
                   ),
                 ],
               ),
@@ -315,10 +318,12 @@ class _BroadsheetButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.paper,
-        border: Border.all(color: AppColors.ink, width: 1),
+        color: scheme.surface,
+        border: Border.all(color: scheme.outline, width: 1),
       ),
       child: Material(
         color: Colors.transparent,
@@ -332,7 +337,7 @@ class _BroadsheetButton extends StatelessWidget {
               style: GoogleFonts.ibmPlexSans(
                 fontSize: 11,
                 fontWeight: FontWeight.w700,
-                color: AppColors.ink,
+                color: scheme.onSurface,
                 letterSpacing: 1.2,
               ),
             ),
@@ -354,9 +359,11 @@ class _BroadsheetOutlineButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: AppColors.ink, width: 1),
+        border: Border.all(color: scheme.outline, width: 1),
       ),
       child: Material(
         color: Colors.transparent,
@@ -375,7 +382,7 @@ class _BroadsheetOutlineButton extends StatelessWidget {
                   style: GoogleFonts.ibmPlexSans(
                     fontSize: 11,
                     fontWeight: FontWeight.w700,
-                    color: AppColors.ink,
+                    color: scheme.onSurface,
                     letterSpacing: 1.2,
                   ),
                 ),
@@ -389,18 +396,24 @@ class _BroadsheetOutlineButton extends StatelessWidget {
 }
 
 class _QuickAccessSection extends StatelessWidget {
-  const _QuickAccessSection({required this.onAdminTap});
+  const _QuickAccessSection({
+    required this.onAdminTap,
+    required this.onOrientationTap,
+  });
 
   final VoidCallback? onAdminTap;
+  final VoidCallback onOrientationTap;
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.paper,
-        border: Border.all(color: AppColors.ink, width: 1),
+        color: scheme.surface,
+        border: Border.all(color: scheme.outline, width: 1),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -423,7 +436,7 @@ class _QuickAccessSection extends StatelessWidget {
                 'Heute im Fokus',
                 style: GoogleFonts.ibmPlexSans(
                   fontSize: 10,
-                  color: AppColors.inkLight,
+                  color: scheme.onSurfaceVariant,
                 ),
               ),
             ],
@@ -431,6 +444,13 @@ class _QuickAccessSection extends StatelessWidget {
           const SizedBox(height: 12),
           Row(
             children: <Widget>[
+              Expanded(
+                child: _BroadsheetOutlineButton(
+                  onPressed: onOrientationTap,
+                  label: 'WISCHTEST',
+                ),
+              ),
+              const SizedBox(width: 10),
               if (onAdminTap != null) ...<Widget>[
                 _BroadsheetButton(onPressed: onAdminTap!, label: 'ADMIN'),
               ],

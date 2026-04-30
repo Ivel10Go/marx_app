@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../core/theme/app_colors.dart';
 import '../../../data/models/user_profile.dart';
 
 class PoliticalLeaningPage extends StatelessWidget {
@@ -41,15 +40,16 @@ class PoliticalLeaningPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.all(24),
       child: Container(
-        decoration: const BoxDecoration(
-          color: AppColors.paper,
+        decoration: BoxDecoration(
+          color: scheme.surface,
           border: Border(
-            left: BorderSide(color: AppColors.ink, width: 1),
-            right: BorderSide(color: AppColors.ink, width: 1),
-            bottom: BorderSide(color: AppColors.ink, width: 1),
+            left: BorderSide(color: scheme.outline, width: 1),
+            right: BorderSide(color: scheme.outline, width: 1),
+            bottom: BorderSide(color: scheme.outline, width: 1),
           ),
         ),
         child: Padding(
@@ -62,7 +62,7 @@ class PoliticalLeaningPage extends StatelessWidget {
                 style: GoogleFonts.ibmPlexSans(
                   fontSize: 10,
                   fontWeight: FontWeight.w700,
-                  color: AppColors.red,
+                  color: scheme.primary,
                   letterSpacing: 1.4,
                 ),
               ),
@@ -71,7 +71,7 @@ class PoliticalLeaningPage extends StatelessWidget {
                 'Optional. Beeinflusst welche Zitate und Fakten bevorzugt werden.',
                 style: GoogleFonts.ibmPlexSans(
                   fontSize: 11,
-                  color: AppColors.inkLight,
+                  color: scheme.onSurfaceVariant,
                 ),
               ),
               const SizedBox(height: 14),
@@ -83,7 +83,7 @@ class PoliticalLeaningPage extends StatelessWidget {
                     final option = _options[index];
                     final isSelected = selected == option.value;
                     return Material(
-                      color: isSelected ? AppColors.ink : AppColors.paper,
+                      color: isSelected ? scheme.onSurface : scheme.surface,
                       child: InkWell(
                         onTap: () => onSelect(option.value),
                         child: Container(
@@ -91,8 +91,8 @@ class PoliticalLeaningPage extends StatelessWidget {
                           decoration: BoxDecoration(
                             border: Border.all(
                               color: isSelected
-                                  ? AppColors.ink
-                                  : AppColors.rule,
+                                  ? scheme.onSurface
+                                  : scheme.outline,
                               width: 1,
                             ),
                           ),
@@ -101,8 +101,8 @@ class PoliticalLeaningPage extends StatelessWidget {
                             style: GoogleFonts.ibmPlexSans(
                               fontSize: 11,
                               color: isSelected
-                                  ? AppColors.paper
-                                  : AppColors.ink,
+                                  ? scheme.surface
+                                  : scheme.onSurface,
                               height: 1.45,
                             ),
                           ),
@@ -119,7 +119,7 @@ class PoliticalLeaningPage extends StatelessWidget {
                   'Lieber nicht angeben -> Neutral',
                   style: GoogleFonts.ibmPlexSans(
                     fontSize: 11,
-                    color: AppColors.inkMuted,
+                    color: scheme.onSurfaceVariant,
                     decoration: TextDecoration.underline,
                   ),
                 ),
