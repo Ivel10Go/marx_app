@@ -120,6 +120,10 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
               ],
             ),
           ),
+          const Padding(
+            padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+            child: _OnboardingIntroCard(),
+          ),
           Expanded(
             child: PageView(
               controller: _pageController,
@@ -205,6 +209,72 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                   ),
                 ),
               ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _OnboardingIntroCard extends StatelessWidget {
+  const _OnboardingIntroCard();
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: scheme.surface,
+        border: Border.all(color: scheme.outline, width: 1),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Container(
+                width: 8,
+                height: 8,
+                decoration: const BoxDecoration(
+                  color: AppColors.red,
+                  shape: BoxShape.circle,
+                ),
+              ),
+              const SizedBox(width: 8),
+              Text(
+                'ERSTE SCHRITTE',
+                style: GoogleFonts.ibmPlexSans(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.red,
+                  letterSpacing: 1.1,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'Die ersten Seiten richten die App auf deine Interessen, deinen Modus und deine Benachrichtigungen aus.',
+            style: GoogleFonts.ibmPlexSans(
+              fontSize: 11,
+              color: scheme.onSurfaceVariant,
+              height: 1.5,
+            ),
+          ),
+          const SizedBox(height: 10),
+          Container(width: 32, height: 1, color: scheme.outline),
+          const SizedBox(height: 10),
+          Text(
+            'Dauer: nur wenige Minuten · alles kann später angepasst werden',
+            style: GoogleFonts.ibmPlexSans(
+              fontSize: 10,
+              fontWeight: FontWeight.w700,
+              color: scheme.onSurfaceVariant,
+              letterSpacing: 0.6,
             ),
           ),
         ],

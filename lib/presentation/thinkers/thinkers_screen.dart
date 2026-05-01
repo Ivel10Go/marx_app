@@ -78,6 +78,10 @@ class ThinkersScreen extends ConsumerWidget {
                 ],
               ),
             ),
+            const Padding(
+              padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+              child: _ThinkersIntroCard(),
+            ),
             Expanded(
               child: selectedAuthor == null
                   ? _AuthorList(type: selectedType)
@@ -85,6 +89,45 @@ class ThinkersScreen extends ConsumerWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _ThinkersIntroCard extends StatelessWidget {
+  const _ThinkersIntroCard();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: AppColors.paper,
+        border: Border.all(color: AppColors.ink, width: 1),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            'DENKER-ARCHIV',
+            style: GoogleFonts.ibmPlexSans(
+              fontSize: 10,
+              fontWeight: FontWeight.w700,
+              color: AppColors.red,
+              letterSpacing: 1.1,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'Philosophen und Politiker werden nach Typ gruppiert, damit du schneller in den passenden Kontext kommst.',
+            style: GoogleFonts.ibmPlexSans(
+              fontSize: 11,
+              color: AppColors.inkLight,
+              height: 1.5,
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -42,11 +42,41 @@ class PremiumFeaturesScreen extends StatelessWidget {
                 Container(width: 40, height: 2, color: AppColors.red),
                 const SizedBox(height: 12),
                 Text(
-                  'Hier stehen nur die Kernfunktionen der App: Lesen, Verstehen, Teilen und täglich dranbleiben.',
+                  'Hier sind die Kernfunktionen, die den Launch tragen: lesen, verstehen, teilen und täglich dranbleiben.',
                   style: GoogleFonts.ibmPlexSans(
                     fontSize: 11,
                     color: scheme.onSurfaceVariant,
                     height: 1.5,
+                  ),
+                ),
+                const SizedBox(height: 14),
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: scheme.surface,
+                    border: Border.all(color: scheme.outline, width: 1),
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      const Icon(
+                        Icons.auto_stories_rounded,
+                        size: 18,
+                        color: AppColors.red,
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          'Die App ist bereits als täglicher Begleiter nutzbar. Pro soll später die Tiefe erweitern, nicht den Einstieg blockieren.',
+                          style: GoogleFonts.ibmPlexSans(
+                            fontSize: 10,
+                            color: scheme.onSurfaceVariant,
+                            height: 1.45,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],

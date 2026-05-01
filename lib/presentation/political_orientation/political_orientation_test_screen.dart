@@ -132,6 +132,8 @@ class _PoliticalOrientationTestScreenState
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              const _OrientationIntroCard(),
+              const SizedBox(height: 12),
               Text(
                 'Wische nach rechts für Zustimmung, nach links für Ablehnung.',
                 style: GoogleFonts.ibmPlexSans(
@@ -191,6 +193,47 @@ class _PoliticalOrientationTestScreenState
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _OrientationIntroCard extends StatelessWidget {
+  const _OrientationIntroCard();
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: scheme.surface,
+        border: Border.all(color: scheme.outline, width: 1),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            'EINORDNUNG',
+            style: GoogleFonts.ibmPlexSans(
+              fontSize: 10,
+              fontWeight: FontWeight.w700,
+              color: AppColors.red,
+              letterSpacing: 1.1,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'Die Antworten helfen dabei, Inhalte und Empfehlungen besser auf deine Haltung abzustimmen.',
+            style: GoogleFonts.ibmPlexSans(
+              fontSize: 11,
+              color: scheme.onSurfaceVariant,
+              height: 1.5,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -421,9 +464,18 @@ class _ResultCard extends StatelessWidget {
           ),
           const SizedBox(height: 6),
           Text(
-            'Dein Profil wurde gespeichert und kann später im Profil angepasst werden.',
+            'Dein Profil wurde gespeichert und kann später im Profil jederzeit angepasst werden.',
             style: GoogleFonts.ibmPlexSans(
               fontSize: 11,
+              color: scheme.onSurfaceVariant,
+              height: 1.45,
+            ),
+          ),
+          const SizedBox(height: 12),
+          Text(
+            'Damit sind die Empfehlungen und die persönliche Einordnung vorbereitet.',
+            style: GoogleFonts.ibmPlexSans(
+              fontSize: 10,
               color: scheme.onSurfaceVariant,
               height: 1.45,
             ),

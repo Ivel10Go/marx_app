@@ -59,6 +59,10 @@ class SettingsScreen extends ConsumerWidget {
               ],
             ),
           ),
+          const Padding(
+            padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+            child: _SettingsIntroCard(),
+          ),
           Expanded(
             child: settingsAsync.when(
               data: (settings) {
@@ -73,7 +77,7 @@ class SettingsScreen extends ConsumerWidget {
                       title: 'BASISFUNKTIONEN',
                       children: <Widget>[
                         Text(
-                          'Die App konzentriert sich auf den Kern: Inhalte lesen, speichern, teilen und täglich dranbleiben.',
+                          'Hier laufen die Kernfunktionen zusammen: Inhalte lesen, speichern, teilen und die tägliche Nutzung sauber steuern.',
                           style: GoogleFonts.ibmPlexSans(
                             fontSize: 11,
                             color: AppColors.inkLight,
@@ -144,7 +148,7 @@ class SettingsScreen extends ConsumerWidget {
                                   ),
                                   const SizedBox(height: 4),
                                   Text(
-                                    'Bei Aktivierung wird dein Tagesinhalt (Zitat oder Fact) jeden Tag zur Uhrzeit geplant.',
+                                    'Bei Aktivierung wird dein Tagesinhalt (Zitat oder Fact) jeden Tag zur gewählten Uhrzeit geplant.',
                                     style: GoogleFonts.ibmPlexSans(
                                       fontSize: 10,
                                       color: AppColors.inkLight,
@@ -156,10 +160,23 @@ class SettingsScreen extends ConsumerWidget {
                             ),
                             Switch.adaptive(
                               value: settings.notificationEnabled,
-                              onChanged: (bool enabled) {
-                                ref
-                                    .read(settingsControllerProvider.notifier)
-                                    .setNotificationEnabled(enabled);
+                              onChanged: (bool enabled) async {
+                                try {
+                                  await ref
+                                      .read(settingsControllerProvider.notifier)
+                                      .setNotificationEnabled(enabled);
+                                } catch (e) {
+                                  if (!context.mounted) {
+                                    return;
+                                  }
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        'Benachrichtigung konnte nicht aktualisiert werden: $e',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               activeThumbColor: AppColors.red,
                             ),
@@ -180,9 +197,22 @@ class SettingsScreen extends ConsumerWidget {
                               ),
                             );
                             if (selected != null && context.mounted) {
-                              await ref
-                                  .read(settingsControllerProvider.notifier)
-                                  .setNotificationTime(selected);
+                              try {
+                                await ref
+                                    .read(settingsControllerProvider.notifier)
+                                    .setNotificationTime(selected);
+                              } catch (e) {
+                                if (!context.mounted) {
+                                  return;
+                                }
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'Benachrichtigungszeit konnte nicht gespeichert werden: $e',
+                                    ),
+                                  ),
+                                );
+                              }
                             }
                           },
                           child: Column(
@@ -218,7 +248,7 @@ class SettingsScreen extends ConsumerWidget {
                       title: 'SAMMLUNG',
                       children: <Widget>[
                         Text(
-                          'Deine gespeicherten Inhalte ohne den Lesefluss zu unterbrechen.',
+                          'Deine gespeicherten Inhalte bleiben erreichbar, ohne den Lesefluss auf anderen Seiten zu stören.',
                           style: GoogleFonts.ibmPlexSans(
                             fontSize: 11,
                             color: AppColors.inkLight,
@@ -315,6 +345,15 @@ class SettingsScreen extends ConsumerWidget {
                     _SettingsGroup(
                       title: 'WARTUNG',
                       children: <Widget>[
+                        Text(
+                          'Diese Werkzeuge sind für Pflege und Rücksetzung gedacht, nicht für den regulären Tagesgebrauch.',
+                          style: GoogleFonts.ibmPlexSans(
+                            fontSize: 11,
+                            color: AppColors.inkLight,
+                            height: 1.5,
+                          ),
+                        ),
+                        const SizedBox(height: 12),
                         SizedBox(
                           width: double.infinity,
                           child: _SettingsActionButton(
@@ -424,6 +463,47 @@ class SettingsScreen extends ConsumerWidget {
                 ),
               ),
               error: (error, _) => Center(child: Text('Fehler: $error')),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SettingsIntroCard extends StatelessWidget {
+  const _SettingsIntroCard();
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: scheme.surface,
+        border: Border.all(color: scheme.outline, width: 1),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            'KONTROLLE',
+            style: GoogleFonts.ibmPlexSans(
+              fontSize: 10,
+              fontWeight: FontWeight.w700,
+              color: AppColors.red,
+              letterSpacing: 1.1,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'Passe Feed, Benachrichtigungen und Verwaltungsfunktionen an, ohne den Alltagsscreen zu überladen.',
+            style: GoogleFonts.ibmPlexSans(
+              fontSize: 11,
+              color: scheme.onSurfaceVariant,
+              height: 1.5,
             ),
           ),
         ],

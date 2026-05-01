@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -22,153 +20,202 @@ class AppLoadingScreen extends StatefulWidget {
 }
 
 class _AppLoadingScreenState extends State<AppLoadingScreen>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _controller;
+    with TickerProviderStateMixin {
+  late final AnimationController _floatingController;
+  late final AnimationController _progressController;
+  late Animation<double> _progressAnimation;
+  late Animation<double> _floatingAnimation;
+  double _previousProgressValue = 0.06;
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
+    _floatingController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1200),
-    )..repeat();
+      duration: const Duration(milliseconds: 3000),
+    )..repeat(reverse: true);
+
+    _floatingAnimation = Tween<double>(
+      begin: 0,
+      end: 20,
+    ).animate(CurvedAnimation(parent: _floatingController, curve: Curves.easeInOut));
+
+    _progressController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 600),
+    );
+
+    _updateProgressAnimation();
+  }
+
+  @override
+  void didUpdateWidget(AppLoadingScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.progress != widget.progress) {
+      _updateProgressAnimation();
+    }
+  }
+
+  void _updateProgressAnimation() {
+    final targetProgress = (widget.progress?.clamp(0.0, 1.0) ?? 0.0);
+    final displayProgress = targetProgress == 0.0 ? 0.06 : targetProgress;
+
+    _progressAnimation = Tween<double>(
+      begin: _previousProgressValue,
+      end: displayProgress,
+    ).animate(CurvedAnimation(parent: _progressController, curve: Curves.easeInOut));
+
+    _previousProgressValue = displayProgress;
+    _progressController.forward(from: 0.0);
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _floatingController.dispose();
+    _progressController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final safeProgress = widget.progress?.clamp(0.0, 1.0);
-    final displayProgress = safeProgress == null
-        ? null
-        : (safeProgress == 0.0 ? 0.06 : safeProgress);
     final percentText = safeProgress == null
         ? 'Synchronisiere ...'
         : '${(safeProgress * 100).round()}%';
 
     return Scaffold(
       backgroundColor: AppColors.paper,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 20, 20, 28),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                'APP START',
-                style: GoogleFonts.ibmPlexSans(
-                  fontSize: 10,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.red,
-                  letterSpacing: 1.2,
-                ),
-              ),
-              const SizedBox(height: 10),
-              Container(width: 44, height: 2, color: AppColors.red),
-              const Spacer(),
-              Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: AppColors.paper,
-                  border: Border.all(color: AppColors.ink, width: 1),
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                      color: AppColors.ink.withValues(alpha: 0.04),
-                      blurRadius: 8,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(18, 18, 18, 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          AnimatedBuilder(
-                            animation: _controller,
-                            builder: (context, child) {
-                              final angle =
-                                  math.sin(_controller.value * math.pi * 2) *
-                                  0.04;
-                              return Transform.rotate(
-                                angle: angle,
-                                child: child,
-                              );
-                            },
-                            child: Container(
-                              width: 52,
-                              height: 52,
-                              decoration: const BoxDecoration(
-                                color: AppColors.red,
-                              ),
-                              child: const Icon(
-                                Icons.auto_stories_rounded,
-                                color: Colors.white,
-                                size: 28,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Text(
-                              widget.title,
-                              style: GoogleFonts.playfairDisplay(
-                                fontSize: 27,
-                                fontWeight: FontWeight.w700,
-                                color: AppColors.ink,
-                                height: 1.15,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 14),
-                      Text(
-                        widget.subtitle,
-                        style: GoogleFonts.ibmPlexSans(
-                          fontSize: 12,
-                          color: AppColors.inkLight,
-                          height: 1.5,
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      LinearProgressIndicator(
-                        minHeight: 12,
-                        value: displayProgress,
-                        borderRadius: BorderRadius.zero,
-                        backgroundColor: AppColors.rule.withValues(alpha: 0.65),
-                        valueColor: const AlwaysStoppedAnimation<Color>(
-                          AppColors.red,
-                        ),
-                        stopIndicatorColor: Colors.transparent,
-                        stopIndicatorRadius: 0,
-                      ),
-                      const SizedBox(height: 8),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: Text(
-                          percentText,
-                          style: GoogleFonts.ibmPlexSans(
-                            fontSize: 11,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.ink,
-                            letterSpacing: 0.3,
-                          ),
-                        ),
-                      ),
-                    ],
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        color: AppColors.paper,
+        child: Stack(
+          children: [
+            // Animated background elements
+            Positioned(
+              top: -50,
+              right: -50,
+              child: AnimatedBuilder(
+                animation: _floatingAnimation,
+                builder: (context, child) {
+                  return Transform.translate(
+                    offset: Offset(0, _floatingAnimation.value),
+                    child: child,
+                  );
+                },
+                child: Container(
+                  width: 200,
+                  height: 200,
+                  decoration: BoxDecoration(
+                    color: AppColors.red.withValues(alpha: 0.05),
                   ),
                 ),
               ),
-              const Spacer(),
-            ],
-          ),
+            ),
+            Positioned(
+              bottom: -30,
+              left: -30,
+              child: AnimatedBuilder(
+                animation: _floatingAnimation,
+                builder: (context, child) {
+                  return Transform.translate(
+                    offset: Offset(0, -_floatingAnimation.value),
+                    child: child,
+                  );
+                },
+                child: Container(
+                  width: 150,
+                  height: 150,
+                  decoration: BoxDecoration(
+                    color: AppColors.red.withValues(alpha: 0.08),
+                  ),
+                ),
+              ),
+            ),
+            // Main content
+            SafeArea(
+              child: Center(
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 32),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        // Icon
+                        Container(
+                          width: 80,
+                          height: 80,
+                          color: AppColors.red,
+                          child: const Icon(
+                            Icons.auto_stories_rounded,
+                            color: Colors.white,
+                            size: 48,
+                          ),
+                        ),
+                        const SizedBox(height: 40),
+                        // Title
+                        Text(
+                          widget.title,
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.playfairDisplay(
+                            fontSize: 36,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.ink,
+                            height: 1.2,
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        // Subtitle
+                        Text(
+                          widget.subtitle,
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.ibmPlexSans(
+                            fontSize: 14,
+                            color: AppColors.inkLight,
+                            height: 1.6,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        const SizedBox(height: 60),
+                        // Progress bar
+                        AnimatedBuilder(
+                          animation: _progressAnimation,
+                          builder: (context, child) {
+                            return Column(
+                              children: [
+                                ClipRect(
+                                  child: LinearProgressIndicator(
+                                    minHeight: 4,
+                                    value: _progressAnimation.value,
+                                    backgroundColor:
+                                        AppColors.rule.withValues(alpha: 0.3),
+                                    valueColor:
+                                        const AlwaysStoppedAnimation<Color>(
+                                          AppColors.red,
+                                        ),
+                                  ),
+                                ),
+                                const SizedBox(height: 12),
+                                Text(
+                                  percentText,
+                                  style: GoogleFonts.ibmPlexSans(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColors.ink,
+                                    letterSpacing: 0.2,
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

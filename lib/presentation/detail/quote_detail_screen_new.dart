@@ -198,6 +198,10 @@ class _QuoteDetailScreenState extends ConsumerState<QuoteDetailScreen> {
                   ],
                 ),
               ),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                child: _QuoteDetailIntroCard(),
+              ),
               if (quote.imageUrl != null && quote.imageUrl!.isNotEmpty)
                 CachedImageLoader(
                   imageUrl: quote.imageUrl!,
@@ -241,12 +245,12 @@ class _QuoteDetailScreenState extends ConsumerState<QuoteDetailScreen> {
                     ),
                     const SizedBox(height: 24),
                     _SectionCard(
-                      title: 'KURZERKLAERUNG',
+                      title: 'KURZERKLÄRUNG',
                       body: quote.explanationShort,
                     ),
                     const SizedBox(height: 16),
                     _SectionCard(
-                      title: 'AUSFUEHRLICHE ERKLAERUNG',
+                      title: 'AUSFÜHRLICHE ERKLÄRUNG',
                       body: quote.explanationLong,
                     ),
                     const SizedBox(height: 16),
@@ -330,6 +334,47 @@ class _SectionCard extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _QuoteDetailIntroCard extends StatelessWidget {
+  const _QuoteDetailIntroCard();
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: scheme.surface,
+        border: Border.all(color: scheme.outline, width: 1),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            'DETAILANSICHT',
+            style: GoogleFonts.ibmPlexSans(
+              fontSize: 10,
+              fontWeight: FontWeight.w700,
+              color: AppColors.red,
+              letterSpacing: 1.1,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'Hier bekommst du das Zitat im Kontext, mit Erklärung, Audio und den passenden Folgeaktionen.',
+            style: GoogleFonts.ibmPlexSans(
+              fontSize: 11,
+              color: scheme.onSurfaceVariant,
+              height: 1.5,
+            ),
+          ),
+        ],
       ),
     );
   }

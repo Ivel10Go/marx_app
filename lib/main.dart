@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'app.dart';
 import 'core/bootstrap/app_bootstrap.dart';
 import 'core/router/app_router.dart';
+import 'core/theme/app_colors.dart';
 import 'core/theme/app_theme.dart';
 import 'presentation/loading/app_loading_screen.dart';
 import 'core/services/background_tasks_service.dart';
@@ -72,87 +73,30 @@ class _BootstrapGateAppState extends State<_BootstrapGateApp> {
 
             if (snapshot.hasError) {
               debugPrint('[UI] Bootstrap error: ${snapshot.error}');
-              return MaterialApp(
-                debugShowCheckedModeBanner: false,
-                theme: AppTheme.light,
-                home: Scaffold(
-                  backgroundColor: Colors.white,
-                  body: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(24),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          const Icon(
-                            Icons.error_outline,
-                            size: 40,
-                            color: Colors.red,
-                          ),
-                          const SizedBox(height: 12),
-                          const Text('Start fehlgeschlagen.'),
-                          const SizedBox(height: 8),
-                          Text(
-                            'Fehler: ${snapshot.error}',
-                            style: const TextStyle(
-                              fontSize: 12,
-                              color: Colors.grey,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                          const SizedBox(height: 16),
-                          ElevatedButton(
-                            onPressed: () {
-                              debugPrint('[UI] User clicked retry');
-                              setState(() {
-                                _bootstrapFuture = AppBootstrap.initialize();
-                              });
-                            },
-                            child: const Text('Erneut versuchen'),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+              return _BootstrapRecoveryApp(
+                message:
+                    'Der Start konnte nicht vollständig abgeschlossen werden.',
+                details: 'Fehler: ${snapshot.error}',
+                onRetry: () {
+                  debugPrint('[UI] User clicked retry');
+                  setState(() {
+                    _bootstrapFuture = AppBootstrap.initialize();
+                  });
+                },
               );
             }
 
             if (!snapshot.hasData) {
               debugPrint('[UI] Bootstrap completed but no data returned');
-              return MaterialApp(
-                debugShowCheckedModeBanner: false,
-                theme: AppTheme.light,
-                home: Scaffold(
-                  backgroundColor: Colors.white,
-                  body: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(24),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          const Icon(
-                            Icons.error_outline,
-                            size: 40,
-                            color: Colors.red,
-                          ),
-                          const SizedBox(height: 12),
-                          const Text('Start fehlgeschlagen.'),
-                          const SizedBox(height: 8),
-                          const SizedBox(height: 16),
-                          ElevatedButton(
-                            onPressed: () {
-                              debugPrint('[UI] User clicked retry');
-                              setState(() {
-                                _bootstrapFuture = AppBootstrap.initialize();
-                              });
-                            },
-                            child: const Text('Erneut versuchen'),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+              return _BootstrapRecoveryApp(
+                message: 'Der Start hat keine gültigen Daten geliefert.',
+                details: 'Die App kann erneut geladen werden.',
+                onRetry: () {
+                  debugPrint('[UI] User clicked retry');
+                  setState(() {
+                    _bootstrapFuture = AppBootstrap.initialize();
+                  });
+                },
               );
             }
 
@@ -170,6 +114,76 @@ class _BootstrapGateAppState extends State<_BootstrapGateApp> {
           },
         );
       },
+    );
+  }
+}
+
+class _BootstrapRecoveryApp extends StatelessWidget {
+  const _BootstrapRecoveryApp({
+    required this.message,
+    required this.details,
+    required this.onRetry,
+  });
+
+  final String message;
+  final String details;
+  final VoidCallback onRetry;
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.light,
+      home: Scaffold(
+        backgroundColor: AppColors.paper,
+        body: SafeArea(
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(24),
+              child: Container(
+                width: 440,
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: AppColors.paper,
+                  border: Border.all(color: AppColors.ink, width: 1),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Container(width: 44, height: 2, color: AppColors.red),
+                    const SizedBox(height: 16),
+                    const Icon(
+                      Icons.error_outline_rounded,
+                      size: 36,
+                      color: AppColors.red,
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      'Start fehlgeschlagen',
+                      style: textTheme.headlineSmall,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(message, style: textTheme.bodyMedium),
+                    const SizedBox(height: 6),
+                    Text(details, style: textTheme.labelSmall),
+                    const SizedBox(height: 18),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: onRetry,
+                        child: const Text('Erneut versuchen'),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

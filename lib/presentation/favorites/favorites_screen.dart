@@ -67,6 +67,10 @@ class FavoritesScreen extends ConsumerWidget {
               ],
             ),
           ),
+          const Padding(
+            padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+            child: _FavoritesIntroCard(),
+          ),
           Expanded(
             child: favoritesAsync.when(
               data: (quotes) {
@@ -108,6 +112,70 @@ class FavoritesScreen extends ConsumerWidget {
                 ),
               ),
               error: (error, _) => Center(child: Text('Fehler: $error')),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _FavoritesIntroCard extends StatelessWidget {
+  const _FavoritesIntroCard();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: AppColors.paper,
+        border: Border.all(color: AppColors.rule, width: 1),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Container(
+                width: 8,
+                height: 8,
+                decoration: const BoxDecoration(
+                  color: AppColors.red,
+                  shape: BoxShape.circle,
+                ),
+              ),
+              const SizedBox(width: 8),
+              Text(
+                'GESAMMELTE FAVORITEN',
+                style: GoogleFonts.ibmPlexSans(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.red,
+                  letterSpacing: 1.1,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'Markierte Zitate bleiben hier sortierbar und lassen sich als PDF weitergeben.',
+            style: GoogleFonts.ibmPlexSans(
+              fontSize: 11,
+              color: AppColors.inkLight,
+              height: 1.5,
+            ),
+          ),
+          const SizedBox(height: 10),
+          Container(width: 32, height: 1, color: AppColors.rule),
+          const SizedBox(height: 10),
+          Text(
+            'Sammeln, prüfen, exportieren.',
+            style: GoogleFonts.ibmPlexSans(
+              fontSize: 10,
+              fontWeight: FontWeight.w700,
+              color: AppColors.inkLight,
+              letterSpacing: 0.6,
             ),
           ),
         ],

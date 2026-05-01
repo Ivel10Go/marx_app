@@ -309,6 +309,10 @@ abstract final class AppTheme {
     );
   }
 
+  // Public getters for Material text styles
+  static TextStyle get titleLarge => _titleLarge;
+  static TextStyle get bodyMedium => _bodyMedium;
+
   // Public getters for custom widget styles (light)
   static TextStyle get masthead => _masthead;
   static TextStyle get mastHeadSubtitle => _mastHeadSubtitle;

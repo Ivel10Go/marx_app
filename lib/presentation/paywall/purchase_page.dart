@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'package:purchases_flutter/purchases_flutter.dart'
     show Offerings, Offering, Package;
 
+import '../../core/theme/app_colors.dart';
 import '../../core/providers/purchases_provider.dart';
 import '../../core/services/purchases_service.dart';
 
@@ -118,6 +120,7 @@ class _PurchasePageState extends ConsumerState<PurchasePage> {
   @override
   Widget build(BuildContext context) {
     final isPro = ref.watch(isProProvider);
+    final scheme = Theme.of(context).colorScheme;
 
     return Scaffold(
       appBar: AppBar(title: const Text('Zitate App Pro')),
@@ -129,13 +132,30 @@ class _PurchasePageState extends ConsumerState<PurchasePage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   if (isPro) ...[
-                    const Text('Du hast bereits Zitate App Pro aktiviert.'),
+                    _PurchaseIntroCard(
+                      title: 'Zitate App Pro ist aktiv.',
+                      body:
+                          'Dein Upgrade ist freigeschaltet und du kannst Käufe jederzeit wiederherstellen.',
+                    ),
                     const SizedBox(height: 12),
                   ],
+                  _PurchaseIntroCard(
+                    title: 'Pro für tiefere Inhalte',
+                    body:
+                        'Pro soll erweiterte Archive, mehr Kontext und neue Feature-Bundles freischalten. Der freie Kern bleibt dabei voll nutzbar.',
+                  ),
+                  const SizedBox(height: 12),
                   if (_errorMessage != null) ...[
-                    Text(
-                      _errorMessage!,
-                      style: Theme.of(context).textTheme.bodyMedium,
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: scheme.surface,
+                        border: Border.all(color: scheme.outline, width: 1),
+                      ),
+                      child: Text(
+                        _errorMessage!,
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
                     ),
                     const SizedBox(height: 12),
                     ElevatedButton(
@@ -177,7 +197,14 @@ class _PurchasePageState extends ConsumerState<PurchasePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(offering.serverDescription),
+            Text(
+              offering.serverDescription,
+              style: GoogleFonts.ibmPlexSans(
+                fontSize: 12,
+                fontWeight: FontWeight.w700,
+                color: AppColors.ink,
+              ),
+            ),
             const SizedBox(height: 8),
             ...offering.availablePackages.map((pkg) {
               final price = pkg.storeProduct.priceString;
@@ -193,6 +220,59 @@ class _PurchasePageState extends ConsumerState<PurchasePage> {
             }),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _PurchaseIntroCard extends StatelessWidget {
+  const _PurchaseIntroCard({required this.title, required this.body});
+
+  final String title;
+  final String body;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: scheme.surface,
+        border: Border.all(color: scheme.outline, width: 1),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            'PRO-ANGEBOT',
+            style: GoogleFonts.ibmPlexSans(
+              fontSize: 10,
+              fontWeight: FontWeight.w700,
+              color: AppColors.red,
+              letterSpacing: 1.1,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            title,
+            style: GoogleFonts.playfairDisplay(
+              fontSize: 18,
+              fontWeight: FontWeight.w700,
+              color: scheme.onSurface,
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            body,
+            style: GoogleFonts.ibmPlexSans(
+              fontSize: 11,
+              color: scheme.onSurfaceVariant,
+              height: 1.5,
+            ),
+          ),
+        ],
       ),
     );
   }

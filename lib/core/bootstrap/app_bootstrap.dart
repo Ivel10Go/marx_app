@@ -183,6 +183,12 @@ abstract final class AppBootstrap {
       final bootstrapDb = AppDatabase();
       try {
         await _seedRepositoriesFromAssets(bootstrapDb);
+      } catch (e, st) {
+        debugPrint(
+          '[Bootstrap] WARNING: Repository seeding failed, continuing startup: $e',
+        );
+        debugPrintStack(stackTrace: st);
+        _emitProgress(0.24, 'Daten werden im Hintergrund erneut geladen ...');
       } finally {
         await bootstrapDb.close();
       }
@@ -214,6 +220,12 @@ abstract final class AppBootstrap {
         '[Bootstrap] ✓ Critical bootstrap completed quickly. Initial route: $initialRoute',
       );
 
+      if (settings.getBool('app_seeded_v1') != true) {
+        debugPrint(
+          '[Bootstrap] Repository seed flag not confirmed; Riverpod seed path will recover on demand.',
+        );
+      }
+
       // Schedule deferred operations to run after app becomes visible.
       _scheduleDeferredOperations();
 
@@ -229,7 +241,7 @@ abstract final class AppBootstrap {
       _emitProgress(1.0, 'Start fehlgeschlagen');
       debugPrint('[Bootstrap] FATAL ERROR: Bootstrap failed unexpectedly: $e');
       debugPrintStack(stackTrace: st);
-      rethrow;
+      return _buildFallbackResult();
     }
   }
 
@@ -402,6 +414,36 @@ abstract final class AppBootstrap {
       case 'mixed':
       default:
         return AppMode.public;
+    }
+  }
+
+  static Future<AppBootstrapResult> _buildFallbackResult() async {
+    try {
+      final settings = await SharedPreferences.getInstance();
+      final profileRaw = settings.getString(UserProfile.storageKey);
+      final onboardingSeen = _resolveOnboardingSeen(profileRaw);
+      final launchRoute = NotificationService.instance.consumeLaunchRoute();
+      return AppBootstrapResult(
+        initialRoute: launchRoute != '/'
+            ? launchRoute
+            : onboardingSeen
+            ? '/'
+            : '/onboarding',
+        dailyContent: null,
+        streakCount: settings.getInt(SettingsKeys.streak) ?? 0,
+        modeLabel: _resolveAppMode(
+          settings.getString('app_mode'),
+        ).name.toUpperCase(),
+      );
+    } catch (e, st) {
+      debugPrint('[Bootstrap] ERROR: Fallback bootstrap also failed: $e');
+      debugPrintStack(stackTrace: st);
+      return const AppBootstrapResult(
+        initialRoute: '/onboarding',
+        dailyContent: null,
+        streakCount: 0,
+        modeLabel: 'PUBLIC',
+      );
     }
   }
 }

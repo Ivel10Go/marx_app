@@ -87,6 +87,10 @@ class ArchiveScreen extends ConsumerWidget {
               ],
             ),
           ),
+          const Padding(
+            padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+            child: _ArchiveIntroCard(),
+          ),
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
             child: Row(
@@ -204,6 +208,70 @@ class ArchiveScreen extends ConsumerWidget {
                 ),
               ),
               error: (error, _) => Center(child: Text('Fehler: $error')),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ArchiveIntroCard extends StatelessWidget {
+  const _ArchiveIntroCard();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: AppColors.paper,
+        border: Border.all(color: AppColors.ink, width: 1),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Container(
+                width: 8,
+                height: 8,
+                decoration: const BoxDecoration(
+                  color: AppColors.red,
+                  shape: BoxShape.circle,
+                ),
+              ),
+              const SizedBox(width: 8),
+              Text(
+                'KURATIERTE SAMMLUNG',
+                style: GoogleFonts.ibmPlexSans(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.red,
+                  letterSpacing: 1.1,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'Archivierte Zitate und Fakten bleiben durchsuchbar, filterbar und schnell erreichbar.',
+            style: GoogleFonts.ibmPlexSans(
+              fontSize: 11,
+              color: AppColors.inkLight,
+              height: 1.5,
+            ),
+          ),
+          const SizedBox(height: 10),
+          Container(width: 32, height: 1, color: AppColors.rule),
+          const SizedBox(height: 10),
+          Text(
+            'Schneller filtern, länger nachlesen.',
+            style: GoogleFonts.ibmPlexSans(
+              fontSize: 10,
+              fontWeight: FontWeight.w700,
+              color: AppColors.inkLight,
+              letterSpacing: 0.6,
             ),
           ),
         ],

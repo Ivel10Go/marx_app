@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -35,7 +37,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
   late final AnimationController _controller;
   late final Animation<Offset> _slide;
   late final Animation<double> _fade;
+  ProviderSubscription<AsyncValue<DailyContent>>? _dailyContentSubscription;
+  ProviderSubscription<AsyncValue<int>>? _streakSubscription;
+  ProviderSubscription<AppMode>? _appModeSubscription;
   bool _calendarExpanded = false;
+  String? _lastWidgetSyncSignature;
+  bool _widgetSyncInFlight = false;
+  bool _widgetSyncNeedsRetry = false;
 
   @override
   void initState() {
@@ -52,15 +60,32 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
 
     _fade = CurvedAnimation(parent: _controller, curve: Curves.easeOut);
 
+    _dailyContentSubscription = ref.listenManual<AsyncValue<DailyContent>>(
+      dailyContentProvider,
+      (_, __) => _syncHomeWidgetIfReady(),
+    );
+    _streakSubscription = ref.listenManual<AsyncValue<int>>(
+      currentStreakProvider,
+      (_, __) => _syncHomeWidgetIfReady(),
+    );
+    _appModeSubscription = ref.listenManual<AppMode>(
+      appModeNotifierProvider,
+      (_, __) => _syncHomeWidgetIfReady(),
+    );
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
         ref.read(streakControllerProvider.notifier).logTodayAndRefresh();
+        _syncHomeWidgetIfReady();
       }
     });
   }
 
   @override
   void dispose() {
+    _dailyContentSubscription?.close();
+    _streakSubscription?.close();
+    _appModeSubscription?.close();
     _controller.dispose();
     super.dispose();
   }
@@ -97,6 +122,72 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
     );
   }
 
+  String _dailyContentSignature(DailyContent content) {
+    return content.when(
+      quote: (quote) => 'quote:${quote.id}',
+      fact: (fact) => 'fact:${fact.id}',
+      thinkerQuote: (quote) => 'thinker:${quote.id}',
+    );
+  }
+
+  void _syncHomeWidgetIfReady() {
+    if (_widgetSyncInFlight) {
+      _widgetSyncNeedsRetry = true;
+      return;
+    }
+
+    final dailyContent = ref.read(dailyContentProvider).valueOrNull;
+    final streak = ref.read(currentStreakProvider).valueOrNull;
+    if (dailyContent == null || streak == null) {
+      return;
+    }
+
+    final modeLabel = ref.read(appModeNotifierProvider).name.toUpperCase();
+    final signature =
+        '${_dailyContentSignature(dailyContent)}|$streak|$modeLabel';
+
+    if (signature == _lastWidgetSyncSignature) {
+      return;
+    }
+
+    _widgetSyncInFlight = true;
+    unawaited(
+      _performWidgetSync(
+        content: dailyContent,
+        streak: streak,
+        modeLabel: modeLabel,
+        signature: signature,
+      ),
+    );
+  }
+
+  Future<void> _performWidgetSync({
+    required DailyContent content,
+    required int streak,
+    required String modeLabel,
+    required String signature,
+  }) async {
+    try {
+      await WidgetSyncService.syncDailyContent(
+        content: content,
+        streakCount: streak,
+        modeLabel: modeLabel,
+      );
+      _lastWidgetSyncSignature = signature;
+    } catch (e, st) {
+      debugPrint('[Home] Widget sync failed: $e');
+      debugPrintStack(stackTrace: st);
+    } finally {
+      _widgetSyncInFlight = false;
+      if (mounted) {
+        if (_widgetSyncNeedsRetry) {
+          _widgetSyncNeedsRetry = false;
+          Future.microtask(_syncHomeWidgetIfReady);
+        }
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
@@ -104,18 +195,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
     final streakAsync = ref.watch(currentStreakProvider);
     final appMode = ref.watch(appModeNotifierProvider);
     final isAdmin = ref.watch(adminAccessProvider);
-    // Sync widget whenever daily content and streak are available
-    ref.listen(dailyContentProvider, (_, next) {
-      if (next.hasValue) {
-        streakAsync.whenData((streak) {
-          WidgetSyncService.syncDailyContent(
-            content: next.value!,
-            streakCount: streak,
-            modeLabel: appMode.name.toUpperCase(),
-          );
-        });
-      }
-    });
 
     return AppDecoratedScaffold(
       appBar: null,
@@ -224,6 +303,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                 ],
               ),
             ),
+            const Padding(
+              padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+              child: _HomeHeroCard(),
+            ),
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 24, 20, 24),
               child: Column(
@@ -294,15 +377,155 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                           )
                         : const SizedBox.shrink(),
                   ),
-                  const SizedBox(height: 20),
-                  _QuickAccessSection(
-                    onAdminTap: isAdmin ? () => context.push('/admin') : null,
-                    onOrientationTap: () =>
-                        context.push('/political-orientation'),
-                  ),
                 ],
               ),
             ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _HomeHeroCard extends StatelessWidget {
+  const _HomeHeroCard();
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: scheme.surface,
+        border: Border.all(color: scheme.outline, width: 1),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                width: 10,
+                height: 10,
+                decoration: const BoxDecoration(
+                  color: AppColors.red,
+                  shape: BoxShape.circle,
+                ),
+              ),
+              const SizedBox(width: 8),
+              Text(
+                'TAGESAUSGABE',
+                style: GoogleFonts.ibmPlexSans(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.red,
+                  letterSpacing: 1.1,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Text(
+            'Ein ruhiger Start mit Kontext, nicht nur mit Content.',
+            style: GoogleFonts.playfairDisplay(
+              fontSize: 20,
+              fontWeight: FontWeight.w700,
+              color: scheme.onSurface,
+              height: 1.2,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'Der Home-Screen führt direkt in das tägliche Zitat oder den Fakt, ergänzt um Streak und Schnellzugriffe ohne visuelles Rauschen.',
+            style: GoogleFonts.ibmPlexSans(
+              fontSize: 11,
+              color: scheme.onSurfaceVariant,
+              height: 1.5,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ThinkerQuoteCard extends StatelessWidget {
+  const _ThinkerQuoteCard({required this.quote});
+
+  final ThinkerQuote quote;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(
+        color: AppColors.paper,
+        border: Border(
+          left: BorderSide(color: AppColors.ink, width: 1),
+          right: BorderSide(color: AppColors.ink, width: 1),
+          bottom: BorderSide(color: AppColors.ink, width: 1),
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: AppColors.paperDark,
+                    border: Border.all(color: AppColors.rule, width: 1),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.person_outline,
+                    color: AppColors.red,
+                    size: 20,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        quote.author.toUpperCase(),
+                        style: GoogleFonts.ibmPlexSans(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.ink,
+                          letterSpacing: 1.0,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        '${quote.source} · ${quote.year}',
+                        style: GoogleFonts.ibmPlexSans(
+                          fontSize: 10,
+                          color: AppColors.inkLight,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            AdaptiveQuoteText(
+              text: quote.textDe,
+              minFontSize: 22,
+              maxFontSize: 30,
+              maxLines: 7,
+              style: Theme.of(context).textTheme.displayMedium,
+            ),
+            const SizedBox(height: 12),
+            Container(width: 28, height: 2, color: AppColors.red),
           ],
         ),
       ),
@@ -389,154 +612,6 @@ class _BroadsheetOutlineButton extends StatelessWidget {
               ],
             ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class _QuickAccessSection extends StatelessWidget {
-  const _QuickAccessSection({
-    required this.onAdminTap,
-    required this.onOrientationTap,
-  });
-
-  final VoidCallback? onAdminTap;
-  final VoidCallback onOrientationTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: scheme.surface,
-        border: Border.all(color: scheme.outline, width: 1),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: <Widget>[
-              Expanded(
-                child: Text(
-                  'AKTIONEN',
-                  style: GoogleFonts.ibmPlexSans(
-                    fontSize: 11,
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.red,
-                    letterSpacing: 1.2,
-                  ),
-                ),
-              ),
-              Text(
-                'Heute im Fokus',
-                style: GoogleFonts.ibmPlexSans(
-                  fontSize: 10,
-                  color: scheme.onSurfaceVariant,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: _BroadsheetOutlineButton(
-                  onPressed: onOrientationTap,
-                  label: 'WISCHTEST',
-                ),
-              ),
-              const SizedBox(width: 10),
-              if (onAdminTap != null) ...<Widget>[
-                _BroadsheetButton(onPressed: onAdminTap!, label: 'ADMIN'),
-              ],
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _ThinkerQuoteCard extends StatelessWidget {
-  const _ThinkerQuoteCard({required this.quote});
-
-  final ThinkerQuote quote;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        color: AppColors.paper,
-        border: Border(
-          left: BorderSide(color: AppColors.ink, width: 1),
-          right: BorderSide(color: AppColors.ink, width: 1),
-          bottom: BorderSide(color: AppColors.ink, width: 1),
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Row(
-              children: <Widget>[
-                Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: AppColors.paperDark,
-                    border: Border.all(color: AppColors.rule, width: 1),
-                    shape: BoxShape.circle,
-                  ),
-                  child: Icon(
-                    Icons.person_outline,
-                    color: AppColors.red,
-                    size: 20,
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        quote.author.toUpperCase(),
-                        style: GoogleFonts.ibmPlexSans(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.ink,
-                          letterSpacing: 1.0,
-                        ),
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        '${quote.source} · ${quote.year}',
-                        style: GoogleFonts.ibmPlexSans(
-                          fontSize: 10,
-                          color: AppColors.inkLight,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            AdaptiveQuoteText(
-              text: quote.textDe,
-              minFontSize: 22,
-              maxFontSize: 30,
-              maxLines: 7,
-              style: Theme.of(context).textTheme.displayMedium,
-            ),
-            const SizedBox(height: 12),
-            Container(width: 28, height: 2, color: AppColors.red),
-          ],
         ),
       ),
     );

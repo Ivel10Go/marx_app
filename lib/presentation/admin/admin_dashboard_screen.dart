@@ -52,6 +52,8 @@ class AdminDashboardScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 10),
           Container(width: 40, height: 2, color: AppColors.red),
+          const SizedBox(height: 12),
+          const _AdminIntroCard(),
           const SizedBox(height: 16),
           _Panel(
             title: 'AKTUELLER MODUS',
@@ -103,9 +105,10 @@ class AdminDashboardScreen extends ConsumerWidget {
               data: (content) {
                 return Text(
                   content.when(
-                    quote: (quote) => 'Zitat: ${quote.source} (${quote.year})',
-                    fact: (fact) => 'Fakt: ${fact.headline}',
-                    thinkerQuote: (quote) => 'Denker: ${quote.author}',
+                    quote: (quote) =>
+                        'Zitatquelle: ${quote.source} (${quote.year})',
+                    fact: (fact) => 'Faktquelle: ${fact.headline}',
+                    thinkerQuote: (quote) => 'Denkerquelle: ${quote.author}',
                   ),
                   style: GoogleFonts.ibmPlexSans(
                     fontSize: 12,
@@ -146,6 +149,45 @@ class AdminDashboardScreen extends ConsumerWidget {
                   ),
                 ),
               ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _AdminIntroCard extends StatelessWidget {
+  const _AdminIntroCard();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: AppColors.paper,
+        border: Border.all(color: AppColors.ink, width: 1),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            'INTERNE STEUERUNG',
+            style: GoogleFonts.ibmPlexSans(
+              fontSize: 10,
+              fontWeight: FontWeight.w700,
+              color: AppColors.red,
+              letterSpacing: 1.1,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'Dieser Bereich zeigt den aktuellen Modus, den heute geladenen Content und Schnellaktionen für Pflege und Kontrolle.',
+            style: GoogleFonts.ibmPlexSans(
+              fontSize: 11,
+              color: AppColors.inkLight,
+              height: 1.5,
             ),
           ),
         ],
