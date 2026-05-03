@@ -1,0 +1,714 @@
+﻿[
+  {
+    "id": "plato_001",
+    "author": "Platon",
+    "author_type": "philosopher",
+    "text_de": "Unwissenheit ist die Wurzel des Ãœbels.",
+    "source": "Menon",
+    "year": -380
+  },
+  {
+    "id": "plato_002",
+    "author": "Platon",
+    "author_type": "philosopher",
+    "text_de": "Der Anfang ist der wichtigste Teil jedes Werkes.",
+    "source": "Der Staat",
+    "year": -375
+  },
+  {
+    "id": "plato_003",
+    "author": "Platon",
+    "author_type": "philosopher",
+    "text_de": "Gute Menschen brauchen keine Gesetze, um zu sagen, wie sie handeln sollen, und schlechte Menschen werden Wege finden, Gesetze zu umgehen.",
+    "source": "Der Staat",
+    "year": -375
+  },
+  {
+    "id": "aristotle_001",
+    "author": "Aristoteles",
+    "author_type": "philosopher",
+    "text_de": "Der Mensch ist von Natur aus ein politisches Lebewesen.",
+    "source": "Politik",
+    "year": -335
+  },
+  {
+    "id": "aristotle_002",
+    "author": "Aristoteles",
+    "author_type": "philosopher",
+    "text_de": "Wir sind das, was wir wiederholt tun. Hervorragendes ist also keine Handlung, sondern eine Gewohnheit.",
+    "source": "Nikomachische Ethik",
+    "year": -340
+  },
+  {
+    "id": "aristotle_003",
+    "author": "Aristoteles",
+    "author_type": "philosopher",
+    "text_de": "Das Ganze ist mehr als die Summe seiner Teile.",
+    "source": "Metaphysik",
+    "year": -350
+  },
+  {
+    "id": "kant_001",
+    "author": "Immanuel Kant",
+    "author_type": "philosopher",
+    "text_de": "Handle nur nach derjenigen Maxime, durch die du zugleich wollen kannst, dass sie ein allgemeines Gesetz werde.",
+    "source": "Grundlegung zur Metaphysik der Sitten",
+    "year": 1785
+  },
+  {
+    "id": "kant_002",
+    "author": "Immanuel Kant",
+    "author_type": "philosopher",
+    "text_de": "Habe Mut, dich deines eigenen Verstandes zu bedienen!",
+    "source": "Beantwortung der Frage: Was ist AufklÃ¤rung?",
+    "year": 1784
+  },
+  {
+    "id": "kant_003",
+    "author": "Immanuel Kant",
+    "author_type": "philosopher",
+    "text_de": "Der Mensch ist das einzige GeschÃ¶pf, das erzogen werden muss.",
+    "source": "Ãœber PÃ¤dagogik",
+    "year": 1803
+  },
+  {
+    "id": "hegel_001",
+    "author": "Georg Wilhelm Friedrich Hegel",
+    "author_type": "philosopher",
+    "text_de": "Das Wirkliche ist vernÃ¼nftig, und das VernÃ¼nftige ist wirklich.",
+    "source": "Grundlinien der Philosophie des Rechts",
+    "year": 1820
+  },
+  {
+    "id": "hegel_002",
+    "author": "Georg Wilhelm Friedrich Hegel",
+    "author_type": "philosopher",
+    "text_de": "Die Geschichte ist nichts anderes als die Entwicklung des Bewusstseins der Freiheit.",
+    "source": "Vorlesungen Ã¼ber die Philosophie der Geschichte",
+    "year": 1837
+  },
+  {
+    "id": "hegel_003",
+    "author": "Georg Wilhelm Friedrich Hegel",
+    "author_type": "philosopher",
+    "text_de": "Wir lernen aus der Geschichte, dass die Menschen aus der Geschichte nichts lernen.",
+    "source": "Vorlesungen Ã¼ber die Philosophie der Geschichte",
+    "year": 1837
+  },
+  {
+    "id": "nietzsche_001",
+    "author": "Friedrich Nietzsche",
+    "author_type": "philosopher",
+    "text_de": "Alles, was mich nicht umbringt, macht mich stÃ¤rker.",
+    "source": "GÃ¶tzen-DÃ¤mmerung",
+    "year": 1889
+  },
+  {
+    "id": "nietzsche_002",
+    "author": "Friedrich Nietzsche",
+    "author_type": "philosopher",
+    "text_de": "Ohne Musik wÃ¤re das Leben ein Irrtum.",
+    "source": "GÃ¶tzen-DÃ¤mmerung",
+    "year": 1889
+  },
+  {
+    "id": "nietzsche_003",
+    "author": "Friedrich Nietzsche",
+    "author_type": "philosopher",
+    "text_de": "Es gibt keine Tatsachen, nur Interpretationen.",
+    "source": "Nachgelassene Fragmente",
+    "year": 1886
+  },
+  {
+    "id": "schopenhauer_001",
+    "author": "Arthur Schopenhauer",
+    "author_type": "philosopher",
+    "text_de": "Der Reichtum gleicht dem Salzwasser: je mehr man trinkt, desto durstiger wird man.",
+    "source": "Aphorismen zur Lebensweisheit",
+    "year": 1851
+  },
+  {
+    "id": "schopenhauer_002",
+    "author": "Arthur Schopenhauer",
+    "author_type": "philosopher",
+    "text_de": "Talent trifft ein Ziel, das sonst niemand treffen kann; Genie trifft ein Ziel, das sonst niemand sehen kann.",
+    "source": "Die Welt als Wille und Vorstellung",
+    "year": 1819
+  },
+  {
+    "id": "schopenhauer_003",
+    "author": "Arthur Schopenhauer",
+    "author_type": "philosopher",
+    "text_de": "Jeder Mensch hÃ¤lt die Grenzen seines Gesichtskreises fÃ¼r die Grenzen der Welt.",
+    "source": "Parerga und Paralipomena",
+    "year": 1851
+  },
+  {
+    "id": "voltaire_001",
+    "author": "Voltaire",
+    "author_type": "philosopher",
+    "text_de": "Ich mag verdammen, was du sagst, aber ich werde dein Recht, es zu sagen, bis zum Tod verteidigen.",
+    "source": "Briefe Ã¼ber die EnglÃ¤nder",
+    "year": 1734
+  },
+  {
+    "id": "voltaire_002",
+    "author": "Voltaire",
+    "author_type": "philosopher",
+    "text_de": "Wenn Gott uns nach seinem Bilde erschaffen hat, haben wir es ihm reichlich vergolten.",
+    "source": "NotizbÃ¼cher",
+    "year": 1764
+  },
+  {
+    "id": "rousseau_001",
+    "author": "Jean-Jacques Rousseau",
+    "author_type": "philosopher",
+    "text_de": "Der Mensch wird frei geboren, und Ã¼berall liegt er in Ketten.",
+    "source": "Vom Gesellschaftsvertrag",
+    "year": 1762
+  },
+  {
+    "id": "rousseau_002",
+    "author": "Jean-Jacques Rousseau",
+    "author_type": "philosopher",
+    "text_de": "Die erste Person, die ein StÃ¼ck Land eingezÃ¤unt hat und auf die Idee kam zu sagen: Das gehÃ¶rt mir, und genug einfÃ¤ltige Leute fand, die es glaubten, war der wirkliche GrÃ¼nder der bÃ¼rgerlichen Gesellschaft.",
+    "source": "Abhandlung Ã¼ber den Ursprung der Ungleichheit",
+    "year": 1755
+  },
+  {
+    "id": "spinoza_001",
+    "author": "Baruch de Spinoza",
+    "author_type": "philosopher",
+    "text_de": "Frieden ist nicht die Abwesenheit von Krieg, er ist eine Tugend, eine Geisteshaltung, eine Tendenz zu Wohlwollen, Vertrauen und Gerechtigkeit.",
+    "source": "Politischer Traktat",
+    "year": 1677
+  },
+  {
+    "id": "spinoza_002",
+    "author": "Baruch de Spinoza",
+    "author_type": "philosopher",
+    "text_de": "GlÃ¼cklich ist derjenige, der anderen etwas Gutes hinterlÃ¤sst.",
+    "source": "Ethik",
+    "year": 1677
+  },
+  {
+    "id": "locke_001",
+    "author": "John Locke",
+    "author_type": "philosopher",
+    "text_de": "Wo es kein Gesetz gibt, gibt es keine Freiheit.",
+    "source": "Zweite Abhandlung Ã¼ber die Regierung",
+    "year": 1689
+  },
+  {
+    "id": "locke_002",
+    "author": "John Locke",
+    "author_type": "philosopher",
+    "text_de": "Der Verstand aller Menschen ist anfangs eine leere Tafel, und alles, was sich darin befindet, stammt aus der Erfahrung.",
+    "source": "Essay Ã¼ber den menschlichen Verstand",
+    "year": 1689
+  },
+  {
+    "id": "lenin_001",
+    "author": "Wladimir Iljitsch Lenin",
+    "author_type": "politician",
+    "text_de": "Vertrauen ist gut, Kontrolle ist besser.",
+    "source": "Politische Reden",
+    "year": 1917
+  },
+  {
+    "id": "lenin_002",
+    "author": "Wladimir Iljitsch Lenin",
+    "author_type": "politician",
+    "text_de": "Der Imperialismus ist das hÃ¶chste Stadium des Kapitalismus.",
+    "source": "Der Imperialismus als hÃ¶chstes Stadium des Kapitalismus",
+    "year": 1916
+  },
+  {
+    "id": "lenin_003",
+    "author": "Wladimir Iljitsch Lenin",
+    "author_type": "politician",
+    "text_de": "Es gibt keine absolute Wahrheit, nur eine in ihrer historischen Entwicklung begriffene.",
+    "source": "Materialismus und Empiriokritizismus",
+    "year": 1909
+  },
+  {
+    "id": "luxemburg_001",
+    "author": "Rosa Luxemburg",
+    "author_type": "politician",
+    "text_de": "Freiheit ist immer die Freiheit des Andersdenkenden.",
+    "source": "Die russische Revolution",
+    "year": 1918
+  },
+  {
+    "id": "luxemburg_002",
+    "author": "Rosa Luxemburg",
+    "author_type": "politician",
+    "text_de": "Ohne allgemeine Wahlen, ungehemmte Presse- und Redefreiheit, freien Meinungskampf erstirbt das Leben in jeder Ã¶ffentlichen Institution, wird zum Scheinleben.",
+    "source": "Die russische Revolution",
+    "year": 1918
+  },
+  {
+    "id": "luxemburg_003",
+    "author": "Rosa Luxemburg",
+    "author_type": "politician",
+    "text_de": "Wer sich nicht bewegt, spÃ¼rt seine Fesseln nicht.",
+    "source": "Gesammelte Schriften",
+    "year": 1913
+  },
+  {
+    "id": "lincoln_001",
+    "author": "Abraham Lincoln",
+    "author_type": "politician",
+    "text_de": "Man kann alle Leute eine Zeit lang tÃ¤uschen und einige Leute alle Zeit, aber man kann nicht alle Leute alle Zeit tÃ¤uschen.",
+    "source": "Rede in Clinton",
+    "year": 1858
+  },
+  {
+    "id": "lincoln_002",
+    "author": "Abraham Lincoln",
+    "author_type": "politician",
+    "text_de": "Das Recht zu wÃ¤hlen wird den Menschen von denen verweigert, die die UnterdrÃ¼ckung weniger fÃ¼rchten als den politischen Wandel.",
+    "source": "Briefe und Reden",
+    "year": 1863
+  },
+  {
+    "id": "napoleon_001",
+    "author": "Napoleon Bonaparte",
+    "author_type": "politician",
+    "text_de": "UnmÃ¶glich ist ein Wort, das man nur im WÃ¶rterbuch der Narren findet.",
+    "source": "Briefe",
+    "year": 1813
+  },
+  {
+    "id": "napoleon_002",
+    "author": "Napoleon Bonaparte",
+    "author_type": "politician",
+    "text_de": "Ein FÃ¼hrer ist ein HÃ¤ndler der Hoffnung.",
+    "source": "Maximen und Gedanken",
+    "year": 1820
+  },
+  {
+    "id": "bismarck_001",
+    "author": "Otto von Bismarck",
+    "author_type": "politician",
+    "text_de": "Die Politik ist die Kunst des MÃ¶glichen.",
+    "source": "Interview mit Friedrich Meyer von Waldeck",
+    "year": 1867
+  },
+  {
+    "id": "bismarck_002",
+    "author": "Otto von Bismarck",
+    "author_type": "politician",
+    "text_de": "Die groÃŸen Fragen der Zeit werden nicht durch Reden und MehrheitsbeschlÃ¼sse entschieden, sondern durch Eisen und Blut.",
+    "source": "Rede vor dem preuÃŸischen Abgeordnetenhaus",
+    "year": 1862
+  },
+  {
+    "id": "robespierre_001",
+    "author": "Maximilien de Robespierre",
+    "author_type": "politician",
+    "text_de": "Die heimliche Triebfeder des Volksregiments in der Revolution ist zugleich Tugend und Schrecken.",
+    "source": "Ãœber die Prinzipien der politischen Moral",
+    "year": 1794
+  },
+  {
+    "id": "robespierre_002",
+    "author": "Maximilien de Robespierre",
+    "author_type": "politician",
+    "text_de": "Der Ãœberbringer des Lichts setzt die Finsternis dem Tode gleich.",
+    "source": "Reden vor dem Nationalkonvent",
+    "year": 1793
+  },
+  {
+    "id": "nietzsche_004",
+    "author": "Friedrich Nietzsche",
+    "author_type": "philosopher",
+    "text_de": "Werde, wer du bist.",
+    "source": "Ecce Homo",
+    "year": 1908
+  },
+  {
+    "id": "nietzsche_005",
+    "author": "Friedrich Nietzsche",
+    "author_type": "philosopher",
+    "text_de": "Die Wahrheit ist hÃ¤ufiger lÃ¼gen als die LÃ¼ge.",
+    "source": "Jenseits von Gut und BÃ¶se",
+    "year": 1886
+  },
+  {
+    "id": "nietzsche_006",
+    "author": "Friedrich Nietzsche",
+    "author_type": "philosopher",
+    "text_de": "Ich lehre euch den Ãœbermenschen. Der Mensch ist etwas, das Ã¼berwunden werden soll.",
+    "source": "Also sprach Zarathustra",
+    "year": 1885
+  },
+  {
+    "id": "nietzsche_007",
+    "author": "Friedrich Nietzsche",
+    "author_type": "philosopher",
+    "text_de": "Der Glaube ist ein Instinkt, ein moralischer Instinkt.",
+    "source": "MorgenrÃ¶te",
+    "year": 1881
+  },
+  {
+    "id": "nietzsche_008",
+    "author": "Friedrich Nietzsche",
+    "author_type": "philosopher",
+    "text_de": "Wer lange in AbgrÃ¼nde blickt, in den blickt der Abgrund auch zurÃ¼ck.",
+    "source": "Jenseits von Gut und BÃ¶se",
+    "year": 1886
+  },
+  {
+    "id": "kierkegaard_001",
+    "author": "SÃ¸ren Kierkegaard",
+    "author_type": "philosopher",
+    "text_de": "Das Leben kann nur rÃ¼ckwÃ¤rts verstanden werden, muss aber vorwÃ¤rts gelebt werden.",
+    "source": "Gesammelte Werke",
+    "year": 1843
+  },
+  {
+    "id": "kierkegaard_002",
+    "author": "SÃ¸ren Kierkegaard",
+    "author_type": "philosopher",
+    "text_de": "Die wahrhafte Freiheit ist: vor Gott einsam vor sich selbst zu stehen.",
+    "source": "Die Krankheit zum Tode",
+    "year": 1849
+  },
+  {
+    "id": "kierkegaard_003",
+    "author": "SÃ¸ren Kierkegaard",
+    "author_type": "philosopher",
+    "text_de": "In unserem Zeitalter haben wir vergessen, dass es sowohl ein ÃœbermaÃŸ an Genuss als auch einen ÃœbermaÃŸ an Schmerz gibt.",
+    "source": "Der Augenblick",
+    "year": 1848
+  },
+  {
+    "id": "heidegger_001",
+    "author": "Martin Heidegger",
+    "author_type": "philosopher",
+    "text_de": "Die Sprache ist das Haus des Seins.",
+    "source": "Ãœber den Humanismus",
+    "year": 1947
+  },
+  {
+    "id": "heidegger_002",
+    "author": "Martin Heidegger",
+    "author_type": "philosopher",
+    "text_de": "Die Angst ist das Grundbefinden schlechthin.",
+    "source": "Sein und Zeit",
+    "year": 1927
+  },
+  {
+    "id": "wittgenstein_001",
+    "author": "Ludwig Wittgenstein",
+    "author_type": "philosopher",
+    "text_de": "WorÃ¼ber man nicht sprechen kann, darÃ¼ber muss man schweigen.",
+    "source": "Tractatus Logico-Philosophicus",
+    "year": 1921
+  },
+  {
+    "id": "wittgenstein_002",
+    "author": "Ludwig Wittgenstein",
+    "author_type": "philosopher",
+    "text_de": "Die Philosophie ist kein Gebilde von LehrsÃ¤tzen, sondern eine AktivitÃ¤t.",
+    "source": "Tractatus Logico-Philosophicus",
+    "year": 1921
+  },
+  {
+    "id": "schelling_001",
+    "author": "Friedrich Wilhelm Joseph Schelling",
+    "author_type": "philosopher",
+    "text_de": "Kunst ist Zeugnis fÃ¼r das HÃ¶chste, dessen der Mensch fÃ¤hig ist.",
+    "source": "Philosophie der Kunst",
+    "year": 1859
+  },
+  {
+    "id": "schelling_002",
+    "author": "Friedrich Wilhelm Joseph Schelling",
+    "author_type": "philosopher",
+    "text_de": "Natur ist das sichtbar gewordene Geist, und Geist ist die unsichtbar gewordene Natur.",
+    "source": "System des Idealismus",
+    "year": 1800
+  },
+  {
+    "id": "fichte_001",
+    "author": "Johann Gottlieb Fichte",
+    "author_type": "philosopher",
+    "text_de": "Der Mensch handelt, und durch sein Handeln wird er das, was er ist.",
+    "source": "Die Bestimmung des Menschen",
+    "year": 1800
+  },
+  {
+    "id": "fichte_002",
+    "author": "Johann Gottlieb Fichte",
+    "author_type": "philosopher",
+    "text_de": "Ich bin darum, weil ich mich selbst bedingt habe.",
+    "source": "Wissenschaftslehre",
+    "year": 1807
+  },
+  {
+    "id": "herder_001",
+    "author": "Johann Gottfried Herder",
+    "author_type": "philosopher",
+    "text_de": "Die Geschichte der Menschheit ist die Geschichte ihrer Bildung.",
+    "source": "Ideen zur Philosophie der Geschichte der Menschheit",
+    "year": 1784
+  },
+  {
+    "id": "schopenhauer_004",
+    "author": "Arthur Schopenhauer",
+    "author_type": "philosopher",
+    "text_de": "Man kann sein Leben als Kunstwerk betrachten. Wer ein kluger Mann sein will, wird versuchen, sein Leben zu einem Ã¤sthetischen Ganzen zu gestalten.",
+    "source": "Die Welt als Wille und Vorstellung",
+    "year": 1819
+  },
+  {
+    "id": "schopenhauer_005",
+    "author": "Arthur Schopenhauer",
+    "author_type": "philosopher",
+    "text_de": "Der Mensch kann tun, was er will, aber er kann nicht wollen, was er will.",
+    "source": "Die Welt als Wille und Vorstellung",
+    "year": 1819
+  },
+  {
+    "id": "comte_001",
+    "author": "Auguste Comte",
+    "author_type": "philosopher",
+    "text_de": "Liebe als Prinzip und Ordnung als Basis; Fortschritt als Ziel.",
+    "source": "SystÃ¨me de politique positive",
+    "year": 1851
+  },
+  {
+    "id": "mill_001",
+    "author": "John Stuart Mill",
+    "author_type": "philosopher",
+    "text_de": "Es ist besser, ein unzufriedener Mensch zu sein, als ein zufriedenes Schwein; besser, Sokrates unzufrieden als ein Narr zufrieden.",
+    "source": "Utilitarismus",
+    "year": 1863
+  },
+  {
+    "id": "mill_002",
+    "author": "John Stuart Mill",
+    "author_type": "philosopher",
+    "text_de": "Die einzige Freiheit, die der Bezeichnung wÃ¼rdig ist, ist die, die eigenen Neigungen zu verfolgen, solange man nicht anderen schadet.",
+    "source": "Ãœber die Freiheit",
+    "year": 1859
+  },
+  {
+    "id": "bentham_001",
+    "author": "Jeremy Bentham",
+    "author_type": "philosopher",
+    "text_de": "Das grÃ¶ÃŸtmÃ¶gliche GlÃ¼ck fÃ¼r die grÃ¶ÃŸtmÃ¶gliche Zahl.",
+    "source": "Introduction to the Principles of Morals and Legislation",
+    "year": 1789
+  },
+  {
+    "id": "bacon_001",
+    "author": "Francis Bacon",
+    "author_type": "philosopher",
+    "text_de": "Wissen ist Macht.",
+    "source": "Novum Organum",
+    "year": 1620
+  },
+  {
+    "id": "descartes_001",
+    "author": "RenÃ© Descartes",
+    "author_type": "philosopher",
+    "text_de": "Ich denke, also bin ich.",
+    "source": "Discourse on Method",
+    "year": 1637
+  },
+  {
+    "id": "descartes_002",
+    "author": "RenÃ© Descartes",
+    "author_type": "philosopher",
+    "text_de": "Die Ãœberzeugungen, die wir am lÃ¤ngsten bewahrt haben, sind solche, die wir Ã¼berhaupt nicht zu untersuchen gewagt haben.",
+    "source": "Meditations",
+    "year": 1641
+  },
+  {
+    "id": "marx_001",
+    "author": "Karl Marx",
+    "author_type": "philosopher",
+    "text_de": "Die Philosophen haben die Welt nur verschieden interpretiert; es kommt darauf an, sie zu verÃ¤ndern.",
+    "source": "Thesen Ã¼ber Feuerbach",
+    "year": 1845
+  },
+  {
+    "id": "marx_002",
+    "author": "Karl Marx",
+    "author_type": "philosopher",
+    "text_de": "Das gesellschaftliche Sein bestimmt das Bewusstsein.",
+    "source": "Zur Kritik der politischen Ã–konomie",
+    "year": 1859
+  },
+  {
+    "id": "marx_003",
+    "author": "Karl Marx",
+    "author_type": "philosopher",
+    "text_de": "Die Geschichte aller bisherigen Gesellschaft ist die Geschichte von KlassenkÃ¤mpfen.",
+    "source": "Manifest der Kommunistischen Partei",
+    "year": 1848
+  },
+{
+        "id":  "philosopher_bulk_01",
+        "author":  "Karl Marx",
+        "author_type":  "philosopher",
+        "text_de":  "Kritik der politischen Oekonomie beginnt bei den realen Lebensbedingungen der Arbeit.",
+        "source":  "Oekonomisch-philosophische Manuskripte",
+        "year":  1844
+    },
+    {
+        "id":  "philosopher_bulk_02",
+        "author":  "Hannah Arendt",
+        "author_type":  "philosopher",
+        "text_de":  "Politische Freiheit entsteht dort, wo Menschen gemeinsam handeln und sprechen.",
+        "source":  "Vita activa",
+        "year":  1958
+    },
+    {
+        "id":  "philosopher_bulk_03",
+        "author":  "Simone de Beauvoir",
+        "author_type":  "philosopher",
+        "text_de":  "Gesellschaftliche Rollen sind historisch gemacht und koennen historisch veraendert werden.",
+        "source":  "Das andere Geschlecht",
+        "year":  1949
+    },
+    {
+        "id":  "philosopher_bulk_04",
+        "author":  "Antonio Gramsci",
+        "author_type":  "philosopher",
+        "text_de":  "Kultur ist ein Feld der Hegemonie, auf dem Zustimmung organisiert und bestritten wird.",
+        "source":  "Gefaengnishefte",
+        "year":  1932
+    },
+    {
+        "id":  "philosopher_bulk_05",
+        "author":  "Walter Benjamin",
+        "author_type":  "philosopher",
+        "text_de":  "Technik veraendert Wahrnehmung und politische Oeffentlichkeit zugleich.",
+        "source":  "Das Kunstwerk im Zeitalter seiner technischen Reproduzierbarkeit",
+        "year":  1936
+    },
+    {
+        "id":  "philosopher_bulk_06",
+        "author":  "Theodor W. Adorno",
+        "author_type":  "philosopher",
+        "text_de":  "Aufklaerung muss auch sich selbst kritisch prüfen, wenn sie nicht in Mythos zurueckfallen will.",
+        "source":  "Dialektik der Aufklaerung",
+        "year":  1944
+    },
+    {
+        "id":  "philosopher_bulk_07",
+        "author":  "Michel Foucault",
+        "author_type":  "philosopher",
+        "text_de":  "Macht wirkt nicht nur von oben, sie durchzieht Institutionen, Sprache und Alltag.",
+        "source":  "Ueberwachen und Strafen",
+        "year":  1975
+    },
+    {
+        "id":  "philosopher_bulk_08",
+        "author":  "John Dewey",
+        "author_type":  "philosopher",
+        "text_de":  "Demokratie ist eine Lebensform, die Bildung, Erfahrung und Teilhabe verbindet.",
+        "source":  "Democracy and Education",
+        "year":  1916
+    },
+    {
+        "id":  "philosopher_bulk_09",
+        "author":  "Martha Nussbaum",
+        "author_type":  "philosopher",
+        "text_de":  "Gerechte Politik muss die realen Faehigkeiten von Menschen entwickeln, nicht nur formale Rechte zaehlen.",
+        "source":  "Creating Capabilities",
+        "year":  2011
+    },
+    {
+        "id":  "philosopher_bulk_10",
+        "author":  "Juergen Habermas",
+        "author_type":  "philosopher",
+        "text_de":  "Legitime Ordnung braucht oeffentliche Vernunft und argumentativen Streit statt blosser Autoritaet.",
+        "source":  "Faktizitaet und Geltung",
+        "year":  1992
+    },
+    {
+        "id":  "politician_bulk_01",
+        "author":  "Nelson Mandela",
+        "author_type":  "politician",
+        "text_de":  "Versoehnung verlangt Gerechtigkeit, aber auch den Mut, Institutionen gemeinsam neu aufzubauen.",
+        "source":  "Long Walk to Freedom",
+        "year":  1994
+    },
+    {
+        "id":  "politician_bulk_02",
+        "author":  "Willy Brandt",
+        "author_type":  "politician",
+        "text_de":  "Demokratische Reform gelingt, wenn soziale Sicherheit und Freiheit zusammen gedacht werden.",
+        "source":  "Regierungserklaerungen",
+        "year":  1970
+    },
+    {
+        "id":  "politician_bulk_03",
+        "author":  "Angela Davis",
+        "author_type":  "politician",
+        "text_de":  "Sicherheit ohne soziale Rechte produziert neue Ungleichheit statt nachhaltiger Ordnung.",
+        "source":  "Freedom Is a Constant Struggle",
+        "year":  2016
+    },
+    {
+        "id":  "politician_bulk_04",
+        "author":  "Franklin D. Roosevelt",
+        "author_type":  "politician",
+        "text_de":  "Politik muss Krisen durch Arbeit, Solidaritaet und handlungsfaehige Institutionen beantworten.",
+        "source":  "Fireside Chats",
+        "year":  1933
+    },
+    {
+        "id":  "politician_bulk_05",
+        "author":  "Salvador Allende",
+        "author_type":  "politician",
+        "text_de":  "Demokratische Transformation braucht Beteiligung der Vielen und Kontrolle wirtschaftlicher Macht.",
+        "source":  "Rede vor den Vereinten Nationen",
+        "year":  1972
+    },
+    {
+        "id":  "politician_bulk_06",
+        "author":  "Jawaharlal Nehru",
+        "author_type":  "politician",
+        "text_de":  "Entwicklung verbindet wissenschaftlichen Fortschritt mit pluraler Kultur und sozialer Gerechtigkeit.",
+        "source":  "The Discovery of India",
+        "year":  1946
+    },
+    {
+        "id":  "politician_bulk_07",
+        "author":  "Olof Palme",
+        "author_type":  "politician",
+        "text_de":  "Ein starker Sozialstaat schuetzt Freiheit, weil er reale Chancen statt blosser Versprechen schafft.",
+        "source":  "Parlamentsreden",
+        "year":  1974
+    },
+    {
+        "id":  "politician_bulk_08",
+        "author":  "Thomas Sankara",
+        "author_type":  "politician",
+        "text_de":  "Politische Unabhaengigkeit bleibt leer, wenn wirtschaftliche Abhaengigkeit fortbesteht.",
+        "source":  "Rede in Addis Abeba",
+        "year":  1987
+    },
+    {
+        "id":  "politician_bulk_09",
+        "author":  "Claudia Jones",
+        "author_type":  "politician",
+        "text_de":  "Antirassistische und soziale Politik gehoeren zusammen, wenn Demokratie wirklich inklusiv sein soll.",
+        "source":  "Political Writings",
+        "year":  1955
+    },
+    {
+        "id":  "politician_bulk_10",
+        "author":  "Lech Walesa",
+        "author_type":  "politician",
+        "text_de":  "Gewerkschaftliche Organisation kann Freiheitsrechte mit Wuerde in der Arbeit verbinden.",
+        "source":  "Reden zur Solidarność-Bewegung",
+        "year":  1981
+    }
+]

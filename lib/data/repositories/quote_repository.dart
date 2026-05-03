@@ -4,6 +4,7 @@ import 'package:drift/drift.dart';
 import 'package:flutter/services.dart';
 
 import '../../core/utils/quote_scheduler.dart';
+import '../../core/utils/german_text_normalizer.dart';
 import '../database/app_database.dart';
 import '../models/quote.dart';
 
@@ -13,11 +14,11 @@ class QuoteRepository {
   final AppDatabase _db;
 
   Future<void> ensureSeeded() async {
-    final raw = await rootBundle.loadString('assets/quotes.json');
+    final raw = await rootBundle.loadString('assets/thinkers_quotes.json');
     final decoded = jsonDecode(raw);
     if (decoded is! List<dynamic>) {
       throw const FormatException(
-        'assets/quotes.json must contain a JSON array',
+        'assets/thinkers_quotes.json must contain a JSON array',
       );
     }
 
@@ -149,18 +150,22 @@ class QuoteRepository {
 
     return Quote(
       id: row.id,
-      textDe: row.textDe,
-      textOriginal: row.textOriginal,
-      source: row.source,
+      textDe: normalizeGermanDisplayText(row.textDe)!,
+      textOriginal: normalizeGermanDisplayText(row.textOriginal)!,
+      source: normalizeGermanDisplayText(row.source)!,
       year: row.year,
-      chapter: row.chapter,
-      category: categories,
+      chapter: normalizeGermanDisplayText(row.chapter)!,
+      category: categories
+          .map((item) => normalizeGermanDisplayText(item)!)
+          .toList(),
       difficulty: row.difficulty,
-      series: row.series,
-      explanationShort: row.explanationShort,
-      explanationLong: row.explanationLong,
-      relatedIds: related,
-      funFact: row.funFact,
+      series: normalizeGermanDisplayText(row.series)!,
+      explanationShort: normalizeGermanDisplayText(row.explanationShort)!,
+      explanationLong: normalizeGermanDisplayText(row.explanationLong)!,
+      relatedIds: related
+          .map((item) => normalizeGermanDisplayText(item)!)
+          .toList(),
+      funFact: normalizeGermanDisplayText(row.funFact),
     );
   }
 

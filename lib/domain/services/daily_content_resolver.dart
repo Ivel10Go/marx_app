@@ -7,6 +7,7 @@ import '../../data/models/quote.dart';
 import '../../data/models/user_profile.dart';
 import '../../data/repositories/history_repository.dart';
 import '../../data/repositories/quote_repository.dart';
+import '../../core/utils/german_text_normalizer.dart';
 import 'personalization_service.dart';
 
 class DailyContentResolver {
@@ -139,7 +140,11 @@ class DailyContentResolver {
       appMode: appMode,
       profile: profile,
     );
-    final candidates = scopedQuotes.isEmpty ? allQuotes : scopedQuotes;
+    final candidates = _resolveCandidatePool(
+      allQuotes: allQuotes,
+      scopedQuotes: scopedQuotes,
+      profile: profile,
+    );
     if (profile.historicalInterests.isEmpty) {
       return <Quote>[];
     }
@@ -208,10 +213,15 @@ class DailyContentResolver {
   }
 
   bool _matchesInterest(Quote quote, String interest) {
-    return quote.category.any((category) {
-      final normalizedCategory = category.toLowerCase();
-      return normalizedCategory.contains(interest);
-    });
+    return textMatchesInterest(
+      interest: interest,
+      texts: <String>[
+        quote.textDe,
+        quote.source,
+        quote.chapter,
+        ...quote.category,
+      ],
+    );
   }
 
   String _quoteContentKey(Quote quote) {
@@ -232,14 +242,49 @@ class DailyContentResolver {
       profile: profile,
     );
 
-    final candidates = scopedQuotes.isEmpty ? allQuotes : scopedQuotes;
+    final candidates = _resolveCandidatePool(
+      allQuotes: allQuotes,
+      scopedQuotes: scopedQuotes,
+      profile: profile,
+    );
     final weighted = _personalization.getWeightedQuotes(candidates, profile);
     if (weighted.isEmpty) {
       return null;
     }
 
     final random = Random(issueNumber + 11);
-    return weighted[random.nextInt(weighted.length)];
+    final picked = weighted[random.nextInt(weighted.length)];
+
+    // Hard safety guard: conservative users should never receive Marx/Engels.
+    if (profile.politicalLeaning == PoliticalLeaning.conservative &&
+        _isMarxQuote(picked)) {
+      final nonMarxWeighted = weighted
+          .where((quote) => !_isMarxQuote(quote))
+          .toList();
+      if (nonMarxWeighted.isEmpty) {
+        return null;
+      }
+      return nonMarxWeighted[random.nextInt(nonMarxWeighted.length)];
+    }
+
+    return picked;
+  }
+
+  List<Quote> _resolveCandidatePool({
+    required List<Quote> allQuotes,
+    required List<Quote> scopedQuotes,
+    required UserProfile profile,
+  }) {
+    if (scopedQuotes.isNotEmpty) {
+      return scopedQuotes;
+    }
+
+    // Never allow fallback to Marx/Engels for conservative profiles.
+    if (profile.politicalLeaning == PoliticalLeaning.conservative) {
+      return allQuotes.where((quote) => !_isMarxQuote(quote)).toList();
+    }
+
+    return allQuotes;
   }
 
   HistoryFact? _resolveFact({
@@ -265,9 +310,121 @@ class DailyContentResolver {
     required AppMode appMode,
     required UserProfile profile,
   }) {
-    // Content filtering is intentionally limited to theme/interests + political orientation.
-    return allQuotes;
+    if (allQuotes.isEmpty) {
+      return allQuotes;
+    }
+
+    final nonMarxQuotes = allQuotes
+        .where((quote) => !_isMarxQuote(quote))
+        .toList();
+
+    switch (profile.politicalLeaning) {
+      case PoliticalLeaning.left:
+      case PoliticalLeaning.centerLeft:
+      case PoliticalLeaning.neutral:
+        return allQuotes;
+      case PoliticalLeaning.liberal:
+        final liberalMatches = nonMarxQuotes
+            .where((quote) => _matchesAnyLens(quote, _liberalLensTerms))
+            .toList();
+        if (liberalMatches.isNotEmpty) {
+          return liberalMatches;
+        }
+        if (nonMarxQuotes.isNotEmpty) {
+          return nonMarxQuotes;
+        }
+        return allQuotes;
+      case PoliticalLeaning.conservative:
+        final conservativeMatches = nonMarxQuotes
+            .where((quote) => _matchesAnyLens(quote, _conservativeLensTerms))
+            .toList();
+        if (conservativeMatches.isNotEmpty) {
+          return conservativeMatches;
+        }
+        if (nonMarxQuotes.isNotEmpty) {
+          return nonMarxQuotes;
+        }
+        return allQuotes;
+    }
   }
+
+  bool _isMarxQuote(Quote quote) {
+    final text = normalizeGermanSearchText(
+      <String>[
+        quote.id,
+        quote.series,
+        quote.source,
+        quote.chapter,
+        ...quote.category,
+        quote.textDe,
+      ].join(' '),
+    );
+
+    return _marxMarkerTerms.any((term) => text.contains(term));
+  }
+
+  bool _matchesAnyLens(Quote quote, List<String> terms) {
+    final text = normalizeGermanSearchText(
+      <String>[
+        quote.id,
+        quote.series,
+        quote.source,
+        quote.chapter,
+        ...quote.category,
+        quote.textDe,
+      ].join(' '),
+    );
+
+    return terms.any((term) => text.contains(term));
+  }
+
+  static const List<String> _marxMarkerTerms = <String>[
+    'marx',
+    'karl marx',
+    'engels',
+    'friedrich engels',
+    'kommunistisch',
+    'kommunismus',
+    'kommunistisches manifest',
+    'manifest der kommunistischen partei',
+    'das kapital',
+    'deutsche ideologie',
+    'grundrisse',
+    'lohnarbeit und kapital',
+    'brumaire',
+    'anti-duehring',
+    'anti-duhring',
+    'thesen ueber feuerbach',
+    'zur kritik der politischen oekonomie',
+    'ursprung der familie',
+    'feuerbach und der ausgang der klassischen deutschen philosophie',
+  ];
+
+  static const List<String> _liberalLensTerms = <String>[
+    'freiheit',
+    'liberty',
+    'rechte',
+    'plural',
+    'markt',
+    'individ',
+    'aufklaerung',
+    'verfassung',
+    'mill',
+  ];
+
+  static const List<String> _conservativeLensTerms = <String>[
+    'ordnung',
+    'tradition',
+    'staat',
+    'sicherheit',
+    'familie',
+    'werte',
+    'kontinuit',
+    'eigentum',
+    'verantwortung',
+    'burke',
+    'hayek',
+  ];
 
   int _issueNumberFor(DateTime now) {
     final epoch = DateTime(2000, 1, 1);

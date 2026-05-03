@@ -23,6 +23,7 @@ const List<InterestOption> availableInterests = <InterestOption>[
   InterestOption(id: 'krieg', label: 'Krieg & Frieden', icon: '⚔'),
   InterestOption(id: 'kolonial', label: 'Kolonialismus', icon: '🌍'),
   InterestOption(id: 'frauen', label: 'Frauengeschichte', icon: '♀'),
+  InterestOption(id: 'frauenrechte', label: 'Frauenrechte', icon: '⚖'),
   InterestOption(id: 'wissenschaft', label: 'Wissenschaft', icon: '🔬'),
   InterestOption(id: 'kunst', label: 'Kunst & Kultur', icon: '🎨'),
   InterestOption(id: 'religion', label: 'Religion & Kirche', icon: '✝'),

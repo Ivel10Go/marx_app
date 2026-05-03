@@ -1,3 +1,5 @@
+import '../../core/utils/german_text_normalizer.dart';
+
 class ThinkerQuote {
   const ThinkerQuote({
     required this.id,
@@ -25,10 +27,10 @@ class ThinkerQuote {
   factory ThinkerQuote.fromJson(Map<String, dynamic> json) {
     return ThinkerQuote(
       id: json['id'] as String,
-      author: json['author'] as String,
+      author: normalizeGermanDisplayText(json['author'] as String)!,
       authorType: json['author_type'] as String,
-      textDe: json['text_de'] as String,
-      source: json['source'] as String,
+      textDe: normalizeGermanDisplayText(json['text_de'] as String)!,
+      source: normalizeGermanDisplayText(json['source'] as String)!,
       year: (json['year'] as num).toInt(),
       imageUrl: json['image_url'] as String?,
     );

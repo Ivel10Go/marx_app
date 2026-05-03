@@ -129,7 +129,7 @@ class NotificationService {
     await _plugin.zonedSchedule(
       _dailyReminderId,
       'Zitatatlas - Tageszitat',
-      'Dein naechstes Tageszitat wartet auf dich.',
+      'Dein nächstes Tageszitat wartet auf dich.',
       nextTrigger,
       details,
       payload: 'route:/',

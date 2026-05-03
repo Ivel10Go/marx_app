@@ -44,8 +44,8 @@ final archivePoolProvider = StreamProvider<List<ArchiveItem>>((Ref ref) async* {
   final selectedOrientation = ref.watch(archiveOrientationFilterProvider);
   final profile = ref.watch(userProfileProvider);
   final personalization = ref.watch(personalizationServiceProvider);
-  final historyRepository = ref.watch(historyRepositoryProvider);
-  final facts = await historyRepository.watchAllHistoryFacts().first;
+  // History facts are intentionally not loaded here because they are
+  // temporarily excluded from the archive listing.
 
   yield* ref.watch(quoteRepositoryProvider).watchAllQuotes().map((
     List<Quote> quotes,
@@ -57,12 +57,15 @@ final archivePoolProvider = StreamProvider<List<ArchiveItem>>((Ref ref) async* {
       profileQuotes,
       profile,
     );
-    // Weight facts based on personalization
-    final weightedFacts = personalization.getWeightedFacts(facts, profile);
+    // Weight facts based on personalization (currently unused because
+    // history facts are temporarily excluded from the archive listing).
 
+    // Temporarily exclude history facts from the archive listing per UX request.
+    // Keep quotes only for now; facts (from assets/history_facts.json) are
+    // intentionally hidden while we review them.
     final items = <ArchiveItem>[
       ...weightedQuotes.map(ArchiveItem.quote),
-      ...weightedFacts.map(ArchiveItem.fact),
+      // ...weightedFacts.map(ArchiveItem.fact),
     ];
 
     final tabFiltered = items.where((ArchiveItem item) {
@@ -206,7 +209,7 @@ Set<String> _orientationTokensForItem({required ArchiveItem item}) {
     'freiheit',
     'rechte',
     'individ',
-    'aufklaerung',
+    'aufklärung',
     'markt',
     'plural',
   ])) {

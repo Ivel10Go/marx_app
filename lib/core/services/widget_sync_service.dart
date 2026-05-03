@@ -60,10 +60,10 @@ abstract final class WidgetSyncService {
         thinkerQuote: (ThinkerQuote quote) async {
           await _saveCommon(
             contentType: 'thinker_quote',
-            header: 'DENKER',
+            header: 'ARCHIV',
             modeLabel: modeLabel ?? 'PUBLIC',
             author: quote.author,
-            launchRoute: '/thinkers',
+            launchRoute: '/archive',
             quoteText: quote.textDe,
             source: '${quote.author}, ${quote.year}',
             explanation: quote.authorType,

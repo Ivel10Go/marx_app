@@ -214,7 +214,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
           children: <Widget>[
             Container(
               color: scheme.surface,
-              padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
+              padding: const EdgeInsets.fromLTRB(20, 16, 20, 10),
               child: LayoutBuilder(
                 builder: (BuildContext context, BoxConstraints constraints) {
                   final compact = constraints.maxWidth < 420;
@@ -258,7 +258,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                       ),
                       const SizedBox(height: 12),
                       Container(width: 40, height: 2, color: AppColors.red),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: 6),
                       if (compact)
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -303,7 +303,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
             ),
             const SizedBox.shrink(),
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 24, 20, 24),
+              padding: const EdgeInsets.fromLTRB(20, 12, 20, 24),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -511,7 +511,7 @@ class _MainQuoteScrollerState extends State<_MainQuoteScroller> {
   @override
   void initState() {
     super.initState();
-    _pageController = PageController(viewportFraction: 0.87);
+    _pageController = PageController(viewportFraction: 0.96);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
         Future<void>.delayed(const Duration(seconds: 3), () {
@@ -564,7 +564,7 @@ class _MainQuoteScrollerState extends State<_MainQuoteScroller> {
                     ),
                     const SizedBox(width: 6),
                     Text(
-                      'Wische nach links/rechts fuer weitere Zitate',
+                      'Wische nach links/rechts für weitere Zitate',
                       style: GoogleFonts.ibmPlexSans(
                         fontSize: 10,
                         fontWeight: FontWeight.w600,
@@ -612,7 +612,7 @@ class _MainQuoteScrollerState extends State<_MainQuoteScroller> {
                       child: Transform.scale(
                         scale: scale,
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 4),
+                          padding: const EdgeInsets.symmetric(horizontal: 2),
                           child: SingleChildScrollView(
                             physics: const BouncingScrollPhysics(),
                             padding: const EdgeInsets.only(bottom: 20),
@@ -811,7 +811,7 @@ extension on _HomeScreenState {
                   ),
                   const SizedBox(height: 14),
                   Text(
-                    'ERKLAERUNG',
+                    'ERKLÄRUNG',
                     style: GoogleFonts.ibmPlexSans(
                       fontSize: 10,
                       fontWeight: FontWeight.w700,

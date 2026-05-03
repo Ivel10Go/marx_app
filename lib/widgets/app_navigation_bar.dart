@@ -37,13 +37,6 @@ class AppNavigationBar extends StatelessWidget {
                 },
               ),
               _MoreItem(
-                label: 'Denker',
-                onTap: () {
-                  Navigator.of(sheetContext).pop();
-                  context.go('/thinkers');
-                },
-              ),
-              _MoreItem(
                 label: 'Einführung',
                 isLast: true,
                 onTap: () {

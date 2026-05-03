@@ -1,3 +1,5 @@
+import '../../core/utils/german_text_normalizer.dart';
+
 class Quote {
   const Quote({
     required this.id,
@@ -34,18 +36,30 @@ class Quote {
   factory Quote.fromJson(Map<String, dynamic> json) {
     return Quote(
       id: json['id'] as String,
-      textDe: json['text_de'] as String,
-      textOriginal: json['text_original'] as String,
-      source: json['source'] as String,
+      textDe: normalizeGermanDisplayText(json['text_de'] as String)!,
+      textOriginal: normalizeGermanDisplayText(
+        json['text_original'] as String,
+      )!,
+      source: normalizeGermanDisplayText(json['source'] as String)!,
       year: (json['year'] as num).toInt(),
-      chapter: json['chapter'] as String,
-      category: (json['category'] as List<dynamic>).cast<String>(),
+      chapter: normalizeGermanDisplayText(json['chapter'] as String)!,
+      category: (json['category'] as List<dynamic>)
+          .cast<String>()
+          .map((item) => normalizeGermanDisplayText(item)!)
+          .toList(),
       difficulty: json['difficulty'] as String,
-      series: json['series'] as String,
-      explanationShort: json['explanation_short'] as String,
-      explanationLong: json['explanation_long'] as String,
-      relatedIds: (json['related_ids'] as List<dynamic>).cast<String>(),
-      funFact: json['fun_fact'] as String?,
+      series: normalizeGermanDisplayText(json['series'] as String)!,
+      explanationShort: normalizeGermanDisplayText(
+        json['explanation_short'] as String,
+      )!,
+      explanationLong: normalizeGermanDisplayText(
+        json['explanation_long'] as String,
+      )!,
+      relatedIds: (json['related_ids'] as List<dynamic>)
+          .cast<String>()
+          .map((item) => normalizeGermanDisplayText(item)!)
+          .toList(),
+      funFact: normalizeGermanDisplayText(json['fun_fact'] as String?),
       imageUrl: json['image_url'] as String?,
     );
   }

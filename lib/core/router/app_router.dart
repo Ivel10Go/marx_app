@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../presentation/archive/archive_screen.dart';
 import '../../presentation/admin/admin_dashboard_screen.dart';
 import '../../presentation/detail/quote_detail_screen_new.dart';
 import '../../presentation/favorites/favorites_screen.dart';
@@ -23,6 +22,9 @@ final appRouterProvider = Provider<GoRouter>((Ref ref) {
   return GoRouter(
     initialLocation: initialRoute,
     redirect: (context, state) {
+      if (state.matchedLocation == '/thinkers') {
+        return '/archive';
+      }
       if (state.matchedLocation == '/admin' && !isAdmin) {
         return '/';
       }
@@ -52,11 +54,6 @@ final appRouterProvider = Provider<GoRouter>((Ref ref) {
       GoRoute(
         path: '/archive',
         name: 'archive',
-        builder: (context, state) => const ArchiveScreen(),
-      ),
-      GoRoute(
-        path: '/thinkers',
-        name: 'thinkers',
         builder: (context, state) => const ThinkersScreen(),
       ),
       GoRoute(

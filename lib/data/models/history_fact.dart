@@ -1,3 +1,5 @@
+import '../../core/utils/german_text_normalizer.dart';
+
 class HistoryFact {
   const HistoryFact({
     required this.id,
@@ -42,22 +44,31 @@ class HistoryFact {
   factory HistoryFact.fromJson(Map<String, dynamic> json) {
     return HistoryFact(
       id: json['id'] as String,
-      headline: json['headline'] as String,
-      body: json['body'] as String,
-      dateDisplay: json['date_display'] as String,
+      headline: normalizeGermanDisplayText(json['headline'] as String)!,
+      body: normalizeGermanDisplayText(json['body'] as String)!,
+      dateDisplay: normalizeGermanDisplayText(json['date_display'] as String)!,
       dateIso: json['date_iso'] as String,
       dayOfYear: (json['day_of_year'] as num).toInt(),
-      era: json['era'] as String,
-      region: json['region'] as String,
-      category: (json['category'] as List<dynamic>).cast<String>(),
+      era: normalizeGermanDisplayText(json['era'] as String)!,
+      region: normalizeGermanDisplayText(json['region'] as String)!,
+      category: (json['category'] as List<dynamic>)
+          .cast<String>()
+          .map((item) => normalizeGermanDisplayText(item)!)
+          .toList(),
       difficulty: json['difficulty'] as String,
-      person: json['person'] as String?,
-      personRole: json['person_role'] as String?,
-      connectionToMarx: json['connection_to_marx'] as String,
+      person: normalizeGermanDisplayText(json['person'] as String?),
+      personRole: normalizeGermanDisplayText(json['person_role'] as String?),
+      connectionToMarx: normalizeGermanDisplayText(
+        json['connection_to_marx'] as String,
+      )!,
       relatedQuoteIds:
-          (json['related_quote_ids'] as List<dynamic>?)?.cast<String>() ?? [],
-      funFact: json['fun_fact'] as String?,
-      source: json['source'] as String?,
+          (json['related_quote_ids'] as List<dynamic>?)
+              ?.cast<String>()
+              .map((item) => normalizeGermanDisplayText(item)!)
+              .toList() ??
+          [],
+      funFact: normalizeGermanDisplayText(json['fun_fact'] as String?),
+      source: normalizeGermanDisplayText(json['source'] as String?),
       todayInHistory: (json['today_in_history'] as bool?) ?? false,
       imageUrl: json['image_url'] as String?,
     );

@@ -37,7 +37,7 @@ class WelcomePage extends StatelessWidget {
               Container(width: 44, height: 2, color: AppColors.red),
               const SizedBox(height: 20),
               Text(
-                'Taeglich ein Gedanke. Taeglich ein Fakt.',
+                'Täglich ein Gedanke. Täglich ein Fakt.',
                 textAlign: TextAlign.center,
                 style: GoogleFonts.ibmPlexSans(
                   fontSize: 13,

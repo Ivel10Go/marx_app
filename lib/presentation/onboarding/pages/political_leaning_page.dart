@@ -74,7 +74,7 @@ class PoliticalLeaningPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            'GEWAEHLT',
+                            'GEWÄHLT',
                             style: GoogleFonts.ibmPlexSans(
                               fontSize: 9,
                               fontWeight: FontWeight.w700,

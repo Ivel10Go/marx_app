@@ -12,6 +12,7 @@ final thinkerTypeProvider = StateProvider<ThinkerType>(
 );
 
 final selectedAuthorProvider = StateProvider<String?>((Ref ref) => null);
+final thinkerSearchQueryProvider = StateProvider<String>((Ref ref) => '');
 
 final allThinkersProvider = FutureProvider<List<ThinkerQuote>>((Ref ref) async {
   final raw = await rootBundle.loadString('assets/thinkers_quotes.json');
@@ -25,6 +26,7 @@ final allThinkersProvider = FutureProvider<List<ThinkerQuote>>((Ref ref) async {
 
 final thinkerAuthorsProvider = Provider<AsyncValue<List<String>>>((Ref ref) {
   final type = ref.watch(thinkerTypeProvider);
+  final query = ref.watch(thinkerSearchQueryProvider).trim().toLowerCase();
   final allAsync = ref.watch(allThinkersProvider);
   return allAsync.whenData((quotes) {
     final typeStr = type == ThinkerType.philosopher
@@ -34,6 +36,9 @@ final thinkerAuthorsProvider = Provider<AsyncValue<List<String>>>((Ref ref) {
         quotes
             .where((q) => q.authorType == typeStr)
             .map((q) => q.author)
+            .where(
+              (author) => query.isEmpty || author.toLowerCase().contains(query),
+            )
             .toSet()
             .toList()
           ..sort();
@@ -45,11 +50,47 @@ final thinkerQuotesProvider = Provider<AsyncValue<List<ThinkerQuote>>>((
   Ref ref,
 ) {
   final author = ref.watch(selectedAuthorProvider);
+  final query = ref.watch(thinkerSearchQueryProvider).trim().toLowerCase();
   final allAsync = ref.watch(allThinkersProvider);
   if (author == null) {
     return const AsyncValue.data(<ThinkerQuote>[]);
   }
-  return allAsync.whenData(
-    (quotes) => quotes.where((q) => q.author == author).toList(),
-  );
+  return allAsync.whenData((quotes) {
+    return quotes.where((q) {
+      if (q.author != author) {
+        return false;
+      }
+      if (query.isEmpty) {
+        return true;
+      }
+      final text = q.textDe.toLowerCase();
+      final source = q.source.toLowerCase();
+      final year = q.year.toString();
+      return text.contains(query) ||
+          source.contains(query) ||
+          year.contains(query);
+    }).toList();
+  });
+});
+
+final thinkerSearchQuotesProvider = Provider<AsyncValue<List<ThinkerQuote>>>((
+  Ref ref,
+) {
+  final query = ref.watch(thinkerSearchQueryProvider).trim().toLowerCase();
+  final allAsync = ref.watch(allThinkersProvider);
+  if (query.isEmpty) {
+    return const AsyncValue.data(<ThinkerQuote>[]);
+  }
+  return allAsync.whenData((quotes) {
+    return quotes.where((q) {
+      final text = q.textDe.toLowerCase();
+      final author = q.author.toLowerCase();
+      final source = q.source.toLowerCase();
+      final year = q.year.toString();
+      return text.contains(query) ||
+          author.contains(query) ||
+          source.contains(query) ||
+          year.contains(query);
+    }).toList();
+  });
 });

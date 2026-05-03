@@ -17,18 +17,24 @@ class ThinkersScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedType = ref.watch(thinkerTypeProvider);
     final selectedAuthor = ref.watch(selectedAuthorProvider);
+    final searchQuery = ref.watch(thinkerSearchQueryProvider);
+    final isSearching = searchQuery.trim().isNotEmpty;
     final scheme = Theme.of(context).colorScheme;
 
     return PopScope(
-      canPop: selectedAuthor == null,
+      canPop: selectedAuthor == null && !isSearching,
       onPopInvokedWithResult: (didPop, _) {
+        if (!didPop && isSearching) {
+          ref.read(thinkerSearchQueryProvider.notifier).state = '';
+          return;
+        }
         if (!didPop && selectedAuthor != null) {
           ref.read(selectedAuthorProvider.notifier).state = null;
         }
       },
       child: AppDecoratedScaffold(
         appBar: null,
-        bottomNavigationBar: const AppNavigationBar(selectedIndex: -1),
+        bottomNavigationBar: const AppNavigationBar(selectedIndex: 1),
         child: Column(
           children: <Widget>[
             // Masthead
@@ -39,7 +45,7 @@ class ThinkersScreen extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    'DENKER',
+                    'ARCHIV',
                     style: GoogleFonts.playfairDisplay(
                       fontSize: 32,
                       fontWeight: FontWeight.w700,
@@ -50,32 +56,64 @@ class ThinkersScreen extends ConsumerWidget {
                   const SizedBox(height: 12),
                   Container(width: 40, height: 2, color: scheme.primary),
                   const SizedBox(height: 16),
-                  // Type toggle
-                  Row(
-                    children: <Widget>[
-                      _TypeTabButton(
-                        label: 'PHILOSOPHEN',
-                        active: selectedType == ThinkerType.philosopher,
-                        onTap: () {
-                          ref.read(thinkerTypeProvider.notifier).state =
-                              ThinkerType.philosopher;
-                          ref.read(selectedAuthorProvider.notifier).state =
-                              null;
-                        },
-                      ),
-                      const SizedBox(width: 20),
-                      _TypeTabButton(
-                        label: 'POLITIKER',
-                        active: selectedType == ThinkerType.politician,
-                        onTap: () {
-                          ref.read(thinkerTypeProvider.notifier).state =
-                              ThinkerType.politician;
-                          ref.read(selectedAuthorProvider.notifier).state =
-                              null;
-                        },
-                      ),
-                    ],
+                  TextField(
+                    onChanged: (value) =>
+                        ref.read(thinkerSearchQueryProvider.notifier).state =
+                            value,
+                    decoration: InputDecoration(
+                      labelText: 'SUCHE',
+                      hintText: 'Zitat, Autor, Quelle, Jahr',
+                      prefixIcon: Icon(Icons.search, color: scheme.onSurface),
+                      suffixIcon: searchQuery.trim().isEmpty
+                          ? null
+                          : IconButton(
+                              onPressed: () {
+                                ref
+                                        .read(
+                                          thinkerSearchQueryProvider.notifier,
+                                        )
+                                        .state =
+                                    '';
+                              },
+                              icon: const Icon(Icons.clear),
+                              tooltip: 'Suche löschen',
+                            ),
+                      border: InputBorder.none,
+                    ),
+                    style: GoogleFonts.ibmPlexSans(
+                      fontSize: 12,
+                      color: scheme.onSurface,
+                    ),
                   ),
+                  if (!isSearching) ...<Widget>[
+                    const SizedBox(height: 12),
+                    // Type toggle
+                    Row(
+                      children: <Widget>[
+                        _TypeTabButton(
+                          label: 'PHILOSOPHEN',
+                          active: selectedType == ThinkerType.philosopher,
+                          onTap: () {
+                            ref.read(thinkerTypeProvider.notifier).state =
+                                ThinkerType.philosopher;
+                            ref.read(selectedAuthorProvider.notifier).state =
+                                null;
+                          },
+                        ),
+                        const SizedBox(width: 20),
+                        _TypeTabButton(
+                          label: 'POLITIKER',
+                          active: selectedType == ThinkerType.politician,
+                          onTap: () {
+                            ref.read(thinkerTypeProvider.notifier).state =
+                                ThinkerType.politician;
+                            ref.read(selectedAuthorProvider.notifier).state =
+                                null;
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
                 ],
               ),
             ),
@@ -84,7 +122,9 @@ class ThinkersScreen extends ConsumerWidget {
               child: const SizedBox.shrink(),
             ),
             Expanded(
-              child: selectedAuthor == null
+              child: isSearching
+                  ? const _SearchQuoteList()
+                  : selectedAuthor == null
                   ? _AuthorList(type: selectedType)
                   : _QuoteList(author: selectedAuthor),
             ),
@@ -213,11 +253,11 @@ class _AuthorList extends ConsumerWidget {
         );
       },
       loading: () => const AppInlineLoadingState(
-        title: 'Denker werden geladen',
+        title: 'Archiv wird geladen',
         subtitle: 'Autorenliste wird vorbereitet ...',
       ),
       error: (error, _) => AppInlineErrorState(
-        title: 'Denker konnten nicht geladen werden',
+        title: 'Archiv konnte nicht geladen werden',
         message: 'Fehler: $error',
         onRetry: () => ref.invalidate(thinkerAuthorsProvider),
       ),
@@ -290,7 +330,7 @@ class _QuoteList extends ConsumerWidget {
             },
             loading: () => const AppInlineLoadingState(
               title: 'Zitate werden geladen',
-              subtitle: 'Einträge des Denkers werden zusammengestellt ...',
+              subtitle: 'Einträge des Archivs werden zusammengestellt ...',
             ),
             error: (error, _) => AppInlineErrorState(
               title: 'Zitate konnten nicht geladen werden',
@@ -300,6 +340,48 @@ class _QuoteList extends ConsumerWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _SearchQuoteList extends ConsumerWidget {
+  const _SearchQuoteList();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final searchQuery = ref.watch(thinkerSearchQueryProvider).trim();
+    final quotesAsync = ref.watch(thinkerSearchQuotesProvider);
+
+    return quotesAsync.when(
+      data: (quotes) {
+        if (quotes.isEmpty) {
+          return Center(
+            child: Text(
+              'Keine Treffer fur "$searchQuery".',
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+          );
+        }
+        return ListView.builder(
+          padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
+          itemCount: quotes.length,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 16),
+              child: _ThinkerQuoteCard(quote: quotes[index]),
+            );
+          },
+        );
+      },
+      loading: () => const AppInlineLoadingState(
+        title: 'Suchergebnisse werden geladen',
+        subtitle: 'Passende Zitate werden zusammengestellt ...',
+      ),
+      error: (error, _) => AppInlineErrorState(
+        title: 'Suchergebnisse konnten nicht geladen werden',
+        message: 'Fehler: $error',
+        onRetry: () => ref.invalidate(thinkerSearchQuotesProvider),
+      ),
     );
   }
 }

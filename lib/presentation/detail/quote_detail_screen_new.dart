@@ -68,7 +68,7 @@ class _QuoteDetailScreenState extends ConsumerState<QuoteDetailScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  'KURZERKLAERUNG',
+                  'KURZERKLÄRUNG',
                   style: GoogleFonts.ibmPlexSans(
                     fontSize: 10,
                     fontWeight: FontWeight.w700,
@@ -121,7 +121,7 @@ class _QuoteDetailScreenState extends ConsumerState<QuoteDetailScreen> {
                 Expanded(
                   child: _BroadsheetButton(
                     onPressed: () => _showExplanation(quote),
-                    label: 'ERKLAERUNG',
+                    label: 'ERKLÄRUNG',
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -512,7 +512,7 @@ class _AudioExplainerSection extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              'AUDIO-ERKLAERUNG',
+              'AUDIO-ERKLÄRUNG',
               style: GoogleFonts.ibmPlexSans(
                 fontSize: 10,
                 fontWeight: FontWeight.w700,

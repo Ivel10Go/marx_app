@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../core/theme/app_colors.dart';
 import '../../data/models/user_profile.dart';
 import '../../domain/providers/user_profile_provider.dart';
+import '../../widgets/parlamentz.dart';
 
 class PoliticalOrientationTestScreen extends ConsumerStatefulWidget {
   const PoliticalOrientationTestScreen({super.key});
@@ -444,6 +445,8 @@ class _ResultCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
+          Center(child: ParlamentzIndicator(leaning: result, size: 84)),
+          const SizedBox(height: 12),
           Text(
             'ERGEBNIS',
             style: GoogleFonts.ibmPlexSans(

@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -18,113 +20,138 @@ class PoliticalLeaningParliamentPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final items = <({PoliticalLeaning value, IconData icon, String label})>[
-      (
-        value: PoliticalLeaning.left,
-        icon: Icons.keyboard_double_arrow_left_rounded,
-        label: 'Links',
-      ),
-      (
-        value: PoliticalLeaning.centerLeft,
-        icon: Icons.chevron_left_rounded,
-        label: 'Mitte-Links',
-      ),
-      (
-        value: PoliticalLeaning.neutral,
-        icon: Icons.circle_outlined,
-        label: 'Neutral',
-      ),
-      (
-        value: PoliticalLeaning.liberal,
-        icon: Icons.chevron_right_rounded,
-        label: 'Liberal',
-      ),
-      (
-        value: PoliticalLeaning.conservative,
-        icon: Icons.keyboard_double_arrow_right_rounded,
-        label: 'Konservativ',
-      ),
-    ];
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final width = constraints.maxWidth.isFinite && constraints.maxWidth > 0
+            ? constraints.maxWidth
+            : 320.0;
+        final labels = <PoliticalLeaning>[
+          PoliticalLeaning.left,
+          PoliticalLeaning.centerLeft,
+          PoliticalLeaning.neutral,
+          PoliticalLeaning.liberal,
+          PoliticalLeaning.conservative,
+        ];
+        const labelAreaHeight = 30.0;
+        final contentHeight = math.max(height - labelAreaHeight, 96.0);
+        final availableWidth = width;
+        final radius = math.min(availableWidth / 2 - 8, contentHeight - 10);
+        final center = Offset(availableWidth / 2, contentHeight);
+        final selectedIndex = _indexForLeaning(selected);
 
-    return SizedBox(
-      height: height,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Expanded(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: items.map((item) {
-                final active = item.value == selected;
-                return Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 4),
-                    child: Tooltip(
-                      message: item.label,
-                      child: InkWell(
-                        onTap: () => onSelect(item.value),
-                        borderRadius: BorderRadius.zero,
-                        child: AnimatedContainer(
-                          duration: const Duration(milliseconds: 180),
-                          curve: Curves.easeOut,
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: active
-                                ? AppColors.red.withValues(alpha: 0.12)
-                                : AppColors.paper,
-                            border: Border.all(
-                              color: active ? AppColors.red : AppColors.rule,
-                              width: active ? 1.6 : 1,
-                            ),
-                            boxShadow: active
-                                ? <BoxShadow>[
-                                    BoxShadow(
-                                      color: AppColors.red.withValues(
-                                        alpha: 0.08,
-                                      ),
-                                      blurRadius: 10,
-                                      offset: const Offset(0, 4),
-                                    ),
-                                  ]
-                                : null,
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Icon(
-                                item.icon,
-                                size: 24,
-                                color: active
-                                    ? AppColors.red
-                                    : AppColors.inkMuted,
-                              ),
-                              const SizedBox(height: 8),
-                              Container(
-                                width: 12,
-                                height: 2,
-                                color: active ? AppColors.red : AppColors.rule,
-                              ),
-                            ],
-                          ),
-                        ),
+        return SizedBox(
+          width: double.infinity,
+          height: height,
+          child: Column(
+            children: <Widget>[
+              Expanded(
+                child: SizedBox(
+                  width: double.infinity,
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTapDown: (details) => _handleTap(
+                      tapPosition: details.localPosition,
+                      labels: labels,
+                      center: center,
+                      radius: radius,
+                      onSelect: onSelect,
+                    ),
+                    child: CustomPaint(
+                      size: Size(availableWidth, contentHeight),
+                      painter: _ParliamentBackgroundPainter(
+                        selectedIndex: selectedIndex,
+                        center: center,
+                        radius: radius,
+                        sectorCount: labels.length,
+                        colors: labels.map(_colorForLeaning).toList(),
                       ),
                     ),
                   ),
-                );
-              }).toList(),
-            ),
+                ),
+              ),
+              const SizedBox(height: 6),
+              SizedBox(
+                height: 24,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    _labelFor(selected),
+                    style: GoogleFonts.playfairDisplay(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.ink,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-          const SizedBox(height: 8),
-          Text(
-            _labelFor(selected),
-            style: GoogleFonts.ibmPlexSans(
-              fontSize: 10,
-              color: AppColors.inkMuted,
-            ),
-          ),
-        ],
-      ),
+        );
+      },
     );
+  }
+
+  void _handleTap({
+    required Offset tapPosition,
+    required List<PoliticalLeaning> labels,
+    required Offset center,
+    required double radius,
+    required ValueChanged<PoliticalLeaning> onSelect,
+  }) {
+    final dx = tapPosition.dx - center.dx;
+    final dy = tapPosition.dy - center.dy;
+    final distance = math.sqrt((dx * dx) + (dy * dy));
+
+    if (distance > radius) {
+      return;
+    }
+
+    // Only the upper half-circle is interactive.
+    if (tapPosition.dy > center.dy) {
+      return;
+    }
+
+    var angle = math.atan2(dy, dx);
+    // Map left..right of the upper half to a 0..1 range.
+    if (angle > 0) {
+      angle -= 2 * math.pi;
+    }
+    final progress = ((angle + math.pi) / math.pi).clamp(0.0, 1.0);
+    final index = (progress * labels.length).floor().clamp(
+      0,
+      labels.length - 1,
+    );
+    onSelect(labels[index]);
+  }
+
+  int _indexForLeaning(PoliticalLeaning leaning) {
+    switch (leaning) {
+      case PoliticalLeaning.left:
+        return 0;
+      case PoliticalLeaning.centerLeft:
+        return 1;
+      case PoliticalLeaning.neutral:
+        return 2;
+      case PoliticalLeaning.liberal:
+        return 3;
+      case PoliticalLeaning.conservative:
+        return 4;
+    }
+  }
+
+  Color _colorForLeaning(PoliticalLeaning leaning) {
+    switch (leaning) {
+      case PoliticalLeaning.left:
+        return const Color(0xFF7A120E);
+      case PoliticalLeaning.centerLeft:
+        return AppColors.redDark;
+      case PoliticalLeaning.neutral:
+        return const Color(0xFF3DBB66);
+      case PoliticalLeaning.liberal:
+        return const Color(0xFFF2D44F);
+      case PoliticalLeaning.conservative:
+        return const Color(0xFF2E8CF0);
+    }
   }
 
   String _labelFor(PoliticalLeaning leaning) {
@@ -140,5 +167,61 @@ class PoliticalLeaningParliamentPicker extends StatelessWidget {
       case PoliticalLeaning.conservative:
         return 'Konservativ';
     }
+  }
+}
+
+class _ParliamentBackgroundPainter extends CustomPainter {
+  const _ParliamentBackgroundPainter({
+    required this.selectedIndex,
+    required this.center,
+    required this.radius,
+    required this.sectorCount,
+    required this.colors,
+  });
+
+  final int selectedIndex;
+  final Offset center;
+  final double radius;
+  final int sectorCount;
+  final List<Color> colors;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    // Enforce a clean upper half only.
+    canvas.save();
+    canvas.clipRect(Rect.fromLTWH(0, 0, size.width, center.dy));
+
+    final sectorPaint = Paint()..style = PaintingStyle.fill;
+
+    final segmentAngle = math.pi / sectorCount;
+    for (var index = 0; index < sectorCount; index++) {
+      final startAngle = math.pi + (segmentAngle * index);
+      final path = Path()
+        ..moveTo(center.dx, center.dy)
+        ..arcTo(
+          Rect.fromCircle(center: center, radius: radius),
+          startAngle,
+          segmentAngle,
+          false,
+        )
+        ..close();
+
+      final isActive = index == selectedIndex;
+      sectorPaint.color = colors[index].withValues(
+        alpha: isActive ? 0.86 : 0.42,
+      );
+      canvas.drawPath(path, sectorPaint);
+    }
+
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _ParliamentBackgroundPainter oldDelegate) {
+    return oldDelegate.selectedIndex != selectedIndex ||
+        oldDelegate.center != center ||
+        oldDelegate.radius != radius ||
+        oldDelegate.sectorCount != sectorCount ||
+        oldDelegate.colors != colors;
   }
 }

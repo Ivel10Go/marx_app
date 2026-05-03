@@ -1,0 +1,22 @@
+{
+  "files_analyzed": [
+    "assets/quotes.json",
+    "assets/thinkers_quotes.json"
+  ],
+  "report": {
+    "assets/quotes.json": {
+      "total": 1700,
+      "with_author": 0,
+      "with_source": 1700,
+      "unsourced_count": 0
+    },
+    "assets/thinkers_quotes.json": {
+      "total": 1789,
+      "with_author": 1789,
+      "with_source": 1789,
+      "unsourced_count": 0
+    }
+  },
+  "unsourced_sample_count": 0,
+  "top_authors_in_unsourced_sample": []
+}

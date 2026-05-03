@@ -43,7 +43,7 @@ class InterestsPage extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                'Wir passen deinen taeglichen Inhalt an.',
+                'Wir passen deinen täglichen Inhalt an.',
                 style: GoogleFonts.ibmPlexSans(
                   fontSize: 11,
                   color: scheme.onSurfaceVariant,
@@ -107,7 +107,7 @@ class InterestsPage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(top: 8),
                   child: Text(
-                    'Bitte waehle mindestens ein Thema.',
+                    'Bitte wähle mindestens ein Thema.',
                     style: GoogleFonts.ibmPlexSans(
                       fontSize: 10,
                       color: scheme.primary,

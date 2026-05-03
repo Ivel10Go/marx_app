@@ -1,0 +1,24 @@
+{
+  "input_counts": {
+    "thinkers_quotes_json": 89,
+    "generated_quotes_json": 3400,
+    "quotes_json": 1700,
+    "thinkers_quotes_json_bak": 89,
+    "combined": 5278
+  },
+  "result_counts": {
+    "person_candidates_after_validation": 178,
+    "person_final": 89,
+    "non_person_final": 5100,
+    "duplicates_removed": 89,
+    "dropped_invalid_seed_shape": 0
+  },
+  "backups": {
+    "thinkers_backup": "F:\\Levi\\flutter_projekts\\Marx\\marx_app\\assets\\thinkers_quotes.json.pre_person_cleanup_20260503_192353.bak",
+    "generated_backup": "F:\\Levi\\flutter_projekts\\Marx\\marx_app\\assets\\generated_quotes.json.pre_person_cleanup_20260503_192353.bak"
+  },
+  "outputs": {
+    "thinkers_quotes_json": "F:\\Levi\\flutter_projekts\\Marx\\marx_app\\assets\\thinkers_quotes.json",
+    "generated_quotes_json": "F:\\Levi\\flutter_projekts\\Marx\\marx_app\\assets\\generated_quotes.json"
+  }
+}

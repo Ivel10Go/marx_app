@@ -1,0 +1,233 @@
+{
+  "thinkers_total": 89,
+  "generated_total": 1700,
+  "thinker_category_counts": {},
+  "generated_category_counts": {
+    "Dialektik": 14,
+    "Methode": 126,
+    "Natur": 4,
+    "Gesellschaft": 503,
+    "Sozialismus": 14,
+    "Theorie": 126,
+    "Kritik": 10,
+    "System": 3,
+    "Wissenschaft": 136,
+    "Praxis": 22,
+    "Organisation": 12,
+    "Bewegung": 8,
+    "Solidaritaet": 15,
+    "Politik": 169,
+    "Taktik": 4,
+    "Strategie": 4,
+    "Alltag": 11,
+    "Kampf": 3,
+    "Internationalismus": 9,
+    "Netzwerk": 3,
+    "Staat": 42,
+    "Macht": 4,
+    "Klassen": 4,
+    "Geschichte": 51,
+    "Wiederholung": 4,
+    "Bauernschaft": 3,
+    "Reaktion": 3,
+    "Schein": 3,
+    "Herrschaft": 8,
+    "Erkenntnis": 4,
+    "Materialismus": 22,
+    "Philosophie": 116,
+    "Religion": 180,
+    "Mensch": 3,
+    "TÃ¤tigkeit": 3,
+    "Wirklichkeit": 3,
+    "Abstraktion": 4,
+    "Maschine": 4,
+    "Arbeit": 72,
+    "Geld": 11,
+    "Krise": 32,
+    "Produktion": 24,
+    "Zeit": 7,
+    "Entwicklung": 6,
+    "Ideologie": 16,
+    "Bewusstsein": 8,
+    "Arbeitsteilung": 4,
+    "Menschenbild": 3,
+    "Ware": 7,
+    "Oekonomie": 57,
+    "Wert": 8,
+    "Beduerfnisse": 1,
+    "Mehrwert": 48,
+    "Arbeitstag": 1,
+    "Lohnarbeit": 1,
+    "Entfremdung": 1,
+    "Arbeitszeit": 5,
+    "Produktivitaet": 2,
+    "Technik": 136,
+    "Akkumulation": 9,
+    "Ungleichheit": 4,
+    "Fetischismus": 1,
+    "Konkurrenz": 5,
+    "Zirkulation": 33,
+    "Maschinerie": 3,
+    "Reproduktion": 4,
+    "Kreislauf": 7,
+    "Kapital": 34,
+    "Umschlag": 4,
+    "Warenkapital": 3,
+    "Profitrate": 4,
+    "Kredit": 4,
+    "Finanz": 4,
+    "Grundrente": 4,
+    "Eigentum": 10,
+    "Transformation": 3,
+    "Preis": 3,
+    "Politische Oekonomie": 4,
+    "Produktionsverhaeltnisse": 3,
+    "Widerspruch": 3,
+    "Lohn": 4,
+    "Arbeitskraft": 4,
+    "Tausch": 4,
+    "Ausbeutung": 5,
+    "Proletariat": 6,
+    "Markt": 6,
+    "Klassenkampf": 28,
+    "Revolution": 175,
+    "Produktivkraefte": 1,
+    "Moderne": 2,
+    "Modernisierung": 1,
+    "Kultur": 77,
+    "Urbanisierung": 1,
+    "Bourgeoisie": 3,
+    "Familie": 4,
+    "Privateigentum": 4,
+    "Verwandtschaft": 3,
+    "Patriarchat": 3,
+    "Formen": 3,
+    "Partei": 20,
+    "Bonapartismus": 15,
+    "Persoenliches": 5,
+    "Wandel": 1,
+    "Freiheit": 17,
+    "Diskussion": 1,
+    "Wissen": 1,
+    "Frauenrechte": 144,
+    "Bildung": 14,
+    "Verfassung": 4,
+    "Gleichberechtigung": 133,
+    "Wahlrecht": 1,
+    "Demokratie": 17,
+    "Verantwortung": 9,
+    "Ordnung": 8,
+    "Liberalismus": 3,
+    "Institutionen": 3,
+    "Gerechtigkeit": 2,
+    "Mitte-Links": 1,
+    "Reform": 15,
+    "Forschung": 122,
+    "Kunst": 65,
+    "Ethik": 2,
+    "Frauen": 137,
+    "Krieg": 129,
+    "Frieden": 129,
+    "Rechte": 155,
+    "Kolonialismus": 180,
+    "Teilhabe": 2,
+    "Tradition": 13,
+    "Kontinuitaet": 3,
+    "Werte": 3,
+    "Neutral": 7,
+    "Mitte": 1,
+    "Konservativ": 1,
+    "Sicherheit": 12,
+    "Sozialpolitik": 11,
+    "Pluralismus": 11,
+    "Gesetz": 10,
+    "Kirche": 174,
+    "Konflikt": 102,
+    "Imperium": 179,
+    "Dekolonisierung": 179,
+    "Emanzipation": 136,
+    "Literatur": 64
+  },
+  "author_counts_sample_top20": [
+    [
+      "Friedrich Nietzsche",
+      8
+    ],
+    [
+      "Arthur Schopenhauer",
+      5
+    ],
+    [
+      "Karl Marx",
+      4
+    ],
+    [
+      "Platon",
+      3
+    ],
+    [
+      "Aristoteles",
+      3
+    ],
+    [
+      "Immanuel Kant",
+      3
+    ],
+    [
+      "Georg Wilhelm Friedrich Hegel",
+      3
+    ],
+    [
+      "Wladimir Iljitsch Lenin",
+      3
+    ],
+    [
+      "Rosa Luxemburg",
+      3
+    ],
+    [
+      "SÃ¸ren Kierkegaard",
+      3
+    ],
+    [
+      "Voltaire",
+      2
+    ],
+    [
+      "Jean-Jacques Rousseau",
+      2
+    ],
+    [
+      "Baruch de Spinoza",
+      2
+    ],
+    [
+      "John Locke",
+      2
+    ],
+    [
+      "Abraham Lincoln",
+      2
+    ],
+    [
+      "Napoleon Bonaparte",
+      2
+    ],
+    [
+      "Otto von Bismarck",
+      2
+    ],
+    [
+      "Maximilien de Robespierre",
+      2
+    ],
+    [
+      "Martin Heidegger",
+      2
+    ],
+    [
+      "Ludwig Wittgenstein",
+      2
+    ]
+  ]
+}

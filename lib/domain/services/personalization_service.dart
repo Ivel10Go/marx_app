@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import '../../core/utils/german_text_normalizer.dart';
 import '../../data/models/history_fact.dart';
 import '../../data/models/quote.dart';
 import '../../data/models/user_profile.dart';
@@ -41,7 +42,10 @@ class PersonalizationService {
       quote.textDe,
     ].join(' ').toLowerCase();
 
-    if (_hasInterestOverlap(quote.category, profile.historicalInterests)) {
+    if (anyInterestMatchesText(
+      interests: profile.historicalInterests,
+      texts: <String>[quoteContext],
+    )) {
       score += 1.5;
     }
 
@@ -78,7 +82,7 @@ class PersonalizationService {
           'rechte',
           'individ',
           'markt',
-          'aufklaerung',
+          'aufklärung',
           'plural',
           'eigenverantwort',
         ])) {
@@ -104,7 +108,21 @@ class PersonalizationService {
   double _factWeight(HistoryFact fact, UserProfile profile) {
     var score = 1.0;
 
-    if (_hasInterestOverlap(fact.category, profile.historicalInterests)) {
+    final factContext = <String>[
+      fact.headline,
+      fact.body,
+      fact.region,
+      fact.era,
+      fact.connectionToMarx,
+      if (fact.person != null) fact.person!,
+      if (fact.personRole != null) fact.personRole!,
+      ...fact.category,
+    ].join(' ');
+
+    if (anyInterestMatchesText(
+      interests: profile.historicalInterests,
+      texts: <String>[factContext],
+    )) {
       score += 1.5;
     }
 
@@ -133,7 +151,7 @@ class PersonalizationService {
         if (_containsAny(fact.category, <String>[
           'freiheit',
           'rechte',
-          'aufklaerung',
+          'aufklärung',
           'verfassung',
         ])) {
           score += 0.6;
@@ -152,30 +170,17 @@ class PersonalizationService {
     return score;
   }
 
-  bool _hasInterestOverlap(List<String> categories, List<String> interests) {
-    if (interests.isEmpty) {
-      return false;
-    }
-
-    final normalizedInterests = interests
-        .map((String value) => value.toLowerCase())
-        .toSet();
-
-    return categories.any((String category) {
-      final normalizedCategory = category.toLowerCase();
-      return normalizedInterests.any(
-        (String interest) => normalizedCategory.contains(interest),
-      );
-    });
-  }
-
   bool _containsAny(List<String> values, List<String> keywords) {
-    final text = values.join(' ').toLowerCase();
+    final text = normalizeGermanSearchText(values.join(' '));
     return keywords.any((String keyword) => text.contains(keyword));
   }
 
   bool _containsAnyInText(String text, List<String> keywords) {
-    return keywords.any((String keyword) => text.contains(keyword));
+    final normalizedText = normalizeGermanSearchText(text);
+    return keywords.any(
+      (String keyword) =>
+          normalizedText.contains(normalizeGermanSearchText(keyword)),
+    );
   }
 
   List<T> _expandByWeight<T>(List<T> values, double Function(T item) scoreFor) {

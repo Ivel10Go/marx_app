@@ -269,7 +269,7 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
           ),
           const SizedBox(height: 8),
           Text(
-            'Waehle innerhalb von 15 Sekunden die richtige Autorin oder den richtigen Autor.',
+            'Wähle innerhalb von 15 Sekunden die richtige Autorin oder den richtigen Autor.',
             style: GoogleFonts.ibmPlexSans(
               fontSize: 11,
               color: AppColors.inkLight,

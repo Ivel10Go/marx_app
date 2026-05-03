@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:drift/drift.dart';
 import 'package:flutter/services.dart';
 
+import '../../core/utils/german_text_normalizer.dart';
 import '../database/app_database.dart';
 import '../models/history_fact.dart';
 
@@ -109,21 +110,25 @@ class HistoryRepository {
 
     return HistoryFact(
       id: row.id,
-      headline: row.headline,
-      body: row.body,
-      dateDisplay: row.dateDisplay,
+      headline: normalizeGermanDisplayText(row.headline)!,
+      body: normalizeGermanDisplayText(row.body)!,
+      dateDisplay: normalizeGermanDisplayText(row.dateDisplay)!,
       dateIso: row.dateIso,
       dayOfYear: row.dayOfYear,
-      era: row.era,
-      region: row.region,
-      category: categories,
+      era: normalizeGermanDisplayText(row.era)!,
+      region: normalizeGermanDisplayText(row.region)!,
+      category: categories
+          .map((item) => normalizeGermanDisplayText(item)!)
+          .toList(),
       difficulty: row.difficulty,
-      person: row.person,
-      personRole: row.personRole,
-      connectionToMarx: row.connectionToMarx,
-      relatedQuoteIds: relatedIds,
-      funFact: row.funFact,
-      source: row.source,
+      person: normalizeGermanDisplayText(row.person),
+      personRole: normalizeGermanDisplayText(row.personRole),
+      connectionToMarx: normalizeGermanDisplayText(row.connectionToMarx)!,
+      relatedQuoteIds: relatedIds
+          .map((item) => normalizeGermanDisplayText(item)!)
+          .toList(),
+      funFact: normalizeGermanDisplayText(row.funFact),
+      source: normalizeGermanDisplayText(row.source),
       todayInHistory: row.todayInHistory,
     );
   }

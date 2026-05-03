@@ -1,0 +1,1693 @@
+[
+  {
+    "id": "lincoln_001",
+    "author": "Abraham Lincoln",
+    "author_type": "politician",
+    "text_de": "Man kann alle Leute eine Zeit lang tÃ¤uschen und einige Leute alle Zeit, aber man kann nicht alle Leute alle Zeit tÃ¤uschen.",
+    "source": "Rede in Clinton",
+    "year": 1858,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Man kann alle Leute eine Zeit lang tÃ¤uschen und einige Leute alle Zeit, aber man kann nicht alle Leute alle Zeit tÃ¤uschen.",
+    "chapter": "Rede in Clinton",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_abraham_lincoln",
+    "explanation_short": "Zitat von Abraham Lincoln: Man kann alle Leute eine Zeit lang tÃ¤uschen und einige Leute alle Zeit, aber man kann nicht alle Leute alle Zeit tÃ¤usc",
+    "explanation_long": "Historisches Zitat von Abraham Lincoln aus \"Rede in Clinton\".",
+    "related_ids": []
+  },
+  {
+    "id": "lincoln_002",
+    "author": "Abraham Lincoln",
+    "author_type": "politician",
+    "text_de": "Das Recht zu wÃ¤hlen wird den Menschen von denen verweigert, die die UnterdrÃ¼ckung weniger fÃ¼rchten als den politischen Wandel.",
+    "source": "Briefe und Reden",
+    "year": 1863,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Das Recht zu wÃ¤hlen wird den Menschen von denen verweigert, die die UnterdrÃ¼ckung weniger fÃ¼rchten als den politischen Wandel.",
+    "chapter": "Briefe und Reden",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_abraham_lincoln",
+    "explanation_short": "Zitat von Abraham Lincoln: Das Recht zu wÃ¤hlen wird den Menschen von denen verweigert, die die UnterdrÃ¼ckung weniger fÃ¼rchten als den politische",
+    "explanation_long": "Historisches Zitat von Abraham Lincoln aus \"Briefe und Reden\".",
+    "related_ids": []
+  },
+  {
+    "id": "politician_bulk_03",
+    "author": "Angela Davis",
+    "author_type": "politician",
+    "text_de": "Sicherheit ohne soziale Rechte produziert neue Ungleichheit statt nachhaltiger Ordnung.",
+    "source": "Freedom Is a Constant Struggle",
+    "year": 2016,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Sicherheit ohne soziale Rechte produziert neue Ungleichheit statt nachhaltiger Ordnung.",
+    "chapter": "Freedom Is a Constant Struggle",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_angela_davis",
+    "explanation_short": "Zitat von Angela Davis: Sicherheit ohne soziale Rechte produziert neue Ungleichheit statt nachhaltiger Ordnung.",
+    "explanation_long": "Historisches Zitat von Angela Davis aus \"Freedom Is a Constant Struggle\".",
+    "related_ids": []
+  },
+  {
+    "id": "philosopher_bulk_04",
+    "author": "Antonio Gramsci",
+    "author_type": "philosopher",
+    "text_de": "Kultur ist ein Feld der Hegemonie, auf dem Zustimmung organisiert und bestritten wird.",
+    "source": "Gefaengnishefte",
+    "year": 1932,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Kultur ist ein Feld der Hegemonie, auf dem Zustimmung organisiert und bestritten wird.",
+    "chapter": "Gefaengnishefte",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_antonio_gramsci",
+    "explanation_short": "Zitat von Antonio Gramsci: Kultur ist ein Feld der Hegemonie, auf dem Zustimmung organisiert und bestritten wird.",
+    "explanation_long": "Historisches Zitat von Antonio Gramsci aus \"Gefaengnishefte\".",
+    "related_ids": []
+  },
+  {
+    "id": "aristotle_003",
+    "author": "Aristoteles",
+    "author_type": "philosopher",
+    "text_de": "Das Ganze ist mehr als die Summe seiner Teile.",
+    "source": "Metaphysik",
+    "year": -350,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Das Ganze ist mehr als die Summe seiner Teile.",
+    "chapter": "Metaphysik",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_aristoteles",
+    "explanation_short": "Zitat von Aristoteles: Das Ganze ist mehr als die Summe seiner Teile.",
+    "explanation_long": "Historisches Zitat von Aristoteles aus \"Metaphysik\".",
+    "related_ids": []
+  },
+  {
+    "id": "aristotle_002",
+    "author": "Aristoteles",
+    "author_type": "philosopher",
+    "text_de": "Wir sind das, was wir wiederholt tun. Hervorragendes ist also keine Handlung, sondern eine Gewohnheit.",
+    "source": "Nikomachische Ethik",
+    "year": -340,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Wir sind das, was wir wiederholt tun. Hervorragendes ist also keine Handlung, sondern eine Gewohnheit.",
+    "chapter": "Nikomachische Ethik",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_aristoteles",
+    "explanation_short": "Zitat von Aristoteles: Wir sind das, was wir wiederholt tun. Hervorragendes ist also keine Handlung, sondern eine Gewohnheit.",
+    "explanation_long": "Historisches Zitat von Aristoteles aus \"Nikomachische Ethik\".",
+    "related_ids": []
+  },
+  {
+    "id": "aristotle_001",
+    "author": "Aristoteles",
+    "author_type": "philosopher",
+    "text_de": "Der Mensch ist von Natur aus ein politisches Lebewesen.",
+    "source": "Politik",
+    "year": -335,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Der Mensch ist von Natur aus ein politisches Lebewesen.",
+    "chapter": "Politik",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_aristoteles",
+    "explanation_short": "Zitat von Aristoteles: Der Mensch ist von Natur aus ein politisches Lebewesen.",
+    "explanation_long": "Historisches Zitat von Aristoteles aus \"Politik\".",
+    "related_ids": []
+  },
+  {
+    "id": "schopenhauer_002",
+    "author": "Arthur Schopenhauer",
+    "author_type": "philosopher",
+    "text_de": "Talent trifft ein Ziel, das sonst niemand treffen kann; Genie trifft ein Ziel, das sonst niemand sehen kann.",
+    "source": "Die Welt als Wille und Vorstellung",
+    "year": 1819,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Talent trifft ein Ziel, das sonst niemand treffen kann; Genie trifft ein Ziel, das sonst niemand sehen kann.",
+    "chapter": "Die Welt als Wille und Vorstellung",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_arthur_schopenhauer",
+    "explanation_short": "Zitat von Arthur Schopenhauer: Talent trifft ein Ziel, das sonst niemand treffen kann; Genie trifft ein Ziel, das sonst niemand sehen kann.",
+    "explanation_long": "Historisches Zitat von Arthur Schopenhauer aus \"Die Welt als Wille und Vorstellung\".",
+    "related_ids": []
+  },
+  {
+    "id": "schopenhauer_004",
+    "author": "Arthur Schopenhauer",
+    "author_type": "philosopher",
+    "text_de": "Man kann sein Leben als Kunstwerk betrachten. Wer ein kluger Mann sein will, wird versuchen, sein Leben zu einem Ã¤sthetischen Ganzen zu gestalten.",
+    "source": "Die Welt als Wille und Vorstellung",
+    "year": 1819,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Man kann sein Leben als Kunstwerk betrachten. Wer ein kluger Mann sein will, wird versuchen, sein Leben zu einem Ã¤sthetischen Ganzen zu gestalten.",
+    "chapter": "Die Welt als Wille und Vorstellung",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_arthur_schopenhauer",
+    "explanation_short": "Zitat von Arthur Schopenhauer: Man kann sein Leben als Kunstwerk betrachten. Wer ein kluger Mann sein will, wird versuchen, sein Leben zu einem Ã¤sthet",
+    "explanation_long": "Historisches Zitat von Arthur Schopenhauer aus \"Die Welt als Wille und Vorstellung\".",
+    "related_ids": []
+  },
+  {
+    "id": "schopenhauer_005",
+    "author": "Arthur Schopenhauer",
+    "author_type": "philosopher",
+    "text_de": "Der Mensch kann tun, was er will, aber er kann nicht wollen, was er will.",
+    "source": "Die Welt als Wille und Vorstellung",
+    "year": 1819,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Der Mensch kann tun, was er will, aber er kann nicht wollen, was er will.",
+    "chapter": "Die Welt als Wille und Vorstellung",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_arthur_schopenhauer",
+    "explanation_short": "Zitat von Arthur Schopenhauer: Der Mensch kann tun, was er will, aber er kann nicht wollen, was er will.",
+    "explanation_long": "Historisches Zitat von Arthur Schopenhauer aus \"Die Welt als Wille und Vorstellung\".",
+    "related_ids": []
+  },
+  {
+    "id": "schopenhauer_001",
+    "author": "Arthur Schopenhauer",
+    "author_type": "philosopher",
+    "text_de": "Der Reichtum gleicht dem Salzwasser: je mehr man trinkt, desto durstiger wird man.",
+    "source": "Aphorismen zur Lebensweisheit",
+    "year": 1851,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Der Reichtum gleicht dem Salzwasser: je mehr man trinkt, desto durstiger wird man.",
+    "chapter": "Aphorismen zur Lebensweisheit",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_arthur_schopenhauer",
+    "explanation_short": "Zitat von Arthur Schopenhauer: Der Reichtum gleicht dem Salzwasser: je mehr man trinkt, desto durstiger wird man.",
+    "explanation_long": "Historisches Zitat von Arthur Schopenhauer aus \"Aphorismen zur Lebensweisheit\".",
+    "related_ids": []
+  },
+  {
+    "id": "schopenhauer_003",
+    "author": "Arthur Schopenhauer",
+    "author_type": "philosopher",
+    "text_de": "Jeder Mensch hÃ¤lt die Grenzen seines Gesichtskreises fÃ¼r die Grenzen der Welt.",
+    "source": "Parerga und Paralipomena",
+    "year": 1851,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Jeder Mensch hÃ¤lt die Grenzen seines Gesichtskreises fÃ¼r die Grenzen der Welt.",
+    "chapter": "Parerga und Paralipomena",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_arthur_schopenhauer",
+    "explanation_short": "Zitat von Arthur Schopenhauer: Jeder Mensch hÃ¤lt die Grenzen seines Gesichtskreises fÃ¼r die Grenzen der Welt.",
+    "explanation_long": "Historisches Zitat von Arthur Schopenhauer aus \"Parerga und Paralipomena\".",
+    "related_ids": []
+  },
+  {
+    "id": "comte_001",
+    "author": "Auguste Comte",
+    "author_type": "philosopher",
+    "text_de": "Liebe als Prinzip und Ordnung als Basis; Fortschritt als Ziel.",
+    "source": "SystÃ¨me de politique positive",
+    "year": 1851,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Liebe als Prinzip und Ordnung als Basis; Fortschritt als Ziel.",
+    "chapter": "SystÃ¨me de politique positive",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_auguste_comte",
+    "explanation_short": "Zitat von Auguste Comte: Liebe als Prinzip und Ordnung als Basis; Fortschritt als Ziel.",
+    "explanation_long": "Historisches Zitat von Auguste Comte aus \"SystÃ¨me de politique positive\".",
+    "related_ids": []
+  },
+  {
+    "id": "spinoza_002",
+    "author": "Baruch de Spinoza",
+    "author_type": "philosopher",
+    "text_de": "GlÃ¼cklich ist derjenige, der anderen etwas Gutes hinterlÃ¤sst.",
+    "source": "Ethik",
+    "year": 1677,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "GlÃ¼cklich ist derjenige, der anderen etwas Gutes hinterlÃ¤sst.",
+    "chapter": "Ethik",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_baruch_de_spinoza",
+    "explanation_short": "Zitat von Baruch de Spinoza: GlÃ¼cklich ist derjenige, der anderen etwas Gutes hinterlÃ¤sst.",
+    "explanation_long": "Historisches Zitat von Baruch de Spinoza aus \"Ethik\".",
+    "related_ids": []
+  },
+  {
+    "id": "spinoza_001",
+    "author": "Baruch de Spinoza",
+    "author_type": "philosopher",
+    "text_de": "Frieden ist nicht die Abwesenheit von Krieg, er ist eine Tugend, eine Geisteshaltung, eine Tendenz zu Wohlwollen, Vertrauen und Gerechtigkeit.",
+    "source": "Politischer Traktat",
+    "year": 1677,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Frieden ist nicht die Abwesenheit von Krieg, er ist eine Tugend, eine Geisteshaltung, eine Tendenz zu Wohlwollen, Vertrauen und Gerechtigkeit.",
+    "chapter": "Politischer Traktat",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_baruch_de_spinoza",
+    "explanation_short": "Zitat von Baruch de Spinoza: Frieden ist nicht die Abwesenheit von Krieg, er ist eine Tugend, eine Geisteshaltung, eine Tendenz zu Wohlwollen, Vertra",
+    "explanation_long": "Historisches Zitat von Baruch de Spinoza aus \"Politischer Traktat\".",
+    "related_ids": []
+  },
+  {
+    "id": "politician_bulk_09",
+    "author": "Claudia Jones",
+    "author_type": "politician",
+    "text_de": "Antirassistische und soziale Politik gehoeren zusammen, wenn Demokratie wirklich inklusiv sein soll.",
+    "source": "Political Writings",
+    "year": 1955,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Antirassistische und soziale Politik gehoeren zusammen, wenn Demokratie wirklich inklusiv sein soll.",
+    "chapter": "Political Writings",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_claudia_jones",
+    "explanation_short": "Zitat von Claudia Jones: Antirassistische und soziale Politik gehoeren zusammen, wenn Demokratie wirklich inklusiv sein soll.",
+    "explanation_long": "Historisches Zitat von Claudia Jones aus \"Political Writings\".",
+    "related_ids": []
+  },
+  {
+    "id": "bacon_001",
+    "author": "Francis Bacon",
+    "author_type": "philosopher",
+    "text_de": "Wissen ist Macht.",
+    "source": "Novum Organum",
+    "year": 1620,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Wissen ist Macht.",
+    "chapter": "Novum Organum",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_francis_bacon",
+    "explanation_short": "Zitat von Francis Bacon: Wissen ist Macht.",
+    "explanation_long": "Historisches Zitat von Francis Bacon aus \"Novum Organum\".",
+    "related_ids": []
+  },
+  {
+    "id": "politician_bulk_04",
+    "author": "Franklin D. Roosevelt",
+    "author_type": "politician",
+    "text_de": "Politik muss Krisen durch Arbeit, Solidaritaet und handlungsfaehige Institutionen beantworten.",
+    "source": "Fireside Chats",
+    "year": 1933,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Politik muss Krisen durch Arbeit, Solidaritaet und handlungsfaehige Institutionen beantworten.",
+    "chapter": "Fireside Chats",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_franklin_d_roosevelt",
+    "explanation_short": "Zitat von Franklin D. Roosevelt: Politik muss Krisen durch Arbeit, Solidaritaet und handlungsfaehige Institutionen beantworten.",
+    "explanation_long": "Historisches Zitat von Franklin D. Roosevelt aus \"Fireside Chats\".",
+    "related_ids": []
+  },
+  {
+    "id": "nietzsche_007",
+    "author": "Friedrich Nietzsche",
+    "author_type": "philosopher",
+    "text_de": "Der Glaube ist ein Instinkt, ein moralischer Instinkt.",
+    "source": "MorgenrÃ¶te",
+    "year": 1881,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Der Glaube ist ein Instinkt, ein moralischer Instinkt.",
+    "chapter": "MorgenrÃ¶te",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_friedrich_nietzsche",
+    "explanation_short": "Zitat von Friedrich Nietzsche: Der Glaube ist ein Instinkt, ein moralischer Instinkt.",
+    "explanation_long": "Historisches Zitat von Friedrich Nietzsche aus \"MorgenrÃ¶te\".",
+    "related_ids": []
+  },
+  {
+    "id": "nietzsche_006",
+    "author": "Friedrich Nietzsche",
+    "author_type": "philosopher",
+    "text_de": "Ich lehre euch den Ãœbermenschen. Der Mensch ist etwas, das Ã¼berwunden werden soll.",
+    "source": "Also sprach Zarathustra",
+    "year": 1885,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Ich lehre euch den Ãœbermenschen. Der Mensch ist etwas, das Ã¼berwunden werden soll.",
+    "chapter": "Also sprach Zarathustra",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_friedrich_nietzsche",
+    "explanation_short": "Zitat von Friedrich Nietzsche: Ich lehre euch den Ãœbermenschen. Der Mensch ist etwas, das Ã¼berwunden werden soll.",
+    "explanation_long": "Historisches Zitat von Friedrich Nietzsche aus \"Also sprach Zarathustra\".",
+    "related_ids": []
+  },
+  {
+    "id": "nietzsche_005",
+    "author": "Friedrich Nietzsche",
+    "author_type": "philosopher",
+    "text_de": "Die Wahrheit ist hÃ¤ufiger lÃ¼gen als die LÃ¼ge.",
+    "source": "Jenseits von Gut und BÃ¶se",
+    "year": 1886,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Die Wahrheit ist hÃ¤ufiger lÃ¼gen als die LÃ¼ge.",
+    "chapter": "Jenseits von Gut und BÃ¶se",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_friedrich_nietzsche",
+    "explanation_short": "Zitat von Friedrich Nietzsche: Die Wahrheit ist hÃ¤ufiger lÃ¼gen als die LÃ¼ge.",
+    "explanation_long": "Historisches Zitat von Friedrich Nietzsche aus \"Jenseits von Gut und BÃ¶se\".",
+    "related_ids": []
+  },
+  {
+    "id": "nietzsche_008",
+    "author": "Friedrich Nietzsche",
+    "author_type": "philosopher",
+    "text_de": "Wer lange in AbgrÃ¼nde blickt, in den blickt der Abgrund auch zurÃ¼ck.",
+    "source": "Jenseits von Gut und BÃ¶se",
+    "year": 1886,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Wer lange in AbgrÃ¼nde blickt, in den blickt der Abgrund auch zurÃ¼ck.",
+    "chapter": "Jenseits von Gut und BÃ¶se",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_friedrich_nietzsche",
+    "explanation_short": "Zitat von Friedrich Nietzsche: Wer lange in AbgrÃ¼nde blickt, in den blickt der Abgrund auch zurÃ¼ck.",
+    "explanation_long": "Historisches Zitat von Friedrich Nietzsche aus \"Jenseits von Gut und BÃ¶se\".",
+    "related_ids": []
+  },
+  {
+    "id": "nietzsche_003",
+    "author": "Friedrich Nietzsche",
+    "author_type": "philosopher",
+    "text_de": "Es gibt keine Tatsachen, nur Interpretationen.",
+    "source": "Nachgelassene Fragmente",
+    "year": 1886,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Es gibt keine Tatsachen, nur Interpretationen.",
+    "chapter": "Nachgelassene Fragmente",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_friedrich_nietzsche",
+    "explanation_short": "Zitat von Friedrich Nietzsche: Es gibt keine Tatsachen, nur Interpretationen.",
+    "explanation_long": "Historisches Zitat von Friedrich Nietzsche aus \"Nachgelassene Fragmente\".",
+    "related_ids": []
+  },
+  {
+    "id": "nietzsche_001",
+    "author": "Friedrich Nietzsche",
+    "author_type": "philosopher",
+    "text_de": "Alles, was mich nicht umbringt, macht mich stÃ¤rker.",
+    "source": "GÃ¶tzen-DÃ¤mmerung",
+    "year": 1889,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Alles, was mich nicht umbringt, macht mich stÃ¤rker.",
+    "chapter": "GÃ¶tzen-DÃ¤mmerung",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_friedrich_nietzsche",
+    "explanation_short": "Zitat von Friedrich Nietzsche: Alles, was mich nicht umbringt, macht mich stÃ¤rker.",
+    "explanation_long": "Historisches Zitat von Friedrich Nietzsche aus \"GÃ¶tzen-DÃ¤mmerung\".",
+    "related_ids": []
+  },
+  {
+    "id": "nietzsche_002",
+    "author": "Friedrich Nietzsche",
+    "author_type": "philosopher",
+    "text_de": "Ohne Musik wÃ¤re das Leben ein Irrtum.",
+    "source": "GÃ¶tzen-DÃ¤mmerung",
+    "year": 1889,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Ohne Musik wÃ¤re das Leben ein Irrtum.",
+    "chapter": "GÃ¶tzen-DÃ¤mmerung",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_friedrich_nietzsche",
+    "explanation_short": "Zitat von Friedrich Nietzsche: Ohne Musik wÃ¤re das Leben ein Irrtum.",
+    "explanation_long": "Historisches Zitat von Friedrich Nietzsche aus \"GÃ¶tzen-DÃ¤mmerung\".",
+    "related_ids": []
+  },
+  {
+    "id": "nietzsche_004",
+    "author": "Friedrich Nietzsche",
+    "author_type": "philosopher",
+    "text_de": "Werde, wer du bist.",
+    "source": "Ecce Homo",
+    "year": 1908,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Werde, wer du bist.",
+    "chapter": "Ecce Homo",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_friedrich_nietzsche",
+    "explanation_short": "Zitat von Friedrich Nietzsche: Werde, wer du bist.",
+    "explanation_long": "Historisches Zitat von Friedrich Nietzsche aus \"Ecce Homo\".",
+    "related_ids": []
+  },
+  {
+    "id": "schelling_002",
+    "author": "Friedrich Wilhelm Joseph Schelling",
+    "author_type": "philosopher",
+    "text_de": "Natur ist das sichtbar gewordene Geist, und Geist ist die unsichtbar gewordene Natur.",
+    "source": "System des Idealismus",
+    "year": 1800,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Natur ist das sichtbar gewordene Geist, und Geist ist die unsichtbar gewordene Natur.",
+    "chapter": "System des Idealismus",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_friedrich_wilhelm_joseph_schelling",
+    "explanation_short": "Zitat von Friedrich Wilhelm Joseph Schelling: Natur ist das sichtbar gewordene Geist, und Geist ist die unsichtbar gewordene Natur.",
+    "explanation_long": "Historisches Zitat von Friedrich Wilhelm Joseph Schelling aus \"System des Idealismus\".",
+    "related_ids": []
+  },
+  {
+    "id": "schelling_001",
+    "author": "Friedrich Wilhelm Joseph Schelling",
+    "author_type": "philosopher",
+    "text_de": "Kunst ist Zeugnis fÃ¼r das HÃ¶chste, dessen der Mensch fÃ¤hig ist.",
+    "source": "Philosophie der Kunst",
+    "year": 1859,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Kunst ist Zeugnis fÃ¼r das HÃ¶chste, dessen der Mensch fÃ¤hig ist.",
+    "chapter": "Philosophie der Kunst",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_friedrich_wilhelm_joseph_schelling",
+    "explanation_short": "Zitat von Friedrich Wilhelm Joseph Schelling: Kunst ist Zeugnis fÃ¼r das HÃ¶chste, dessen der Mensch fÃ¤hig ist.",
+    "explanation_long": "Historisches Zitat von Friedrich Wilhelm Joseph Schelling aus \"Philosophie der Kunst\".",
+    "related_ids": []
+  },
+  {
+    "id": "hegel_001",
+    "author": "Georg Wilhelm Friedrich Hegel",
+    "author_type": "philosopher",
+    "text_de": "Das Wirkliche ist vernÃ¼nftig, und das VernÃ¼nftige ist wirklich.",
+    "source": "Grundlinien der Philosophie des Rechts",
+    "year": 1820,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Das Wirkliche ist vernÃ¼nftig, und das VernÃ¼nftige ist wirklich.",
+    "chapter": "Grundlinien der Philosophie des Rechts",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_georg_wilhelm_friedrich_hegel",
+    "explanation_short": "Zitat von Georg Wilhelm Friedrich Hegel: Das Wirkliche ist vernÃ¼nftig, und das VernÃ¼nftige ist wirklich.",
+    "explanation_long": "Historisches Zitat von Georg Wilhelm Friedrich Hegel aus \"Grundlinien der Philosophie des Rechts\".",
+    "related_ids": []
+  },
+  {
+    "id": "hegel_002",
+    "author": "Georg Wilhelm Friedrich Hegel",
+    "author_type": "philosopher",
+    "text_de": "Die Geschichte ist nichts anderes als die Entwicklung des Bewusstseins der Freiheit.",
+    "source": "Vorlesungen Ã¼ber die Philosophie der Geschichte",
+    "year": 1837,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Die Geschichte ist nichts anderes als die Entwicklung des Bewusstseins der Freiheit.",
+    "chapter": "Vorlesungen Ã¼ber die Philosophie der Geschichte",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_georg_wilhelm_friedrich_hegel",
+    "explanation_short": "Zitat von Georg Wilhelm Friedrich Hegel: Die Geschichte ist nichts anderes als die Entwicklung des Bewusstseins der Freiheit.",
+    "explanation_long": "Historisches Zitat von Georg Wilhelm Friedrich Hegel aus \"Vorlesungen Ã¼ber die Philosophie der Geschichte\".",
+    "related_ids": []
+  },
+  {
+    "id": "hegel_003",
+    "author": "Georg Wilhelm Friedrich Hegel",
+    "author_type": "philosopher",
+    "text_de": "Wir lernen aus der Geschichte, dass die Menschen aus der Geschichte nichts lernen.",
+    "source": "Vorlesungen Ã¼ber die Philosophie der Geschichte",
+    "year": 1837,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Wir lernen aus der Geschichte, dass die Menschen aus der Geschichte nichts lernen.",
+    "chapter": "Vorlesungen Ã¼ber die Philosophie der Geschichte",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_georg_wilhelm_friedrich_hegel",
+    "explanation_short": "Zitat von Georg Wilhelm Friedrich Hegel: Wir lernen aus der Geschichte, dass die Menschen aus der Geschichte nichts lernen.",
+    "explanation_long": "Historisches Zitat von Georg Wilhelm Friedrich Hegel aus \"Vorlesungen Ã¼ber die Philosophie der Geschichte\".",
+    "related_ids": []
+  },
+  {
+    "id": "philosopher_bulk_02",
+    "author": "Hannah Arendt",
+    "author_type": "philosopher",
+    "text_de": "Politische Freiheit entsteht dort, wo Menschen gemeinsam handeln und sprechen.",
+    "source": "Vita activa",
+    "year": 1958,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Politische Freiheit entsteht dort, wo Menschen gemeinsam handeln und sprechen.",
+    "chapter": "Vita activa",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_hannah_arendt",
+    "explanation_short": "Zitat von Hannah Arendt: Politische Freiheit entsteht dort, wo Menschen gemeinsam handeln und sprechen.",
+    "explanation_long": "Historisches Zitat von Hannah Arendt aus \"Vita activa\".",
+    "related_ids": []
+  },
+  {
+    "id": "kant_002",
+    "author": "Immanuel Kant",
+    "author_type": "philosopher",
+    "text_de": "Habe Mut, dich deines eigenen Verstandes zu bedienen!",
+    "source": "Beantwortung der Frage: Was ist AufklÃ¤rung?",
+    "year": 1784,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Habe Mut, dich deines eigenen Verstandes zu bedienen!",
+    "chapter": "Beantwortung der Frage: Was ist AufklÃ¤rung?",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_immanuel_kant",
+    "explanation_short": "Zitat von Immanuel Kant: Habe Mut, dich deines eigenen Verstandes zu bedienen!",
+    "explanation_long": "Historisches Zitat von Immanuel Kant aus \"Beantwortung der Frage: Was ist AufklÃ¤rung?\".",
+    "related_ids": []
+  },
+  {
+    "id": "kant_001",
+    "author": "Immanuel Kant",
+    "author_type": "philosopher",
+    "text_de": "Handle nur nach derjenigen Maxime, durch die du zugleich wollen kannst, dass sie ein allgemeines Gesetz werde.",
+    "source": "Grundlegung zur Metaphysik der Sitten",
+    "year": 1785,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Handle nur nach derjenigen Maxime, durch die du zugleich wollen kannst, dass sie ein allgemeines Gesetz werde.",
+    "chapter": "Grundlegung zur Metaphysik der Sitten",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_immanuel_kant",
+    "explanation_short": "Zitat von Immanuel Kant: Handle nur nach derjenigen Maxime, durch die du zugleich wollen kannst, dass sie ein allgemeines Gesetz werde.",
+    "explanation_long": "Historisches Zitat von Immanuel Kant aus \"Grundlegung zur Metaphysik der Sitten\".",
+    "related_ids": []
+  },
+  {
+    "id": "kant_003",
+    "author": "Immanuel Kant",
+    "author_type": "philosopher",
+    "text_de": "Der Mensch ist das einzige GeschÃ¶pf, das erzogen werden muss.",
+    "source": "Ãœber PÃ¤dagogik",
+    "year": 1803,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Der Mensch ist das einzige GeschÃ¶pf, das erzogen werden muss.",
+    "chapter": "Ãœber PÃ¤dagogik",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_immanuel_kant",
+    "explanation_short": "Zitat von Immanuel Kant: Der Mensch ist das einzige GeschÃ¶pf, das erzogen werden muss.",
+    "explanation_long": "Historisches Zitat von Immanuel Kant aus \"Ãœber PÃ¤dagogik\".",
+    "related_ids": []
+  },
+  {
+    "id": "politician_bulk_06",
+    "author": "Jawaharlal Nehru",
+    "author_type": "politician",
+    "text_de": "Entwicklung verbindet wissenschaftlichen Fortschritt mit pluraler Kultur und sozialer Gerechtigkeit.",
+    "source": "The Discovery of India",
+    "year": 1946,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Entwicklung verbindet wissenschaftlichen Fortschritt mit pluraler Kultur und sozialer Gerechtigkeit.",
+    "chapter": "The Discovery of India",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_jawaharlal_nehru",
+    "explanation_short": "Zitat von Jawaharlal Nehru: Entwicklung verbindet wissenschaftlichen Fortschritt mit pluraler Kultur und sozialer Gerechtigkeit.",
+    "explanation_long": "Historisches Zitat von Jawaharlal Nehru aus \"The Discovery of India\".",
+    "related_ids": []
+  },
+  {
+    "id": "rousseau_002",
+    "author": "Jean-Jacques Rousseau",
+    "author_type": "philosopher",
+    "text_de": "Die erste Person, die ein StÃ¼ck Land eingezÃ¤unt hat und auf die Idee kam zu sagen: Das gehÃ¶rt mir, und genug einfÃ¤ltige Leute fand, die es glaubten, war der wirkliche GrÃ¼nder der bÃ¼rgerlichen Gesellschaft.",
+    "source": "Abhandlung Ã¼ber den Ursprung der Ungleichheit",
+    "year": 1755,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Die erste Person, die ein StÃ¼ck Land eingezÃ¤unt hat und auf die Idee kam zu sagen: Das gehÃ¶rt mir, und genug einfÃ¤ltige Leute fand, die es glaubten, war der wirkliche GrÃ¼nder der bÃ¼rgerlichen Gesellschaft.",
+    "chapter": "Abhandlung Ã¼ber den Ursprung der Ungleichheit",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_jean_jacques_rousseau",
+    "explanation_short": "Zitat von Jean-Jacques Rousseau: Die erste Person, die ein StÃ¼ck Land eingezÃ¤unt hat und auf die Idee kam zu sagen: Das gehÃ¶rt mir, und genug einfÃ¤lt",
+    "explanation_long": "Historisches Zitat von Jean-Jacques Rousseau aus \"Abhandlung Ã¼ber den Ursprung der Ungleichheit\".",
+    "related_ids": []
+  },
+  {
+    "id": "rousseau_001",
+    "author": "Jean-Jacques Rousseau",
+    "author_type": "philosopher",
+    "text_de": "Der Mensch wird frei geboren, und Ã¼berall liegt er in Ketten.",
+    "source": "Vom Gesellschaftsvertrag",
+    "year": 1762,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Der Mensch wird frei geboren, und Ã¼berall liegt er in Ketten.",
+    "chapter": "Vom Gesellschaftsvertrag",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_jean_jacques_rousseau",
+    "explanation_short": "Zitat von Jean-Jacques Rousseau: Der Mensch wird frei geboren, und Ã¼berall liegt er in Ketten.",
+    "explanation_long": "Historisches Zitat von Jean-Jacques Rousseau aus \"Vom Gesellschaftsvertrag\".",
+    "related_ids": []
+  },
+  {
+    "id": "bentham_001",
+    "author": "Jeremy Bentham",
+    "author_type": "philosopher",
+    "text_de": "Das grÃ¶ÃŸtmÃ¶gliche GlÃ¼ck fÃ¼r die grÃ¶ÃŸtmÃ¶gliche Zahl.",
+    "source": "Introduction to the Principles of Morals and Legislation",
+    "year": 1789,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Das grÃ¶ÃŸtmÃ¶gliche GlÃ¼ck fÃ¼r die grÃ¶ÃŸtmÃ¶gliche Zahl.",
+    "chapter": "Introduction to the Principles of Morals and Legislation",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_jeremy_bentham",
+    "explanation_short": "Zitat von Jeremy Bentham: Das grÃ¶ÃŸtmÃ¶gliche GlÃ¼ck fÃ¼r die grÃ¶ÃŸtmÃ¶gliche Zahl.",
+    "explanation_long": "Historisches Zitat von Jeremy Bentham aus \"Introduction to the Principles of Morals and Legislation\".",
+    "related_ids": []
+  },
+  {
+    "id": "herder_001",
+    "author": "Johann Gottfried Herder",
+    "author_type": "philosopher",
+    "text_de": "Die Geschichte der Menschheit ist die Geschichte ihrer Bildung.",
+    "source": "Ideen zur Philosophie der Geschichte der Menschheit",
+    "year": 1784,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Die Geschichte der Menschheit ist die Geschichte ihrer Bildung.",
+    "chapter": "Ideen zur Philosophie der Geschichte der Menschheit",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_johann_gottfried_herder",
+    "explanation_short": "Zitat von Johann Gottfried Herder: Die Geschichte der Menschheit ist die Geschichte ihrer Bildung.",
+    "explanation_long": "Historisches Zitat von Johann Gottfried Herder aus \"Ideen zur Philosophie der Geschichte der Menschheit\".",
+    "related_ids": []
+  },
+  {
+    "id": "fichte_001",
+    "author": "Johann Gottlieb Fichte",
+    "author_type": "philosopher",
+    "text_de": "Der Mensch handelt, und durch sein Handeln wird er das, was er ist.",
+    "source": "Die Bestimmung des Menschen",
+    "year": 1800,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Der Mensch handelt, und durch sein Handeln wird er das, was er ist.",
+    "chapter": "Die Bestimmung des Menschen",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_johann_gottlieb_fichte",
+    "explanation_short": "Zitat von Johann Gottlieb Fichte: Der Mensch handelt, und durch sein Handeln wird er das, was er ist.",
+    "explanation_long": "Historisches Zitat von Johann Gottlieb Fichte aus \"Die Bestimmung des Menschen\".",
+    "related_ids": []
+  },
+  {
+    "id": "fichte_002",
+    "author": "Johann Gottlieb Fichte",
+    "author_type": "philosopher",
+    "text_de": "Ich bin darum, weil ich mich selbst bedingt habe.",
+    "source": "Wissenschaftslehre",
+    "year": 1807,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Ich bin darum, weil ich mich selbst bedingt habe.",
+    "chapter": "Wissenschaftslehre",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_johann_gottlieb_fichte",
+    "explanation_short": "Zitat von Johann Gottlieb Fichte: Ich bin darum, weil ich mich selbst bedingt habe.",
+    "explanation_long": "Historisches Zitat von Johann Gottlieb Fichte aus \"Wissenschaftslehre\".",
+    "related_ids": []
+  },
+  {
+    "id": "philosopher_bulk_08",
+    "author": "John Dewey",
+    "author_type": "philosopher",
+    "text_de": "Demokratie ist eine Lebensform, die Bildung, Erfahrung und Teilhabe verbindet.",
+    "source": "Democracy and Education",
+    "year": 1916,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Demokratie ist eine Lebensform, die Bildung, Erfahrung und Teilhabe verbindet.",
+    "chapter": "Democracy and Education",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_john_dewey",
+    "explanation_short": "Zitat von John Dewey: Demokratie ist eine Lebensform, die Bildung, Erfahrung und Teilhabe verbindet.",
+    "explanation_long": "Historisches Zitat von John Dewey aus \"Democracy and Education\".",
+    "related_ids": []
+  },
+  {
+    "id": "locke_002",
+    "author": "John Locke",
+    "author_type": "philosopher",
+    "text_de": "Der Verstand aller Menschen ist anfangs eine leere Tafel, und alles, was sich darin befindet, stammt aus der Erfahrung.",
+    "source": "Essay Ã¼ber den menschlichen Verstand",
+    "year": 1689,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Der Verstand aller Menschen ist anfangs eine leere Tafel, und alles, was sich darin befindet, stammt aus der Erfahrung.",
+    "chapter": "Essay Ã¼ber den menschlichen Verstand",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_john_locke",
+    "explanation_short": "Zitat von John Locke: Der Verstand aller Menschen ist anfangs eine leere Tafel, und alles, was sich darin befindet, stammt aus der Erfahrung.",
+    "explanation_long": "Historisches Zitat von John Locke aus \"Essay Ã¼ber den menschlichen Verstand\".",
+    "related_ids": []
+  },
+  {
+    "id": "locke_001",
+    "author": "John Locke",
+    "author_type": "philosopher",
+    "text_de": "Wo es kein Gesetz gibt, gibt es keine Freiheit.",
+    "source": "Zweite Abhandlung Ã¼ber die Regierung",
+    "year": 1689,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Wo es kein Gesetz gibt, gibt es keine Freiheit.",
+    "chapter": "Zweite Abhandlung Ã¼ber die Regierung",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_john_locke",
+    "explanation_short": "Zitat von John Locke: Wo es kein Gesetz gibt, gibt es keine Freiheit.",
+    "explanation_long": "Historisches Zitat von John Locke aus \"Zweite Abhandlung Ã¼ber die Regierung\".",
+    "related_ids": []
+  },
+  {
+    "id": "mill_002",
+    "author": "John Stuart Mill",
+    "author_type": "philosopher",
+    "text_de": "Die einzige Freiheit, die der Bezeichnung wÃ¼rdig ist, ist die, die eigenen Neigungen zu verfolgen, solange man nicht anderen schadet.",
+    "source": "Ãœber die Freiheit",
+    "year": 1859,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Die einzige Freiheit, die der Bezeichnung wÃ¼rdig ist, ist die, die eigenen Neigungen zu verfolgen, solange man nicht anderen schadet.",
+    "chapter": "Ãœber die Freiheit",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_john_stuart_mill",
+    "explanation_short": "Zitat von John Stuart Mill: Die einzige Freiheit, die der Bezeichnung wÃ¼rdig ist, ist die, die eigenen Neigungen zu verfolgen, solange man nicht an",
+    "explanation_long": "Historisches Zitat von John Stuart Mill aus \"Ãœber die Freiheit\".",
+    "related_ids": []
+  },
+  {
+    "id": "mill_001",
+    "author": "John Stuart Mill",
+    "author_type": "philosopher",
+    "text_de": "Es ist besser, ein unzufriedener Mensch zu sein, als ein zufriedenes Schwein; besser, Sokrates unzufrieden als ein Narr zufrieden.",
+    "source": "Utilitarismus",
+    "year": 1863,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Es ist besser, ein unzufriedener Mensch zu sein, als ein zufriedenes Schwein; besser, Sokrates unzufrieden als ein Narr zufrieden.",
+    "chapter": "Utilitarismus",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_john_stuart_mill",
+    "explanation_short": "Zitat von John Stuart Mill: Es ist besser, ein unzufriedener Mensch zu sein, als ein zufriedenes Schwein; besser, Sokrates unzufrieden als ein Narr",
+    "explanation_long": "Historisches Zitat von John Stuart Mill aus \"Utilitarismus\".",
+    "related_ids": []
+  },
+  {
+    "id": "philosopher_bulk_10",
+    "author": "Juergen Habermas",
+    "author_type": "philosopher",
+    "text_de": "Legitime Ordnung braucht oeffentliche Vernunft und argumentativen Streit statt blosser Autoritaet.",
+    "source": "Faktizitaet und Geltung",
+    "year": 1992,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Legitime Ordnung braucht oeffentliche Vernunft und argumentativen Streit statt blosser Autoritaet.",
+    "chapter": "Faktizitaet und Geltung",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_juergen_habermas",
+    "explanation_short": "Zitat von Juergen Habermas: Legitime Ordnung braucht oeffentliche Vernunft und argumentativen Streit statt blosser Autoritaet.",
+    "explanation_long": "Historisches Zitat von Juergen Habermas aus \"Faktizitaet und Geltung\".",
+    "related_ids": []
+  },
+  {
+    "id": "philosopher_bulk_01",
+    "author": "Karl Marx",
+    "author_type": "philosopher",
+    "text_de": "Kritik der politischen Oekonomie beginnt bei den realen Lebensbedingungen der Arbeit.",
+    "source": "Oekonomisch-philosophische Manuskripte",
+    "year": 1844,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Kritik der politischen Oekonomie beginnt bei den realen Lebensbedingungen der Arbeit.",
+    "chapter": "Oekonomisch-philosophische Manuskripte",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_karl_marx",
+    "explanation_short": "Zitat von Karl Marx: Kritik der politischen Oekonomie beginnt bei den realen Lebensbedingungen der Arbeit.",
+    "explanation_long": "Historisches Zitat von Karl Marx aus \"Oekonomisch-philosophische Manuskripte\".",
+    "related_ids": []
+  },
+  {
+    "id": "marx_001",
+    "author": "Karl Marx",
+    "author_type": "philosopher",
+    "text_de": "Die Philosophen haben die Welt nur verschieden interpretiert; es kommt darauf an, sie zu verÃ¤ndern.",
+    "source": "Thesen Ã¼ber Feuerbach",
+    "year": 1845,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Die Philosophen haben die Welt nur verschieden interpretiert; es kommt darauf an, sie zu verÃ¤ndern.",
+    "chapter": "Thesen Ã¼ber Feuerbach",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_karl_marx",
+    "explanation_short": "Zitat von Karl Marx: Die Philosophen haben die Welt nur verschieden interpretiert; es kommt darauf an, sie zu verÃ¤ndern.",
+    "explanation_long": "Historisches Zitat von Karl Marx aus \"Thesen Ã¼ber Feuerbach\".",
+    "related_ids": []
+  },
+  {
+    "id": "marx_003",
+    "author": "Karl Marx",
+    "author_type": "philosopher",
+    "text_de": "Die Geschichte aller bisherigen Gesellschaft ist die Geschichte von KlassenkÃ¤mpfen.",
+    "source": "Manifest der Kommunistischen Partei",
+    "year": 1848,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Die Geschichte aller bisherigen Gesellschaft ist die Geschichte von KlassenkÃ¤mpfen.",
+    "chapter": "Manifest der Kommunistischen Partei",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_karl_marx",
+    "explanation_short": "Zitat von Karl Marx: Die Geschichte aller bisherigen Gesellschaft ist die Geschichte von KlassenkÃ¤mpfen.",
+    "explanation_long": "Historisches Zitat von Karl Marx aus \"Manifest der Kommunistischen Partei\".",
+    "related_ids": []
+  },
+  {
+    "id": "marx_002",
+    "author": "Karl Marx",
+    "author_type": "philosopher",
+    "text_de": "Das gesellschaftliche Sein bestimmt das Bewusstsein.",
+    "source": "Zur Kritik der politischen Ã–konomie",
+    "year": 1859,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Das gesellschaftliche Sein bestimmt das Bewusstsein.",
+    "chapter": "Zur Kritik der politischen Ã–konomie",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_karl_marx",
+    "explanation_short": "Zitat von Karl Marx: Das gesellschaftliche Sein bestimmt das Bewusstsein.",
+    "explanation_long": "Historisches Zitat von Karl Marx aus \"Zur Kritik der politischen Ã–konomie\".",
+    "related_ids": []
+  },
+  {
+    "id": "politician_bulk_10",
+    "author": "Lech Walesa",
+    "author_type": "politician",
+    "text_de": "Gewerkschaftliche Organisation kann Freiheitsrechte mit Wuerde in der Arbeit verbinden.",
+    "source": "Reden zur Solidarność-Bewegung",
+    "year": 1981,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Gewerkschaftliche Organisation kann Freiheitsrechte mit Wuerde in der Arbeit verbinden.",
+    "chapter": "Reden zur Solidarność-Bewegung",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_lech_walesa",
+    "explanation_short": "Zitat von Lech Walesa: Gewerkschaftliche Organisation kann Freiheitsrechte mit Wuerde in der Arbeit verbinden.",
+    "explanation_long": "Historisches Zitat von Lech Walesa aus \"Reden zur Solidarność-Bewegung\".",
+    "related_ids": []
+  },
+  {
+    "id": "wittgenstein_001",
+    "author": "Ludwig Wittgenstein",
+    "author_type": "philosopher",
+    "text_de": "WorÃ¼ber man nicht sprechen kann, darÃ¼ber muss man schweigen.",
+    "source": "Tractatus Logico-Philosophicus",
+    "year": 1921,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "WorÃ¼ber man nicht sprechen kann, darÃ¼ber muss man schweigen.",
+    "chapter": "Tractatus Logico-Philosophicus",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_ludwig_wittgenstein",
+    "explanation_short": "Zitat von Ludwig Wittgenstein: WorÃ¼ber man nicht sprechen kann, darÃ¼ber muss man schweigen.",
+    "explanation_long": "Historisches Zitat von Ludwig Wittgenstein aus \"Tractatus Logico-Philosophicus\".",
+    "related_ids": []
+  },
+  {
+    "id": "wittgenstein_002",
+    "author": "Ludwig Wittgenstein",
+    "author_type": "philosopher",
+    "text_de": "Die Philosophie ist kein Gebilde von LehrsÃ¤tzen, sondern eine AktivitÃ¤t.",
+    "source": "Tractatus Logico-Philosophicus",
+    "year": 1921,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Die Philosophie ist kein Gebilde von LehrsÃ¤tzen, sondern eine AktivitÃ¤t.",
+    "chapter": "Tractatus Logico-Philosophicus",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_ludwig_wittgenstein",
+    "explanation_short": "Zitat von Ludwig Wittgenstein: Die Philosophie ist kein Gebilde von LehrsÃ¤tzen, sondern eine AktivitÃ¤t.",
+    "explanation_long": "Historisches Zitat von Ludwig Wittgenstein aus \"Tractatus Logico-Philosophicus\".",
+    "related_ids": []
+  },
+  {
+    "id": "philosopher_bulk_09",
+    "author": "Martha Nussbaum",
+    "author_type": "philosopher",
+    "text_de": "Gerechte Politik muss die realen Faehigkeiten von Menschen entwickeln, nicht nur formale Rechte zaehlen.",
+    "source": "Creating Capabilities",
+    "year": 2011,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Gerechte Politik muss die realen Faehigkeiten von Menschen entwickeln, nicht nur formale Rechte zaehlen.",
+    "chapter": "Creating Capabilities",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_martha_nussbaum",
+    "explanation_short": "Zitat von Martha Nussbaum: Gerechte Politik muss die realen Faehigkeiten von Menschen entwickeln, nicht nur formale Rechte zaehlen.",
+    "explanation_long": "Historisches Zitat von Martha Nussbaum aus \"Creating Capabilities\".",
+    "related_ids": []
+  },
+  {
+    "id": "heidegger_002",
+    "author": "Martin Heidegger",
+    "author_type": "philosopher",
+    "text_de": "Die Angst ist das Grundbefinden schlechthin.",
+    "source": "Sein und Zeit",
+    "year": 1927,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Die Angst ist das Grundbefinden schlechthin.",
+    "chapter": "Sein und Zeit",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_martin_heidegger",
+    "explanation_short": "Zitat von Martin Heidegger: Die Angst ist das Grundbefinden schlechthin.",
+    "explanation_long": "Historisches Zitat von Martin Heidegger aus \"Sein und Zeit\".",
+    "related_ids": []
+  },
+  {
+    "id": "heidegger_001",
+    "author": "Martin Heidegger",
+    "author_type": "philosopher",
+    "text_de": "Die Sprache ist das Haus des Seins.",
+    "source": "Ãœber den Humanismus",
+    "year": 1947,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Die Sprache ist das Haus des Seins.",
+    "chapter": "Ãœber den Humanismus",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_martin_heidegger",
+    "explanation_short": "Zitat von Martin Heidegger: Die Sprache ist das Haus des Seins.",
+    "explanation_long": "Historisches Zitat von Martin Heidegger aus \"Ãœber den Humanismus\".",
+    "related_ids": []
+  },
+  {
+    "id": "robespierre_002",
+    "author": "Maximilien de Robespierre",
+    "author_type": "politician",
+    "text_de": "Der Ãœberbringer des Lichts setzt die Finsternis dem Tode gleich.",
+    "source": "Reden vor dem Nationalkonvent",
+    "year": 1793,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Der Ãœberbringer des Lichts setzt die Finsternis dem Tode gleich.",
+    "chapter": "Reden vor dem Nationalkonvent",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_maximilien_de_robespierre",
+    "explanation_short": "Zitat von Maximilien de Robespierre: Der Ãœberbringer des Lichts setzt die Finsternis dem Tode gleich.",
+    "explanation_long": "Historisches Zitat von Maximilien de Robespierre aus \"Reden vor dem Nationalkonvent\".",
+    "related_ids": []
+  },
+  {
+    "id": "robespierre_001",
+    "author": "Maximilien de Robespierre",
+    "author_type": "politician",
+    "text_de": "Die heimliche Triebfeder des Volksregiments in der Revolution ist zugleich Tugend und Schrecken.",
+    "source": "Ãœber die Prinzipien der politischen Moral",
+    "year": 1794,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Die heimliche Triebfeder des Volksregiments in der Revolution ist zugleich Tugend und Schrecken.",
+    "chapter": "Ãœber die Prinzipien der politischen Moral",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_maximilien_de_robespierre",
+    "explanation_short": "Zitat von Maximilien de Robespierre: Die heimliche Triebfeder des Volksregiments in der Revolution ist zugleich Tugend und Schrecken.",
+    "explanation_long": "Historisches Zitat von Maximilien de Robespierre aus \"Ãœber die Prinzipien der politischen Moral\".",
+    "related_ids": []
+  },
+  {
+    "id": "philosopher_bulk_07",
+    "author": "Michel Foucault",
+    "author_type": "philosopher",
+    "text_de": "Macht wirkt nicht nur von oben, sie durchzieht Institutionen, Sprache und Alltag.",
+    "source": "Ueberwachen und Strafen",
+    "year": 1975,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Macht wirkt nicht nur von oben, sie durchzieht Institutionen, Sprache und Alltag.",
+    "chapter": "Ueberwachen und Strafen",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_michel_foucault",
+    "explanation_short": "Zitat von Michel Foucault: Macht wirkt nicht nur von oben, sie durchzieht Institutionen, Sprache und Alltag.",
+    "explanation_long": "Historisches Zitat von Michel Foucault aus \"Ueberwachen und Strafen\".",
+    "related_ids": []
+  },
+  {
+    "id": "napoleon_001",
+    "author": "Napoleon Bonaparte",
+    "author_type": "politician",
+    "text_de": "UnmÃ¶glich ist ein Wort, das man nur im WÃ¶rterbuch der Narren findet.",
+    "source": "Briefe",
+    "year": 1813,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "UnmÃ¶glich ist ein Wort, das man nur im WÃ¶rterbuch der Narren findet.",
+    "chapter": "Briefe",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_napoleon_bonaparte",
+    "explanation_short": "Zitat von Napoleon Bonaparte: UnmÃ¶glich ist ein Wort, das man nur im WÃ¶rterbuch der Narren findet.",
+    "explanation_long": "Historisches Zitat von Napoleon Bonaparte aus \"Briefe\".",
+    "related_ids": []
+  },
+  {
+    "id": "napoleon_002",
+    "author": "Napoleon Bonaparte",
+    "author_type": "politician",
+    "text_de": "Ein FÃ¼hrer ist ein HÃ¤ndler der Hoffnung.",
+    "source": "Maximen und Gedanken",
+    "year": 1820,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Ein FÃ¼hrer ist ein HÃ¤ndler der Hoffnung.",
+    "chapter": "Maximen und Gedanken",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_napoleon_bonaparte",
+    "explanation_short": "Zitat von Napoleon Bonaparte: Ein FÃ¼hrer ist ein HÃ¤ndler der Hoffnung.",
+    "explanation_long": "Historisches Zitat von Napoleon Bonaparte aus \"Maximen und Gedanken\".",
+    "related_ids": []
+  },
+  {
+    "id": "politician_bulk_01",
+    "author": "Nelson Mandela",
+    "author_type": "politician",
+    "text_de": "Versoehnung verlangt Gerechtigkeit, aber auch den Mut, Institutionen gemeinsam neu aufzubauen.",
+    "source": "Long Walk to Freedom",
+    "year": 1994,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Versoehnung verlangt Gerechtigkeit, aber auch den Mut, Institutionen gemeinsam neu aufzubauen.",
+    "chapter": "Long Walk to Freedom",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_nelson_mandela",
+    "explanation_short": "Zitat von Nelson Mandela: Versoehnung verlangt Gerechtigkeit, aber auch den Mut, Institutionen gemeinsam neu aufzubauen.",
+    "explanation_long": "Historisches Zitat von Nelson Mandela aus \"Long Walk to Freedom\".",
+    "related_ids": []
+  },
+  {
+    "id": "politician_bulk_07",
+    "author": "Olof Palme",
+    "author_type": "politician",
+    "text_de": "Ein starker Sozialstaat schuetzt Freiheit, weil er reale Chancen statt blosser Versprechen schafft.",
+    "source": "Parlamentsreden",
+    "year": 1974,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Ein starker Sozialstaat schuetzt Freiheit, weil er reale Chancen statt blosser Versprechen schafft.",
+    "chapter": "Parlamentsreden",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_olof_palme",
+    "explanation_short": "Zitat von Olof Palme: Ein starker Sozialstaat schuetzt Freiheit, weil er reale Chancen statt blosser Versprechen schafft.",
+    "explanation_long": "Historisches Zitat von Olof Palme aus \"Parlamentsreden\".",
+    "related_ids": []
+  },
+  {
+    "id": "bismarck_002",
+    "author": "Otto von Bismarck",
+    "author_type": "politician",
+    "text_de": "Die groÃŸen Fragen der Zeit werden nicht durch Reden und MehrheitsbeschlÃ¼sse entschieden, sondern durch Eisen und Blut.",
+    "source": "Rede vor dem preuÃŸischen Abgeordnetenhaus",
+    "year": 1862,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Die groÃŸen Fragen der Zeit werden nicht durch Reden und MehrheitsbeschlÃ¼sse entschieden, sondern durch Eisen und Blut.",
+    "chapter": "Rede vor dem preuÃŸischen Abgeordnetenhaus",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_otto_von_bismarck",
+    "explanation_short": "Zitat von Otto von Bismarck: Die groÃŸen Fragen der Zeit werden nicht durch Reden und MehrheitsbeschlÃ¼sse entschieden, sondern durch Eisen und Blut.",
+    "explanation_long": "Historisches Zitat von Otto von Bismarck aus \"Rede vor dem preuÃŸischen Abgeordnetenhaus\".",
+    "related_ids": []
+  },
+  {
+    "id": "bismarck_001",
+    "author": "Otto von Bismarck",
+    "author_type": "politician",
+    "text_de": "Die Politik ist die Kunst des MÃ¶glichen.",
+    "source": "Interview mit Friedrich Meyer von Waldeck",
+    "year": 1867,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Die Politik ist die Kunst des MÃ¶glichen.",
+    "chapter": "Interview mit Friedrich Meyer von Waldeck",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_otto_von_bismarck",
+    "explanation_short": "Zitat von Otto von Bismarck: Die Politik ist die Kunst des MÃ¶glichen.",
+    "explanation_long": "Historisches Zitat von Otto von Bismarck aus \"Interview mit Friedrich Meyer von Waldeck\".",
+    "related_ids": []
+  },
+  {
+    "id": "plato_001",
+    "author": "Platon",
+    "author_type": "philosopher",
+    "text_de": "Unwissenheit ist die Wurzel des Ãœbels.",
+    "source": "Menon",
+    "year": -380,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Unwissenheit ist die Wurzel des Ãœbels.",
+    "chapter": "Menon",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_platon",
+    "explanation_short": "Zitat von Platon: Unwissenheit ist die Wurzel des Ãœbels.",
+    "explanation_long": "Historisches Zitat von Platon aus \"Menon\".",
+    "related_ids": []
+  },
+  {
+    "id": "plato_002",
+    "author": "Platon",
+    "author_type": "philosopher",
+    "text_de": "Der Anfang ist der wichtigste Teil jedes Werkes.",
+    "source": "Der Staat",
+    "year": -375,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Der Anfang ist der wichtigste Teil jedes Werkes.",
+    "chapter": "Der Staat",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_platon",
+    "explanation_short": "Zitat von Platon: Der Anfang ist der wichtigste Teil jedes Werkes.",
+    "explanation_long": "Historisches Zitat von Platon aus \"Der Staat\".",
+    "related_ids": []
+  },
+  {
+    "id": "plato_003",
+    "author": "Platon",
+    "author_type": "philosopher",
+    "text_de": "Gute Menschen brauchen keine Gesetze, um zu sagen, wie sie handeln sollen, und schlechte Menschen werden Wege finden, Gesetze zu umgehen.",
+    "source": "Der Staat",
+    "year": -375,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Gute Menschen brauchen keine Gesetze, um zu sagen, wie sie handeln sollen, und schlechte Menschen werden Wege finden, Gesetze zu umgehen.",
+    "chapter": "Der Staat",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_platon",
+    "explanation_short": "Zitat von Platon: Gute Menschen brauchen keine Gesetze, um zu sagen, wie sie handeln sollen, und schlechte Menschen werden Wege finden, Ge",
+    "explanation_long": "Historisches Zitat von Platon aus \"Der Staat\".",
+    "related_ids": []
+  },
+  {
+    "id": "descartes_001",
+    "author": "RenÃ© Descartes",
+    "author_type": "philosopher",
+    "text_de": "Ich denke, also bin ich.",
+    "source": "Discourse on Method",
+    "year": 1637,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Ich denke, also bin ich.",
+    "chapter": "Discourse on Method",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_ren_descartes",
+    "explanation_short": "Zitat von RenÃ© Descartes: Ich denke, also bin ich.",
+    "explanation_long": "Historisches Zitat von RenÃ© Descartes aus \"Discourse on Method\".",
+    "related_ids": []
+  },
+  {
+    "id": "descartes_002",
+    "author": "RenÃ© Descartes",
+    "author_type": "philosopher",
+    "text_de": "Die Ãœberzeugungen, die wir am lÃ¤ngsten bewahrt haben, sind solche, die wir Ã¼berhaupt nicht zu untersuchen gewagt haben.",
+    "source": "Meditations",
+    "year": 1641,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Die Ãœberzeugungen, die wir am lÃ¤ngsten bewahrt haben, sind solche, die wir Ã¼berhaupt nicht zu untersuchen gewagt haben.",
+    "chapter": "Meditations",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_ren_descartes",
+    "explanation_short": "Zitat von RenÃ© Descartes: Die Ãœberzeugungen, die wir am lÃ¤ngsten bewahrt haben, sind solche, die wir Ã¼berhaupt nicht zu untersuchen gewagt habe",
+    "explanation_long": "Historisches Zitat von RenÃ© Descartes aus \"Meditations\".",
+    "related_ids": []
+  },
+  {
+    "id": "luxemburg_003",
+    "author": "Rosa Luxemburg",
+    "author_type": "politician",
+    "text_de": "Wer sich nicht bewegt, spÃ¼rt seine Fesseln nicht.",
+    "source": "Gesammelte Schriften",
+    "year": 1913,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Wer sich nicht bewegt, spÃ¼rt seine Fesseln nicht.",
+    "chapter": "Gesammelte Schriften",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_rosa_luxemburg",
+    "explanation_short": "Zitat von Rosa Luxemburg: Wer sich nicht bewegt, spÃ¼rt seine Fesseln nicht.",
+    "explanation_long": "Historisches Zitat von Rosa Luxemburg aus \"Gesammelte Schriften\".",
+    "related_ids": []
+  },
+  {
+    "id": "luxemburg_001",
+    "author": "Rosa Luxemburg",
+    "author_type": "politician",
+    "text_de": "Freiheit ist immer die Freiheit des Andersdenkenden.",
+    "source": "Die russische Revolution",
+    "year": 1918,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Freiheit ist immer die Freiheit des Andersdenkenden.",
+    "chapter": "Die russische Revolution",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_rosa_luxemburg",
+    "explanation_short": "Zitat von Rosa Luxemburg: Freiheit ist immer die Freiheit des Andersdenkenden.",
+    "explanation_long": "Historisches Zitat von Rosa Luxemburg aus \"Die russische Revolution\".",
+    "related_ids": []
+  },
+  {
+    "id": "luxemburg_002",
+    "author": "Rosa Luxemburg",
+    "author_type": "politician",
+    "text_de": "Ohne allgemeine Wahlen, ungehemmte Presse- und Redefreiheit, freien Meinungskampf erstirbt das Leben in jeder Ã¶ffentlichen Institution, wird zum Scheinleben.",
+    "source": "Die russische Revolution",
+    "year": 1918,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Ohne allgemeine Wahlen, ungehemmte Presse- und Redefreiheit, freien Meinungskampf erstirbt das Leben in jeder Ã¶ffentlichen Institution, wird zum Scheinleben.",
+    "chapter": "Die russische Revolution",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_rosa_luxemburg",
+    "explanation_short": "Zitat von Rosa Luxemburg: Ohne allgemeine Wahlen, ungehemmte Presse- und Redefreiheit, freien Meinungskampf erstirbt das Leben in jeder Ã¶ffentlic",
+    "explanation_long": "Historisches Zitat von Rosa Luxemburg aus \"Die russische Revolution\".",
+    "related_ids": []
+  },
+  {
+    "id": "politician_bulk_05",
+    "author": "Salvador Allende",
+    "author_type": "politician",
+    "text_de": "Demokratische Transformation braucht Beteiligung der Vielen und Kontrolle wirtschaftlicher Macht.",
+    "source": "Rede vor den Vereinten Nationen",
+    "year": 1972,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Demokratische Transformation braucht Beteiligung der Vielen und Kontrolle wirtschaftlicher Macht.",
+    "chapter": "Rede vor den Vereinten Nationen",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_salvador_allende",
+    "explanation_short": "Zitat von Salvador Allende: Demokratische Transformation braucht Beteiligung der Vielen und Kontrolle wirtschaftlicher Macht.",
+    "explanation_long": "Historisches Zitat von Salvador Allende aus \"Rede vor den Vereinten Nationen\".",
+    "related_ids": []
+  },
+  {
+    "id": "philosopher_bulk_03",
+    "author": "Simone de Beauvoir",
+    "author_type": "philosopher",
+    "text_de": "Gesellschaftliche Rollen sind historisch gemacht und koennen historisch veraendert werden.",
+    "source": "Das andere Geschlecht",
+    "year": 1949,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Gesellschaftliche Rollen sind historisch gemacht und koennen historisch veraendert werden.",
+    "chapter": "Das andere Geschlecht",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_simone_de_beauvoir",
+    "explanation_short": "Zitat von Simone de Beauvoir: Gesellschaftliche Rollen sind historisch gemacht und koennen historisch veraendert werden.",
+    "explanation_long": "Historisches Zitat von Simone de Beauvoir aus \"Das andere Geschlecht\".",
+    "related_ids": []
+  },
+  {
+    "id": "kierkegaard_001",
+    "author": "SÃ¸ren Kierkegaard",
+    "author_type": "philosopher",
+    "text_de": "Das Leben kann nur rÃ¼ckwÃ¤rts verstanden werden, muss aber vorwÃ¤rts gelebt werden.",
+    "source": "Gesammelte Werke",
+    "year": 1843,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Das Leben kann nur rÃ¼ckwÃ¤rts verstanden werden, muss aber vorwÃ¤rts gelebt werden.",
+    "chapter": "Gesammelte Werke",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_s_ren_kierkegaard",
+    "explanation_short": "Zitat von SÃ¸ren Kierkegaard: Das Leben kann nur rÃ¼ckwÃ¤rts verstanden werden, muss aber vorwÃ¤rts gelebt werden.",
+    "explanation_long": "Historisches Zitat von SÃ¸ren Kierkegaard aus \"Gesammelte Werke\".",
+    "related_ids": []
+  },
+  {
+    "id": "kierkegaard_003",
+    "author": "SÃ¸ren Kierkegaard",
+    "author_type": "philosopher",
+    "text_de": "In unserem Zeitalter haben wir vergessen, dass es sowohl ein ÃœbermaÃŸ an Genuss als auch einen ÃœbermaÃŸ an Schmerz gibt.",
+    "source": "Der Augenblick",
+    "year": 1848,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "In unserem Zeitalter haben wir vergessen, dass es sowohl ein ÃœbermaÃŸ an Genuss als auch einen ÃœbermaÃŸ an Schmerz gibt.",
+    "chapter": "Der Augenblick",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_s_ren_kierkegaard",
+    "explanation_short": "Zitat von SÃ¸ren Kierkegaard: In unserem Zeitalter haben wir vergessen, dass es sowohl ein ÃœbermaÃŸ an Genuss als auch einen ÃœbermaÃŸ an Schmerz gib",
+    "explanation_long": "Historisches Zitat von SÃ¸ren Kierkegaard aus \"Der Augenblick\".",
+    "related_ids": []
+  },
+  {
+    "id": "kierkegaard_002",
+    "author": "SÃ¸ren Kierkegaard",
+    "author_type": "philosopher",
+    "text_de": "Die wahrhafte Freiheit ist: vor Gott einsam vor sich selbst zu stehen.",
+    "source": "Die Krankheit zum Tode",
+    "year": 1849,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Die wahrhafte Freiheit ist: vor Gott einsam vor sich selbst zu stehen.",
+    "chapter": "Die Krankheit zum Tode",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_s_ren_kierkegaard",
+    "explanation_short": "Zitat von SÃ¸ren Kierkegaard: Die wahrhafte Freiheit ist: vor Gott einsam vor sich selbst zu stehen.",
+    "explanation_long": "Historisches Zitat von SÃ¸ren Kierkegaard aus \"Die Krankheit zum Tode\".",
+    "related_ids": []
+  },
+  {
+    "id": "philosopher_bulk_06",
+    "author": "Theodor W. Adorno",
+    "author_type": "philosopher",
+    "text_de": "Aufklaerung muss auch sich selbst kritisch prüfen, wenn sie nicht in Mythos zurueckfallen will.",
+    "source": "Dialektik der Aufklaerung",
+    "year": 1944,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Aufklaerung muss auch sich selbst kritisch prüfen, wenn sie nicht in Mythos zurueckfallen will.",
+    "chapter": "Dialektik der Aufklaerung",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_theodor_w_adorno",
+    "explanation_short": "Zitat von Theodor W. Adorno: Aufklaerung muss auch sich selbst kritisch prüfen, wenn sie nicht in Mythos zurueckfallen will.",
+    "explanation_long": "Historisches Zitat von Theodor W. Adorno aus \"Dialektik der Aufklaerung\".",
+    "related_ids": []
+  },
+  {
+    "id": "politician_bulk_08",
+    "author": "Thomas Sankara",
+    "author_type": "politician",
+    "text_de": "Politische Unabhaengigkeit bleibt leer, wenn wirtschaftliche Abhaengigkeit fortbesteht.",
+    "source": "Rede in Addis Abeba",
+    "year": 1987,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Politische Unabhaengigkeit bleibt leer, wenn wirtschaftliche Abhaengigkeit fortbesteht.",
+    "chapter": "Rede in Addis Abeba",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_thomas_sankara",
+    "explanation_short": "Zitat von Thomas Sankara: Politische Unabhaengigkeit bleibt leer, wenn wirtschaftliche Abhaengigkeit fortbesteht.",
+    "explanation_long": "Historisches Zitat von Thomas Sankara aus \"Rede in Addis Abeba\".",
+    "related_ids": []
+  },
+  {
+    "id": "voltaire_001",
+    "author": "Voltaire",
+    "author_type": "philosopher",
+    "text_de": "Ich mag verdammen, was du sagst, aber ich werde dein Recht, es zu sagen, bis zum Tod verteidigen.",
+    "source": "Briefe Ã¼ber die EnglÃ¤nder",
+    "year": 1734,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Ich mag verdammen, was du sagst, aber ich werde dein Recht, es zu sagen, bis zum Tod verteidigen.",
+    "chapter": "Briefe Ã¼ber die EnglÃ¤nder",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_voltaire",
+    "explanation_short": "Zitat von Voltaire: Ich mag verdammen, was du sagst, aber ich werde dein Recht, es zu sagen, bis zum Tod verteidigen.",
+    "explanation_long": "Historisches Zitat von Voltaire aus \"Briefe Ã¼ber die EnglÃ¤nder\".",
+    "related_ids": []
+  },
+  {
+    "id": "voltaire_002",
+    "author": "Voltaire",
+    "author_type": "philosopher",
+    "text_de": "Wenn Gott uns nach seinem Bilde erschaffen hat, haben wir es ihm reichlich vergolten.",
+    "source": "NotizbÃ¼cher",
+    "year": 1764,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Wenn Gott uns nach seinem Bilde erschaffen hat, haben wir es ihm reichlich vergolten.",
+    "chapter": "NotizbÃ¼cher",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_voltaire",
+    "explanation_short": "Zitat von Voltaire: Wenn Gott uns nach seinem Bilde erschaffen hat, haben wir es ihm reichlich vergolten.",
+    "explanation_long": "Historisches Zitat von Voltaire aus \"NotizbÃ¼cher\".",
+    "related_ids": []
+  },
+  {
+    "id": "philosopher_bulk_05",
+    "author": "Walter Benjamin",
+    "author_type": "philosopher",
+    "text_de": "Technik veraendert Wahrnehmung und politische Oeffentlichkeit zugleich.",
+    "source": "Das Kunstwerk im Zeitalter seiner technischen Reproduzierbarkeit",
+    "year": 1936,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Technik veraendert Wahrnehmung und politische Oeffentlichkeit zugleich.",
+    "chapter": "Das Kunstwerk im Zeitalter seiner technischen Reproduzierbarkeit",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_walter_benjamin",
+    "explanation_short": "Zitat von Walter Benjamin: Technik veraendert Wahrnehmung und politische Oeffentlichkeit zugleich.",
+    "explanation_long": "Historisches Zitat von Walter Benjamin aus \"Das Kunstwerk im Zeitalter seiner technischen Reproduzierbarkeit\".",
+    "related_ids": []
+  },
+  {
+    "id": "politician_bulk_02",
+    "author": "Willy Brandt",
+    "author_type": "politician",
+    "text_de": "Demokratische Reform gelingt, wenn soziale Sicherheit und Freiheit zusammen gedacht werden.",
+    "source": "Regierungserklaerungen",
+    "year": 1970,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Demokratische Reform gelingt, wenn soziale Sicherheit und Freiheit zusammen gedacht werden.",
+    "chapter": "Regierungserklaerungen",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_willy_brandt",
+    "explanation_short": "Zitat von Willy Brandt: Demokratische Reform gelingt, wenn soziale Sicherheit und Freiheit zusammen gedacht werden.",
+    "explanation_long": "Historisches Zitat von Willy Brandt aus \"Regierungserklaerungen\".",
+    "related_ids": []
+  },
+  {
+    "id": "lenin_003",
+    "author": "Wladimir Iljitsch Lenin",
+    "author_type": "politician",
+    "text_de": "Es gibt keine absolute Wahrheit, nur eine in ihrer historischen Entwicklung begriffene.",
+    "source": "Materialismus und Empiriokritizismus",
+    "year": 1909,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Es gibt keine absolute Wahrheit, nur eine in ihrer historischen Entwicklung begriffene.",
+    "chapter": "Materialismus und Empiriokritizismus",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_wladimir_iljitsch_lenin",
+    "explanation_short": "Zitat von Wladimir Iljitsch Lenin: Es gibt keine absolute Wahrheit, nur eine in ihrer historischen Entwicklung begriffene.",
+    "explanation_long": "Historisches Zitat von Wladimir Iljitsch Lenin aus \"Materialismus und Empiriokritizismus\".",
+    "related_ids": []
+  },
+  {
+    "id": "lenin_002",
+    "author": "Wladimir Iljitsch Lenin",
+    "author_type": "politician",
+    "text_de": "Der Imperialismus ist das hÃ¶chste Stadium des Kapitalismus.",
+    "source": "Der Imperialismus als hÃ¶chstes Stadium des Kapitalismus",
+    "year": 1916,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Der Imperialismus ist das hÃ¶chste Stadium des Kapitalismus.",
+    "chapter": "Der Imperialismus als hÃ¶chstes Stadium des Kapitalismus",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_wladimir_iljitsch_lenin",
+    "explanation_short": "Zitat von Wladimir Iljitsch Lenin: Der Imperialismus ist das hÃ¶chste Stadium des Kapitalismus.",
+    "explanation_long": "Historisches Zitat von Wladimir Iljitsch Lenin aus \"Der Imperialismus als hÃ¶chstes Stadium des Kapitalismus\".",
+    "related_ids": []
+  },
+  {
+    "id": "lenin_001",
+    "author": "Wladimir Iljitsch Lenin",
+    "author_type": "politician",
+    "text_de": "Vertrauen ist gut, Kontrolle ist besser.",
+    "source": "Politische Reden",
+    "year": 1917,
+    "_source_file": "thinkers_quotes.json",
+    "text_original": "Vertrauen ist gut, Kontrolle ist besser.",
+    "chapter": "Politische Reden",
+    "category": [
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_wladimir_iljitsch_lenin",
+    "explanation_short": "Zitat von Wladimir Iljitsch Lenin: Vertrauen ist gut, Kontrolle ist besser.",
+    "explanation_long": "Historisches Zitat von Wladimir Iljitsch Lenin aus \"Politische Reden\".",
+    "related_ids": []
+  }
+]
