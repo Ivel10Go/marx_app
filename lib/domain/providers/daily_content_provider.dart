@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../data/models/daily_content.dart';
+import '../../data/models/quote.dart';
 import '../services/daily_content_resolver.dart';
 import '../services/personalization_service.dart';
 import 'app_mode_provider.dart';
@@ -42,4 +43,24 @@ final dailyContentProvider = FutureProvider<DailyContent>((Ref ref) async {
   }
 
   return content;
+});
+
+final premiumDailyQuotesProvider = FutureProvider<List<Quote>>((Ref ref) async {
+  await ref.watch(initialSeedProvider.future);
+  final appMode = ref.watch(appModeNotifierProvider);
+  final profile = ref.watch(userProfileProvider);
+  final quoteRepository = ref.watch(quoteRepositoryProvider);
+  final resolver = ref.watch(dailyContentResolverProvider);
+  final premiumQuoteCount = profile.historicalInterests.length;
+
+  if (premiumQuoteCount <= 0) {
+    return <Quote>[];
+  }
+
+  return resolver.resolvePremiumQuoteFeed(
+    quoteRepository: quoteRepository,
+    appMode: appMode,
+    profile: profile,
+    count: premiumQuoteCount,
+  );
 });

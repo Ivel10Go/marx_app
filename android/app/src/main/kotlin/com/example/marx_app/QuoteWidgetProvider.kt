@@ -86,9 +86,7 @@ class QuoteWidgetProvider : AppWidgetProvider() {
             else -> "ZITATATLAS"
           }
 
-        // Use a conservative compatibility layout first. This avoids launcher
-        // RemoteViews inflation failures on stricter hosts.
-        val layout = R.layout.quote_widget_compat
+        val layout = selectLayout(appWidgetManager, appWidgetId, widgetMode, contentType)
 
         val views = RemoteViews(context.packageName, layout)
         views.setTextViewText(R.id.quote_header, header)
@@ -140,7 +138,7 @@ class QuoteWidgetProvider : AppWidgetProvider() {
         views.setOnClickPendingIntent(R.id.quote_root, pendingIntent)
 
         appWidgetManager.updateAppWidget(appWidgetId, views)
-        Log.d(LOG_TAG, "Widget $appWidgetId successfully updated with primary layout")
+        Log.d(LOG_TAG, "Widget $appWidgetId successfully updated with layout $layout")
       } catch (e: Exception) {
         Log.e(LOG_TAG, "Widget render failed for id=$appWidgetId, using fallback", e)
         val fallbackViews = RemoteViews(context.packageName, R.layout.quote_widget_compat)
@@ -160,6 +158,25 @@ class QuoteWidgetProvider : AppWidgetProvider() {
         fallbackViews.setOnClickPendingIntent(R.id.quote_root, fallbackPendingIntent)
         appWidgetManager.updateAppWidget(appWidgetId, fallbackViews)
         Log.d(LOG_TAG, "Widget $appWidgetId updated with fallback layout")
+      }
+    }
+
+    private fun selectLayout(
+      appWidgetManager: AppWidgetManager,
+      appWidgetId: Int,
+      widgetMode: String,
+      contentType: String,
+    ): Int {
+      val options = appWidgetManager.getAppWidgetOptions(appWidgetId)
+      val minWidth = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH)
+      val minHeight = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT)
+
+      return when {
+        widgetMode.equals("MARX", ignoreCase = true) ||
+          contentType == "thinker_quote" ||
+          minWidth >= 240 || minHeight >= 160 -> R.layout.quote_widget_v2
+        minWidth >= 180 || minHeight >= 120 -> R.layout.quote_widget_medium
+        else -> R.layout.quote_widget_small
       }
     }
   }

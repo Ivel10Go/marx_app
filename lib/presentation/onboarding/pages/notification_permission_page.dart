@@ -34,7 +34,7 @@ class NotificationPermissionPage extends StatelessWidget {
                 'Lass dich täglich erinnern',
                 textAlign: TextAlign.center,
                 style: GoogleFonts.playfairDisplay(
-                  fontSize: 28,
+                  fontSize: 32,
                   fontWeight: FontWeight.w700,
                   color: scheme.onSurface,
                 ),

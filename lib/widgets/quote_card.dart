@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'adaptive_quote_text.dart';
 import '../core/theme/app_theme.dart';
+import '../core/utils/quote_attribution.dart';
 import '../data/models/quote.dart';
 import '../domain/providers/favorites_provider.dart';
 import '../domain/providers/repository_providers.dart';
@@ -47,7 +48,7 @@ class QuoteCard extends ConsumerWidget {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  '${quote.source.toUpperCase()} · ${quote.year}',
+                  '${quoteAuthorLabel(quote).toUpperCase()} · ${quote.year}',
                   style: AppTheme.quoteCardKicker,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -102,12 +103,19 @@ class QuoteCard extends ConsumerWidget {
                       alignment: Alignment.topRight,
                       child: IconButton(
                         onPressed: () async {
-                          final repo = ref.read(quoteRepositoryProvider);
-                          if (isFavorite) {
-                            await repo.removeFavorite(quote.id);
-                            return;
+                          try {
+                            final repo = ref.read(quoteRepositoryProvider);
+                            if (isFavorite) {
+                              await repo.removeFavorite(quote.id);
+                              return;
+                            }
+                            await repo.addFavorite(quote.id);
+                          } catch (error, stackTrace) {
+                            debugPrint(
+                              '[QuoteCard] Favorite toggle failed: $error',
+                            );
+                            debugPrintStack(stackTrace: stackTrace);
                           }
-                          await repo.addFavorite(quote.id);
                         },
                         icon: Icon(
                           isFavorite ? Icons.favorite : Icons.favorite_border,
@@ -154,7 +162,7 @@ class QuoteCard extends ConsumerWidget {
                     const SizedBox(height: 10),
                     // Attribution
                     Text(
-                      '— ${quote.source}',
+                      '— ${quoteAuthorLabel(quote)}',
                       style: GoogleFonts.playfairDisplay(
                         fontSize: 11,
                         color: scheme.onSurface.withOpacity(0.85),

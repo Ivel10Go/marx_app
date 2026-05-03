@@ -5,6 +5,21 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../core/providers/purchases_provider.dart';
 
+/// Premium feature gate that shows content for Pro users or a teaser for free users.
+///
+/// **Immediate Entitlement Sync (MON-05)**:
+/// - Watches [isProProvider] which streams latest entitlement state from RevenueCat
+/// - When purchase/restore succeeds, stream emits new CustomerInfo
+/// - Riverpod automatically rebuilds this widget with new isPremium value
+/// - No app restart needed; gate updates in real-time during purchase flow
+///
+/// **Usage:**
+/// ```dart
+/// PremiumGate(
+///   featureName: 'Advanced Archive Filters',
+///   child: AdvancedArchiveScreen(),
+/// )
+/// ```
 class PremiumGate extends ConsumerWidget {
   const PremiumGate({
     required this.child,

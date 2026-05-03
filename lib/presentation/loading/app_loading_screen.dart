@@ -22,10 +22,7 @@ class AppLoadingScreen extends StatefulWidget {
 class _AppLoadingScreenState extends State<AppLoadingScreen>
     with TickerProviderStateMixin {
   late final AnimationController _floatingController;
-  late final AnimationController _progressController;
-  late Animation<double> _progressAnimation;
   late Animation<double> _floatingAnimation;
-  double _previousProgressValue = 0.06;
 
   @override
   void initState() {
@@ -35,44 +32,14 @@ class _AppLoadingScreenState extends State<AppLoadingScreen>
       duration: const Duration(milliseconds: 3000),
     )..repeat(reverse: true);
 
-    _floatingAnimation = Tween<double>(
-      begin: 0,
-      end: 20,
-    ).animate(CurvedAnimation(parent: _floatingController, curve: Curves.easeInOut));
-
-    _progressController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 600),
+    _floatingAnimation = Tween<double>(begin: 0, end: 20).animate(
+      CurvedAnimation(parent: _floatingController, curve: Curves.easeInOut),
     );
-
-    _updateProgressAnimation();
-  }
-
-  @override
-  void didUpdateWidget(AppLoadingScreen oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.progress != widget.progress) {
-      _updateProgressAnimation();
-    }
-  }
-
-  void _updateProgressAnimation() {
-    final targetProgress = (widget.progress?.clamp(0.0, 1.0) ?? 0.0);
-    final displayProgress = targetProgress == 0.0 ? 0.06 : targetProgress;
-
-    _progressAnimation = Tween<double>(
-      begin: _previousProgressValue,
-      end: displayProgress,
-    ).animate(CurvedAnimation(parent: _progressController, curve: Curves.easeInOut));
-
-    _previousProgressValue = displayProgress;
-    _progressController.forward(from: 0.0);
   }
 
   @override
   void dispose() {
     _floatingController.dispose();
-    _progressController.dispose();
     super.dispose();
   }
 
@@ -82,6 +49,7 @@ class _AppLoadingScreenState extends State<AppLoadingScreen>
     final percentText = safeProgress == null
         ? 'Synchronisiere ...'
         : '${(safeProgress * 100).round()}%';
+    final barProgress = safeProgress ?? 0.08;
 
     return Scaffold(
       backgroundColor: AppColors.paper,
@@ -177,37 +145,42 @@ class _AppLoadingScreenState extends State<AppLoadingScreen>
                           ),
                         ),
                         const SizedBox(height: 60),
-                        // Progress bar
-                        AnimatedBuilder(
-                          animation: _progressAnimation,
-                          builder: (context, child) {
-                            return Column(
-                              children: [
-                                ClipRect(
-                                  child: LinearProgressIndicator(
-                                    minHeight: 4,
-                                    value: _progressAnimation.value,
-                                    backgroundColor:
-                                        AppColors.rule.withValues(alpha: 0.3),
-                                    valueColor:
-                                        const AlwaysStoppedAnimation<Color>(
-                                          AppColors.red,
-                                        ),
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: AppColors.paper,
+                            border: Border.all(color: AppColors.rule, width: 1),
+                          ),
+                          child: Column(
+                            children: <Widget>[
+                              ClipRRect(
+                                child: LinearProgressIndicator(
+                                  minHeight: 4,
+                                  value: safeProgress == null
+                                      ? null
+                                      : barProgress,
+                                  backgroundColor: AppColors.rule.withValues(
+                                    alpha: 0.28,
                                   ),
+                                  valueColor:
+                                      const AlwaysStoppedAnimation<Color>(
+                                        AppColors.red,
+                                      ),
                                 ),
-                                const SizedBox(height: 12),
-                                Text(
-                                  percentText,
-                                  style: GoogleFonts.ibmPlexSans(
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w500,
-                                    color: AppColors.ink,
-                                    letterSpacing: 0.2,
-                                  ),
+                              ),
+                              const SizedBox(height: 12),
+                              Text(
+                                percentText,
+                                style: GoogleFonts.ibmPlexSans(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.ink,
+                                  letterSpacing: 0.2,
                                 ),
-                              ],
-                            );
-                          },
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -216,6 +189,216 @@ class _AppLoadingScreenState extends State<AppLoadingScreen>
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class AppInlineLoadingState extends StatelessWidget {
+  const AppInlineLoadingState({
+    super.key,
+    required this.title,
+    required this.subtitle,
+  });
+
+  final String title;
+  final String subtitle;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Container(
+          width: 440,
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: AppColors.paper,
+            border: Border.all(color: AppColors.rule, width: 1),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(width: 36, height: 2, color: AppColors.red),
+              const SizedBox(height: 12),
+              Text(
+                title,
+                style: GoogleFonts.ibmPlexSans(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.ink,
+                  letterSpacing: 0.9,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                subtitle,
+                style: GoogleFonts.ibmPlexSans(
+                  fontSize: 11,
+                  color: AppColors.inkLight,
+                  height: 1.45,
+                ),
+              ),
+              const SizedBox(height: 14),
+              const LinearProgressIndicator(
+                minHeight: 3,
+                valueColor: AlwaysStoppedAnimation<Color>(AppColors.red),
+                backgroundColor: AppColors.rule,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class AppInlineErrorState extends StatelessWidget {
+  const AppInlineErrorState({
+    super.key,
+    required this.title,
+    required this.message,
+    this.onRetry,
+    this.retryLabel = 'Erneut versuchen',
+  });
+
+  final String title;
+  final String message;
+  final VoidCallback? onRetry;
+  final String retryLabel;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Container(
+          width: 440,
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: AppColors.paper,
+            border: Border.all(color: AppColors.ink, width: 1),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(width: 36, height: 2, color: AppColors.red),
+              const SizedBox(height: 10),
+              Row(
+                children: <Widget>[
+                  const Icon(
+                    Icons.error_outline_rounded,
+                    size: 20,
+                    color: AppColors.red,
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      title,
+                      style: GoogleFonts.ibmPlexSans(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.ink,
+                        letterSpacing: 0.9,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              Text(
+                message,
+                style: GoogleFonts.ibmPlexSans(
+                  fontSize: 11,
+                  color: AppColors.inkLight,
+                  height: 1.45,
+                ),
+              ),
+              if (onRetry != null) ...<Widget>[
+                const SizedBox(height: 14),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: onRetry,
+                    child: Text(retryLabel),
+                  ),
+                ),
+              ],
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class AppFullscreenRecoveryScreen extends StatelessWidget {
+  const AppFullscreenRecoveryScreen({
+    super.key,
+    required this.title,
+    required this.message,
+    required this.details,
+    this.onRetry,
+    this.retryLabel = 'Erneut versuchen',
+  });
+
+  final String title;
+  final String message;
+  final String details;
+  final VoidCallback? onRetry;
+  final String retryLabel;
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    return Scaffold(
+      backgroundColor: AppColors.paper,
+      body: SafeArea(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: Container(
+              width: 440,
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: AppColors.paper,
+                border: Border.all(color: AppColors.ink, width: 1),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(width: 44, height: 2, color: AppColors.red),
+                  const SizedBox(height: 16),
+                  const Icon(
+                    Icons.error_outline_rounded,
+                    size: 36,
+                    color: AppColors.red,
+                  ),
+                  const SizedBox(height: 12),
+                  Text(title, style: textTheme.headlineSmall),
+                  const SizedBox(height: 8),
+                  Text(message, style: textTheme.bodyMedium),
+                  const SizedBox(height: 6),
+                  Text(details, style: textTheme.labelSmall),
+                  if (onRetry != null) ...<Widget>[
+                    const SizedBox(height: 18),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: onRetry,
+                        child: Text(retryLabel),
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );

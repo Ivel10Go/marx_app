@@ -5,7 +5,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../data/models/quiz_session.dart';
 import '../../data/models/quote.dart';
-import '../../data/models/user_profile.dart';
 import '../services/personalization_service.dart';
 import 'repository_providers.dart';
 import 'user_profile_provider.dart';
@@ -37,7 +36,7 @@ class QuizNotifier extends StateNotifier<QuizSession> {
     }
 
     // Filter quotes by profile (same as archive)
-    final profileQuotes = _filterQuotesByProfile(allQuotes, profile);
+    final profileQuotes = _filterQuotesByProfile(allQuotes);
     final candidates = profileQuotes.isEmpty ? allQuotes : profileQuotes;
 
     // Weight quotes by personalization
@@ -112,25 +111,8 @@ class QuizNotifier extends StateNotifier<QuizSession> {
     return result;
   }
 
-  List<Quote> _filterQuotesByProfile(List<Quote> all, UserProfile profile) {
-    // If not in manual mode, return all quotes
-    if (profile.quoteDiscoveryMode != QuoteDiscoveryMode.manual) {
-      return all;
-    }
-
-    // If no sources selected, return all quotes
-    if (profile.selectedSources.isEmpty) {
-      return all;
-    }
-
-    // Filter by selected sources
-    final selected = profile.selectedSources
-        .map((String value) => value.toLowerCase())
-        .toSet();
-
-    return all
-        .where((Quote quote) => selected.contains(quote.source.toLowerCase()))
-        .toList();
+  List<Quote> _filterQuotesByProfile(List<Quote> all) {
+    return all;
   }
 
   void answer(int selectedIndex) {

@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../core/services/widget_sync_service.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_theme.dart';
+import '../../core/providers/purchases_provider.dart';
 import '../../core/utils/share_card_renderer.dart';
 import '../../data/models/daily_content.dart';
 import '../../data/models/quote.dart';
@@ -192,6 +193,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final dailyContent = ref.watch(dailyContentProvider);
+    final isPro = ref.watch(isProProvider);
+    final premiumQuotesAsync = isPro
+        ? ref.watch(premiumDailyQuotesProvider)
+        : const AsyncValue<List<Quote>>.data(<Quote>[]);
     final streakAsync = ref.watch(currentStreakProvider);
     final appMode = ref.watch(appModeNotifierProvider);
     final isAdmin = ref.watch(adminAccessProvider);
@@ -210,103 +215,93 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
             Container(
               color: scheme.surface,
               padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
+              child: LayoutBuilder(
+                builder: (BuildContext context, BoxConstraints constraints) {
+                  final compact = constraints.maxWidth < 420;
+
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text('ZITATATLAS', style: AppTheme.masthead),
-                            const SizedBox(height: 4),
-                            Text(
-                              _mastheadSubtitle(),
-                              style: AppTheme.mastHeadSubtitle,
-                            ),
-                          ],
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () => context.push('/settings'),
-                        icon: const Icon(Icons.settings_outlined),
-                        color: scheme.onSurface,
-                        tooltip: 'Einstellungen',
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  Container(width: 40, height: 2, color: AppColors.red),
-                  const SizedBox(height: 12),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: isAdmin
-                            ? _BroadsheetOutlineButton(
-                                onPressed: _showModeDialog,
-                                label: _modeLabel(appMode),
-                              )
-                            : Material(
-                                color: Colors.transparent,
-                                child: InkWell(
-                                  borderRadius: BorderRadius.zero,
-                                  onTap: () => context.push('/settings'),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color: scheme.outline,
-                                        width: 1,
-                                      ),
-                                    ),
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 16,
-                                      vertical: 12,
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: <Widget>[
-                                        Text(
-                                          'PERSONALISIERT',
-                                          textAlign: TextAlign.center,
-                                          style: GoogleFonts.ibmPlexSans(
-                                            fontSize: 11,
-                                            fontWeight: FontWeight.w700,
-                                            color: scheme.onSurface,
-                                            letterSpacing: 1.2,
-                                          ),
-                                        ),
-                                        const SizedBox(width: 4),
-                                        const Icon(
-                                          Icons.chevron_right_rounded,
-                                          size: 16,
-                                          color: AppColors.inkMuted,
-                                        ),
-                                      ],
-                                    ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  'TAGESAUSGABE',
+                                  style: GoogleFonts.ibmPlexSans(
+                                    fontSize: 9,
+                                    fontWeight: FontWeight.w700,
+                                    color: AppColors.red,
+                                    letterSpacing: 1.4,
                                   ),
                                 ),
-                              ),
+                                const SizedBox(height: 6),
+                                Text('ZITATATLAS', style: AppTheme.masthead),
+                                const SizedBox(height: 4),
+                                Text(
+                                  _mastheadSubtitle(),
+                                  style: AppTheme.mastHeadSubtitle,
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          _HeaderIconAction(
+                            icon: Icons.settings_outlined,
+                            tooltip: 'Einstellungen',
+                            onTap: () => context.push('/settings'),
+                          ),
+                        ],
                       ),
-                      if (isAdmin) ...<Widget>[
-                        const SizedBox(width: 10),
-                        _BroadsheetButton(
-                          onPressed: () => context.push('/admin'),
-                          label: 'ADMIN',
+                      const SizedBox(height: 12),
+                      Container(width: 40, height: 2, color: AppColors.red),
+                      const SizedBox(height: 12),
+                      if (compact)
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: <Widget>[
+                            if (isAdmin)
+                              _BroadsheetOutlineButton(
+                                onPressed: _showModeDialog,
+                                label: _modeLabel(appMode),
+                              ),
+                            if (isAdmin) ...<Widget>[
+                              const SizedBox(height: 10),
+                              _BroadsheetButton(
+                                onPressed: () => context.push('/admin'),
+                                label: 'ADMIN',
+                              ),
+                            ],
+                          ],
+                        )
+                      else
+                        Row(
+                          children: <Widget>[
+                            if (isAdmin)
+                              Expanded(
+                                child: _BroadsheetOutlineButton(
+                                  onPressed: _showModeDialog,
+                                  label: _modeLabel(appMode),
+                                ),
+                              ),
+                            if (isAdmin) ...<Widget>[
+                              const SizedBox(width: 10),
+                              _BroadsheetButton(
+                                onPressed: () => context.push('/admin'),
+                                label: 'ADMIN',
+                              ),
+                            ],
+                          ],
                         ),
-                      ],
                     ],
-                  ),
-                ],
+                  );
+                },
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-              child: _HomeHeroCard(),
-            ),
+            const SizedBox.shrink(),
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 24, 20, 24),
               child: Column(
@@ -314,36 +309,64 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                 children: <Widget>[
                   dailyContent.when(
                     data: (content) {
-                      return FadeTransition(
-                        opacity: _fade,
-                        child: SlideTransition(
-                          position: _slide,
-                          child: content.when(
-                            quote: (quote) => QuoteCard(
-                              quote: quote,
-                              onShare: () => ShareCardRenderer().shareQuote(
-                                quote,
-                                context,
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          FadeTransition(
+                            opacity: _fade,
+                            child: SlideTransition(
+                              position: _slide,
+                              child: content.when(
+                                quote: (quote) {
+                                  final fallbackCard = QuoteCard(
+                                    quote: quote,
+                                    onShare: () => ShareCardRenderer()
+                                        .shareQuote(quote, context),
+                                    onTap: () =>
+                                        _showQuoteInsightSheet(context, quote),
+                                    onLongPress: () =>
+                                        _showQuoteInsightSheet(context, quote),
+                                  );
+
+                                  if (!isPro) {
+                                    return fallbackCard;
+                                  }
+
+                                  return premiumQuotesAsync.when(
+                                    data: (quotes) {
+                                      final visibleQuotes = quotes.isEmpty
+                                          ? <Quote>[quote]
+                                          : quotes;
+                                      return _MainQuoteScroller(
+                                        quotes: visibleQuotes,
+                                        onQuoteTap: (Quote selectedQuote) =>
+                                            _showQuoteInsightSheet(
+                                              context,
+                                              selectedQuote,
+                                            ),
+                                      );
+                                    },
+                                    loading: () => fallbackCard,
+                                    error: (_, __) => fallbackCard,
+                                  );
+                                },
+                                fact: (fact) => FactBlock(
+                                  fact: fact,
+                                  onShareTap: () => ShareCardRenderer()
+                                      .shareFact(fact, context),
+                                  onRelatedQuoteTap:
+                                      fact.relatedQuoteIds.isNotEmpty
+                                      ? () => context.push(
+                                          '/detail/${fact.relatedQuoteIds.first}',
+                                        )
+                                      : null,
+                                ),
+                                thinkerQuote: (ThinkerQuote quote) =>
+                                    _ThinkerQuoteCard(quote: quote),
                               ),
-                              onTap: () =>
-                                  _showQuoteInsightSheet(context, quote),
-                              onLongPress: () =>
-                                  _showQuoteInsightSheet(context, quote),
                             ),
-                            fact: (fact) => FactBlock(
-                              fact: fact,
-                              onShareTap: () =>
-                                  ShareCardRenderer().shareFact(fact, context),
-                              onRelatedQuoteTap: fact.relatedQuoteIds.isNotEmpty
-                                  ? () => context.push(
-                                      '/detail/${fact.relatedQuoteIds.first}',
-                                    )
-                                  : null,
-                            ),
-                            thinkerQuote: (ThinkerQuote quote) =>
-                                _ThinkerQuoteCard(quote: quote),
                           ),
-                        ),
+                        ],
                       );
                     },
                     loading: () => const _LoadingCard(),
@@ -387,70 +410,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
   }
 }
 
-class _HomeHeroCard extends StatelessWidget {
-  const _HomeHeroCard();
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: scheme.surface,
-        border: Border.all(color: scheme.outline, width: 1),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                width: 10,
-                height: 10,
-                decoration: const BoxDecoration(
-                  color: AppColors.red,
-                  shape: BoxShape.circle,
-                ),
-              ),
-              const SizedBox(width: 8),
-              Text(
-                'TAGESAUSGABE',
-                style: GoogleFonts.ibmPlexSans(
-                  fontSize: 10,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.red,
-                  letterSpacing: 1.1,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          Text(
-            'Ein ruhiger Start mit Kontext, nicht nur mit Content.',
-            style: GoogleFonts.playfairDisplay(
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
-              color: scheme.onSurface,
-              height: 1.2,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'Der Home-Screen führt direkt in das tägliche Zitat oder den Fakt, ergänzt um Streak und Schnellzugriffe ohne visuelles Rauschen.',
-            style: GoogleFonts.ibmPlexSans(
-              fontSize: 11,
-              color: scheme.onSurfaceVariant,
-              height: 1.5,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+// Home hero/tip card removed per scope-reduction request.
 
 class _ThinkerQuoteCard extends StatelessWidget {
   const _ThinkerQuoteCard({required this.quote});
@@ -533,6 +493,165 @@ class _ThinkerQuoteCard extends StatelessWidget {
   }
 }
 
+class _MainQuoteScroller extends StatefulWidget {
+  const _MainQuoteScroller({required this.quotes, required this.onQuoteTap});
+
+  final List<Quote> quotes;
+  final ValueChanged<Quote> onQuoteTap;
+
+  @override
+  State<_MainQuoteScroller> createState() => _MainQuoteScrollerState();
+}
+
+class _MainQuoteScrollerState extends State<_MainQuoteScroller> {
+  late final PageController _pageController;
+  int _currentPage = 0;
+  bool _showSwipeHint = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(viewportFraction: 0.87);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        Future<void>.delayed(const Duration(seconds: 3), () {
+          if (mounted) {
+            setState(() {
+              _showSwipeHint = false;
+            });
+          }
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final media = MediaQuery.sizeOf(context);
+    final pageHeight = (media.height * 0.74).clamp(440.0, 620.0);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        if (widget.quotes.length > 1)
+          AnimatedOpacity(
+            opacity: _showSwipeHint ? 1 : 0,
+            duration: const Duration(milliseconds: 350),
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: TweenAnimationBuilder<double>(
+                tween: Tween<double>(begin: 0, end: 1),
+                duration: const Duration(milliseconds: 1200),
+                curve: Curves.easeOutCubic,
+                builder: (BuildContext context, double value, Widget? child) {
+                  return Transform.translate(
+                    offset: Offset(value * 8, 0),
+                    child: child,
+                  );
+                },
+                child: Row(
+                  children: <Widget>[
+                    Icon(
+                      Icons.swipe_rounded,
+                      size: 16,
+                      color: AppColors.inkMuted,
+                    ),
+                    const SizedBox(width: 6),
+                    Text(
+                      'Wische nach links/rechts fuer weitere Zitate',
+                      style: GoogleFonts.ibmPlexSans(
+                        fontSize: 10,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.inkMuted,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        SizedBox(
+          height: pageHeight,
+          child: PageView.builder(
+            controller: _pageController,
+            physics: const PageScrollPhysics(),
+            itemCount: widget.quotes.length,
+            onPageChanged: (index) {
+              setState(() {
+                _currentPage = index;
+              });
+            },
+            itemBuilder: (BuildContext context, int index) {
+              final quote = widget.quotes[index];
+              return AnimatedBuilder(
+                animation: _pageController,
+                child: QuoteCard(
+                  quote: quote,
+                  onShare: () => ShareCardRenderer().shareQuote(quote, context),
+                  onTap: () => widget.onQuoteTap(quote),
+                  onLongPress: () => widget.onQuoteTap(quote),
+                ),
+                builder: (BuildContext context, Widget? child) {
+                  final page =
+                      _pageController.hasClients && _pageController.page != null
+                      ? _pageController.page!
+                      : _currentPage.toDouble();
+                  final distance = (page - index).abs();
+                  final scale = (1.0 - (distance * 0.08)).clamp(0.90, 1.0);
+                  final opacity = (1.0 - (distance * 0.24)).clamp(0.68, 1.0);
+
+                  return Center(
+                    child: Opacity(
+                      opacity: opacity,
+                      child: Transform.scale(
+                        scale: scale,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4),
+                          child: SingleChildScrollView(
+                            physics: const BouncingScrollPhysics(),
+                            padding: const EdgeInsets.only(bottom: 20),
+                            child: child,
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
+          ),
+        ),
+        if (widget.quotes.length > 1)
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List<Widget>.generate(widget.quotes.length, (index) {
+                final active = index == _currentPage;
+                return AnimatedContainer(
+                  duration: const Duration(milliseconds: 180),
+                  margin: const EdgeInsets.symmetric(horizontal: 3),
+                  width: active ? 16 : 6,
+                  height: 6,
+                  decoration: BoxDecoration(
+                    color: active ? AppColors.red : AppColors.rule,
+                    borderRadius: BorderRadius.circular(99),
+                  ),
+                );
+              }),
+            ),
+          ),
+      ],
+    );
+  }
+}
+
 class _BroadsheetButton extends StatelessWidget {
   const _BroadsheetButton({required this.onPressed, required this.label});
 
@@ -564,6 +683,41 @@ class _BroadsheetButton extends StatelessWidget {
                 letterSpacing: 1.2,
               ),
             ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _HeaderIconAction extends StatelessWidget {
+  const _HeaderIconAction({
+    required this.icon,
+    required this.tooltip,
+    required this.onTap,
+  });
+
+  final IconData icon;
+  final String tooltip;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
+    return Tooltip(
+      message: tooltip,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          child: Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              border: Border.all(color: scheme.outline, width: 1),
+            ),
+            child: Icon(icon, color: scheme.onSurface, size: 20),
           ),
         ),
       ),

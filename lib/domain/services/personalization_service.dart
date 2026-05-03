@@ -33,50 +33,68 @@ class PersonalizationService {
   double _quoteWeight(Quote quote, UserProfile profile) {
     var score = 1.0;
 
+    final quoteContext = <String>[
+      quote.series,
+      quote.source,
+      quote.chapter,
+      ...quote.category,
+      quote.textDe,
+    ].join(' ').toLowerCase();
+
     if (_hasInterestOverlap(quote.category, profile.historicalInterests)) {
-      score += 0.5;
+      score += 1.5;
     }
 
     switch (profile.politicalLeaning) {
       case PoliticalLeaning.left:
-        if (_matchesAny(
-          quote,
-          <String>['kapital', 'manifest', 'feuerbach'],
-          <String>[
-            'kapital',
-            'manifest',
-            'feuerbach',
-            'klassenkampf',
-            'arbeit',
-          ],
-        )) {
-          score += 0.75;
+        if (_containsAnyInText(quoteContext, <String>[
+          'arbeit',
+          'revolution',
+          'ungleichheit',
+          'solidar',
+          'gewerkschaft',
+          'umverteilung',
+          'klasse',
+        ])) {
+          score += 1.0;
         }
       case PoliticalLeaning.centerLeft:
-        if (_matchesAny(
-          quote,
-          <String>['manifest', 'kapital'],
-          <String>['arbeit', 'gewerkschaft', 'demokratie'],
-        )) {
-          score += 0.45;
+        if (_containsAnyInText(quoteContext, <String>[
+          'sozial',
+          'gerecht',
+          'demokratie',
+          'chancen',
+          'arbeit',
+          'teilhabe',
+          'reform',
+        ])) {
+          score += 0.8;
         }
       case PoliticalLeaning.neutral:
         break;
       case PoliticalLeaning.liberal:
-        if (_matchesAny(
-          quote,
-          <String>['feuerbach', 'misc'],
-          <String>['freiheit', 'aufklaerung', 'rechte', 'buerger'],
-        )) {
-          score += 0.6;
+        if (_containsAnyInText(quoteContext, <String>[
+          'freiheit',
+          'rechte',
+          'individ',
+          'markt',
+          'aufklaerung',
+          'plural',
+          'eigenverantwort',
+        ])) {
+          score += 1.0;
         }
       case PoliticalLeaning.conservative:
-        if (_matchesAny(
-          quote,
-          <String>['misc', 'brumaire'],
-          <String>['ordnung', 'staat', 'tradition'],
-        )) {
-          score += 0.45;
+        if (_containsAnyInText(quoteContext, <String>[
+          'ordnung',
+          'staat',
+          'tradition',
+          'sicherheit',
+          'familie',
+          'werte',
+          'kontinuit',
+        ])) {
+          score += 1.0;
         }
     }
 
@@ -87,7 +105,7 @@ class PersonalizationService {
     var score = 1.0;
 
     if (_hasInterestOverlap(fact.category, profile.historicalInterests)) {
-      score += 0.5;
+      score += 1.5;
     }
 
     switch (profile.politicalLeaning) {
@@ -151,25 +169,12 @@ class PersonalizationService {
     });
   }
 
-  bool _matchesAny(Quote quote, List<String> series, List<String> keywords) {
-    final haystack = <String>[
-      quote.series,
-      quote.source,
-      quote.chapter,
-      ...quote.category,
-    ].join(' ').toLowerCase();
-
-    final matchSeries = series.any(
-      (String value) => quote.series.toLowerCase().contains(value),
-    );
-    final matchKeyword = keywords.any(
-      (String value) => haystack.contains(value),
-    );
-    return matchSeries || matchKeyword;
-  }
-
   bool _containsAny(List<String> values, List<String> keywords) {
     final text = values.join(' ').toLowerCase();
+    return keywords.any((String keyword) => text.contains(keyword));
+  }
+
+  bool _containsAnyInText(String text, List<String> keywords) {
     return keywords.any((String keyword) => text.contains(keyword));
   }
 

@@ -8,6 +8,7 @@ import '../../data/models/thinker_quote.dart';
 import '../../domain/providers/thinkers_provider.dart';
 import '../../widgets/app_decorated_scaffold.dart';
 import '../../widgets/app_navigation_bar.dart';
+import '../loading/app_loading_screen.dart';
 
 class ThinkersScreen extends ConsumerWidget {
   const ThinkersScreen({super.key});
@@ -80,7 +81,7 @@ class ThinkersScreen extends ConsumerWidget {
             ),
             const Padding(
               padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-              child: _ThinkersIntroCard(),
+              child: const SizedBox.shrink(),
             ),
             Expanded(
               child: selectedAuthor == null
@@ -94,44 +95,7 @@ class ThinkersScreen extends ConsumerWidget {
   }
 }
 
-class _ThinkersIntroCard extends StatelessWidget {
-  const _ThinkersIntroCard();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: AppColors.paper,
-        border: Border.all(color: AppColors.ink, width: 1),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            'DENKER-ARCHIV',
-            style: GoogleFonts.ibmPlexSans(
-              fontSize: 10,
-              fontWeight: FontWeight.w700,
-              color: AppColors.red,
-              letterSpacing: 1.1,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'Philosophen und Politiker werden nach Typ gruppiert, damit du schneller in den passenden Kontext kommst.',
-            style: GoogleFonts.ibmPlexSans(
-              fontSize: 11,
-              color: AppColors.inkLight,
-              height: 1.5,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+// Thinkers intro/tip card removed per scope-reduction request.
 
 class _TypeTabButton extends StatelessWidget {
   const _TypeTabButton({
@@ -248,12 +212,15 @@ class _AuthorList extends ConsumerWidget {
           },
         );
       },
-      loading: () => const Center(
-        child: CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(AppColors.red),
-        ),
+      loading: () => const AppInlineLoadingState(
+        title: 'Denker werden geladen',
+        subtitle: 'Autorenliste wird vorbereitet ...',
       ),
-      error: (error, _) => Center(child: Text('Fehler: $error')),
+      error: (error, _) => AppInlineErrorState(
+        title: 'Denker konnten nicht geladen werden',
+        message: 'Fehler: $error',
+        onRetry: () => ref.invalidate(thinkerAuthorsProvider),
+      ),
     );
   }
 }
@@ -321,12 +288,15 @@ class _QuoteList extends ConsumerWidget {
                 },
               );
             },
-            loading: () => const Center(
-              child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(AppColors.red),
-              ),
+            loading: () => const AppInlineLoadingState(
+              title: 'Zitate werden geladen',
+              subtitle: 'Einträge des Denkers werden zusammengestellt ...',
             ),
-            error: (error, _) => Center(child: Text('Fehler: $error')),
+            error: (error, _) => AppInlineErrorState(
+              title: 'Zitate konnten nicht geladen werden',
+              message: 'Fehler: $error',
+              onRetry: () => ref.invalidate(thinkerQuotesProvider),
+            ),
           ),
         ),
       ],
@@ -356,7 +326,7 @@ class _ThinkerQuoteCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
-                quote.source.toUpperCase(),
+                quote.author.toUpperCase(),
                 style: GoogleFonts.ibmPlexSans(
                   fontSize: 9,
                   fontWeight: FontWeight.w700,

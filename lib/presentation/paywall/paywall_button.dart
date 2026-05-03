@@ -31,8 +31,9 @@ class _PaywallButtonState extends ConsumerState<PaywallButton> {
                 await PurchasesService.instance.presentPaywallIfNeeded(
                   requiredEntitlementId: 'zitate_app_pro',
                 );
-                // refresh customer info and react if entitlement now active
-                final info = await PurchasesService.instance.getCustomerInfo();
+                // Refresh customer info and react if entitlement now active.
+                final info = await PurchasesService.instance
+                    .refreshCustomerInfo();
                 if (PurchasesService.instance.hasProEntitlement(info)) {
                   messenger.showSnackBar(
                     const SnackBar(

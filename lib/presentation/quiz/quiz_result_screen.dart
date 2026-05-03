@@ -64,7 +64,39 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 26),
+            const SizedBox(height: 12),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(14),
+              decoration: BoxDecoration(
+                color: AppColors.paper,
+                border: Border.all(color: AppColors.rule, width: 1),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    'AUSWERTUNG',
+                    style: GoogleFonts.ibmPlexSans(
+                      fontSize: 10,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.red,
+                      letterSpacing: 1.1,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Dein Ergebnis im direkten Vergleich mit deinem bisherigen Bestwert.',
+                    style: GoogleFonts.ibmPlexSans(
+                      fontSize: 11,
+                      color: AppColors.inkLight,
+                      height: 1.5,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 22),
             Text(
               '${widget.score}/10',
               style: GoogleFonts.playfairDisplay(

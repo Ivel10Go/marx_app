@@ -1,12 +1,12 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../data/models/user_profile.dart';
-import '../../../domain/providers/quote_sources_provider.dart';
 import '../../../domain/providers/user_profile_provider.dart';
+import '../../../widgets/political_leaning_parliament_picker.dart';
 
 class ProfileSection extends ConsumerWidget {
   const ProfileSection({super.key});
@@ -14,7 +14,6 @@ class ProfileSection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final profile = ref.watch(userProfileProvider);
-    final sourcesAsync = ref.watch(availableQuoteSourcesProvider);
     final interests = availableInterests
         .where(
           (InterestOption option) =>
@@ -27,6 +26,7 @@ class ProfileSection extends ConsumerWidget {
     return _SettingsGroup(
       title: 'MEIN PROFIL',
       titleColor: AppColors.red,
+      topAccentColor: AppColors.red,
       children: <Widget>[
         _ProfileRow(
           label: 'Interessen',
@@ -39,27 +39,16 @@ class ProfileSection extends ConsumerWidget {
           value: _leaningLabel(profile.politicalLeaning),
           onTap: () => _showLeaningSheet(context, ref, profile),
         ),
+        if (kDebugMode) ...<Widget>[
+          const SizedBox(height: 12),
+          _DebugPremiumToggle(
+            enabled: profile.premiumTestEnabled,
+            onChanged: (value) => ref
+                .read(userProfileProvider.notifier)
+                .updatePremiumTestEnabled(value),
+          ),
+        ],
         const SizedBox(height: 16),
-        _ProfileRow(
-          label: 'Orientierungstest',
-          value: 'Starten',
-          onTap: () => context.push('/political-orientation'),
-        ),
-        const SizedBox(height: 14),
-        _ProfileRow(
-          label: 'Zitate auswählen',
-          value: _discoveryLabel(profile.quoteDiscoveryMode),
-          onTap: () => _showDiscoverySheet(context, ref, profile, sourcesAsync),
-        ),
-        const SizedBox(height: 14),
-        _ProfileRow(
-          label: 'Manuelle Quellen',
-          value: profile.selectedSources.isEmpty
-              ? 'Keine Auswahl'
-              : profile.selectedSources.join(', '),
-          onTap: () => _showDiscoverySheet(context, ref, profile, sourcesAsync),
-        ),
-        const SizedBox(height: 14),
         GestureDetector(
           onTap: () => _confirmReset(context, ref),
           child: Text(
@@ -72,181 +61,6 @@ class ProfileSection extends ConsumerWidget {
           ),
         ),
       ],
-    );
-  }
-
-  Future<void> _showDiscoverySheet(
-    BuildContext context,
-    WidgetRef ref,
-    UserProfile profile,
-    AsyncValue<List<String>> sourcesAsync,
-  ) async {
-    final scheme = Theme.of(context).colorScheme;
-    final selectedSources = profile.selectedSources.toSet();
-    var selectedMode = profile.quoteDiscoveryMode;
-
-    await showModalBottomSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: scheme.surface,
-      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-      builder: (BuildContext context) {
-        return StatefulBuilder(
-          builder: (context, setSheetState) {
-            return Padding(
-              padding: const EdgeInsets.fromLTRB(20, 20, 20, 24),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    'ZITATAUSWAHL',
-                    style: GoogleFonts.ibmPlexSans(
-                      fontSize: 10,
-                      fontWeight: FontWeight.w700,
-                      letterSpacing: 1.2,
-                      color: scheme.primary,
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  _DiscoveryTile(
-                    title: 'Nach Interessen',
-                    subtitle: 'Die App gewichtet passende Zitate automatisch.',
-                    active: selectedMode == QuoteDiscoveryMode.interests,
-                    onTap: () {
-                      setSheetState(() {
-                        selectedMode = QuoteDiscoveryMode.interests;
-                      });
-                    },
-                  ),
-                  const SizedBox(height: 8),
-                  _DiscoveryTile(
-                    title: 'Manuelle Auswahl',
-                    subtitle: 'Du bestimmst die Quellen selbst.',
-                    active: selectedMode == QuoteDiscoveryMode.manual,
-                    onTap: () {
-                      setSheetState(() {
-                        selectedMode = QuoteDiscoveryMode.manual;
-                      });
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                  if (selectedMode == QuoteDiscoveryMode.manual) ...<Widget>[
-                    Text(
-                      'QUELLEN AUSWÄHLEN',
-                      style: GoogleFonts.ibmPlexSans(
-                        fontSize: 10,
-                        fontWeight: FontWeight.w700,
-                        letterSpacing: 1.2,
-                        color: scheme.onSurfaceVariant,
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    sourcesAsync.when(
-                      data: (sources) {
-                        return SizedBox(
-                          height: 260,
-                          child: ListView.separated(
-                            itemCount: sources.length,
-                            separatorBuilder: (_, __) =>
-                                const SizedBox(height: 8),
-                            itemBuilder: (context, index) {
-                              final source = sources[index];
-                              final isActive = selectedSources.contains(source);
-                              return Material(
-                                color: isActive
-                                    ? AppColors.red.withValues(alpha: 0.1)
-                                    : scheme.surface,
-                                child: InkWell(
-                                  onTap: () {
-                                    setSheetState(() {
-                                      if (isActive) {
-                                        selectedSources.remove(source);
-                                      } else {
-                                        selectedSources.add(source);
-                                      }
-                                    });
-                                  },
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 12,
-                                      vertical: 10,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color: isActive
-                                            ? AppColors.red
-                                            : scheme.outline,
-                                      ),
-                                    ),
-                                    child: Row(
-                                      children: <Widget>[
-                                        Expanded(
-                                          child: Text(
-                                            source,
-                                            style: GoogleFonts.ibmPlexSans(
-                                              fontSize: 11,
-                                              fontWeight: FontWeight.w600,
-                                              color: scheme.onSurface,
-                                            ),
-                                          ),
-                                        ),
-                                        Icon(
-                                          isActive
-                                              ? Icons.check_box_rounded
-                                              : Icons.circle_outlined,
-                                          size: 18,
-                                          color: isActive
-                                              ? AppColors.red
-                                              : scheme.onSurfaceVariant,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        );
-                      },
-                      loading: () => const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 12),
-                        child: Center(child: CircularProgressIndicator()),
-                      ),
-                      error: (error, _) => Text('Fehler: $error'),
-                    ),
-                    const SizedBox(height: 16),
-                  ],
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        await ref
-                            .read(userProfileProvider.notifier)
-                            .updateQuoteDiscoveryMode(selectedMode);
-                        await ref
-                            .read(userProfileProvider.notifier)
-                            .updateSelectedSources(selectedSources.toList());
-                        if (context.mounted) {
-                          Navigator.of(context).pop();
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: scheme.onSurface,
-                        foregroundColor: scheme.surface,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.zero,
-                        ),
-                      ),
-                      child: const Text('SPEICHERN'),
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
-        );
-      },
     );
   }
 
@@ -494,37 +308,75 @@ class ProfileSection extends ConsumerWidget {
     UserProfile profile,
   ) async {
     final scheme = Theme.of(context).colorScheme;
+    var selected = profile.politicalLeaning;
     await showModalBottomSheet<void>(
       context: context,
+      isScrollControlled: true,
       backgroundColor: scheme.surface,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
       builder: (BuildContext context) {
-        return Padding(
-          padding: const EdgeInsets.fromLTRB(20, 20, 20, 24),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: PoliticalLeaning.values.map((PoliticalLeaning leaning) {
-              final isSelected = leaning == profile.politicalLeaning;
-              return ListTile(
-                contentPadding: EdgeInsets.zero,
-                title: Text(
-                  _leaningLabel(leaning),
-                  style: GoogleFonts.ibmPlexSans(color: scheme.onSurface),
-                ),
-                trailing: isSelected
-                    ? const Icon(Icons.check_rounded, color: AppColors.red)
-                    : null,
-                onTap: () async {
-                  await ref
-                      .read(userProfileProvider.notifier)
-                      .updatePoliticalLeaning(leaning);
-                  if (context.mounted) {
-                    Navigator.of(context).pop();
-                  }
-                },
-              );
-            }).toList(),
-          ),
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setModalState) {
+            return Padding(
+              padding: const EdgeInsets.fromLTRB(20, 20, 20, 24),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    'POLITISCHE HALTUNG',
+                    style: GoogleFonts.ibmPlexSans(
+                      fontSize: 10,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 1.2,
+                      color: AppColors.red,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  PoliticalLeaningParliamentPicker(
+                    selected: selected,
+                    height: 180,
+                    onSelect: (leaning) {
+                      setModalState(() {
+                        selected = leaning;
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    _leaningLabel(selected),
+                    style: GoogleFonts.playfairDisplay(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                      color: scheme.onSurface,
+                    ),
+                  ),
+                  const SizedBox(height: 14),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        await ref
+                            .read(userProfileProvider.notifier)
+                            .updatePoliticalLeaning(selected);
+                        if (context.mounted) {
+                          Navigator.of(context).pop();
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: scheme.onSurface,
+                        foregroundColor: scheme.surface,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.zero,
+                        ),
+                      ),
+                      child: const Text('SPEICHERN'),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         );
       },
     );
@@ -573,15 +425,6 @@ class ProfileSection extends ConsumerWidget {
     }
   }
 
-  String _discoveryLabel(QuoteDiscoveryMode mode) {
-    switch (mode) {
-      case QuoteDiscoveryMode.interests:
-        return 'Nach Interessen';
-      case QuoteDiscoveryMode.manual:
-        return 'Manuell';
-    }
-  }
-
   String _formatInterestsSummary(List<String> interests) {
     if (interests.isEmpty) {
       return 'Nicht gesetzt';
@@ -609,89 +452,50 @@ class _ProfileRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    return GestureDetector(
-      onTap: onTap,
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: Text(
-              label,
-              style: GoogleFonts.ibmPlexSans(
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-                color: scheme.onSurface,
-              ),
-            ),
-          ),
-          const SizedBox(width: 8),
-          Flexible(
-            child: Text(
-              value,
-              textAlign: TextAlign.right,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: GoogleFonts.ibmPlexSans(
-                fontSize: 11,
-                color: scheme.onSurfaceVariant,
-              ),
-            ),
-          ),
-          const SizedBox(width: 8),
-          const Icon(Icons.chevron_right_rounded, size: 16),
-        ],
-      ),
-    );
-  }
-}
-
-class _DiscoveryTile extends StatelessWidget {
-  const _DiscoveryTile({
-    required this.title,
-    required this.subtitle,
-    required this.active,
-    required this.onTap,
-  });
-
-  final String title;
-  final String subtitle;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    final activeBg = AppColors.red.withValues(alpha: 0.1);
-
     return Material(
-      color: active ? activeBg : scheme.surface,
+      color: scheme.surface,
       child: InkWell(
         onTap: onTap,
         child: Container(
+          width: double.infinity,
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            border: Border.all(color: active ? AppColors.red : scheme.outline),
+            border: Border.all(color: scheme.outline, width: 1),
           ),
-          child: Column(
+          child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(
-                title,
-                style: GoogleFonts.playfairDisplay(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w700,
-                  color: scheme.onSurface,
+              Container(width: 3, height: 28, color: AppColors.red),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      label,
+                      style: GoogleFonts.ibmPlexSans(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w700,
+                        color: scheme.onSurface,
+                        letterSpacing: 0.2,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      value,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: GoogleFonts.ibmPlexSans(
+                        fontSize: 11,
+                        color: scheme.onSurfaceVariant,
+                        height: 1.35,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              const SizedBox(height: 4),
-              Text(
-                subtitle,
-                style: GoogleFonts.ibmPlexSans(
-                  fontSize: 11,
-                  color: active
-                      ? scheme.onSurface.withValues(alpha: 0.8)
-                      : scheme.onSurfaceVariant,
-                ),
-              ),
+              const SizedBox(width: 8),
+              const Icon(Icons.chevron_right_rounded, size: 16),
             ],
           ),
         ),
@@ -705,11 +509,13 @@ class _SettingsGroup extends StatelessWidget {
     required this.title,
     required this.children,
     this.titleColor = AppColors.ink,
+    this.topAccentColor,
   });
 
   final String title;
   final List<Widget> children;
   final Color titleColor;
+  final Color? topAccentColor;
 
   @override
   Widget build(BuildContext context) {
@@ -728,6 +534,10 @@ class _SettingsGroup extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            if (topAccentColor != null) ...<Widget>[
+              Container(width: 40, height: 2, color: topAccentColor),
+              const SizedBox(height: 12),
+            ],
             Text(
               title,
               style: GoogleFonts.ibmPlexSans(
@@ -741,6 +551,55 @@ class _SettingsGroup extends StatelessWidget {
             ...children,
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _DebugPremiumToggle extends StatelessWidget {
+  const _DebugPremiumToggle({required this.enabled, required this.onChanged});
+
+  final bool enabled;
+  final ValueChanged<bool> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      decoration: BoxDecoration(
+        border: Border.all(color: scheme.outline, width: 1),
+        color: AppColors.paper,
+      ),
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  'Premium-Test (Debug)',
+                  style: GoogleFonts.ibmPlexSans(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.ink,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  'Aktiviert Premium-Features lokal (z. B. mehrere Zitate).',
+                  style: GoogleFonts.ibmPlexSans(
+                    fontSize: 10,
+                    color: AppColors.inkMuted,
+                    height: 1.35,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 12),
+          Switch.adaptive(value: enabled, onChanged: onChanged),
+        ],
       ),
     );
   }

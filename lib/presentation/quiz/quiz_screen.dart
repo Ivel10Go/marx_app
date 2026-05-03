@@ -9,6 +9,7 @@ import '../../domain/providers/quiz_provider.dart';
 import '../../domain/providers/quiz_timer_provider.dart';
 import '../../widgets/app_decorated_scaffold.dart';
 import '../../widgets/app_navigation_bar.dart';
+import '../loading/app_loading_screen.dart';
 import 'quiz_result_screen.dart';
 import 'widgets/answer_button.dart';
 import 'widgets/countdown_display.dart';
@@ -34,7 +35,10 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
     if (session.questions.isEmpty) {
       return const AppDecoratedScaffold(
         bottomNavigationBar: AppNavigationBar(selectedIndex: -1),
-        child: Center(child: CircularProgressIndicator()),
+        child: AppInlineLoadingState(
+          title: 'Quiz wird vorbereitet',
+          subtitle: 'Fragen und Antwortoptionen werden geladen ...',
+        ),
       );
     }
 
@@ -58,8 +62,38 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
               ),
             ),
             const SizedBox(height: 12),
-            const _QuizIntroCard(),
-            const SizedBox(height: 14),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(14),
+              decoration: BoxDecoration(
+                color: AppColors.paper,
+                border: Border.all(color: AppColors.rule, width: 1),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    'EINSTIEG',
+                    style: GoogleFonts.ibmPlexSans(
+                      fontSize: 10,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.red,
+                      letterSpacing: 1.1,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Kurzer Check, wie sicher du Quellen erkennst. Der Timer startet erst nach deinem Startklick.',
+                    style: GoogleFonts.ibmPlexSans(
+                      fontSize: 11,
+                      color: AppColors.inkLight,
+                      height: 1.5,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 12),
             Container(
               padding: const EdgeInsets.all(18),
               decoration: BoxDecoration(
@@ -224,8 +258,6 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
               ],
             ),
           ),
-          const SizedBox(height: 12),
-          const _QuizIntroCard(compact: true),
           const SizedBox(height: 14),
           Text(
             'Wer ist die Quelle dieses Zitats?',
@@ -329,75 +361,5 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
             _timerStartedForQuestionIndex = null;
           },
         );
-  }
-}
-
-class _QuizIntroCard extends StatelessWidget {
-  const _QuizIntroCard({this.compact = false});
-
-  final bool compact;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.all(compact ? 12 : 16),
-      decoration: BoxDecoration(
-        color: AppColors.paper,
-        border: Border.all(color: AppColors.rule, width: 1),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              Container(
-                width: 8,
-                height: 8,
-                decoration: const BoxDecoration(
-                  color: AppColors.red,
-                  shape: BoxShape.circle,
-                ),
-              ),
-              const SizedBox(width: 8),
-              Text(
-                'KURZSPIEL',
-                style: GoogleFonts.ibmPlexSans(
-                  fontSize: 10,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.red,
-                  letterSpacing: 1.1,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Text(
-            compact
-                ? 'Jede Frage testet, ob du das Zitat wirklich zuordnen kannst.'
-                : 'In diesem Modus steht die Zuordnung im Vordergrund: schnell lesen, sauber entscheiden und den Punktestand im Blick behalten.',
-            style: GoogleFonts.ibmPlexSans(
-              fontSize: 11,
-              color: AppColors.inkLight,
-              height: 1.5,
-            ),
-          ),
-          if (!compact) ...<Widget>[
-            const SizedBox(height: 10),
-            Container(width: 32, height: 1, color: AppColors.rule),
-            const SizedBox(height: 10),
-            Text(
-              '10 Fragen · 15 Sekunden pro Runde · sofortige Auswertung',
-              style: GoogleFonts.ibmPlexSans(
-                fontSize: 10,
-                fontWeight: FontWeight.w700,
-                color: AppColors.inkLight,
-                letterSpacing: 0.6,
-              ),
-            ),
-          ],
-        ],
-      ),
-    );
   }
 }

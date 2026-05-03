@@ -7,7 +7,7 @@ import '../services/personalization_service.dart';
 import 'repository_providers.dart';
 import 'user_profile_provider.dart';
 
-enum ArchiveTab { all, marx, history }
+enum ArchiveTab { all, history }
 
 class ArchiveItem {
   const ArchiveItem.quote(this.quote) : fact = null;
@@ -30,8 +30,9 @@ final archiveQueryProvider = StateProvider<String>((Ref ref) => '');
 final archiveTabProvider = StateProvider<ArchiveTab>(
   (Ref ref) => ArchiveTab.all,
 );
-final archiveActiveFiltersProvider = StateProvider<Set<String>>(
-  (Ref ref) => <String>{},
+final archiveThemeFilterProvider = StateProvider<String?>((Ref ref) => null);
+final archiveOrientationFilterProvider = StateProvider<String?>(
+  (Ref ref) => null,
 );
 
 final archivePoolProvider = StreamProvider<List<ArchiveItem>>((Ref ref) async* {
@@ -39,6 +40,8 @@ final archivePoolProvider = StreamProvider<List<ArchiveItem>>((Ref ref) async* {
 
   final query = ref.watch(archiveQueryProvider).trim().toLowerCase();
   final tab = ref.watch(archiveTabProvider);
+  final selectedTheme = ref.watch(archiveThemeFilterProvider);
+  final selectedOrientation = ref.watch(archiveOrientationFilterProvider);
   final profile = ref.watch(userProfileProvider);
   final personalization = ref.watch(personalizationServiceProvider);
   final historyRepository = ref.watch(historyRepositoryProvider);
@@ -66,18 +69,30 @@ final archivePoolProvider = StreamProvider<List<ArchiveItem>>((Ref ref) async* {
       switch (tab) {
         case ArchiveTab.all:
           return true;
-        case ArchiveTab.marx:
-          return item.isQuote;
         case ArchiveTab.history:
           return item.isFact;
       }
     }).toList();
 
+    final dropdownFiltered = tabFiltered.where((ArchiveItem item) {
+      if (selectedTheme != null &&
+          !_matchesTheme(item: item, theme: selectedTheme)) {
+        return false;
+      }
+
+      if (selectedOrientation != null &&
+          !_matchesOrientation(item: item, orientation: selectedOrientation)) {
+        return false;
+      }
+
+      return true;
+    }).toList();
+
     if (query.isEmpty) {
-      return tabFiltered;
+      return dropdownFiltered;
     }
 
-    return tabFiltered.where((ArchiveItem item) {
+    return dropdownFiltered.where((ArchiveItem item) {
       if (item.isQuote) {
         final quote = item.quote!;
         return quote.textDe.toLowerCase().contains(query) ||
@@ -101,79 +116,145 @@ final archivePoolProvider = StreamProvider<List<ArchiveItem>>((Ref ref) async* {
   });
 });
 
-final archiveFilterOptionsProvider = Provider<List<String>>((Ref ref) {
+final archiveThemeFilterOptionsProvider = Provider<List<String>>((Ref ref) {
   final pool = ref.watch(archivePoolProvider).valueOrNull ?? <ArchiveItem>[];
-  final tab = ref.watch(archiveTabProvider);
   final options = <String>{};
 
   for (final item in pool) {
-    options.addAll(_tokensForTab(item: item, tab: tab));
+    options.addAll(_themeTokensForItem(item: item));
   }
 
   final sorted = options.toList()..sort();
   return sorted.take(24).toList();
 });
 
-final archiveProvider = Provider<AsyncValue<List<ArchiveItem>>>((Ref ref) {
-  final activeFilters = ref.watch(archiveActiveFiltersProvider);
-  final tab = ref.watch(archiveTabProvider);
-  final poolAsync = ref.watch(archivePoolProvider);
+final archiveOrientationFilterOptionsProvider = Provider<List<String>>((
+  Ref ref,
+) {
+  final pool = ref.watch(archivePoolProvider).valueOrNull ?? <ArchiveItem>[];
+  final options = <String>{};
 
-  return poolAsync.whenData((List<ArchiveItem> items) {
-    if (activeFilters.isEmpty) {
-      return items;
-    }
+  for (final item in pool) {
+    options.addAll(_orientationTokensForItem(item: item));
+  }
 
-    return items.where((ArchiveItem item) {
-      final tokens = _tokensForTab(item: item, tab: tab);
-      return activeFilters.any(tokens.contains);
-    }).toList();
-  });
+  final sorted = options.toList()..sort();
+  return sorted.take(8).toList();
 });
 
-Set<String> _tokensForTab({
-  required ArchiveItem item,
-  required ArchiveTab tab,
-}) {
+final archiveProvider = Provider<AsyncValue<List<ArchiveItem>>>((Ref ref) {
+  final poolAsync = ref.watch(archivePoolProvider);
+
+  return poolAsync;
+});
+
+Set<String> _themeTokensForItem({required ArchiveItem item}) {
   if (item.isQuote) {
     final quote = item.quote!;
-    if (tab == ArchiveTab.history) {
-      return <String>{};
-    }
-    return <String>{quote.source, quote.difficulty, ...quote.category, 'ZITAT'};
+    return <String>{...quote.category};
   }
 
   final fact = item.fact!;
-  if (tab == ArchiveTab.marx) {
-    return <String>{};
+  return <String>{...fact.category};
+}
+
+Set<String> _orientationTokensForItem({required ArchiveItem item}) {
+  final text = item.isQuote
+      ? <String>[
+          item.quote!.textDe,
+          item.quote!.source,
+          item.quote!.chapter,
+          ...item.quote!.category,
+        ].join(' ').toLowerCase()
+      : <String>[
+          item.fact!.headline,
+          item.fact!.body,
+          item.fact!.era,
+          item.fact!.region,
+          item.fact!.connectionToMarx,
+          if (item.fact!.person != null) item.fact!.person!,
+          if (item.fact!.personRole != null) item.fact!.personRole!,
+          ...item.fact!.category,
+        ].join(' ').toLowerCase();
+
+  final tokens = <String>{};
+
+  if (_containsAny(text, <String>[
+    'arbeit',
+    'klasse',
+    'revolution',
+    'solidar',
+    'gewerkschaft',
+    'umverteilung',
+    'sozial',
+  ])) {
+    tokens.add('Links');
   }
-  return <String>{
-    fact.era,
-    fact.region,
-    fact.difficulty,
-    ...fact.category,
-    if ((fact.person ?? '').trim().isNotEmpty) fact.person!,
-    'FAKT',
-  };
+
+  if (_containsAny(text, <String>[
+    'demokratie',
+    'gerecht',
+    'reform',
+    'teilhabe',
+    'chancen',
+    'gleichheit',
+  ])) {
+    tokens.add('Mitte-Links');
+  }
+
+  if (_containsAny(text, <String>[
+    'freiheit',
+    'rechte',
+    'individ',
+    'aufklaerung',
+    'markt',
+    'plural',
+  ])) {
+    tokens.add('Liberal');
+  }
+
+  if (_containsAny(text, <String>[
+    'ordnung',
+    'staat',
+    'tradition',
+    'familie',
+    'sicherheit',
+    'werte',
+  ])) {
+    tokens.add('Konservativ');
+  }
+
+  if (tokens.isEmpty) {
+    tokens.add('Neutral');
+  }
+
+  return tokens;
+}
+
+bool _containsAny(String text, List<String> keywords) {
+  return keywords.any((String keyword) => text.contains(keyword));
+}
+
+bool _matchesTheme({required ArchiveItem item, required String theme}) {
+  final normalized = theme.toLowerCase();
+  if (item.isQuote) {
+    return item.quote!.category.any(
+      (String category) => category.toLowerCase().contains(normalized),
+    );
+  }
+
+  return item.fact!.category.any(
+    (String category) => category.toLowerCase().contains(normalized),
+  );
+}
+
+bool _matchesOrientation({
+  required ArchiveItem item,
+  required String orientation,
+}) {
+  return _orientationTokensForItem(item: item).contains(orientation);
 }
 
 List<Quote> _filterQuotesByProfile(List<Quote> all, UserProfile profile) {
-  // If not in manual mode, return all quotes
-  if (profile.quoteDiscoveryMode != QuoteDiscoveryMode.manual) {
-    return all;
-  }
-
-  // If no sources selected, return all quotes
-  if (profile.selectedSources.isEmpty) {
-    return all;
-  }
-
-  // Filter by selected sources
-  final selected = profile.selectedSources
-      .map((String value) => value.toLowerCase())
-      .toSet();
-
-  return all
-      .where((Quote quote) => selected.contains(quote.source.toLowerCase()))
-      .toList();
+  return all;
 }

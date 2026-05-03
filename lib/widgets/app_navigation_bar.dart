@@ -14,11 +14,6 @@ class AppNavigationBar extends StatelessWidget {
       label: 'ARCHIV',
       icon: Icons.library_books_outlined,
     ),
-    _NavDestination(
-      path: '/settings',
-      label: 'EINST.',
-      icon: Icons.settings_outlined,
-    ),
     _NavDestination(label: 'MEHR', icon: Icons.grid_view_rounded, isMore: true),
   ];
 
@@ -39,20 +34,6 @@ class AppNavigationBar extends StatelessWidget {
                 onTap: () {
                   Navigator.of(sheetContext).pop();
                   context.go('/favorites');
-                },
-              ),
-              _MoreItem(
-                label: 'Wischtest',
-                onTap: () {
-                  Navigator.of(sheetContext).pop();
-                  context.go('/political-orientation');
-                },
-              ),
-              _MoreItem(
-                label: 'Quiz',
-                onTap: () {
-                  Navigator.of(sheetContext).pop();
-                  context.go('/quiz');
                 },
               ),
               _MoreItem(

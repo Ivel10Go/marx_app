@@ -6,11 +6,9 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../core/services/notification_service.dart';
 import '../../core/theme/app_colors.dart';
 import '../../data/models/user_profile.dart';
-import '../../domain/providers/quote_sources_provider.dart';
 import '../../domain/providers/user_profile_provider.dart';
 import '../../widgets/app_decorated_scaffold.dart';
 import 'pages/interests_page.dart';
-import 'pages/quote_discovery_page.dart';
 import 'pages/notification_permission_page.dart';
 import 'pages/political_leaning_page.dart';
 import 'pages/welcome_page.dart';
@@ -26,12 +24,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   final PageController _pageController = PageController();
   int _index = 0;
   final Set<String> _selectedInterests = <String>{};
-  final Set<String> _selectedSources = <String>{};
   PoliticalLeaning _leaning = PoliticalLeaning.neutral;
-  QuoteDiscoverySelection _quoteDiscoverySelection =
-      QuoteDiscoverySelection.interests;
 
-  static const _pageCount = 5;
+  static const _pageCount = 4;
 
   @override
   void dispose() {
@@ -51,11 +46,6 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           .saveProfile(
             historicalInterests: _selectedInterests.toList(),
             politicalLeaning: _leaning,
-            quoteDiscoveryMode:
-                _quoteDiscoverySelection == QuoteDiscoverySelection.manual
-                ? QuoteDiscoveryMode.manual
-                : QuoteDiscoveryMode.interests,
-            selectedSources: _selectedSources.toList(),
           );
       ref.invalidate(userProfileProvider);
       if (mounted) {
@@ -73,7 +63,6 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    final sourcesAsync = ref.watch(availableQuoteSourcesProvider);
 
     return AppDecoratedScaffold(
       child: Column(
@@ -90,9 +79,10 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                     Text(
                       'ONBOARDING',
                       style: GoogleFonts.playfairDisplay(
-                        fontSize: 30,
+                        fontSize: 32,
                         fontWeight: FontWeight.w700,
                         color: scheme.onSurface,
+                        letterSpacing: -0.5,
                       ),
                     ),
                     Text(
@@ -108,6 +98,15 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 ),
                 const SizedBox(height: 12),
                 Container(width: 40, height: 2, color: AppColors.red),
+                const SizedBox(height: 10),
+                Text(
+                  'In wenigen Schritten richtet sich dein Feed auf deine Themen aus.',
+                  style: GoogleFonts.ibmPlexSans(
+                    fontSize: 11,
+                    color: scheme.onSurfaceVariant,
+                    height: 1.45,
+                  ),
+                ),
                 const SizedBox(height: 12),
                 Container(
                   height: 1,
@@ -120,9 +119,12 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
               ],
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-            child: _OnboardingIntroCard(),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+            child: _OnboardingStepCard(
+              title: _stepHeadline(_index),
+              body: _stepHint(_index),
+            ),
           ),
           Expanded(
             child: PageView(
@@ -147,26 +149,6 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                         _selectedInterests.remove(value);
                       } else {
                         _selectedInterests.add(value);
-                      }
-                    });
-                  },
-                ),
-                QuoteDiscoveryPage(
-                  mode: _quoteDiscoverySelection,
-                  sources: _selectedSources,
-                  availableSources:
-                      sourcesAsync.valueOrNull ?? const <String>[],
-                  onModeChanged: (QuoteDiscoverySelection value) {
-                    setState(() {
-                      _quoteDiscoverySelection = value;
-                    });
-                  },
-                  onToggleSource: (String value) {
-                    setState(() {
-                      if (_selectedSources.contains(value)) {
-                        _selectedSources.remove(value);
-                      } else {
-                        _selectedSources.add(value);
                       }
                     });
                   },
@@ -217,8 +199,39 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   }
 }
 
-class _OnboardingIntroCard extends StatelessWidget {
-  const _OnboardingIntroCard();
+String _stepHeadline(int index) {
+  switch (index) {
+    case 0:
+      return 'START';
+    case 1:
+      return 'ERINNERUNG';
+    case 2:
+      return 'INTERESSEN';
+    case 3:
+      return 'ORIENTIERUNG';
+  }
+  return 'ONBOARDING';
+}
+
+String _stepHint(int index) {
+  switch (index) {
+    case 0:
+      return 'Kurzer Überblick über deinen täglichen Ablauf in der App.';
+    case 1:
+      return 'Aktiviere optional die tägliche Erinnerung zur Ausgabe.';
+    case 2:
+      return 'Markiere Themen, damit dein Feed relevanter startet.';
+    case 3:
+      return 'Optionaler politischer Fokus für feinere Einordnung.';
+  }
+  return 'Richte deine tägliche Ausgabe in wenigen Schritten ein.';
+}
+
+class _OnboardingStepCard extends StatelessWidget {
+  const _OnboardingStepCard({required this.title, required this.body});
+
+  final String title;
+  final String body;
 
   @override
   Widget build(BuildContext context) {
@@ -234,47 +247,22 @@ class _OnboardingIntroCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Row(
-            children: <Widget>[
-              Container(
-                width: 8,
-                height: 8,
-                decoration: const BoxDecoration(
-                  color: AppColors.red,
-                  shape: BoxShape.circle,
-                ),
-              ),
-              const SizedBox(width: 8),
-              Text(
-                'ERSTE SCHRITTE',
-                style: GoogleFonts.ibmPlexSans(
-                  fontSize: 10,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.red,
-                  letterSpacing: 1.1,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
           Text(
-            'Die ersten Seiten richten die App auf deine Interessen, deinen Modus und deine Benachrichtigungen aus.',
-            style: GoogleFonts.ibmPlexSans(
-              fontSize: 11,
-              color: scheme.onSurfaceVariant,
-              height: 1.5,
-            ),
-          ),
-          const SizedBox(height: 10),
-          Container(width: 32, height: 1, color: scheme.outline),
-          const SizedBox(height: 10),
-          Text(
-            'Dauer: nur wenige Minuten · alles kann später angepasst werden',
+            title,
             style: GoogleFonts.ibmPlexSans(
               fontSize: 10,
               fontWeight: FontWeight.w700,
+              color: AppColors.red,
+              letterSpacing: 1.2,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            body,
+            style: GoogleFonts.ibmPlexSans(
+              fontSize: 11,
               color: scheme.onSurfaceVariant,
-              letterSpacing: 0.6,
+              height: 1.45,
             ),
           ),
         ],

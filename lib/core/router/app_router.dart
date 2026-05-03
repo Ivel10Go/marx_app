@@ -8,9 +8,7 @@ import '../../presentation/detail/quote_detail_screen_new.dart';
 import '../../presentation/favorites/favorites_screen.dart';
 import '../../presentation/home/home_screen.dart';
 import '../../presentation/onboarding/onboarding_screen.dart';
-import '../../presentation/political_orientation/political_orientation_test_screen.dart';
 import '../../presentation/premium/premium_features_screen.dart';
-import '../../presentation/quiz/quiz_screen.dart';
 import '../../presentation/settings/settings_screen.dart';
 import '../../presentation/thinkers/thinkers_screen.dart';
 import '../../presentation/paywall/purchase_page.dart';
@@ -67,11 +65,6 @@ final appRouterProvider = Provider<GoRouter>((Ref ref) {
         builder: (context, state) => const FavoritesScreen(),
       ),
       GoRoute(
-        path: '/quiz',
-        name: 'quiz',
-        builder: (context, state) => const QuizScreen(),
-      ),
-      GoRoute(
         path: '/settings',
         name: 'settings',
         pageBuilder: (context, state) => CustomTransitionPage<void>(
@@ -92,18 +85,6 @@ final appRouterProvider = Provider<GoRouter>((Ref ref) {
         path: '/onboarding',
         name: 'onboarding',
         builder: (context, state) => const OnboardingScreen(),
-      ),
-      GoRoute(
-        path: '/political-orientation',
-        name: 'political-orientation',
-        pageBuilder: (context, state) => CustomTransitionPage<void>(
-          key: state.pageKey,
-          transitionDuration: const Duration(milliseconds: 180),
-          reverseTransitionDuration: const Duration(milliseconds: 140),
-          child: const PoliticalOrientationTestScreen(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-              FadeTransition(opacity: animation, child: child),
-        ),
       ),
       GoRoute(
         path: '/purchase',

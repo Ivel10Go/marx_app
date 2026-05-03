@@ -11,7 +11,6 @@ enum DifficultyFilter { all, beginnerOnly, noBeginner }
 
 class SettingsState {
   const SettingsState({
-    required this.themeMode,
     required this.languageCode,
     required this.difficultyFilter,
     required this.notificationHour,
@@ -22,7 +21,6 @@ class SettingsState {
     required this.onboardingSeen,
   });
 
-  final ThemeMode themeMode;
   final String languageCode;
   final DifficultyFilter difficultyFilter;
   final int notificationHour;
@@ -33,7 +31,6 @@ class SettingsState {
   final bool onboardingSeen;
 
   SettingsState copyWith({
-    ThemeMode? themeMode,
     String? languageCode,
     DifficultyFilter? difficultyFilter,
     int? notificationHour,
@@ -44,7 +41,6 @@ class SettingsState {
     bool? onboardingSeen,
   }) {
     return SettingsState(
-      themeMode: themeMode ?? this.themeMode,
       languageCode: languageCode ?? this.languageCode,
       difficultyFilter: difficultyFilter ?? this.difficultyFilter,
       notificationHour: notificationHour ?? this.notificationHour,
@@ -66,7 +62,6 @@ class SettingsController extends AsyncNotifier<SettingsState> {
         ? false
         : UserProfile.fromJsonString(profileRaw).onboardingCompleted;
     return SettingsState(
-      themeMode: _fromThemeIndex(prefs.getInt(SettingsKeys.themeMode) ?? 0),
       languageCode: prefs.getString(SettingsKeys.languageCode) ?? 'de',
       difficultyFilter: _fromDifficultyKey(
         prefs.getString(SettingsKeys.difficulty) ?? DifficultyFilter.all.name,
@@ -89,12 +84,6 @@ class SettingsController extends AsyncNotifier<SettingsState> {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(SettingsKeys.homeContentMode, mode.name);
     state = AsyncData(state.requireValue.copyWith(homeContentMode: mode));
-  }
-
-  Future<void> setThemeMode(ThemeMode mode) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt(SettingsKeys.themeMode, mode.index);
-    state = AsyncData(state.requireValue.copyWith(themeMode: mode));
   }
 
   Future<void> setLanguageCode(String code) async {
@@ -164,13 +153,6 @@ class SettingsController extends AsyncNotifier<SettingsState> {
       profile.copyWith(onboardingCompleted: true).toJsonString(),
     );
     state = AsyncData(state.requireValue.copyWith(onboardingSeen: true));
-  }
-
-  ThemeMode _fromThemeIndex(int index) {
-    if (index < 0 || index >= ThemeMode.values.length) {
-      return ThemeMode.system;
-    }
-    return ThemeMode.values[index];
   }
 
   DifficultyFilter _fromDifficultyKey(String key) {

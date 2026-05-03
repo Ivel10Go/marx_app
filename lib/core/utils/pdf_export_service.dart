@@ -5,6 +5,7 @@ import 'package:printing/printing.dart';
 
 import '../../data/models/history_fact.dart';
 import '../../data/models/quote.dart';
+import 'quote_attribution.dart';
 
 class PdfExportService {
   static final _red = PdfColor.fromInt(0xFFC41E1E);
@@ -119,110 +120,186 @@ class PdfExportService {
   }
 
   pw.Widget _buildQuotePage(Quote quote, _PdfFonts fonts) {
-    return pw.Column(
-      crossAxisAlignment: pw.CrossAxisAlignment.start,
-      children: <pw.Widget>[
-        pw.Text(
-          '${quote.source.toUpperCase()} · ${quote.year}',
-          style: pw.TextStyle(
-            font: fonts.sansBold,
-            fontSize: 9,
+    return pw.Container(
+      decoration: pw.BoxDecoration(
+        border: pw.Border.all(color: _ink, width: 1.5),
+      ),
+      child: pw.Column(
+        crossAxisAlignment: pw.CrossAxisAlignment.stretch,
+        children: <pw.Widget>[
+          pw.Container(
             color: _red,
-            letterSpacing: 1.4,
+            padding: const pw.EdgeInsets.symmetric(
+              horizontal: 14,
+              vertical: 10,
+            ),
+            child: pw.Row(
+              children: <pw.Widget>[
+                pw.Expanded(
+                  child: pw.Text(
+                    '${quoteAuthorLabel(quote).toUpperCase()} · ${quote.year}',
+                    style: pw.TextStyle(
+                      font: fonts.sansBold,
+                      fontSize: 9,
+                      color: PdfColors.white,
+                      letterSpacing: 1.1,
+                    ),
+                    maxLines: 1,
+                  ),
+                ),
+                pw.SizedBox(width: 8),
+                pw.Text(
+                  quote.chapter.toUpperCase(),
+                  style: pw.TextStyle(
+                    font: fonts.sansBold,
+                    fontSize: 8,
+                    color: PdfColors.white,
+                    letterSpacing: 1.0,
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-        pw.SizedBox(height: 20),
-        pw.Text(
-          '„${quote.textDe}“',
-          style: pw.TextStyle(
-            font: fonts.serifItalic,
-            fontSize: 20,
-            color: _ink,
-            lineSpacing: 6,
+          pw.Padding(
+            padding: const pw.EdgeInsets.fromLTRB(18, 18, 18, 14),
+            child: pw.Column(
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
+              children: <pw.Widget>[
+                pw.Text(
+                  '„${quote.textDe}“',
+                  style: pw.TextStyle(
+                    font: fonts.serifItalic,
+                    fontSize: 22,
+                    color: _ink,
+                    lineSpacing: 5,
+                  ),
+                ),
+                pw.SizedBox(height: 14),
+                pw.Container(width: 56, height: 2, color: _red),
+                pw.SizedBox(height: 10),
+                pw.Text(
+                  '— ${quoteAuthorLabel(quote)}',
+                  style: pw.TextStyle(
+                    font: fonts.sans,
+                    fontSize: 12,
+                    color: _muted,
+                  ),
+                ),
+                if (quote.category.isNotEmpty) ...<pw.Widget>[
+                  pw.SizedBox(height: 12),
+                  pw.Text(
+                    quote.category.join(' · ').toUpperCase(),
+                    style: pw.TextStyle(
+                      font: fonts.sansBold,
+                      fontSize: 8,
+                      color: _red,
+                      letterSpacing: 0.9,
+                    ),
+                  ),
+                ],
+                if (quote.explanationShort.trim().isNotEmpty) ...<pw.Widget>[
+                  pw.SizedBox(height: 16),
+                  pw.Text(
+                    quote.explanationShort,
+                    style: pw.TextStyle(
+                      font: fonts.sans,
+                      fontSize: 10,
+                      color: _muted,
+                      lineSpacing: 2.5,
+                    ),
+                  ),
+                ],
+              ],
+            ),
           ),
-        ),
-        pw.SizedBox(height: 16),
-        pw.Container(width: 40, height: 2, color: _red),
-        pw.SizedBox(height: 10),
-        pw.Text(
-          quote.source,
-          style: pw.TextStyle(font: fonts.sans, fontSize: 11, color: _muted),
-        ),
-        pw.SizedBox(height: 24),
-        pw.Text(
-          'ERKLAERUNG',
-          style: pw.TextStyle(
-            font: fonts.sansBold,
-            fontSize: 8,
-            color: _red,
-            letterSpacing: 1.2,
-          ),
-        ),
-        pw.SizedBox(height: 6),
-        pw.Text(
-          quote.explanationLong,
-          style: pw.TextStyle(
-            font: fonts.sans,
-            fontSize: 11,
-            color: _muted,
-            lineSpacing: 3,
-          ),
-        ),
-        pw.Spacer(),
-        pw.Text(
-          quote.category.join(' · '),
-          style: pw.TextStyle(font: fonts.sans, fontSize: 8, color: _muted),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
   pw.Widget _buildFactPage(HistoryFact fact, _PdfFonts fonts) {
-    return pw.Column(
-      crossAxisAlignment: pw.CrossAxisAlignment.start,
-      children: <pw.Widget>[
-        pw.Text(
-          'WELTGESCHICHTE · ${fact.dateDisplay.toUpperCase()}',
-          style: pw.TextStyle(
-            font: fonts.sansBold,
-            fontSize: 9,
+    return pw.Container(
+      decoration: pw.BoxDecoration(
+        border: pw.Border.all(color: _ink, width: 1.5),
+      ),
+      child: pw.Column(
+        crossAxisAlignment: pw.CrossAxisAlignment.stretch,
+        children: <pw.Widget>[
+          pw.Container(
             color: _red,
-            letterSpacing: 1.4,
+            padding: const pw.EdgeInsets.symmetric(
+              horizontal: 14,
+              vertical: 10,
+            ),
+            child: pw.Row(
+              children: <pw.Widget>[
+                pw.Expanded(
+                  child: pw.Text(
+                    'WELTGESCHICHTE · ${fact.dateDisplay.toUpperCase()}',
+                    style: pw.TextStyle(
+                      font: fonts.sansBold,
+                      fontSize: 9,
+                      color: PdfColors.white,
+                      letterSpacing: 1.1,
+                    ),
+                  ),
+                ),
+                pw.SizedBox(width: 8),
+                pw.Text(
+                  fact.category.isNotEmpty
+                      ? fact.category.first.toUpperCase()
+                      : 'FAKT',
+                  style: pw.TextStyle(
+                    font: fonts.sansBold,
+                    fontSize: 8,
+                    color: PdfColors.white,
+                    letterSpacing: 1.0,
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-        pw.SizedBox(height: 20),
-        pw.Text(
-          fact.headline,
-          style: pw.TextStyle(font: fonts.serif, fontSize: 22, color: _ink),
-        ),
-        pw.SizedBox(height: 12),
-        pw.Text(
-          fact.body,
-          style: pw.TextStyle(font: fonts.sans, fontSize: 12, color: _ink),
-        ),
-        pw.SizedBox(height: 16),
-        pw.Container(width: 40, height: 2, color: _red),
-        pw.SizedBox(height: 10),
-        pw.Text(
-          'MARXISTISCHE EINORDNUNG',
-          style: pw.TextStyle(
-            font: fonts.sansBold,
-            fontSize: 8,
-            color: _red,
-            letterSpacing: 1.2,
+          pw.Padding(
+            padding: const pw.EdgeInsets.fromLTRB(18, 18, 18, 14),
+            child: pw.Column(
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
+              children: <pw.Widget>[
+                pw.Text(
+                  fact.funFact ?? fact.headline,
+                  style: pw.TextStyle(
+                    font: fonts.serif,
+                    fontSize: 22,
+                    color: _ink,
+                    lineSpacing: 4,
+                  ),
+                ),
+                pw.SizedBox(height: 12),
+                pw.Text(
+                  fact.body,
+                  style: pw.TextStyle(
+                    font: fonts.sans,
+                    fontSize: 11,
+                    color: _ink,
+                    lineSpacing: 3,
+                  ),
+                ),
+                pw.SizedBox(height: 14),
+                pw.Container(width: 56, height: 2, color: _red),
+                pw.SizedBox(height: 10),
+                pw.Text(
+                  fact.connectionToMarx,
+                  style: pw.TextStyle(
+                    font: fonts.sans,
+                    fontSize: 10,
+                    color: _muted,
+                    lineSpacing: 2.6,
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-        pw.SizedBox(height: 6),
-        pw.Text(
-          fact.connectionToMarx,
-          style: pw.TextStyle(
-            font: fonts.sans,
-            fontSize: 11,
-            color: _muted,
-            lineSpacing: 3,
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

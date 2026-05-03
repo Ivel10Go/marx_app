@@ -32,7 +32,7 @@ class PremiumFeaturesScreen extends StatelessWidget {
                 Text(
                   'BASISFUNKTIONEN',
                   style: GoogleFonts.playfairDisplay(
-                    fontSize: 28,
+                    fontSize: 32,
                     fontWeight: FontWeight.w700,
                     color: scheme.onSurface,
                     letterSpacing: -0.5,

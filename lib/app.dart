@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'core/router/app_router.dart';
-import 'core/theme/app_colors.dart';
 import 'core/theme/app_theme.dart';
 import 'domain/providers/settings_provider.dart';
+import 'presentation/loading/app_loading_screen.dart';
 
 class DasKapitalApp extends ConsumerWidget {
   const DasKapitalApp({super.key});
@@ -15,21 +15,31 @@ class DasKapitalApp extends ConsumerWidget {
     final settings = ref.watch(settingsControllerProvider);
 
     return settings.when(
-      data: (settingsState) => MaterialApp.router(
+      data: (_) => MaterialApp.router(
         title: 'Zitatatlas',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.light,
-        darkTheme: AppTheme.dark,
-        themeMode: settingsState.themeMode,
         routerConfig: router,
       ),
       loading: () => MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.light,
         home: Scaffold(
-          body: Center(child: CircularProgressIndicator(color: AppColors.red)),
+          body: const AppInlineLoadingState(
+            title: 'Einstellungen werden geladen',
+            subtitle: 'App-Konfiguration wird vorbereitet ...',
+          ),
         ),
       ),
       error: (err, stack) => MaterialApp(
-        home: Scaffold(body: Center(child: Text('Error: $err'))),
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.light,
+        home: Scaffold(
+          body: AppInlineErrorState(
+            title: 'Einstellungen konnten nicht geladen werden',
+            message: 'Fehler: $err',
+          ),
+        ),
       ),
     );
   }

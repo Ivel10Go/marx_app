@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/utils/image_loader.dart';
 import '../../core/utils/share_card_renderer.dart';
+import '../../core/utils/quote_attribution.dart';
 import '../../data/models/quote.dart';
 import '../../domain/providers/daily_quote_provider.dart';
 import '../../domain/providers/favorites_provider.dart';
@@ -13,6 +14,7 @@ import '../../domain/services/tts_service.dart';
 import '../../widgets/adaptive_quote_text.dart';
 import '../../widgets/app_decorated_scaffold.dart';
 import '../../widgets/category_chip.dart';
+import '../loading/app_loading_screen.dart';
 
 class QuoteDetailScreen extends ConsumerStatefulWidget {
   const QuoteDetailScreen({required this.quoteId, super.key});
@@ -166,7 +168,7 @@ class _QuoteDetailScreenState extends ConsumerState<QuoteDetailScreen> {
       child: quoteAsync.when(
         data: (quote) {
           if (quote == null) {
-            return const Center(child: Text('Zitat nicht gefunden.'));
+            return const _DetailEmptyStateCard();
           }
 
           return ListView(
@@ -179,7 +181,7 @@ class _QuoteDetailScreenState extends ConsumerState<QuoteDetailScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      '${quote.source.toUpperCase()} · ${quote.year}',
+                      '${quoteAuthorLabel(quote).toUpperCase()} · ${quote.year}',
                       style: GoogleFonts.ibmPlexSans(
                         fontSize: 11,
                         fontWeight: FontWeight.w700,
@@ -189,7 +191,7 @@ class _QuoteDetailScreenState extends ConsumerState<QuoteDetailScreen> {
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      quote.chapter,
+                      '${quote.source} · ${quote.chapter}',
                       style: GoogleFonts.ibmPlexSans(
                         fontSize: 9,
                         color: AppColors.redOnRed.withValues(alpha: 0.8),
@@ -198,10 +200,7 @@ class _QuoteDetailScreenState extends ConsumerState<QuoteDetailScreen> {
                   ],
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                child: _QuoteDetailIntroCard(),
-              ),
+              const SizedBox.shrink(),
               if (quote.imageUrl != null && quote.imageUrl!.isNotEmpty)
                 CachedImageLoader(
                   imageUrl: quote.imageUrl!,
@@ -283,8 +282,15 @@ class _QuoteDetailScreenState extends ConsumerState<QuoteDetailScreen> {
             ],
           );
         },
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, _) => Center(child: Text('Fehler: $error')),
+        loading: () => const AppInlineLoadingState(
+          title: 'Zitat wird geladen',
+          subtitle: 'Detailansicht und Kontext werden vorbereitet ...',
+        ),
+        error: (error, _) => AppInlineErrorState(
+          title: 'Zitat konnte nicht geladen werden',
+          message: 'Fehler: $error',
+          onRetry: () => ref.invalidate(quoteByIdProvider(quoteId)),
+        ),
       ),
     );
   }
@@ -301,13 +307,9 @@ class _SectionCard extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
 
     return Container(
-      decoration: const BoxDecoration(
-        color: Colors.transparent,
-        border: Border(
-          left: BorderSide(color: Colors.transparent, width: 1),
-          right: BorderSide(color: Colors.transparent, width: 1),
-          bottom: BorderSide(color: Colors.transparent, width: 1),
-        ),
+      decoration: BoxDecoration(
+        color: scheme.surface,
+        border: Border.all(color: scheme.outline, width: 1),
       ),
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -339,46 +341,64 @@ class _SectionCard extends StatelessWidget {
   }
 }
 
-class _QuoteDetailIntroCard extends StatelessWidget {
-  const _QuoteDetailIntroCard();
+class _DetailEmptyStateCard extends StatelessWidget {
+  const _DetailEmptyStateCard();
 
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
 
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: scheme.surface,
-        border: Border.all(color: scheme.outline, width: 1),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            'DETAILANSICHT',
-            style: GoogleFonts.ibmPlexSans(
-              fontSize: 10,
-              fontWeight: FontWeight.w700,
-              color: AppColors.red,
-              letterSpacing: 1.1,
-            ),
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Container(
+          width: 460,
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: scheme.surface,
+            border: Border.all(color: scheme.outline, width: 1),
           ),
-          const SizedBox(height: 8),
-          Text(
-            'Hier bekommst du das Zitat im Kontext, mit Erklärung, Audio und den passenden Folgeaktionen.',
-            style: GoogleFonts.ibmPlexSans(
-              fontSize: 11,
-              color: scheme.onSurfaceVariant,
-              height: 1.5,
-            ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(width: 34, height: 2, color: AppColors.red),
+              const SizedBox(height: 10),
+              Text(
+                'Zitat nicht gefunden',
+                style: GoogleFonts.ibmPlexSans(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w700,
+                  color: scheme.onSurface,
+                  letterSpacing: 0.9,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'Der Eintrag ist nicht verfügbar oder wurde verschoben. Du kannst zur letzten Ansicht zurückgehen.',
+                style: GoogleFonts.ibmPlexSans(
+                  fontSize: 11,
+                  color: scheme.onSurfaceVariant,
+                  height: 1.45,
+                ),
+              ),
+              const SizedBox(height: 14),
+              SizedBox(
+                width: double.infinity,
+                child: OutlinedButton(
+                  onPressed: () => Navigator.of(context).maybePop(),
+                  child: const Text('ZURÜCK'),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
 }
+
+// Quote detail intro/tip card removed per scope-reduction request.
 
 class _BroadsheetButton extends StatelessWidget {
   const _BroadsheetButton({required this.onPressed, required this.label});

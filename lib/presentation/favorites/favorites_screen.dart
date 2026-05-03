@@ -9,6 +9,7 @@ import '../../domain/providers/favorites_provider.dart';
 import '../../widgets/app_decorated_scaffold.dart';
 import '../../widgets/app_navigation_bar.dart';
 import '../../widgets/quote_card.dart';
+import '../loading/app_loading_screen.dart';
 
 class FavoritesScreen extends ConsumerWidget {
   const FavoritesScreen({super.key});
@@ -29,13 +30,52 @@ class FavoritesScreen extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
-                  'FAVORITEN',
-                  style: GoogleFonts.playfairDisplay(
-                    fontSize: 32,
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.ink,
-                    letterSpacing: -0.5,
+                favoritesAsync.when(
+                  data: (quotes) {
+                    return Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                        Text(
+                          'FAVORITEN',
+                          style: GoogleFonts.playfairDisplay(
+                            fontSize: 32,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.ink,
+                            letterSpacing: -0.5,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 4),
+                          child: Text(
+                            '${quotes.length} Einträge',
+                            style: GoogleFonts.ibmPlexSans(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.inkMuted,
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                  loading: () => Text(
+                    'FAVORITEN',
+                    style: GoogleFonts.playfairDisplay(
+                      fontSize: 32,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.ink,
+                      letterSpacing: -0.5,
+                    ),
+                  ),
+                  error: (_, __) => Text(
+                    'FAVORITEN',
+                    style: GoogleFonts.playfairDisplay(
+                      fontSize: 32,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.ink,
+                      letterSpacing: -0.5,
+                    ),
                   ),
                 ),
                 Align(
@@ -69,30 +109,19 @@ class FavoritesScreen extends ConsumerWidget {
           ),
           const Padding(
             padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-            child: _FavoritesIntroCard(),
+            child: const SizedBox.shrink(),
           ),
           Expanded(
             child: favoritesAsync.when(
               data: (quotes) {
                 if (quotes.isEmpty) {
-                  return Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(24),
-                      child: Text(
-                        'Noch keine Favoriten gespeichert. Markiere ein Zitat mit Herz und es erscheint hier.',
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.ibmPlexSans(
-                          fontSize: 12,
-                          color: AppColors.inkLight,
-                          height: 1.6,
-                        ),
-                      ),
-                    ),
+                  return _FavoritesEmptyStateCard(
+                    onGoArchive: () => context.push('/archive'),
                   );
                 }
 
                 return ListView.builder(
-                  padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
+                  padding: const EdgeInsets.fromLTRB(20, 10, 20, 24),
                   itemCount: quotes.length,
                   itemBuilder: (context, index) {
                     final quote = quotes[index];
@@ -100,18 +129,23 @@ class FavoritesScreen extends ConsumerWidget {
                       padding: const EdgeInsets.only(bottom: 12),
                       child: QuoteCard(
                         quote: quote,
-                        onTap: () => context.push('/detail/${quote.id}'),
+                        onTap: () => context.push(
+                          '/detail/${Uri.encodeComponent(quote.id)}',
+                        ),
                       ),
                     );
                   },
                 );
               },
-              loading: () => const Center(
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(AppColors.red),
-                ),
+              loading: () => const AppInlineLoadingState(
+                title: 'Favoriten werden geladen',
+                subtitle: 'Gespeicherte Zitate werden zusammengestellt ...',
               ),
-              error: (error, _) => Center(child: Text('Fehler: $error')),
+              error: (error, _) => AppInlineErrorState(
+                title: 'Favoriten konnten nicht geladen werden',
+                message: 'Fehler: $error',
+                onRetry: () => ref.invalidate(favoritesProvider),
+              ),
             ),
           ),
         ],
@@ -120,65 +154,62 @@ class FavoritesScreen extends ConsumerWidget {
   }
 }
 
-class _FavoritesIntroCard extends StatelessWidget {
-  const _FavoritesIntroCard();
+// Favorites intro/tip card removed per scope-reduction request.
+
+class _FavoritesEmptyStateCard extends StatelessWidget {
+  const _FavoritesEmptyStateCard({required this.onGoArchive});
+
+  final VoidCallback onGoArchive;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: AppColors.paper,
-        border: Border.all(color: AppColors.rule, width: 1),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Row(
+    final scheme = Theme.of(context).colorScheme;
+
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
+        child: Container(
+          width: 460,
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: scheme.surface,
+            border: Border.all(color: scheme.outline, width: 1),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Container(
-                width: 8,
-                height: 8,
-                decoration: const BoxDecoration(
-                  color: AppColors.red,
-                  shape: BoxShape.circle,
+              Container(width: 34, height: 2, color: AppColors.red),
+              const SizedBox(height: 10),
+              Text(
+                'Noch keine Favoriten',
+                style: GoogleFonts.ibmPlexSans(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w700,
+                  color: scheme.onSurface,
+                  letterSpacing: 0.9,
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(height: 8),
               Text(
-                'GESAMMELTE FAVORITEN',
+                'Markiere ein Zitat mit dem Herzsymbol. Danach erscheint es hier und kann als PDF exportiert werden.',
                 style: GoogleFonts.ibmPlexSans(
-                  fontSize: 10,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.red,
-                  letterSpacing: 1.1,
+                  fontSize: 11,
+                  color: scheme.onSurfaceVariant,
+                  height: 1.45,
+                ),
+              ),
+              const SizedBox(height: 14),
+              SizedBox(
+                width: double.infinity,
+                child: OutlinedButton(
+                  onPressed: onGoArchive,
+                  child: const Text('ZUM ARCHIV'),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 8),
-          Text(
-            'Markierte Zitate bleiben hier sortierbar und lassen sich als PDF weitergeben.',
-            style: GoogleFonts.ibmPlexSans(
-              fontSize: 11,
-              color: AppColors.inkLight,
-              height: 1.5,
-            ),
-          ),
-          const SizedBox(height: 10),
-          Container(width: 32, height: 1, color: AppColors.rule),
-          const SizedBox(height: 10),
-          Text(
-            'Sammeln, prüfen, exportieren.',
-            style: GoogleFonts.ibmPlexSans(
-              fontSize: 10,
-              fontWeight: FontWeight.w700,
-              color: AppColors.inkLight,
-              letterSpacing: 0.6,
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

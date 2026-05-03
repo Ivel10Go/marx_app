@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:purchases_flutter/purchases_flutter.dart'
-    show Offerings, Offering, Package;
+    show Offerings, Offering, Package, PurchasesError, PurchasesErrorCode;
 
 import '../../core/theme/app_colors.dart';
 import '../../core/providers/purchases_provider.dart';
@@ -19,12 +19,20 @@ class PurchasePage extends ConsumerStatefulWidget {
 class _PurchasePageState extends ConsumerState<PurchasePage> {
   Offerings? _offerings;
   bool _loading = false;
+  bool _purchaseBusy = false;
+  bool _restoreBusy = false;
+  bool _customerCenterBusy = false;
   String? _errorMessage;
 
   @override
   void initState() {
     super.initState();
+    _refreshEntitlementSnapshot();
     _loadOfferings();
+  }
+
+  Future<void> _refreshEntitlementSnapshot() async {
+    await PurchasesService.instance.refreshCustomerInfoSafe();
   }
 
   Future<void> _loadOfferings() async {
@@ -37,12 +45,29 @@ class _PurchasePageState extends ConsumerState<PurchasePage> {
     });
 
     try {
-      final off = await PurchasesService.instance.fetchOfferings();
+      final result = await PurchasesService.instance.fetchOfferingsWithStatus();
+      final off = result.offerings;
+      final hasPackages =
+          off != null &&
+          off.all.values.any(
+            (offering) => offering.availablePackages.isNotEmpty,
+          );
+
       if (!mounted) {
         return;
       }
       setState(() {
         _offerings = off;
+        if (off == null) {
+          _errorMessage = result.isTimeout
+              ? 'Angebote konnten nicht rechtzeitig geladen werden. Bitte erneut versuchen.'
+              : 'Angebote konnten nicht geladen werden. Bitte Verbindung und RevenueCat-Setup prüfen.';
+        } else if (!hasPackages) {
+          _errorMessage =
+              'Angebote geladen, aber ohne kaufbare Pakete. Bitte Offering-Konfiguration prüfen.';
+        } else {
+          _errorMessage = null;
+        }
       });
     } catch (e) {
       if (!mounted) {
@@ -62,58 +87,145 @@ class _PurchasePageState extends ConsumerState<PurchasePage> {
   }
 
   Future<void> _buyPackage(Package pkg) async {
+    if (_purchaseBusy) {
+      return;
+    }
+    setState(() {
+      _purchaseBusy = true;
+    });
     try {
       await PurchasesService.instance.purchasePackage(pkg);
-      final info = await PurchasesService.instance.getCustomerInfo();
+      final info = await PurchasesService.instance.refreshCustomerInfo();
       if (PurchasesService.instance.hasProEntitlement(info)) {
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Danke — Zitate App Pro freigeschaltet!'),
+            content: Text('Danke — Zitate App Pro ist nun aktiv! 🎉'),
+            duration: Duration(seconds: 3),
           ),
-        );
-      }
-    } catch (e) {
-      if (!mounted) return;
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Fehler beim Kauf: $e')));
-    }
-  }
-
-  Future<void> _restore() async {
-    try {
-      await PurchasesService.instance.restorePurchases();
-      final info = await PurchasesService.instance.getCustomerInfo();
-      if (PurchasesService.instance.hasProEntitlement(info)) {
-        if (!mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Käufe wiederhergestellt — Pro aktiv.')),
         );
       } else {
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Keine wiederherstellbaren Käufe gefunden.'),
+            content: Text(
+              'Kauf verarbeitet. Pro-Status wird noch aktualisiert — bitte gedulde dich einen Moment.',
+            ),
+            duration: Duration(seconds: 4),
           ),
         );
       }
+    } on PurchasesError catch (e) {
+      if (!mounted) return;
+      final cancelled = e.code == PurchasesErrorCode.purchaseCancelledError;
+      final networkError = e.code == PurchasesErrorCode.networkError;
+      final message = cancelled
+          ? 'Kauf abgebrochen — keine Belastung.'
+          : networkError
+          ? 'Netzwerkfehler beim Kauf. Bitte Verbindung überprüfen und erneut versuchen.'
+          : 'Kauf nicht abgeschlossen: ${e.message} — Bitte erneut versuchen.';
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(message), duration: const Duration(seconds: 5)),
+      );
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Fehler beim Wiederherstellen: $e')),
+        SnackBar(
+          content: Text('Fehler beim Kauf: $e — Bitte erneut versuchen.'),
+          duration: const Duration(seconds: 5),
+        ),
       );
+    } finally {
+      if (mounted) {
+        setState(() {
+          _purchaseBusy = false;
+        });
+      }
+    }
+  }
+
+  Future<void> _restore() async {
+    if (_restoreBusy) {
+      return;
+    }
+    setState(() {
+      _restoreBusy = true;
+    });
+    try {
+      await PurchasesService.instance.restorePurchases();
+      final info = await PurchasesService.instance.refreshCustomerInfo();
+      if (PurchasesService.instance.hasProEntitlement(info)) {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('✓ Käufe wiederhergestellt — Pro ist aktiv!'),
+            duration: Duration(seconds: 3),
+          ),
+        );
+      } else {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Keine aktiven Käufe auf diesem Gerät gefunden.'),
+            duration: Duration(seconds: 4),
+          ),
+        );
+      }
+    } on PurchasesError catch (e) {
+      if (!mounted) return;
+      final networkError = e.code == PurchasesErrorCode.networkError;
+      final message = networkError
+          ? 'Netzwerkfehler beim Wiederherstellen. Bitte Verbindung überprüfen.'
+          : 'Wiederherstellung fehlgeschlagen: ${e.message} — Bitte erneut versuchen.';
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(message), duration: const Duration(seconds: 5)),
+      );
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Fehler beim Wiederherstellen: $e — Bitte erneut versuchen.',
+          ),
+          duration: const Duration(seconds: 5),
+        ),
+      );
+    } finally {
+      if (mounted) {
+        setState(() {
+          _restoreBusy = false;
+        });
+      }
     }
   }
 
   Future<void> _openCustomerCenter() async {
+    if (_customerCenterBusy) {
+      return;
+    }
+    setState(() {
+      _customerCenterBusy = true;
+    });
     try {
       await PurchasesService.instance.presentCustomerCenter();
     } catch (e) {
       if (!mounted) return;
+      // Customer Center nicht verfügbar — zeige fallback option
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Customer Center nicht verfügbar: $e')),
+        SnackBar(
+          content: const Text(
+            'Kontocenter ist auf diesem Gerät nicht verfügbar. Bitte versuche es später oder kontaktiere den Support.',
+          ),
+          duration: const Duration(seconds: 5),
+          action: SnackBarAction(label: 'OK', onPressed: () {}),
+        ),
       );
+    } finally {
+      if (mounted) {
+        setState(() {
+          _customerCenterBusy = false;
+        });
+      }
     }
   }
 
@@ -145,6 +257,18 @@ class _PurchasePageState extends ConsumerState<PurchasePage> {
                         'Pro soll erweiterte Archive, mehr Kontext und neue Feature-Bundles freischalten. Der freie Kern bleibt dabei voll nutzbar.',
                   ),
                   const SizedBox(height: 12),
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: scheme.surface,
+                      border: Border.all(color: scheme.outline, width: 1),
+                    ),
+                    child: Text(
+                      'Audit-Check: Käufe wiederherstellen, Customer Center öffnen und Angebote laden müssen auch dann funktionieren, wenn RevenueCat zeitweise nicht antwortet.',
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
                   if (_errorMessage != null) ...[
                     Container(
                       padding: const EdgeInsets.all(12),
@@ -166,7 +290,35 @@ class _PurchasePageState extends ConsumerState<PurchasePage> {
                   ],
                   Expanded(
                     child: _offerings == null
-                        ? const Center(child: Text('Keine Angebote verfügbar.'))
+                        ? Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(24),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  const Icon(
+                                    Icons.inventory_2_outlined,
+                                    size: 36,
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    'Keine Angebote verfügbar.',
+                                    style: Theme.of(
+                                      context,
+                                    ).textTheme.titleMedium,
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    'Wenn das so bleibt, liegt das Problem meist an Setup, Produkttypen oder einer fehlenden Offering-Konfiguration.',
+                                    textAlign: TextAlign.center,
+                                    style: Theme.of(
+                                      context,
+                                    ).textTheme.bodySmall,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )
                         : ListView(
                             children: _offerings!.all.values
                                 .map((offering) => _buildOffering(offering))
@@ -174,14 +326,31 @@ class _PurchasePageState extends ConsumerState<PurchasePage> {
                           ),
                   ),
                   const SizedBox(height: 8),
-                  ElevatedButton(
-                    onPressed: _restore,
-                    child: const Text('Käufe wiederherstellen'),
+                  OutlinedButton(
+                    onPressed: _loading ? null : _loadOfferings,
+                    child: const Text('Angebote aktualisieren'),
                   ),
                   const SizedBox(height: 8),
                   ElevatedButton(
-                    onPressed: _openCustomerCenter,
-                    child: const Text('Customer Center öffnen'),
+                    onPressed: _restoreBusy ? null : _restore,
+                    child: _restoreBusy
+                        ? const SizedBox(
+                            width: 16,
+                            height: 16,
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          )
+                        : const Text('Käufe wiederherstellen'),
+                  ),
+                  const SizedBox(height: 8),
+                  ElevatedButton(
+                    onPressed: _customerCenterBusy ? null : _openCustomerCenter,
+                    child: _customerCenterBusy
+                        ? const SizedBox(
+                            width: 16,
+                            height: 16,
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          )
+                        : const Text('Customer Center öffnen'),
                   ),
                 ],
               ),
@@ -213,8 +382,14 @@ class _PurchasePageState extends ConsumerState<PurchasePage> {
                 title: Text(title),
                 subtitle: Text(price),
                 trailing: ElevatedButton(
-                  onPressed: () => _buyPackage(pkg),
-                  child: const Text('Kaufen'),
+                  onPressed: _purchaseBusy ? null : () => _buyPackage(pkg),
+                  child: _purchaseBusy
+                      ? const SizedBox(
+                          width: 16,
+                          height: 16,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        )
+                      : const Text('Kaufen'),
                 ),
               );
             }),

@@ -8,6 +8,7 @@ import '../../domain/providers/admin_access_provider.dart';
 import '../../domain/providers/app_mode_provider.dart';
 import '../../domain/providers/daily_content_provider.dart';
 import '../../widgets/app_decorated_scaffold.dart';
+import '../loading/app_loading_screen.dart';
 
 class AdminDashboardScreen extends ConsumerWidget {
   const AdminDashboardScreen({super.key});
@@ -45,7 +46,7 @@ class AdminDashboardScreen extends ConsumerWidget {
           Text(
             'ADMIN DASHBOARD',
             style: GoogleFonts.playfairDisplay(
-              fontSize: 30,
+              fontSize: 32,
               fontWeight: FontWeight.w700,
               color: AppColors.ink,
             ),
@@ -117,14 +118,14 @@ class AdminDashboardScreen extends ConsumerWidget {
                   ),
                 );
               },
-              loading: () =>
-                  const LinearProgressIndicator(color: AppColors.red),
-              error: (error, _) => Text(
-                'Fehler: $error',
-                style: GoogleFonts.ibmPlexSans(
-                  fontSize: 12,
-                  color: AppColors.red,
-                ),
+              loading: () => const AppInlineLoadingState(
+                title: 'Tagesinhalt wird geladen',
+                subtitle: 'Aktueller Content-Status wird geprüft ...',
+              ),
+              error: (error, _) => AppInlineErrorState(
+                title: 'Content-Status konnte nicht geladen werden',
+                message: 'Fehler: $error',
+                onRetry: () => ref.invalidate(dailyContentProvider),
               ),
             ),
           ),

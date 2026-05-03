@@ -26,7 +26,7 @@ class SettingsScreen extends ConsumerWidget {
 
     return AppDecoratedScaffold(
       appBar: null,
-      bottomNavigationBar: const AppNavigationBar(selectedIndex: 2),
+      bottomNavigationBar: const AppNavigationBar(selectedIndex: -1),
       child: Column(
         children: <Widget>[
           // Masthead
@@ -59,74 +59,14 @@ class SettingsScreen extends ConsumerWidget {
               ],
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-            child: _SettingsIntroCard(),
-          ),
+          const SizedBox.shrink(),
           Expanded(
             child: settingsAsync.when(
               data: (settings) {
                 return ListView(
                   padding: const EdgeInsets.fromLTRB(20, 20, 20, 24),
                   children: <Widget>[
-                    const _SettingsHeroCard(),
-                    const SizedBox(height: 16),
                     const ProfileSection(),
-                    const SizedBox(height: 20),
-                    _SettingsGroup(
-                      title: 'BASISFUNKTIONEN',
-                      children: <Widget>[
-                        Text(
-                          'Hier laufen die Kernfunktionen zusammen: Inhalte lesen, speichern, teilen und die tägliche Nutzung sauber steuern.',
-                          style: GoogleFonts.ibmPlexSans(
-                            fontSize: 11,
-                            color: AppColors.inkLight,
-                            height: 1.5,
-                          ),
-                        ),
-                        const SizedBox(height: 12),
-                        _BasisFunctionGrid(
-                          items: const <_BasisFunctionItem>[
-                            _BasisFunctionItem(
-                              title: 'Zitate + Erklärung',
-                              subtitle: 'Tageszitate mit direkter Einordnung.',
-                            ),
-                            _BasisFunctionItem(
-                              title: 'Benachrichtigungen',
-                              subtitle:
-                                  'Tägliche Erinnerung zur gewählten Uhrzeit.',
-                            ),
-                            _BasisFunctionItem(
-                              title: 'Profil',
-                              subtitle:
-                                  'Interessen, Haltung und Entdeckung steuern.',
-                            ),
-                            _BasisFunctionItem(
-                              title: 'Archiv',
-                              subtitle:
-                                  'Gespeicherte Inhalte jederzeit finden.',
-                            ),
-                            _BasisFunctionItem(
-                              title: 'Teilen',
-                              subtitle: 'Zitate und Fakten direkt weitergeben.',
-                            ),
-                            _BasisFunctionItem(
-                              title: 'Vorlesen',
-                              subtitle: 'Erklärungen per TTS anhören.',
-                            ),
-                            _BasisFunctionItem(
-                              title: 'Streak',
-                              subtitle: 'Tägliche Nutzung sichtbar halten.',
-                            ),
-                            _BasisFunctionItem(
-                              title: 'Home Widget',
-                              subtitle:
-                                  'Tagesinhalt direkt auf dem Startbildschirm.',
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
                     const SizedBox(height: 20),
                     _SettingsGroup(
                       title: 'BENACHRICHTIGUNGEN',
@@ -457,12 +397,16 @@ class SettingsScreen extends ConsumerWidget {
                 );
               },
               loading: () => const Center(
-                child: AppLoadingScreen(
+                child: AppInlineLoadingState(
                   title: 'Einstellungen werden geladen',
                   subtitle: 'Profil, Modus und Benachrichtigungen …',
                 ),
               ),
-              error: (error, _) => Center(child: Text('Fehler: $error')),
+              error: (error, _) => AppInlineErrorState(
+                title: 'Einstellungen konnten nicht geladen werden',
+                message: 'Fehler: $error',
+                onRetry: () => ref.invalidate(settingsControllerProvider),
+              ),
             ),
           ),
         ],
@@ -471,46 +415,7 @@ class SettingsScreen extends ConsumerWidget {
   }
 }
 
-class _SettingsIntroCard extends StatelessWidget {
-  const _SettingsIntroCard();
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: scheme.surface,
-        border: Border.all(color: scheme.outline, width: 1),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            'KONTROLLE',
-            style: GoogleFonts.ibmPlexSans(
-              fontSize: 10,
-              fontWeight: FontWeight.w700,
-              color: AppColors.red,
-              letterSpacing: 1.1,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'Passe Feed, Benachrichtigungen und Verwaltungsfunktionen an, ohne den Alltagsscreen zu überladen.',
-            style: GoogleFonts.ibmPlexSans(
-              fontSize: 11,
-              color: scheme.onSurfaceVariant,
-              height: 1.5,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+// Settings intro/tip card removed per scope-reduction request.
 
 String _modeLabel(AppMode mode) {
   switch (mode) {
@@ -574,110 +479,7 @@ class _SettingsGroup extends StatelessWidget {
   }
 }
 
-class _SettingsHeroCard extends StatelessWidget {
-  const _SettingsHeroCard();
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: scheme.surface,
-        border: Border.all(color: scheme.outline, width: 1),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            color: scheme.primary,
-            width: double.infinity,
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Text(
-              'PERSÖNLICHER FEED',
-              style: GoogleFonts.ibmPlexSans(
-                fontSize: 10,
-                fontWeight: FontWeight.w700,
-                color: scheme.onPrimary,
-                letterSpacing: 1.2,
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Text(
-              'Passe den Feed an: Zitate für Tiefe, Fakten für schnelles historisches Lernen oder Zufall für Abwechslung.',
-              style: GoogleFonts.ibmPlexSans(
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-                color: scheme.onSurface,
-                height: 1.5,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _BasisFunctionGrid extends StatelessWidget {
-  const _BasisFunctionGrid({required this.items});
-
-  final List<_BasisFunctionItem> items;
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-
-    return Wrap(
-      spacing: 8,
-      runSpacing: 8,
-      children: items
-          .map(
-            (item) => Container(
-              width: 152,
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: scheme.surface,
-                border: Border.all(color: scheme.outline, width: 1),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    item.title,
-                    style: GoogleFonts.ibmPlexSans(
-                      fontSize: 11,
-                      fontWeight: FontWeight.w700,
-                      color: scheme.onSurface,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    item.subtitle,
-                    style: GoogleFonts.ibmPlexSans(
-                      fontSize: 9,
-                      color: scheme.onSurfaceVariant,
-                      height: 1.35,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          )
-          .toList(),
-    );
-  }
-}
-
-class _BasisFunctionItem {
-  const _BasisFunctionItem({required this.title, required this.subtitle});
-
-  final String title;
-  final String subtitle;
-}
+// Settings hero/tip card removed per scope-reduction request.
 
 class _SettingsActionButton extends StatelessWidget {
   const _SettingsActionButton({

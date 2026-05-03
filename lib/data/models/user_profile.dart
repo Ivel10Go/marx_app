@@ -2,7 +2,7 @@ import 'dart:convert';
 
 enum PoliticalLeaning { left, centerLeft, neutral, liberal, conservative }
 
-enum QuoteDiscoveryMode { interests, manual }
+enum QuoteDiscoveryMode { interests }
 
 class InterestOption {
   const InterestOption({
@@ -34,8 +34,8 @@ class UserProfile {
     required this.historicalInterests,
     required this.politicalLeaning,
     required this.quoteDiscoveryMode,
-    required this.selectedSources,
     required this.isAdmin,
+    required this.premiumTestEnabled,
     required this.onboardingCompleted,
     required this.onboardingDate,
   });
@@ -45,8 +45,8 @@ class UserProfile {
   final List<String> historicalInterests;
   final PoliticalLeaning politicalLeaning;
   final QuoteDiscoveryMode quoteDiscoveryMode;
-  final List<String> selectedSources;
   final bool isAdmin;
+  final bool premiumTestEnabled;
   final bool onboardingCompleted;
   final DateTime? onboardingDate;
 
@@ -55,8 +55,8 @@ class UserProfile {
       historicalInterests: <String>[],
       politicalLeaning: PoliticalLeaning.neutral,
       quoteDiscoveryMode: QuoteDiscoveryMode.interests,
-      selectedSources: <String>[],
       isAdmin: false,
+      premiumTestEnabled: false,
       onboardingCompleted: false,
       onboardingDate: null,
     );
@@ -66,8 +66,8 @@ class UserProfile {
     List<String>? historicalInterests,
     PoliticalLeaning? politicalLeaning,
     QuoteDiscoveryMode? quoteDiscoveryMode,
-    List<String>? selectedSources,
     bool? isAdmin,
+    bool? premiumTestEnabled,
     bool? onboardingCompleted,
     DateTime? onboardingDate,
   }) {
@@ -75,8 +75,8 @@ class UserProfile {
       historicalInterests: historicalInterests ?? this.historicalInterests,
       politicalLeaning: politicalLeaning ?? this.politicalLeaning,
       quoteDiscoveryMode: quoteDiscoveryMode ?? this.quoteDiscoveryMode,
-      selectedSources: selectedSources ?? this.selectedSources,
       isAdmin: isAdmin ?? this.isAdmin,
+      premiumTestEnabled: premiumTestEnabled ?? this.premiumTestEnabled,
       onboardingCompleted: onboardingCompleted ?? this.onboardingCompleted,
       onboardingDate: onboardingDate ?? this.onboardingDate,
     );
@@ -87,8 +87,8 @@ class UserProfile {
       'historical_interests': historicalInterests,
       'political_leaning': politicalLeaning.name,
       'quote_discovery_mode': quoteDiscoveryMode.name,
-      'selected_sources': selectedSources,
       'is_admin': isAdmin,
+      'premium_test_enabled': premiumTestEnabled,
       'onboarding_completed': onboardingCompleted,
       'onboarding_date': onboardingDate?.toIso8601String(),
     };
@@ -104,14 +104,11 @@ class UserProfile {
       politicalLeaning: PoliticalLeaning.values.byName(
         (json['political_leaning'] as String?) ?? PoliticalLeaning.neutral.name,
       ),
-      quoteDiscoveryMode: QuoteDiscoveryMode.values.byName(
-        (json['quote_discovery_mode'] as String?) ??
-            QuoteDiscoveryMode.interests.name,
+      quoteDiscoveryMode: _parseQuoteDiscoveryMode(
+        json['quote_discovery_mode'] as String?,
       ),
-      selectedSources:
-          (json['selected_sources'] as List<dynamic>? ?? <dynamic>[])
-              .cast<String>(),
       isAdmin: (json['is_admin'] as bool?) ?? false,
+      premiumTestEnabled: (json['premium_test_enabled'] as bool?) ?? false,
       onboardingCompleted: (json['onboarding_completed'] as bool?) ?? false,
       onboardingDate: _tryParseDate(json['onboarding_date'] as String?),
     );
@@ -127,5 +124,9 @@ class UserProfile {
       return null;
     }
     return DateTime.tryParse(value);
+  }
+
+  static QuoteDiscoveryMode _parseQuoteDiscoveryMode(String? value) {
+    return QuoteDiscoveryMode.interests;
   }
 }

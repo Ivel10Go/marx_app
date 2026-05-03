@@ -8846,5 +8846,59 @@
                             "briefe_005"
                         ],
         "fun_fact":  null
+    },
+    {
+        "id":  "burke_001",
+        "text_de":  "Ein Staat ohne Mittel zur Veraenderung hat auch keine Mittel zu seinem Erhalt.",
+        "text_original":  "A state without the means of some change is without the means of its conservation.",
+        "source":  "Reflections on the Revolution in France",
+        "year":  1790,
+        "chapter":  "Reflections",
+        "category":  [
+                         "Staat",
+                         "Wandel"
+                     ],
+        "difficulty":  "intermediate",
+        "series":  "burke",
+        "explanation_short":  "Kurz erklaert: Ein Staat braucht kontrollierte Veraenderung, um sich selbst zu erhalten.",
+        "explanation_long":  "Burke verbindet politische Stabilitaet mit begrenzter Veraenderungsfaehigkeit. Der Satz ist zentral, weil er Reform nicht als Gegenspieler von Ordnung darstellt, sondern als Bedingung ihrer Dauer.",
+        "related_ids":  [],
+        "fun_fact":  "V1-Ergaenzung fuer den Themenkorpus."
+    },
+    {
+        "id":  "mill_001",
+        "text_de":  "Wer nur seine eigene Seite kennt, weiss wenig von der Sache.",
+        "text_original":  "He who knows only his own side of the case, knows little of that.",
+        "source":  "On Liberty",
+        "year":  1859,
+        "chapter":  "Of the Liberty of Thought and Discussion",
+        "category":  [
+                         "Freiheit",
+                         "Diskussion"
+                     ],
+        "difficulty":  "beginner",
+        "series":  "mill",
+        "explanation_short":  "Kurz erklaert: Wahrheitsfindung braucht die Auseinandersetzung mit Gegenargumenten.",
+        "explanation_long":  "Mill begruendet hier die Freiheit der Diskussion: Ohne die Gegenseite zu kennen, bleibt das eigene Urteil unvollstaendig. Der Satz ist ein Kernstueck seines Arguments fuer offene Debatte.",
+        "related_ids":  [],
+        "fun_fact":  "V1-Ergaenzung fuer den Themenkorpus."
+    },
+    {
+        "id":  "hayek_001",
+        "text_de":  "Das Wissen um Tatsachen ist weithin verstreut. Wir muessen Wissen nutzen, das bei Millionen von Menschen liegt, und das nur ueber Signale zur allgemeinen Lage wirksam werden kann.",
+        "text_original":  "The knowledge of facts is widely dispersed. We want to make use of knowledge possessed by millions of individual people, which they can only use if they are fed signals about the general situation.",
+        "source":  "The Levin interviews - Friedrich Hayek",
+        "year":  1980,
+        "chapter":  "Interview",
+        "category":  [
+                         "Markt",
+                         "Wissen"
+                     ],
+        "difficulty":  "advanced",
+        "series":  "hayek",
+        "explanation_short":  "Kurz erklaert: Dezentrale Information wird ueber Signale koordiniert, nicht zentral gesammelt.",
+        "explanation_long":  "Hayek beschreibt hier sein zentrales Informationsargument: Kein Akteur verfuegt allein ueber genug Wissen, deshalb braucht es Signale, die verstreutes Wissen koordinieren.",
+        "related_ids":  [],
+        "fun_fact":  "V1-Ergaenzung fuer den Themenkorpus."
     }
 ]

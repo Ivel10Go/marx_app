@@ -121,6 +121,105 @@ class DailyContentResolver {
     return DailyContent.quote(quote: quote);
   }
 
+  Future<List<Quote>> resolvePremiumQuoteFeed({
+    required QuoteRepository quoteRepository,
+    required AppMode appMode,
+    required UserProfile profile,
+    required int count,
+    DateTime? now,
+  }) async {
+    final allQuotes = await quoteRepository.watchAllQuotes().first;
+    if (allQuotes.isEmpty || count <= 0) {
+      return <Quote>[];
+    }
+
+    final issueNumber = _issueNumberFor(now ?? DateTime.now());
+    final scopedQuotes = _scopedQuotes(
+      allQuotes: allQuotes,
+      appMode: appMode,
+      profile: profile,
+    );
+    final candidates = scopedQuotes.isEmpty ? allQuotes : scopedQuotes;
+    if (profile.historicalInterests.isEmpty) {
+      return <Quote>[];
+    }
+
+    final selected = <Quote>[];
+    final seenIds = <String>{};
+    final seenContentKeys = <String>{};
+
+    for (var i = 0; i < profile.historicalInterests.length; i++) {
+      final interest = profile.historicalInterests[i].trim().toLowerCase();
+      if (interest.isEmpty) {
+        continue;
+      }
+
+      final interestCandidates = candidates
+          .where((quote) => _matchesInterest(quote, interest))
+          .toList();
+      if (interestCandidates.isEmpty) {
+        continue;
+      }
+
+      final weightedInterest = _personalization.getWeightedQuotes(
+        interestCandidates,
+        profile,
+      );
+      if (weightedInterest.isEmpty) {
+        continue;
+      }
+
+      final shuffledInterest = List<Quote>.from(weightedInterest)
+        ..shuffle(Random(issueNumber + 73 + i));
+
+      for (final quote in shuffledInterest) {
+        final contentKey = _quoteContentKey(quote);
+        if (seenIds.add(quote.id) && seenContentKeys.add(contentKey)) {
+          selected.add(quote);
+          break;
+        }
+      }
+    }
+
+    if (selected.length >= count) {
+      return selected.take(count).toList();
+    }
+
+    final weighted = _personalization.getWeightedQuotes(candidates, profile);
+    if (weighted.isEmpty) {
+      return selected;
+    }
+
+    final shuffled = List<Quote>.from(weighted)
+      ..shuffle(Random(issueNumber + 177));
+
+    for (final quote in shuffled) {
+      final contentKey = _quoteContentKey(quote);
+      if (seenIds.add(quote.id) && seenContentKeys.add(contentKey)) {
+        selected.add(quote);
+      }
+
+      if (selected.length == count) {
+        break;
+      }
+    }
+
+    return selected;
+  }
+
+  bool _matchesInterest(Quote quote, String interest) {
+    return quote.category.any((category) {
+      final normalizedCategory = category.toLowerCase();
+      return normalizedCategory.contains(interest);
+    });
+  }
+
+  String _quoteContentKey(Quote quote) {
+    final text = quote.textDe.trim().toLowerCase();
+    final source = quote.source.trim().toLowerCase();
+    return '$source::$text';
+  }
+
   Quote? _resolveQuote({
     required List<Quote> allQuotes,
     required AppMode appMode,
@@ -166,38 +265,8 @@ class DailyContentResolver {
     required AppMode appMode,
     required UserProfile profile,
   }) {
-    final profileScoped = _candidateQuotes(allQuotes, profile);
-    final candidates = profileScoped.isEmpty ? allQuotes : profileScoped;
-
-    if (appMode != AppMode.adminMarx) {
-      return candidates;
-    }
-
-    final adminQuotes = candidates.where(_isAdminQuote).toList();
-    return adminQuotes.isEmpty ? candidates : adminQuotes;
-  }
-
-  List<Quote> _candidateQuotes(List<Quote> all, UserProfile profile) {
-    if (profile.quoteDiscoveryMode != QuoteDiscoveryMode.manual) {
-      return all;
-    }
-
-    if (profile.selectedSources.isEmpty) {
-      return all;
-    }
-
-    final selected = profile.selectedSources
-        .map((String value) => value.toLowerCase())
-        .toSet();
-
-    return all
-        .where((Quote quote) => selected.contains(quote.source.toLowerCase()))
-        .toList();
-  }
-
-  bool _isAdminQuote(Quote quote) {
-    final source = quote.source.toLowerCase();
-    return source.contains('marx') || source.contains('engels');
+    // Content filtering is intentionally limited to theme/interests + political orientation.
+    return allQuotes;
   }
 
   int _issueNumberFor(DateTime now) {

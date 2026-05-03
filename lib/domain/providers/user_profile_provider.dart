@@ -26,16 +26,16 @@ class UserProfileNotifier extends StateNotifier<UserProfile> {
     required List<String> historicalInterests,
     required PoliticalLeaning politicalLeaning,
     QuoteDiscoveryMode quoteDiscoveryMode = QuoteDiscoveryMode.interests,
-    List<String> selectedSources = const <String>[],
     bool isAdmin = false,
+    bool premiumTestEnabled = false,
     bool onboardingCompleted = true,
   }) async {
     final next = UserProfile(
       historicalInterests: historicalInterests,
       politicalLeaning: politicalLeaning,
       quoteDiscoveryMode: quoteDiscoveryMode,
-      selectedSources: selectedSources,
       isAdmin: isAdmin,
+      premiumTestEnabled: premiumTestEnabled,
       onboardingCompleted: onboardingCompleted,
       onboardingDate: DateTime.now(),
     );
@@ -58,13 +58,13 @@ class UserProfileNotifier extends StateNotifier<UserProfile> {
     await _persist(next);
   }
 
-  Future<void> updateSelectedSources(List<String> sources) async {
-    final next = state.copyWith(selectedSources: sources);
+  Future<void> updateAdminAccess(bool isAdmin) async {
+    final next = state.copyWith(isAdmin: isAdmin);
     await _persist(next);
   }
 
-  Future<void> updateAdminAccess(bool isAdmin) async {
-    final next = state.copyWith(isAdmin: isAdmin);
+  Future<void> updatePremiumTestEnabled(bool enabled) async {
+    final next = state.copyWith(premiumTestEnabled: enabled);
     await _persist(next);
   }
 
