@@ -5,6 +5,18 @@ import '../../data/models/quote.dart';
 import '../../data/models/thinker_quote.dart';
 
 abstract final class WidgetSyncService {
+  static Future<void> forceRefresh() async {
+    try {
+      await HomeWidget.updateWidget(
+        androidName: 'QuoteWidgetProvider',
+        iOSName: 'QuoteWidget',
+      );
+    } catch (e) {
+      // ignore: avoid_print
+      print('[WidgetSync] Force refresh failed: $e');
+    }
+  }
+
   static Future<void> syncDailyContent({
     required DailyContent content,
     required int streakCount,
