@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:home_widget/home_widget.dart';
 
 import '../../data/models/daily_content.dart';
@@ -5,6 +6,17 @@ import '../../data/models/quote.dart';
 import '../../data/models/thinker_quote.dart';
 
 abstract final class WidgetSyncService {
+  static Future<void> forceRefresh() async {
+    try {
+      await HomeWidget.updateWidget(
+        androidName: 'QuoteWidgetProvider',
+        iOSName: 'QuoteWidget',
+      );
+    } catch (e) {
+      debugPrint('[WidgetSync] Force refresh failed: $e');
+    }
+  }
+
   static Future<void> syncDailyContent({
     required DailyContent content,
     required int streakCount,

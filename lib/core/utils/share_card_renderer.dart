@@ -141,28 +141,26 @@ class _ShareCanvas extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-
     return Material(
-      color: scheme.surface,
+      color: AppColors.paper,
       child: Container(
         width: 1080,
         height: 1350,
-        color: scheme.surface,
+        color: AppColors.paper,
         padding: const EdgeInsets.all(40),
         child: Center(
           child: Container(
             width: 1000,
             padding: const EdgeInsets.all(0),
             decoration: BoxDecoration(
-              color: scheme.surface,
-              border: Border.all(color: scheme.onSurface, width: 2),
+              color: AppColors.paper,
+              border: Border.all(color: AppColors.ink, width: 2),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 Container(
-                  color: scheme.primary,
+                  color: AppColors.red,
                   padding: const EdgeInsets.fromLTRB(20, 12, 20, 12),
                   child: Row(
                     children: <Widget>[
@@ -172,7 +170,7 @@ class _ShareCanvas extends StatelessWidget {
                           style: GoogleFonts.ibmPlexSans(
                             fontSize: 17,
                             fontWeight: FontWeight.w700,
-                            color: scheme.onPrimary,
+                            color: AppColors.redOnRed,
                             letterSpacing: 1.4,
                           ),
                           maxLines: 1,
@@ -185,7 +183,7 @@ class _ShareCanvas extends StatelessWidget {
                         style: GoogleFonts.ibmPlexSans(
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
-                          color: scheme.onPrimary,
+                          color: AppColors.redOnRed,
                           letterSpacing: 1.2,
                         ),
                         maxLines: 1,
@@ -205,7 +203,7 @@ class _ShareCanvas extends StatelessWidget {
                           fontSize: 54,
                           fontWeight: FontWeight.w700,
                           fontStyle: FontStyle.italic,
-                          color: scheme.onSurface,
+                          color: AppColors.ink,
                           height: 1.2,
                         ),
                         maxLines: kind == _ShareCanvasKind.quote ? 8 : 5,
@@ -219,7 +217,7 @@ class _ShareCanvas extends StatelessWidget {
                         style: GoogleFonts.ibmPlexSans(
                           fontSize: 22,
                           fontWeight: FontWeight.w600,
-                          color: scheme.onSurface.withOpacity(0.86),
+                          color: AppColors.ink.withOpacity(0.86),
                         ),
                         maxLines: 4,
                         overflow: TextOverflow.ellipsis,
@@ -231,7 +229,7 @@ class _ShareCanvas extends StatelessWidget {
                           style: GoogleFonts.ibmPlexSans(
                             fontSize: 20,
                             height: 1.45,
-                            color: scheme.onSurface,
+                            color: AppColors.ink,
                           ),
                           maxLines: 8,
                           overflow: TextOverflow.ellipsis,
@@ -245,7 +243,7 @@ class _ShareCanvas extends StatelessWidget {
                           style: GoogleFonts.ibmPlexSans(
                             fontSize: 14,
                             fontWeight: FontWeight.w700,
-                            color: scheme.primary,
+                            color: AppColors.red,
                             letterSpacing: 1.0,
                           ),
                           maxLines: 1,
@@ -260,7 +258,7 @@ class _ShareCanvas extends StatelessWidget {
                           style: GoogleFonts.ibmPlexSans(
                             fontSize: 18,
                             fontWeight: FontWeight.w700,
-                            color: scheme.onSurface.withOpacity(0.55),
+                            color: AppColors.ink.withOpacity(0.55),
                             letterSpacing: 1.0,
                           ),
                         ),

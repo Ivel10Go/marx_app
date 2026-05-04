@@ -135,17 +135,26 @@ class DailyContentResolver {
     }
 
     final issueNumber = _issueNumberFor(now ?? DateTime.now());
-    final scopedQuotes = _scopedQuotes(
-      allQuotes: allQuotes,
-      appMode: appMode,
-      profile: profile,
-    );
-    final candidates = _resolveCandidatePool(
-      allQuotes: allQuotes,
-      scopedQuotes: scopedQuotes,
-      profile: profile,
-    );
-    if (profile.historicalInterests.isEmpty) {
+
+    // For conservative users, use all non-Marx quotes as the candidate pool so
+    // the premium feed has enough variety. The personalization weighting already
+    // boosts conservative-relevant quotes within this wider pool.
+    final List<Quote> candidates;
+    if (profile.politicalLeaning == PoliticalLeaning.conservative) {
+      candidates = allQuotes.where((q) => !_isMarxQuote(q)).toList();
+    } else {
+      final scopedQuotes = _scopedQuotes(
+        allQuotes: allQuotes,
+        appMode: appMode,
+        profile: profile,
+      );
+      candidates = _resolveCandidatePool(
+        allQuotes: allQuotes,
+        scopedQuotes: scopedQuotes,
+        profile: profile,
+      );
+    }
+    if (candidates.isEmpty) {
       return <Quote>[];
     }
 
@@ -341,10 +350,9 @@ class DailyContentResolver {
         if (conservativeMatches.isNotEmpty) {
           return conservativeMatches;
         }
-        if (nonMarxQuotes.isNotEmpty) {
-          return nonMarxQuotes;
-        }
-        return allQuotes;
+        // Never fall back to allQuotes for conservative users — return only
+        // non-Marx quotes (may be empty; _resolveCandidatePool handles that).
+        return nonMarxQuotes;
     }
   }
 
