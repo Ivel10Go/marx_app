@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:home_widget/home_widget.dart';
 
 import '../../data/models/daily_content.dart';
@@ -12,8 +13,7 @@ abstract final class WidgetSyncService {
         iOSName: 'QuoteWidget',
       );
     } catch (e) {
-      // ignore: avoid_print
-      print('[WidgetSync] Force refresh failed: $e');
+      debugPrint('[WidgetSync] Force refresh failed: $e');
     }
   }
 
