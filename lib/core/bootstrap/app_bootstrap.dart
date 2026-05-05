@@ -297,6 +297,12 @@ abstract final class AppBootstrap {
           debugPrint(
             '[Deferred] Widget synced in ${syncStart.elapsedMilliseconds}ms',
           );
+        } else {
+          // No new content resolved, but still trigger a widget refresh so the
+          // widget displays whatever was previously stored rather than staying
+          // stuck on the loading placeholder.
+          debugPrint('[Deferred] No content resolved — force-refreshing widget');
+          await WidgetSyncService.forceRefresh();
         }
 
         // Schedule daily reminders

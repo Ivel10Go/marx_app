@@ -30,6 +30,13 @@ class AppNavigationBar extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               _MoreItem(
+                label: 'Einstellungen',
+                onTap: () {
+                  Navigator.of(sheetContext).pop();
+                  context.go('/settings');
+                },
+              ),
+              _MoreItem(
                 label: 'Favoriten',
                 onTap: () {
                   Navigator.of(sheetContext).pop();
