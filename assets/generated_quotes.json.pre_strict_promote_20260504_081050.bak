@@ -467,6 +467,239 @@
     "needs_review": true
   },
   {
+    "id": "hayek_001",
+    "text_de": "Das Wissen um Tatsachen ist weithin verstreut. Wir muessen Wissen nutzen, das bei Millionen von Menschen liegt, und das nur ueber Signale zur allgemeinen Lage wirksam werden kann.",
+    "text_original": "The knowledge of facts is widely dispersed. We want to make use of knowledge possessed by millions of individual people, which they can only use if they are fed signals about the general situation.",
+    "source": "The Levin interviews - Friedrich Hayek",
+    "year": 1980,
+    "chapter": "Interview",
+    "category": [
+      "Markt",
+      "Wissen"
+    ],
+    "difficulty": "advanced",
+    "series": "hayek",
+    "explanation_short": "Kurz erklaert: Dezentrale Information wird ueber Signale koordiniert, nicht zentral gesammelt.",
+    "explanation_long": "Hayek beschreibt hier sein zentrales Informationsargument: Kein Akteur verfuegt allein ueber genug Wissen, deshalb braucht es Signale, die verstreutes Wissen koordinieren.",
+    "related_ids": [],
+    "fun_fact": "V1-Ergaenzung fuer den Themenkorpus.",
+    "author": "(unknown)",
+    "merged_from": "assets/quotes.json",
+    "author_type": "person",
+    "provenance": "generated",
+    "needs_review": true
+  },
+  {
+    "id": "wollstonecraft_001",
+    "text_de": "Wenn Frauen keine gleiche Bildung erhalten, verliert die Gesellschaft die Haelfte ihrer Vernunft.",
+    "text_original": "If women do not receive equal education, society loses half of its reason.",
+    "source": "A Vindication of the Rights of Woman",
+    "year": 1792,
+    "chapter": "Education and Citizenship",
+    "category": [
+      "Frauenrechte",
+      "Bildung",
+      "Gesellschaft"
+    ],
+    "difficulty": "beginner",
+    "series": "wollstonecraft",
+    "explanation_short": "Kurz erklaert: Gleichberechtigung beginnt bei Bildung und politischer Teilhabe.",
+    "explanation_long": "Das Zitat betont den Zusammenhang zwischen Bildung, Gleichberechtigung und demokratischer Kultur. Ohne gleiche Bildungschancen bleiben politische und soziale Rechte fuer Frauen unvollstaendig.",
+    "related_ids": [
+      "de_gouges_001"
+    ],
+    "fun_fact": "V2-Ergaenzung: Fokus auf Frauenrechte und Frauengeschichte.",
+    "author": "(unknown)",
+    "merged_from": "assets/quotes.json",
+    "author_type": "person",
+    "provenance": "generated",
+    "needs_review": true
+  },
+  {
+    "id": "de_gouges_001",
+    "text_de": "Eine Verfassung ist erst gerecht, wenn die Rechte von Frauen und Maennern gleich gelten.",
+    "text_original": "A constitution is just only when the rights of women and men apply equally.",
+    "source": "Declaration of the Rights of Woman and of the Female Citizen",
+    "year": 1791,
+    "chapter": "Articles",
+    "category": [
+      "Frauenrechte",
+      "Verfassung",
+      "Gleichberechtigung"
+    ],
+    "difficulty": "intermediate",
+    "series": "de_gouges",
+    "explanation_short": "Kurz erklaert: Politische Rechte muessen geschlechtergerecht formuliert und umgesetzt werden.",
+    "explanation_long": "Hier wird die Forderung nach gleicher staatsbuergerlicher Teilhabe formuliert. Das Thema verbindet Frauenrechte mit Rechtsstaat, Demokratie und Verfassungspolitik.",
+    "related_ids": [
+      "wollstonecraft_001",
+      "stanton_001"
+    ],
+    "fun_fact": "V2-Ergaenzung: Frauenrechte als Kern demokratischer Ordnung.",
+    "author": "(unknown)",
+    "merged_from": "assets/quotes.json",
+    "author_type": "person",
+    "provenance": "generated",
+    "needs_review": true
+  },
+  {
+    "id": "stanton_001",
+    "text_de": "Ohne Wahlrecht bleibt Gleichberechtigung ein Versprechen ohne politische Stimme.",
+    "text_original": "Without suffrage, equality remains a promise without a political voice.",
+    "source": "Seneca Falls Convention Speeches",
+    "year": 1848,
+    "chapter": "Convention Notes",
+    "category": [
+      "Frauenrechte",
+      "Wahlrecht",
+      "Demokratie"
+    ],
+    "difficulty": "beginner",
+    "series": "stanton",
+    "explanation_short": "Kurz erklaert: Wahlrecht ist zentral fuer reale politische Teilhabe von Frauen.",
+    "explanation_long": "Das Zitat verknuepft Frauenrechte mit institutioneller Demokratie. Es zeigt, dass formale Gleichheit ohne Wahlrecht und politische Repräsentation unzureichend bleibt.",
+    "related_ids": [
+      "de_gouges_001"
+    ],
+    "fun_fact": "V2-Ergaenzung: Frauengeschichte und Demokratie.",
+    "author": "(unknown)",
+    "merged_from": "assets/quotes.json",
+    "author_type": "person",
+    "provenance": "generated",
+    "needs_review": true
+  },
+  {
+    "id": "weber_001",
+    "text_de": "Verantwortung in der Politik verlangt, Macht mit Augenmass und klaren Regeln zu begrenzen.",
+    "text_original": "Responsibility in politics requires limiting power with prudence and clear rules.",
+    "source": "Politik als Beruf",
+    "year": 1919,
+    "chapter": "Verantwortungsethik",
+    "category": [
+      "Staat",
+      "Verantwortung",
+      "Ordnung"
+    ],
+    "difficulty": "intermediate",
+    "series": "weber",
+    "explanation_short": "Kurz erklaert: Gute Politik verbindet Verantwortung, Ordnung und Begrenzung von Macht.",
+    "explanation_long": "Der Schwerpunkt liegt auf institutioneller Ordnung und verantwortlichem Handeln. Das trifft konservative und neutrale Lesarten, ohne autoritaere Extreme zu beguenstigen.",
+    "related_ids": [
+      "tocqueville_001"
+    ],
+    "fun_fact": "V2-Ergaenzung: konservative und neutrale Perspektive.",
+    "author": "(unknown)",
+    "merged_from": "assets/quotes.json",
+    "author_type": "person",
+    "provenance": "generated",
+    "needs_review": true
+  },
+  {
+    "id": "tocqueville_001",
+    "text_de": "Demokratie bleibt stabil, wenn Freiheit von Vereinen, Gerichten und lokalen Institutionen getragen wird.",
+    "text_original": "Democracy remains stable when liberty is sustained by associations, courts, and local institutions.",
+    "source": "Democracy in America",
+    "year": 1835,
+    "chapter": "Civil Associations",
+    "category": [
+      "Liberalismus",
+      "Demokratie",
+      "Institutionen"
+    ],
+    "difficulty": "intermediate",
+    "series": "tocqueville",
+    "explanation_short": "Kurz erklaert: Freiheit braucht Institutionen und aktive Buergergesellschaft.",
+    "explanation_long": "Das Zitat verbindet liberale Freiheitsrechte mit institutioneller Stabilitaet. Es passt fuer liberale, neutrale und mitte-links Profile, die Teilhabe und Rechtsstaat priorisieren.",
+    "related_ids": [
+      "mill_001",
+      "weber_001"
+    ],
+    "fun_fact": "V2-Ergaenzung: liberal-demokratische Schwerpunktquelle.",
+    "author": "(unknown)",
+    "merged_from": "assets/quotes.json",
+    "author_type": "person",
+    "provenance": "generated",
+    "needs_review": true
+  },
+  {
+    "id": "rawls_001",
+    "text_de": "Eine gerechte Ordnung misst Freiheit daran, ob auch die Schwachen von ihr profitieren.",
+    "text_original": "A just order measures liberty by whether the least advantaged benefit from it.",
+    "source": "A Theory of Justice",
+    "year": 1971,
+    "chapter": "Justice as Fairness",
+    "category": [
+      "Gerechtigkeit",
+      "Mitte-Links",
+      "Reform"
+    ],
+    "difficulty": "advanced",
+    "series": "rawls",
+    "explanation_short": "Kurz erklaert: Freiheit und soziale Gerechtigkeit muessen gemeinsam gedacht werden.",
+    "explanation_long": "Der Fokus liegt auf fairen Institutionen und gerechter Teilhabe. Das staerkt Inhalte fuer mitte-links Profile und Interessen an Demokratie, Arbeit und Gesellschaft.",
+    "related_ids": [
+      "dewey_001"
+    ],
+    "fun_fact": "V2-Ergaenzung: Mitte-Links Gewichtung ueber Gerechtigkeit und Reform.",
+    "author": "(unknown)",
+    "merged_from": "assets/quotes.json",
+    "author_type": "person",
+    "provenance": "generated",
+    "needs_review": true
+  },
+  {
+    "id": "dewey_001",
+    "text_de": "Demokratie ist nicht nur eine Staatsform, sondern eine gemeinsame Lebensweise des Lernens.",
+    "text_original": "Democracy is not only a form of government but a shared way of learning in common life.",
+    "source": "Democracy and Education",
+    "year": 1916,
+    "chapter": "Education and Social Progress",
+    "category": [
+      "Demokratie",
+      "Bildung",
+      "Alltag"
+    ],
+    "difficulty": "beginner",
+    "series": "dewey",
+    "explanation_short": "Kurz erklaert: Demokratie entsteht im Alltag, durch Bildung und Teilhabe.",
+    "explanation_long": "Das Zitat passt stark zu neutralen und mitte-links Lesarten, weil es demokratische Praxis im Alltag betont statt ideologische Zuspitzung.",
+    "related_ids": [
+      "rawls_001"
+    ],
+    "fun_fact": "V2-Ergaenzung: Interesse alltag/gesellschaft und demokratie.",
+    "author": "(unknown)",
+    "merged_from": "assets/quotes.json",
+    "author_type": "person",
+    "provenance": "generated",
+    "needs_review": true
+  },
+  {
+    "id": "arendt_001",
+    "text_de": "Politische Freiheit lebt davon, dass Menschen gemeinsam handeln und oeffentlich Verantwortung tragen.",
+    "text_original": "Political freedom lives from people acting together and taking public responsibility.",
+    "source": "The Human Condition",
+    "year": 1958,
+    "chapter": "Action and Public Space",
+    "category": [
+      "Freiheit",
+      "Demokratie",
+      "Verantwortung"
+    ],
+    "difficulty": "intermediate",
+    "series": "arendt",
+    "explanation_short": "Kurz erklaert: Freiheit ist eine gemeinsame Praxis im oeffentlichen Raum.",
+    "explanation_long": "Der Satz verbindet liberale Freiheitsidee mit gemeinschaftlicher Verantwortung. Dadurch entsteht eine Bruecke zwischen liberalen und neutralen Profilen.",
+    "related_ids": [
+      "tocqueville_001"
+    ],
+    "fun_fact": "V2-Ergaenzung: Fokus auf oeffentliche Freiheit statt Privatinteresse allein.",
+    "author": "(unknown)",
+    "merged_from": "assets/quotes.json",
+    "author_type": "person",
+    "provenance": "generated",
+    "needs_review": true
+  },
+  {
     "id": "curie_001",
     "text_de": "Wissenschaft waechst, wenn Neugier und Methode staerker sind als Angst vor dem Unbekannten.",
     "text_original": "Science grows when curiosity and method are stronger than fear of the unknown.",
@@ -543,6 +776,58 @@
     "needs_review": true
   },
   {
+    "id": "nightingale_001",
+    "text_de": "Reformen gelingen, wenn Sorgearbeit sichtbar wird und als gesellschaftliche Leistung anerkannt ist.",
+    "text_original": "Reforms succeed when care work is visible and recognized as a social contribution.",
+    "source": "Notes on Nursing and Public Health",
+    "year": 1860,
+    "chapter": "Public Health Reform",
+    "category": [
+      "Frauen",
+      "Arbeit",
+      "Reform"
+    ],
+    "difficulty": "intermediate",
+    "series": "nightingale",
+    "explanation_short": "Kurz erklaert: Unsichtbare Arbeit braucht politische Anerkennung und soziale Reform.",
+    "explanation_long": "Die Passage verbindet Frauengeschichte, Arbeit und Mitte-Links Reformperspektiven. Damit verbessert sie gleichzeitig Interessen- und Profilvielfalt.",
+    "related_ids": [
+      "wollstonecraft_001"
+    ],
+    "fun_fact": "V2-Ergaenzung: Schnittstelle frauen/arbeit/reform.",
+    "author": "(unknown)",
+    "merged_from": "assets/quotes.json",
+    "author_type": "person",
+    "provenance": "generated",
+    "needs_review": true
+  },
+  {
+    "id": "du_bois_001",
+    "text_de": "Eine Demokratie ist erst vollstaendig, wenn gleiche Rechte nicht nur im Gesetz, sondern im Alltag gelten.",
+    "text_original": "A democracy is complete only when equal rights exist not only in law but in everyday life.",
+    "source": "The Souls of Black Folk and Later Essays",
+    "year": 1903,
+    "chapter": "Citizenship and Equality",
+    "category": [
+      "Gleichberechtigung",
+      "Demokratie",
+      "Alltag"
+    ],
+    "difficulty": "intermediate",
+    "series": "du_bois",
+    "explanation_short": "Kurz erklaert: Gleichberechtigung muss soziale Wirklichkeit werden.",
+    "explanation_long": "Das Zitat staerkt demokratische und gesellschaftliche Kategorien und passt besonders fuer mitte-links sowie neutrale Perspektiven.",
+    "related_ids": [
+      "rawls_001"
+    ],
+    "fun_fact": "V2-Ergaenzung: Interesse alltag/gesellschaft und gleichberechtigung.",
+    "author": "(unknown)",
+    "merged_from": "assets/quotes.json",
+    "author_type": "person",
+    "provenance": "generated",
+    "needs_review": true
+  },
+  {
     "id": "geneva_001",
     "text_de": "Im Krieg zeigt sich Rechtsstaatlichkeit daran, ob auch Feinde als Menschen behandelt werden.",
     "text_original": "In war, rule of law is shown by whether even enemies are treated as human beings.",
@@ -560,6 +845,32 @@
     "explanation_long": "Die Passage verbessert Treffer fuer das Interesse Krieg/Frieden und verbindet liberale Rechtsbegriffe mit konservativem Ordnungsdenken.",
     "related_ids": [],
     "fun_fact": "V2-Ergaenzung: staerkere Abdeckung fuer krieg und rechte.",
+    "author": "(unknown)",
+    "merged_from": "assets/quotes.json",
+    "author_type": "person",
+    "provenance": "generated",
+    "needs_review": true
+  },
+  {
+    "id": "fanon_001",
+    "text_de": "Kolonialismus endet nicht mit einem Datum, sondern erst mit gleicher politischer und wirtschaftlicher Teilhabe.",
+    "text_original": "Colonialism does not end with a date but only with equal political and economic participation.",
+    "source": "The Wretched of the Earth",
+    "year": 1961,
+    "chapter": "Decolonization",
+    "category": [
+      "Kolonialismus",
+      "Revolution",
+      "Teilhabe"
+    ],
+    "difficulty": "advanced",
+    "series": "fanon",
+    "explanation_short": "Kurz erklaert: Dekolonisierung braucht reale Teilhabe statt symbolischer Unabhaengigkeit.",
+    "explanation_long": "Das Zitat schliesst eine klare Luecke beim Interesse kolonial und verknuepft dieses mit sozialen und demokratischen Fragen.",
+    "related_ids": [
+      "du_bois_001"
+    ],
+    "fun_fact": "V2-Ergaenzung: bessere thematische Breite jenseits europaezentrischer Quellen.",
     "author": "(unknown)",
     "merged_from": "assets/quotes.json",
     "author_type": "person",
@@ -594,6 +905,86 @@
     "needs_review": true
   },
   {
+    "id": "popper_001",
+    "text_de": "Offene Gesellschaften bleiben stark, wenn Kritik erlaubt ist und Reformen friedlich moeglich bleiben.",
+    "text_original": "Open societies remain strong when criticism is allowed and reforms remain possible without violence.",
+    "source": "The Open Society and Its Enemies",
+    "year": 1945,
+    "chapter": "Open Society",
+    "category": [
+      "Liberalismus",
+      "Reform",
+      "Demokratie"
+    ],
+    "difficulty": "beginner",
+    "series": "popper",
+    "explanation_short": "Kurz erklaert: Kritik und Reformfaehigkeit schuetzen demokratische Freiheit.",
+    "explanation_long": "Dieses Zitat staerkt insbesondere liberale und neutrale Profile und verbessert die Abdeckung fuer reform, demokratie und freiheit.",
+    "related_ids": [
+      "mill_001",
+      "tocqueville_001"
+    ],
+    "fun_fact": "V2-Ergaenzung: mehr nicht-marxistische Demokratiezitate.",
+    "author": "(unknown)",
+    "merged_from": "assets/quotes.json",
+    "author_type": "person",
+    "provenance": "generated",
+    "needs_review": true
+  },
+  {
+    "id": "hayek_002",
+    "text_de": "Eine freie Ordnung braucht allgemeine Regeln, damit Macht nicht bei wenigen konzentriert wird.",
+    "text_original": "A free order needs general rules so power is not concentrated in the hands of a few.",
+    "source": "The Constitution of Liberty",
+    "year": 1960,
+    "chapter": "Rules and Order",
+    "category": [
+      "Ordnung",
+      "Freiheit",
+      "Staat"
+    ],
+    "difficulty": "advanced",
+    "series": "hayek",
+    "explanation_short": "Kurz erklaert: Freiheit bleibt stabil durch verallgemeinerte Regeln statt Willkuer.",
+    "explanation_long": "Die Passage bringt konservativ-liberale Schluesselbegriffe zusammen und staerkt nicht-marxistische Auswahl fuer liberal und konservativ.",
+    "related_ids": [
+      "hayek_001",
+      "ordoliberal_001"
+    ],
+    "fun_fact": "V3-Ausbau: liberal-konservative Bruecke.",
+    "author": "(unknown)",
+    "merged_from": "assets/quotes.json",
+    "author_type": "person",
+    "provenance": "generated",
+    "needs_review": true
+  },
+  {
+    "id": "locke_001__merged_9eff80",
+    "text_de": "Rechte auf Eigentum und Freiheit sind nur sicher, wenn Gesetz und Gewaltenteilung sie schuetzen.",
+    "text_original": "Rights to property and liberty are secure only when law and separation of powers protect them.",
+    "source": "Two Treatises of Government",
+    "year": 1689,
+    "chapter": "Civil Government",
+    "category": [
+      "Rechte",
+      "Eigentum",
+      "Verfassung"
+    ],
+    "difficulty": "intermediate",
+    "series": "locke",
+    "explanation_short": "Kurz erklaert: Freiheit braucht rechtsstaatliche Institutionen.",
+    "explanation_long": "Dieses Zitat staerkt konservative und liberale Profile ueber die Marker rechte, eigentum und staatliche Ordnung.",
+    "related_ids": [
+      "madison_001"
+    ],
+    "fun_fact": "V3-Ausbau: Eigentum und Rechtsstaat abgedeckt.",
+    "author": "(unknown)",
+    "merged_from": "assets/quotes.json",
+    "author_type": "person",
+    "provenance": "generated",
+    "needs_review": true
+  },
+  {
     "id": "madison_001",
     "text_de": "Macht muss durch Macht begrenzt werden, damit Freiheit im Alltag erhalten bleibt.",
     "text_original": "Power must be limited by power so that liberty survives in ordinary life.",
@@ -621,6 +1012,85 @@
     "needs_review": true
   },
   {
+    "id": "oakeshott_001",
+    "text_de": "Regieren ist oft die Kunst, Schaden zu begrenzen statt grosse Plaene ueber Menschen zu legen.",
+    "text_original": "Governing is often the art of limiting harm rather than imposing grand designs on people.",
+    "source": "Rationalism in Politics",
+    "year": 1962,
+    "chapter": "Practical Politics",
+    "category": [
+      "Verantwortung",
+      "Ordnung",
+      "Tradition"
+    ],
+    "difficulty": "advanced",
+    "series": "oakeshott",
+    "explanation_short": "Kurz erklaert: Politik sollte vorsichtig, lernfaehig und verantwortungsvoll handeln.",
+    "explanation_long": "Das Zitat liefert konservative Schwerpunkte ohne Ideologisierung und stabilisiert die konservative Feed-Balance.",
+    "related_ids": [
+      "burke_002"
+    ],
+    "fun_fact": "V3-Ausbau: konservative Verantwortungsethik.",
+    "author": "(unknown)",
+    "merged_from": "assets/quotes.json",
+    "author_type": "person",
+    "provenance": "generated",
+    "needs_review": true
+  },
+  {
+    "id": "solzhenitsyn_001",
+    "text_de": "Freiheit beginnt dort, wo der Einzelne Verantwortung uebernimmt und Luegen nicht zur Norm werden.",
+    "text_original": "Freedom begins where individuals accept responsibility and lies do not become the norm.",
+    "source": "Gulag Archipelago Speeches and Essays",
+    "year": 1974,
+    "chapter": "Truth and Responsibility",
+    "category": [
+      "Werte",
+      "Verantwortung",
+      "Freiheit"
+    ],
+    "difficulty": "intermediate",
+    "series": "solzhenitsyn",
+    "explanation_short": "Kurz erklaert: Freiheitskultur braucht Wahrheit und persoenliche Verantwortung.",
+    "explanation_long": "Der Fokus auf werte und verantwortung verbessert konservative und neutrale Auswahl ohne parteipolitische Schieflage.",
+    "related_ids": [
+      "weber_001"
+    ],
+    "fun_fact": "V3-Ausbau: Wertebezug fuer konservative Nutzer.",
+    "author": "(unknown)",
+    "merged_from": "assets/quotes.json",
+    "author_type": "person",
+    "provenance": "generated",
+    "needs_review": true
+  },
+  {
+    "id": "smith_001",
+    "text_de": "Wohlstand entsteht stabil, wenn Wettbewerb mit Moral und verlässlichen Regeln verbunden bleibt.",
+    "text_original": "Prosperity remains stable when competition stays linked to morality and reliable rules.",
+    "source": "The Wealth of Nations",
+    "year": 1776,
+    "chapter": "Political Economy",
+    "category": [
+      "Markt",
+      "Ordnung",
+      "Werte"
+    ],
+    "difficulty": "intermediate",
+    "series": "smith",
+    "explanation_short": "Kurz erklaert: Wirtschaft braucht Regeln und moralische Grenzen.",
+    "explanation_long": "Das Zitat verbindet markt und ordnung und hilft bei konservativ-liberalen Empfehlungen ausserhalb des Marx-Pools.",
+    "related_ids": [
+      "ordoliberal_001",
+      "hayek_002"
+    ],
+    "fun_fact": "V3-Ausbau: marktwirtschaftliche Ordnungsthemen.",
+    "author": "(unknown)",
+    "merged_from": "assets/quotes.json",
+    "author_type": "person",
+    "provenance": "generated",
+    "needs_review": true
+  },
+  {
     "id": "hume_001",
     "text_de": "Stabile politische Ordnung waechst aus Gewohnheiten des Vertrauens und nicht aus kurzfristiger Erregung.",
     "text_original": "Stable political order grows from habits of trust, not from short-lived excitement.",
@@ -640,6 +1110,165 @@
       "burke_002"
     ],
     "fun_fact": "V3-Ausbau: Kontinuitaet als politischer Faktor.",
+    "author": "(unknown)",
+    "merged_from": "assets/quotes.json",
+    "author_type": "person",
+    "provenance": "generated",
+    "needs_review": true
+  },
+  {
+    "id": "montesquieu_001",
+    "text_de": "Macht bleibt maessig, wenn Institutionen sich gegenseitig kontrollieren und begrenzen.",
+    "text_original": "Power stays moderate when institutions control and limit one another.",
+    "source": "The Spirit of the Laws",
+    "year": 1748,
+    "chapter": "Separation of Powers",
+    "category": [
+      "Staat",
+      "Verfassung",
+      "Ordnung"
+    ],
+    "difficulty": "beginner",
+    "series": "montesquieu",
+    "explanation_short": "Kurz erklaert: Gewaltenteilung schuetzt Freiheit durch institutionelle Balance.",
+    "explanation_long": "Dieses Zitat passt besonders fuer konservative und neutrale Profile, die staatliche Ordnung und Rechtsbindung priorisieren.",
+    "related_ids": [
+      "madison_001",
+      "locke_001"
+    ],
+    "fun_fact": "V3-Ausbau: Staatsordnung und Verfassung.",
+    "author": "(unknown)",
+    "merged_from": "assets/quotes.json",
+    "author_type": "person",
+    "provenance": "generated",
+    "needs_review": true
+  },
+  {
+    "id": "camus_001",
+    "text_de": "Mass und Anstand im politischen Streit verhindern, dass Gegensaetze in Entmenschlichung kippen.",
+    "text_original": "Measure and decency in political conflict prevent disagreement from turning into dehumanization.",
+    "source": "The Rebel",
+    "year": 1951,
+    "chapter": "Limits and Dignity",
+    "category": [
+      "Neutral",
+      "Ethik",
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "camus",
+    "explanation_short": "Kurz erklaert: Demokratische Kultur braucht Grenzen im Streit.",
+    "explanation_long": "Der Fokus liegt auf neutraler politischer Kultur und alltagstauglicher Ethik, was den neutralen Feed stabilisiert.",
+    "related_ids": [
+      "arendt_001"
+    ],
+    "fun_fact": "V3-Ausbau: neutraler Ethik-Schwerpunkt.",
+    "author": "(unknown)",
+    "merged_from": "assets/quotes.json",
+    "author_type": "person",
+    "provenance": "generated",
+    "needs_review": true
+  },
+  {
+    "id": "ricoeur_001",
+    "text_de": "Gerechte Institutionen zeigen sich daran, wie sie Konflikte in faire Verfahren uebersetzen.",
+    "text_original": "Just institutions are recognized by how they translate conflict into fair procedures.",
+    "source": "Oneself as Another",
+    "year": 1990,
+    "chapter": "Justice and Institutions",
+    "category": [
+      "Neutral",
+      "Gerechtigkeit",
+      "Institutionen"
+    ],
+    "difficulty": "advanced",
+    "series": "ricoeur",
+    "explanation_short": "Kurz erklaert: Verfahren sind zentral fuer gerechte demokratische Ordnung.",
+    "explanation_long": "Das Zitat bringt neutrale Institutionenperspektiven ein und verbessert die Balance jenseits ideologischer Marker.",
+    "related_ids": [
+      "rawls_001",
+      "montesquieu_001"
+    ],
+    "fun_fact": "V3-Ausbau: neutrales Institutionenprofil.",
+    "author": "(unknown)",
+    "merged_from": "assets/quotes.json",
+    "author_type": "person",
+    "provenance": "generated",
+    "needs_review": true
+  },
+  {
+    "id": "ostrom_001",
+    "text_de": "Gemeinsame Gueter bleiben erhalten, wenn lokale Regeln klar sind und Verantwortung geteilt wird.",
+    "text_original": "Commons endure when local rules are clear and responsibility is shared.",
+    "source": "Governing the Commons",
+    "year": 1990,
+    "chapter": "Collective Rules",
+    "category": [
+      "Neutral",
+      "Alltag",
+      "Verantwortung"
+    ],
+    "difficulty": "beginner",
+    "series": "ostrom",
+    "explanation_short": "Kurz erklaert: Kooperation funktioniert mit klaren Regeln und gemeinsamer Verantwortung.",
+    "explanation_long": "Dieser Eintrag verbessert die neutrale Auswahl fuer alltag/gesellschaft und verbindet sie mit verantwortungsvoller Ordnung.",
+    "related_ids": [
+      "dewey_001"
+    ],
+    "fun_fact": "V3-Ausbau: neutral-praktische Governance-Perspektive.",
+    "author": "(unknown)",
+    "merged_from": "assets/quotes.json",
+    "author_type": "person",
+    "provenance": "generated",
+    "needs_review": true
+  },
+  {
+    "id": "sen_001",
+    "text_de": "Freiheit wird konkret, wenn Menschen reale Faehigkeiten zur Teilhabe besitzen.",
+    "text_original": "Freedom becomes concrete when people possess real capabilities for participation.",
+    "source": "Development as Freedom",
+    "year": 1999,
+    "chapter": "Capabilities and Agency",
+    "category": [
+      "Neutral",
+      "Teilhabe",
+      "Freiheit"
+    ],
+    "difficulty": "intermediate",
+    "series": "sen",
+    "explanation_short": "Kurz erklaert: Freiheit braucht tatsaechliche Optionen, nicht nur formale Rechte.",
+    "explanation_long": "Das Zitat staerkt neutrale und mitte-nahe Empfehlungen mit Fokus auf Teilhabe und alltagswirksame Freiheit.",
+    "related_ids": [
+      "rawls_001",
+      "du_bois_001"
+    ],
+    "fun_fact": "V3-Ausbau: neutraler Teilhabe-Fokus.",
+    "author": "(unknown)",
+    "merged_from": "assets/quotes.json",
+    "author_type": "person",
+    "provenance": "generated",
+    "needs_review": true
+  },
+  {
+    "id": "havel_001",
+    "text_de": "Politik bleibt glaubwuerdig, wenn Verantwortung im Kleinen beginnt und Wahrheit oeffentlich verteidigt wird.",
+    "text_original": "Politics remains credible when responsibility starts in everyday life and truth is defended in public.",
+    "source": "The Power of the Powerless",
+    "year": 1978,
+    "chapter": "Living in Truth",
+    "category": [
+      "Neutral",
+      "Verantwortung",
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "havel",
+    "explanation_short": "Kurz erklaert: Demokratische Kultur entsteht aus Alltagspraxis und Wahrhaftigkeit.",
+    "explanation_long": "Der Schwerpunkt ist neutral und gesellschaftsnah. Das hilft der App, weniger ideologisch einseitige Tageszitate auszuspielen.",
+    "related_ids": [
+      "camus_001"
+    ],
+    "fun_fact": "V3-Ausbau: neutral-alltagspolitische Quelle.",
     "author": "(unknown)",
     "merged_from": "assets/quotes.json",
     "author_type": "person",

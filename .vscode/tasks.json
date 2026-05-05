@@ -11,6 +11,89 @@
 				"pixel6"
 			],
 			"isBackground": true
+		},
+		{
+			"label": "Analyze quotes sources",
+			"type": "shell",
+			"command": "python",
+			"args": [
+				"tools/analyze_quotes_sources.py"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Promote quotes json person sources",
+			"type": "shell",
+			"command": "python",
+			"args": [
+				"tools/promote_quotes_json_person_sources.py"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Promote thinkers expanded to thinkers",
+			"type": "shell",
+			"command": "python",
+			"args": [
+				"tools/promote_thinkers_expanded_to_thinkers.py"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Validate thinkers quotes count",
+			"type": "shell",
+			"command": "python",
+			"args": [
+				"-c",
+				"import json; from pathlib import Path; data=json.load(open(Path('assets/thinkers_quotes.json'), encoding='utf-8')); print('count', len(data)); print('missing', sum(1 for q in data if not all(k in q for k in ['id','text_de','text_original','author','source','year','chapter','category','difficulty','series','explanation_short','explanation_long','related_ids']))); print('unknown', sum(1 for q in data if q.get('author') == '(unknown)'))"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Validate thinkers quotes script",
+			"type": "shell",
+			"command": "python",
+			"args": [
+				"tools/validate_thinkers_quotes.py"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Temp: flutter analyze",
+			"type": "shell",
+			"command": "flutter analyze",
+			"isBackground": false,
+			"problemMatcher": [
+				"$dart-analyze"
+			]
+		},
+		{
+			"label": "Temp: flutter run device",
+			"type": "shell",
+			"command": "flutter run -d 19051FDF6000J8",
+			"isBackground": false
+		},
+		{
+			"label": "Temp: flutter run device",
+			"type": "shell",
+			"command": "flutter run -d 19051FDF6000J8",
+			"isBackground": false
+		},
+		{
+			"label": "Temp: flutter run device",
+			"type": "shell",
+			"command": "flutter run -d 19051FDF6000J8",
+			"isBackground": false
 		}
 	]
 }

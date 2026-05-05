@@ -1,0 +1,25 @@
+{
+  "batch": 6,
+  "timestamp": "2026-05-04T16:08:00.776278",
+  "before_count": 222,
+  "added": 8,
+  "after_count": 230,
+  "skipped_duplicates": [
+    "sontag_001",
+    "weber_001",
+    "douglass_001",
+    "havel_001",
+    "einstein_001"
+  ],
+  "backup_path": "F:\\Levi\\flutter_projekts\\Marx\\marx_app\\tools\\backups\\thinkers_quotes.json.pre_batch6_20260504_160800.bak",
+  "authors_added": [
+    "Angela Davis",
+    "Octavia E. Butler",
+    "José Ortega y Gasset",
+    "Arundhati Roy",
+    "Cornel West",
+    "Alice Walker",
+    "Steve Biko",
+    "Maya Angelou"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "batch": 4,
+  "timestamp": "2026-05-04T08:21:45.754111",
+  "before_count": 191,
+  "added": 19,
+  "after_count": 210,
+  "skipped_duplicates": 9,
+  "skipped_invalid": 0,
+  "total_new_entries": 28,
+  "backup_path": "F:\\Levi\\flutter_projekts\\Marx\\marx_app\\tools\\backups\\thinkers_quotes.json.pre_batch4_20260504_082145.bak",
+  "skipped_reasons": [
+    "  - voltaire_001: duplicate",
+    "  - wollstonecraft_001: duplicate",
+    "  - bentham_001: duplicate",
+    "  - mill_001: duplicate",
+    "  - beauvoir_001: duplicate",
+    "  - rawls_001: duplicate",
+    "  - arendt_001: duplicate",
+    "  - fanon_001: duplicate",
+    "  - popper_001: duplicate"
+  ],
+  "new_author_count": 19,
+  "categories_added": [
+    "revolution",
+    "wissenschaft",
+    "arbeit",
+    "frauen",
+    "kolonial",
+    "philosophie",
+    "frauenrechte"
+  ]
+}

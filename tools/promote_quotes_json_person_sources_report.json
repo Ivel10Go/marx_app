@@ -1,0 +1,42 @@
+{
+  "before_count": 230,
+  "added": 109,
+  "after_count": 339,
+  "target_count": 400,
+  "skipped_duplicates": 319,
+  "skipped_missing": 0,
+  "backup_path": "F:\\Levi\\flutter_projekts\\Marx\\marx_app\\tools\\backups\\thinkers_quotes.json.pre_promote_quotes_20260504_161238.bak",
+  "sources_used": [
+    "Anti-Duhring",
+    "Briefe und Korrespondenz",
+    "Briefe von Marx und Engels",
+    "Das Kapital Band 1",
+    "Das Kapital Band 2",
+    "Das Kapital Band 3",
+    "Das Kapital, Band 1",
+    "Das Kapital, Band 2/3",
+    "Der Ursprung der Familie, des Privateigentums und des Staats",
+    "Der achtzehnte Brumaire",
+    "Der achtzehnte Brumaire des Louis Bonaparte",
+    "Die deutsche Ideologie",
+    "Engels: Anti-Duehring u.a.",
+    "Grundrisse",
+    "Grundrisse der Kritik der Politischen Oekonomie",
+    "Kommunistisches Manifest",
+    "Lohnarbeit und Kapital",
+    "Ludwig Feuerbach und der Ausgang der klassischen deutschen Philosophie",
+    "Manifest der Kommunistischen Partei",
+    "On Liberty",
+    "Reflections on the Revolution in France",
+    "Thesen ueber Feuerbach",
+    "Zur Kritik der Hegelschen Rechtsphilosophie. Einleitung",
+    "Zur Kritik der Politischen Oekonomie"
+  ],
+  "authors_used": [
+    "Edmund Burke",
+    "Friedrich Engels",
+    "John Stuart Mill",
+    "Karl Marx",
+    "Karl Marx & Friedrich Engels"
+  ]
+}

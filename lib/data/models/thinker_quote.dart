@@ -25,13 +25,27 @@ class ThinkerQuote {
   bool get isPolitician => authorType == 'politician';
 
   factory ThinkerQuote.fromJson(Map<String, dynamic> json) {
+    // Safely handle all fields (may be missing or null in some entries)
+    String getAuthorType() {
+      final at = json['author_type'];
+      if (at is String && at.isNotEmpty) {
+        return at;
+      }
+      return 'philosopher';
+    }
+
     return ThinkerQuote(
-      id: json['id'] as String,
-      author: normalizeGermanDisplayText(json['author'] as String)!,
-      authorType: json['author_type'] as String,
-      textDe: normalizeGermanDisplayText(json['text_de'] as String)!,
-      source: normalizeGermanDisplayText(json['source'] as String)!,
-      year: (json['year'] as num).toInt(),
+      id: (json['id'] as String?) ?? 'unknown',
+      author:
+          normalizeGermanDisplayText(json['author'] as String?) ?? '(Unknown)',
+      authorType: getAuthorType(),
+      textDe:
+          normalizeGermanDisplayText(json['text_de'] as String?) ??
+          '(Text not available)',
+      source:
+          normalizeGermanDisplayText(json['source'] as String?) ??
+          '(Source unknown)',
+      year: (json['year'] as num?)?.toInt() ?? 0,
       imageUrl: json['image_url'] as String?,
     );
   }

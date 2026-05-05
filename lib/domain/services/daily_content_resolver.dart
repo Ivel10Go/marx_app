@@ -8,6 +8,7 @@ import '../../data/models/user_profile.dart';
 import '../../data/repositories/history_repository.dart';
 import '../../data/repositories/quote_repository.dart';
 import '../../core/utils/german_text_normalizer.dart';
+import '../../core/utils/quote_attribution.dart';
 import 'personalization_service.dart';
 
 class DailyContentResolver {
@@ -145,8 +146,18 @@ class DailyContentResolver {
       scopedQuotes: scopedQuotes,
       profile: profile,
     );
-    if (profile.historicalInterests.isEmpty) {
+
+    if (candidates.isEmpty) {
       return <Quote>[];
+    }
+
+    // If no interests set, return random diverse quotes
+    if (profile.historicalInterests.isEmpty) {
+      final weighted = _personalization.getWeightedQuotes(candidates, profile);
+      if (weighted.isEmpty) {
+        return <Quote>[];
+      }
+      return weighted.take(count).toList(growable: false);
     }
 
     final selected = <Quote>[];
@@ -349,6 +360,11 @@ class DailyContentResolver {
   }
 
   bool _isMarxQuote(Quote quote) {
+    final attribution = quoteAuthorLabel(quote).toLowerCase();
+    if (attribution.contains('marx') || attribution.contains('engels')) {
+      return true;
+    }
+
     final text = normalizeGermanSearchText(
       <String>[
         quote.id,
@@ -383,6 +399,7 @@ class DailyContentResolver {
     'karl marx',
     'engels',
     'friedrich engels',
+    'briefe',
     'kommunistisch',
     'kommunismus',
     'kommunistisches manifest',

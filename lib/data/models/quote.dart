@@ -35,33 +35,62 @@ class Quote {
 
   factory Quote.fromJson(Map<String, dynamic> json) {
     return Quote(
-      id: json['id'] as String,
-      textDe: normalizeGermanDisplayText(json['text_de'] as String)!,
-      textOriginal: normalizeGermanDisplayText(
-        json['text_original'] as String,
-      )!,
-      source: normalizeGermanDisplayText(json['source'] as String)!,
-      year: (json['year'] as num).toInt(),
-      chapter: normalizeGermanDisplayText(json['chapter'] as String)!,
-      category: (json['category'] as List<dynamic>)
-          .cast<String>()
-          .map((item) => normalizeGermanDisplayText(item)!)
-          .toList(),
-      difficulty: json['difficulty'] as String,
-      series: normalizeGermanDisplayText(json['series'] as String)!,
-      explanationShort: normalizeGermanDisplayText(
-        json['explanation_short'] as String,
-      )!,
-      explanationLong: normalizeGermanDisplayText(
-        json['explanation_long'] as String,
-      )!,
-      relatedIds: (json['related_ids'] as List<dynamic>)
-          .cast<String>()
-          .map((item) => normalizeGermanDisplayText(item)!)
-          .toList(),
+      id: (json['id'] as String?) ?? 'unknown',
+      textDe:
+          normalizeGermanDisplayText(json['text_de'] as String?) ??
+          '(Text nicht verfügbar)',
+      textOriginal:
+          normalizeGermanDisplayText(json['text_original'] as String?) ??
+          '(Original text not available)',
+      source:
+          normalizeGermanDisplayText(json['source'] as String?) ??
+          '(Source unknown)',
+      year: (json['year'] as num?)?.toInt() ?? 0,
+      chapter: normalizeGermanDisplayText(json['chapter'] as String?) ?? '',
+      category: _safeParseCategory(json['category']),
+      difficulty: json['difficulty'] as String? ?? 'intermediate',
+      series: normalizeGermanDisplayText(json['series'] as String?) ?? '',
+      explanationShort:
+          normalizeGermanDisplayText(json['explanation_short'] as String?) ??
+          '',
+      explanationLong:
+          normalizeGermanDisplayText(json['explanation_long'] as String?) ?? '',
+      relatedIds: _safeParseRelatedIds(json['related_ids']),
       funFact: normalizeGermanDisplayText(json['fun_fact'] as String?),
       imageUrl: json['image_url'] as String?,
     );
+  }
+
+  static List<String> _safeParseCategory(dynamic value) {
+    if (value == null) return <String>[];
+    if (value is String) return <String>[value];
+    if (value is List<dynamic>) {
+      return value
+          .map((item) {
+            final normalized = normalizeGermanDisplayText(item?.toString());
+            final out = (normalized ?? item?.toString() ?? '').trim();
+            return out;
+          })
+          .where((item) => item.isNotEmpty)
+          .toList();
+    }
+    return <String>[];
+  }
+
+  static List<String> _safeParseRelatedIds(dynamic value) {
+    if (value == null) return <String>[];
+    if (value is String) return <String>[value];
+    if (value is List<dynamic>) {
+      return value
+          .map((item) {
+            final normalized = normalizeGermanDisplayText(item?.toString());
+            final out = (normalized ?? item?.toString() ?? '').trim();
+            return out;
+          })
+          .where((item) => item.isNotEmpty)
+          .toList();
+    }
+    return <String>[];
   }
 
   Map<String, dynamic> toJson() {

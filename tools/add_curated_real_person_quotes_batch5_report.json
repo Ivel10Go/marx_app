@@ -1,0 +1,41 @@
+{
+  "batch": 5,
+  "timestamp": "2026-05-04T16:07:10.845185",
+  "before_count": 210,
+  "added": 12,
+  "after_count": 222,
+  "skipped_duplicates": [
+    "camus_001",
+    "orwell_001",
+    "dewey_001",
+    "sen_001",
+    "king_001",
+    "kierkegaard_001"
+  ],
+  "backup_path": "F:\\Levi\\flutter_projekts\\Marx\\marx_app\\tools\\backups\\thinkers_quotes.json.pre_batch5_20260504_160710.bak",
+  "authors_added": [
+    "Virginia Woolf",
+    "Audre Lorde",
+    "Simone Weil",
+    "W. E. B. Du Bois",
+    "Paulo Freire",
+    "C. Wright Mills",
+    "James Baldwin",
+    "Michel de Montaigne",
+    "Rebecca Solnit",
+    "Alain de Botton",
+    "Martha Nussbaum",
+    "Rigoberta Menchú"
+  ],
+  "categories_added": [
+    "alltag",
+    "bildung",
+    "frauenrechte",
+    "frieden",
+    "gerechtigkeit",
+    "gesellschaft",
+    "gleichberechtigung",
+    "philosophie",
+    "revolution"
+  ]
+}

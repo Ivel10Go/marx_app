@@ -128,7 +128,7 @@ final archiveThemeFilterOptionsProvider = Provider<List<String>>((Ref ref) {
   }
 
   final sorted = options.toList()..sort();
-  return sorted.take(24).toList();
+  return sorted;
 });
 
 final archiveOrientationFilterOptionsProvider = Provider<List<String>>((

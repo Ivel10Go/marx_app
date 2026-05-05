@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../data/models/user_profile.dart';
+import '../../../domain/providers/daily_content_provider.dart';
 import '../../../domain/providers/user_profile_provider.dart';
 import '../../../widgets/political_leaning_parliament_picker.dart';
 
@@ -279,6 +280,7 @@ class ProfileSection extends ConsumerWidget {
                               await ref
                                   .read(userProfileProvider.notifier)
                                   .updateInterests(selected.toList());
+                              ref.invalidate(dailyContentProvider);
                               if (context.mounted) {
                                 Navigator.of(context).pop();
                               }
@@ -359,6 +361,7 @@ class ProfileSection extends ConsumerWidget {
                         await ref
                             .read(userProfileProvider.notifier)
                             .updatePoliticalLeaning(selected);
+                        ref.invalidate(dailyContentProvider);
                         if (context.mounted) {
                           Navigator.of(context).pop();
                         }

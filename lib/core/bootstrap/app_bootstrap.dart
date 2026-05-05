@@ -265,9 +265,11 @@ abstract final class AppBootstrap {
         // Warm the database and sync the widget without blocking startup.
         // Use compute() to avoid database locks in main thread.
         final warmupStart = Stopwatch()..start();
-        debugPrint('[Deferred] Warming up data for widget sync (isolate)...');
-        final dailyContentData =
-            await compute(_initializeDatabaseInIsolate, isolateArgs).timeout(
+        debugPrint(
+          '[Deferred] Warming up data for widget sync (main isolate)...',
+        );
+        final dailyContentData = await _initializeDatabaseInIsolate(isolateArgs)
+            .timeout(
               const Duration(seconds: 30),
               onTimeout: () {
                 debugPrint('[Deferred] WARNING: Database warm-up timed out');

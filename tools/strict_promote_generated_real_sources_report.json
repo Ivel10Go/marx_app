@@ -1,0 +1,69 @@
+{
+  "before": {
+    "thinkers_count": 167,
+    "generated_count": 3897
+  },
+  "strict_sources": [
+    "The Levin interviews - Friedrich Hayek",
+    "A Vindication of the Rights of Woman",
+    "Declaration of the Rights of Woman and of the Female Citizen",
+    "Seneca Falls Convention Speeches",
+    "Politik als Beruf",
+    "Democracy in America",
+    "A Theory of Justice",
+    "Democracy and Education",
+    "The Human Condition",
+    "Notes on Nursing and Public Health",
+    "The Souls of Black Folk and Later Essays",
+    "The Wretched of the Earth",
+    "The Open Society and Its Enemies",
+    "The Constitution of Liberty",
+    "Two Treatises of Government",
+    "The Spirit of the Laws",
+    "The Rebel",
+    "Oneself as Another",
+    "Governing the Commons",
+    "Development as Freedom",
+    "The Power of the Powerless",
+    "The Wealth of Nations",
+    "Rationalism in Politics",
+    "Gulag Archipelago Speeches and Essays"
+  ],
+  "source_hits_in_generated": {
+    "The Levin interviews - Friedrich Hayek": 3,
+    "A Vindication of the Rights of Woman": 3,
+    "Declaration of the Rights of Woman and of the Female Citizen": 3,
+    "Seneca Falls Convention Speeches": 3,
+    "Politik als Beruf": 3,
+    "Democracy in America": 3,
+    "A Theory of Justice": 3,
+    "Democracy and Education": 3,
+    "The Human Condition": 3,
+    "Notes on Nursing and Public Health": 3,
+    "The Souls of Black Folk and Later Essays": 3,
+    "The Wretched of the Earth": 3,
+    "The Open Society and Its Enemies": 3,
+    "The Constitution of Liberty": 3,
+    "Two Treatises of Government": 3,
+    "The Spirit of the Laws": 3,
+    "The Rebel": 3,
+    "Oneself as Another": 3,
+    "Governing the Commons": 3,
+    "Development as Freedom": 3,
+    "The Power of the Powerless": 3,
+    "The Wealth of Nations": 3,
+    "Rationalism in Politics": 3,
+    "Gulag Archipelago Speeches and Essays": 3
+  },
+  "result": {
+    "promoted": 24,
+    "skipped_duplicates": 48,
+    "skipped_missing_fields": 0,
+    "thinkers_after": 191,
+    "generated_after": 3873
+  },
+  "backups": {
+    "thinkers_backup": "F:\\Levi\\flutter_projekts\\Marx\\marx_app\\assets\\thinkers_quotes.json.pre_strict_promote_20260504_081050.bak",
+    "generated_backup": "F:\\Levi\\flutter_projekts\\Marx\\marx_app\\assets\\generated_quotes.json.pre_strict_promote_20260504_081050.bak"
+  }
+}

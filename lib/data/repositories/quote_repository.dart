@@ -150,20 +150,24 @@ class QuoteRepository {
 
     return Quote(
       id: row.id,
-      textDe: normalizeGermanDisplayText(row.textDe)!,
-      textOriginal: normalizeGermanDisplayText(row.textOriginal)!,
-      source: normalizeGermanDisplayText(row.source)!,
+      textDe: (normalizeGermanDisplayText(row.textDe) ?? '').trim(),
+      textOriginal: (normalizeGermanDisplayText(row.textOriginal) ?? '').trim(),
+      source: (normalizeGermanDisplayText(row.source) ?? '').trim(),
       year: row.year,
-      chapter: normalizeGermanDisplayText(row.chapter)!,
+      chapter: (normalizeGermanDisplayText(row.chapter) ?? '').trim(),
       category: categories
-          .map((item) => normalizeGermanDisplayText(item)!)
+          .map((item) => (normalizeGermanDisplayText(item) ?? '').trim())
+          .where((item) => item.isNotEmpty)
           .toList(),
       difficulty: row.difficulty,
-      series: normalizeGermanDisplayText(row.series)!,
-      explanationShort: normalizeGermanDisplayText(row.explanationShort)!,
-      explanationLong: normalizeGermanDisplayText(row.explanationLong)!,
+      series: (normalizeGermanDisplayText(row.series) ?? '').trim(),
+      explanationShort: (normalizeGermanDisplayText(row.explanationShort) ?? '')
+          .trim(),
+      explanationLong: (normalizeGermanDisplayText(row.explanationLong) ?? '')
+          .trim(),
       relatedIds: related
-          .map((item) => normalizeGermanDisplayText(item)!)
+          .map((item) => (normalizeGermanDisplayText(item) ?? '').trim())
+          .where((item) => item.isNotEmpty)
           .toList(),
       funFact: normalizeGermanDisplayText(row.funFact),
     );

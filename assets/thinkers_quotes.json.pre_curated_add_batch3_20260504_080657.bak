@@ -6,7 +6,6 @@
     "text_de": "Man kann alle Leute eine Zeit lang tÃ¤uschen und einige Leute alle Zeit, aber man kann nicht alle Leute alle Zeit tÃ¤uschen.",
     "source": "Rede in Clinton",
     "year": 1858,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Man kann alle Leute eine Zeit lang tÃ¤uschen und einige Leute alle Zeit, aber man kann nicht alle Leute alle Zeit tÃ¤uschen.",
     "chapter": "Rede in Clinton",
     "category": [
@@ -19,13 +18,32 @@
     "related_ids": []
   },
   {
+    "id": "lincoln_003",
+    "author": "Abraham Lincoln",
+    "author_type": "politician",
+    "text_de": "Die beste Art, die Zukunft vorauszusagen, ist, sie zu gestalten.",
+    "source": "Zugeschriebene politische Formel",
+    "year": 1862,
+    "text_original": "Die beste Art, die Zukunft vorauszusagen, ist, sie zu gestalten.",
+    "chapter": "Zugeschriebene politische Formel",
+    "category": [
+      "Politik",
+      "Reform",
+      "Demokratie"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_abraham_lincoln",
+    "explanation_short": "Zitat von Abraham Lincoln: Die beste Art, die Zukunft vorauszusagen, ist, sie zu gestalten.",
+    "explanation_long": "Historisches Zitat von Abraham Lincoln aus \"Zugeschriebene politische Formel\".",
+    "related_ids": []
+  },
+  {
     "id": "lincoln_002",
     "author": "Abraham Lincoln",
     "author_type": "politician",
     "text_de": "Das Recht zu wÃ¤hlen wird den Menschen von denen verweigert, die die UnterdrÃ¼ckung weniger fÃ¼rchten als den politischen Wandel.",
     "source": "Briefe und Reden",
     "year": 1863,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Das Recht zu wÃ¤hlen wird den Menschen von denen verweigert, die die UnterdrÃ¼ckung weniger fÃ¼rchten als den politischen Wandel.",
     "chapter": "Briefe und Reden",
     "category": [
@@ -38,13 +56,132 @@
     "related_ids": []
   },
   {
+    "id": "lovelace_001",
+    "author": "Ada Lovelace",
+    "author_type": "philosopher",
+    "text_de": "Die analytische Maschine hat keinen Anspruch darauf, irgendetwas selbst hervorbringen zu koennen. Sie kann nur tun, was wir ihr anzuordnen wissen.",
+    "source": "Notes on the Analytical Engine",
+    "year": 1843,
+    "text_original": "Die analytische Maschine hat keinen Anspruch darauf, irgendetwas selbst hervorbringen zu koennen. Sie kann nur tun, was wir ihr anzuordnen wissen.",
+    "chapter": "Notes on the Analytical Engine",
+    "category": [
+      "Wissenschaft",
+      "Technik",
+      "Methode"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_ada_lovelace",
+    "explanation_short": "Zitat von Ada Lovelace: Die analytische Maschine hat keinen Anspruch darauf, irgendetwas selbst hervorbringen zu koennen. Sie kann nur tun, was ",
+    "explanation_long": "Historisches Zitat von Ada Lovelace aus \"Notes on the Analytical Engine\".",
+    "related_ids": []
+  },
+  {
+    "id": "cesaire_001",
+    "author": "Aime Cesaire",
+    "author_type": "politician",
+    "text_de": "Kolonisation entmenschlicht den Kolonisator ebenso wie den Kolonisierten.",
+    "source": "Diskurs ueber den Kolonialismus",
+    "year": 1950,
+    "text_original": "Kolonisation entmenschlicht den Kolonisator ebenso wie den Kolonisierten.",
+    "chapter": "Diskurs ueber den Kolonialismus",
+    "category": [
+      "Kolonialismus",
+      "Kritik",
+      "Emanzipation"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_aime_cesaire",
+    "explanation_short": "Zitat von Aime Cesaire: Kolonisation entmenschlicht den Kolonisator ebenso wie den Kolonisierten.",
+    "explanation_long": "Historisches Zitat von Aime Cesaire aus \"Diskurs ueber den Kolonialismus\".",
+    "related_ids": []
+  },
+  {
+    "id": "camus_001",
+    "author": "Albert Camus",
+    "author_type": "philosopher",
+    "text_de": "Inmitten des Winters habe ich endlich gelernt, dass es in mir einen unbesiegbaren Sommer gibt.",
+    "source": "Retour a Tipasa",
+    "year": 1954,
+    "text_original": "Inmitten des Winters habe ich endlich gelernt, dass es in mir einen unbesiegbaren Sommer gibt.",
+    "chapter": "Retour a Tipasa",
+    "category": [
+      "Philosophie",
+      "Menschenbild",
+      "Ethik"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_albert_camus",
+    "explanation_short": "Zitat von Albert Camus: Inmitten des Winters habe ich endlich gelernt, dass es in mir einen unbesiegbaren Sommer gibt.",
+    "explanation_long": "Historisches Zitat von Albert Camus aus \"Retour a Tipasa\".",
+    "related_ids": []
+  },
+  {
+    "id": "einstein_001",
+    "author": "Albert Einstein",
+    "author_type": "philosopher",
+    "text_de": "Phantasie ist wichtiger als Wissen, denn Wissen ist begrenzt.",
+    "source": "Cosmic Religion and Other Opinions and Aphorisms",
+    "year": 1931,
+    "text_original": "Phantasie ist wichtiger als Wissen, denn Wissen ist begrenzt.",
+    "chapter": "Cosmic Religion and Other Opinions and Aphorisms",
+    "category": [
+      "Wissenschaft",
+      "Bildung",
+      "Philosophie"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_albert_einstein",
+    "explanation_short": "Zitat von Albert Einstein: Phantasie ist wichtiger als Wissen, denn Wissen ist begrenzt.",
+    "explanation_long": "Historisches Zitat von Albert Einstein aus \"Cosmic Religion and Other Opinions and Aphorisms\".",
+    "related_ids": []
+  },
+  {
+    "id": "humboldt_001",
+    "author": "Alexander von Humboldt",
+    "author_type": "philosopher",
+    "text_de": "Die Natur muss gefuehlt werden.",
+    "source": "Kosmos",
+    "year": 1845,
+    "text_original": "Die Natur muss gefuehlt werden.",
+    "chapter": "Kosmos",
+    "category": [
+      "Natur",
+      "Wissenschaft",
+      "Philosophie"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_alexander_von_humboldt",
+    "explanation_short": "Zitat von Alexander von Humboldt: Die Natur muss gefuehlt werden.",
+    "explanation_long": "Historisches Zitat von Alexander von Humboldt aus \"Kosmos\".",
+    "related_ids": []
+  },
+  {
+    "id": "tocqueville_001",
+    "author": "Alexis de Tocqueville",
+    "author_type": "philosopher",
+    "text_de": "Die Gesundheit einer demokratischen Gesellschaft laesst sich daran messen, wie sie mit Minderheiten umgeht.",
+    "source": "Ueber die Demokratie in Amerika",
+    "year": 1835,
+    "text_original": "Die Gesundheit einer demokratischen Gesellschaft laesst sich daran messen, wie sie mit Minderheiten umgeht.",
+    "chapter": "Ueber die Demokratie in Amerika",
+    "category": [
+      "Demokratie",
+      "Rechte",
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_alexis_de_tocqueville",
+    "explanation_short": "Zitat von Alexis de Tocqueville: Die Gesundheit einer demokratischen Gesellschaft laesst sich daran messen, wie sie mit Minderheiten umgeht.",
+    "explanation_long": "Historisches Zitat von Alexis de Tocqueville aus \"Ueber die Demokratie in Amerika\".",
+    "related_ids": []
+  },
+  {
     "id": "politician_bulk_03",
     "author": "Angela Davis",
     "author_type": "politician",
     "text_de": "Sicherheit ohne soziale Rechte produziert neue Ungleichheit statt nachhaltiger Ordnung.",
     "source": "Freedom Is a Constant Struggle",
     "year": 2016,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Sicherheit ohne soziale Rechte produziert neue Ungleichheit statt nachhaltiger Ordnung.",
     "chapter": "Freedom Is a Constant Struggle",
     "category": [
@@ -63,7 +200,6 @@
     "text_de": "Kultur ist ein Feld der Hegemonie, auf dem Zustimmung organisiert und bestritten wird.",
     "source": "Gefaengnishefte",
     "year": 1932,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Kultur ist ein Feld der Hegemonie, auf dem Zustimmung organisiert und bestritten wird.",
     "chapter": "Gefaengnishefte",
     "category": [
@@ -82,7 +218,6 @@
     "text_de": "Das Ganze ist mehr als die Summe seiner Teile.",
     "source": "Metaphysik",
     "year": -350,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Das Ganze ist mehr als die Summe seiner Teile.",
     "chapter": "Metaphysik",
     "category": [
@@ -101,7 +236,6 @@
     "text_de": "Wir sind das, was wir wiederholt tun. Hervorragendes ist also keine Handlung, sondern eine Gewohnheit.",
     "source": "Nikomachische Ethik",
     "year": -340,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Wir sind das, was wir wiederholt tun. Hervorragendes ist also keine Handlung, sondern eine Gewohnheit.",
     "chapter": "Nikomachische Ethik",
     "category": [
@@ -120,7 +254,6 @@
     "text_de": "Der Mensch ist von Natur aus ein politisches Lebewesen.",
     "source": "Politik",
     "year": -335,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Der Mensch ist von Natur aus ein politisches Lebewesen.",
     "chapter": "Politik",
     "category": [
@@ -139,7 +272,6 @@
     "text_de": "Talent trifft ein Ziel, das sonst niemand treffen kann; Genie trifft ein Ziel, das sonst niemand sehen kann.",
     "source": "Die Welt als Wille und Vorstellung",
     "year": 1819,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Talent trifft ein Ziel, das sonst niemand treffen kann; Genie trifft ein Ziel, das sonst niemand sehen kann.",
     "chapter": "Die Welt als Wille und Vorstellung",
     "category": [
@@ -158,7 +290,6 @@
     "text_de": "Man kann sein Leben als Kunstwerk betrachten. Wer ein kluger Mann sein will, wird versuchen, sein Leben zu einem Ã¤sthetischen Ganzen zu gestalten.",
     "source": "Die Welt als Wille und Vorstellung",
     "year": 1819,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Man kann sein Leben als Kunstwerk betrachten. Wer ein kluger Mann sein will, wird versuchen, sein Leben zu einem Ã¤sthetischen Ganzen zu gestalten.",
     "chapter": "Die Welt als Wille und Vorstellung",
     "category": [
@@ -177,7 +308,6 @@
     "text_de": "Der Mensch kann tun, was er will, aber er kann nicht wollen, was er will.",
     "source": "Die Welt als Wille und Vorstellung",
     "year": 1819,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Der Mensch kann tun, was er will, aber er kann nicht wollen, was er will.",
     "chapter": "Die Welt als Wille und Vorstellung",
     "category": [
@@ -196,7 +326,6 @@
     "text_de": "Der Reichtum gleicht dem Salzwasser: je mehr man trinkt, desto durstiger wird man.",
     "source": "Aphorismen zur Lebensweisheit",
     "year": 1851,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Der Reichtum gleicht dem Salzwasser: je mehr man trinkt, desto durstiger wird man.",
     "chapter": "Aphorismen zur Lebensweisheit",
     "category": [
@@ -215,7 +344,6 @@
     "text_de": "Jeder Mensch hÃ¤lt die Grenzen seines Gesichtskreises fÃ¼r die Grenzen der Welt.",
     "source": "Parerga und Paralipomena",
     "year": 1851,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Jeder Mensch hÃ¤lt die Grenzen seines Gesichtskreises fÃ¼r die Grenzen der Welt.",
     "chapter": "Parerga und Paralipomena",
     "category": [
@@ -234,7 +362,6 @@
     "text_de": "Liebe als Prinzip und Ordnung als Basis; Fortschritt als Ziel.",
     "source": "SystÃ¨me de politique positive",
     "year": 1851,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Liebe als Prinzip und Ordnung als Basis; Fortschritt als Ziel.",
     "chapter": "SystÃ¨me de politique positive",
     "category": [
@@ -247,13 +374,52 @@
     "related_ids": []
   },
   {
+    "id": "augustinus_001",
+    "author": "Augustinus",
+    "author_type": "philosopher",
+    "text_de": "Unruhig ist unser Herz, bis es ruht in dir.",
+    "source": "Bekenntnisse",
+    "year": 397,
+    "text_original": "Unruhig ist unser Herz, bis es ruht in dir.",
+    "chapter": "Bekenntnisse",
+    "category": [
+      "Religion",
+      "Philosophie",
+      "Menschenbild"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_augustinus",
+    "explanation_short": "Zitat von Augustinus: Unruhig ist unser Herz, bis es ruht in dir.",
+    "explanation_long": "Historisches Zitat von Augustinus aus \"Bekenntnisse\".",
+    "related_ids": []
+  },
+  {
+    "id": "lascasas_001",
+    "author": "Bartolome de las Casas",
+    "author_type": "philosopher",
+    "text_de": "Alle Völker der Welt sind Menschen und haben dieselbe Natur.",
+    "source": "Kurzgefasster Bericht von der Verwuestung der Westindischen Laender",
+    "year": 1542,
+    "text_original": "Alle Völker der Welt sind Menschen und haben dieselbe Natur.",
+    "chapter": "Kurzgefasster Bericht von der Verwuestung der Westindischen Laender",
+    "category": [
+      "Kolonialismus",
+      "Rechte",
+      "Menschenbild"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_bartolome_de_las_casas",
+    "explanation_short": "Zitat von Bartolome de las Casas: Alle Völker der Welt sind Menschen und haben dieselbe Natur.",
+    "explanation_long": "Historisches Zitat von Bartolome de las Casas aus \"Kurzgefasster Bericht von der Verwuestung der Westindischen Laender\".",
+    "related_ids": []
+  },
+  {
     "id": "spinoza_002",
     "author": "Baruch de Spinoza",
     "author_type": "philosopher",
     "text_de": "GlÃ¼cklich ist derjenige, der anderen etwas Gutes hinterlÃ¤sst.",
     "source": "Ethik",
     "year": 1677,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "GlÃ¼cklich ist derjenige, der anderen etwas Gutes hinterlÃ¤sst.",
     "chapter": "Ethik",
     "category": [
@@ -272,7 +438,6 @@
     "text_de": "Frieden ist nicht die Abwesenheit von Krieg, er ist eine Tugend, eine Geisteshaltung, eine Tendenz zu Wohlwollen, Vertrauen und Gerechtigkeit.",
     "source": "Politischer Traktat",
     "year": 1677,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Frieden ist nicht die Abwesenheit von Krieg, er ist eine Tugend, eine Geisteshaltung, eine Tendenz zu Wohlwollen, Vertrauen und Gerechtigkeit.",
     "chapter": "Politischer Traktat",
     "category": [
@@ -285,13 +450,132 @@
     "related_ids": []
   },
   {
+    "id": "spinoza_003",
+    "author": "Baruch de Spinoza",
+    "author_type": "philosopher",
+    "text_de": "Frieden ist nicht die Abwesenheit von Krieg. Frieden ist eine Tugend, eine Geisteshaltung.",
+    "source": "Tractatus Politicus",
+    "year": 1677,
+    "text_original": "Frieden ist nicht die Abwesenheit von Krieg. Frieden ist eine Tugend, eine Geisteshaltung.",
+    "chapter": "Tractatus Politicus",
+    "category": [
+      "Religion",
+      "Ethik",
+      "Frieden"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_baruch_de_spinoza",
+    "explanation_short": "Zitat von Baruch de Spinoza: Frieden ist nicht die Abwesenheit von Krieg. Frieden ist eine Tugend, eine Geisteshaltung.",
+    "explanation_long": "Historisches Zitat von Baruch de Spinoza aus \"Tractatus Politicus\".",
+    "related_ids": []
+  },
+  {
+    "id": "hook_001",
+    "author": "bell hooks",
+    "author_type": "philosopher",
+    "text_de": "Feminismus ist fuer alle da.",
+    "source": "Feminism is for Everybody",
+    "year": 2000,
+    "text_original": "Feminismus ist fuer alle da.",
+    "chapter": "Feminism is for Everybody",
+    "category": [
+      "Frauenrechte",
+      "Emanzipation",
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_bell_hooks",
+    "explanation_short": "Zitat von bell hooks: Feminismus ist fuer alle da.",
+    "explanation_long": "Historisches Zitat von bell hooks aus \"Feminism is for Everybody\".",
+    "related_ids": []
+  },
+  {
+    "id": "brecht_001",
+    "author": "Bertolt Brecht",
+    "author_type": "philosopher",
+    "text_de": "Wer die Wahrheit nicht weiss, der ist bloss ein Dummkopf. Aber wer sie weiss und sie eine Luege nennt, der ist ein Verbrecher.",
+    "source": "Leben des Galilei",
+    "year": 1938,
+    "text_original": "Wer die Wahrheit nicht weiss, der ist bloss ein Dummkopf. Aber wer sie weiss und sie eine Luege nennt, der ist ein Verbrecher.",
+    "chapter": "Leben des Galilei",
+    "category": [
+      "Kultur",
+      "Rechte",
+      "Kritik"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_bertolt_brecht",
+    "explanation_short": "Zitat von Bertolt Brecht: Wer die Wahrheit nicht weiss, der ist bloss ein Dummkopf. Aber wer sie weiss und sie eine Luege nennt, der ist ein Verbr",
+    "explanation_long": "Historisches Zitat von Bertolt Brecht aus \"Leben des Galilei\".",
+    "related_ids": []
+  },
+  {
+    "id": "clausewitz_001",
+    "author": "Carl von Clausewitz",
+    "author_type": "politician",
+    "text_de": "Der Krieg ist eine blosse Fortsetzung der Politik mit anderen Mitteln.",
+    "source": "Vom Kriege",
+    "year": 1832,
+    "text_original": "Der Krieg ist eine blosse Fortsetzung der Politik mit anderen Mitteln.",
+    "chapter": "Vom Kriege",
+    "category": [
+      "Krieg",
+      "Politik",
+      "Strategie"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_carl_von_clausewitz",
+    "explanation_short": "Zitat von Carl von Clausewitz: Der Krieg ist eine blosse Fortsetzung der Politik mit anderen Mitteln.",
+    "explanation_long": "Historisches Zitat von Carl von Clausewitz aus \"Vom Kriege\".",
+    "related_ids": []
+  },
+  {
+    "id": "darwin_001",
+    "author": "Charles Darwin",
+    "author_type": "philosopher",
+    "text_de": "Nicht die staerkste Art ueberlebt, auch nicht die intelligenteste, sondern diejenige, die sich am besten an Veraenderung anpasst.",
+    "source": "Zugeschriebene Darwin-Formel",
+    "year": 1860,
+    "text_original": "Nicht die staerkste Art ueberlebt, auch nicht die intelligenteste, sondern diejenige, die sich am besten an Veraenderung anpasst.",
+    "chapter": "Zugeschriebene Darwin-Formel",
+    "category": [
+      "Wissenschaft",
+      "Natur",
+      "Entwicklung"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_charles_darwin",
+    "explanation_short": "Zitat von Charles Darwin: Nicht die staerkste Art ueberlebt, auch nicht die intelligenteste, sondern diejenige, die sich am besten an Veraenderung",
+    "explanation_long": "Historisches Zitat von Charles Darwin aus \"Zugeschriebene Darwin-Formel\".",
+    "related_ids": []
+  },
+  {
+    "id": "zetkin_001",
+    "author": "Clara Zetkin",
+    "author_type": "politician",
+    "text_de": "Die Befreiung der Frau ist untrennbar mit der Befreiung der Arbeit verbunden.",
+    "source": "Reden und Schriften",
+    "year": 1896,
+    "text_original": "Die Befreiung der Frau ist untrennbar mit der Befreiung der Arbeit verbunden.",
+    "chapter": "Reden und Schriften",
+    "category": [
+      "Frauen",
+      "Arbeit",
+      "Emanzipation"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_clara_zetkin",
+    "explanation_short": "Zitat von Clara Zetkin: Die Befreiung der Frau ist untrennbar mit der Befreiung der Arbeit verbunden.",
+    "explanation_long": "Historisches Zitat von Clara Zetkin aus \"Reden und Schriften\".",
+    "related_ids": []
+  },
+  {
     "id": "politician_bulk_09",
     "author": "Claudia Jones",
     "author_type": "politician",
     "text_de": "Antirassistische und soziale Politik gehoeren zusammen, wenn Demokratie wirklich inklusiv sein soll.",
     "source": "Political Writings",
     "year": 1955,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Antirassistische und soziale Politik gehoeren zusammen, wenn Demokratie wirklich inklusiv sein soll.",
     "chapter": "Political Writings",
     "category": [
@@ -304,13 +588,52 @@
     "related_ids": []
   },
   {
+    "id": "burke_001",
+    "author": "Edmund Burke",
+    "author_type": "philosopher",
+    "text_de": "Ein Staat ohne die Mittel zu Veraenderung ist ohne die Mittel zu seiner Erhaltung.",
+    "source": "Reflections on the Revolution in France",
+    "year": 1790,
+    "text_original": "Ein Staat ohne die Mittel zu Veraenderung ist ohne die Mittel zu seiner Erhaltung.",
+    "chapter": "Reflections on the Revolution in France",
+    "category": [
+      "Konservativ",
+      "Staat",
+      "Reform"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_edmund_burke",
+    "explanation_short": "Zitat von Edmund Burke: Ein Staat ohne die Mittel zu Veraenderung ist ohne die Mittel zu seiner Erhaltung.",
+    "explanation_long": "Historisches Zitat von Edmund Burke aus \"Reflections on the Revolution in France\".",
+    "related_ids": []
+  },
+  {
+    "id": "roe_001",
+    "author": "Eleanor Roosevelt",
+    "author_type": "politician",
+    "text_de": "Niemand kann dir ohne deine Zustimmung das Gefuehl geben, minderwertig zu sein.",
+    "source": "This Is My Story",
+    "year": 1937,
+    "text_original": "Niemand kann dir ohne deine Zustimmung das Gefuehl geben, minderwertig zu sein.",
+    "chapter": "This Is My Story",
+    "category": [
+      "Rechte",
+      "Frauen",
+      "Menschenbild"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_eleanor_roosevelt",
+    "explanation_short": "Zitat von Eleanor Roosevelt: Niemand kann dir ohne deine Zustimmung das Gefuehl geben, minderwertig zu sein.",
+    "explanation_long": "Historisches Zitat von Eleanor Roosevelt aus \"This Is My Story\".",
+    "related_ids": []
+  },
+  {
     "id": "bacon_001",
     "author": "Francis Bacon",
     "author_type": "philosopher",
     "text_de": "Wissen ist Macht.",
     "source": "Novum Organum",
     "year": 1620,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Wissen ist Macht.",
     "chapter": "Novum Organum",
     "category": [
@@ -329,7 +652,6 @@
     "text_de": "Politik muss Krisen durch Arbeit, Solidaritaet und handlungsfaehige Institutionen beantworten.",
     "source": "Fireside Chats",
     "year": 1933,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Politik muss Krisen durch Arbeit, Solidaritaet und handlungsfaehige Institutionen beantworten.",
     "chapter": "Fireside Chats",
     "category": [
@@ -342,13 +664,72 @@
     "related_ids": []
   },
   {
+    "id": "roosevelt_001",
+    "author": "Franklin D. Roosevelt",
+    "author_type": "politician",
+    "text_de": "Das Einzige, was wir zu fuerchten haben, ist die Furcht selbst.",
+    "source": "First Inaugural Address",
+    "year": 1933,
+    "text_original": "Das Einzige, was wir zu fuerchten haben, ist die Furcht selbst.",
+    "chapter": "First Inaugural Address",
+    "category": [
+      "Politik",
+      "Krise",
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_franklin_d._roosevelt",
+    "explanation_short": "Zitat von Franklin D. Roosevelt: Das Einzige, was wir zu fuerchten haben, ist die Furcht selbst.",
+    "explanation_long": "Historisches Zitat von Franklin D. Roosevelt aus \"First Inaugural Address\".",
+    "related_ids": []
+  },
+  {
+    "id": "fanon_001",
+    "author": "Frantz Fanon",
+    "author_type": "philosopher",
+    "text_de": "Jede Generation muss in relativer Undurchsichtigkeit ihre Mission entdecken, sie erfuellen oder verraten.",
+    "source": "Die Verdammten dieser Erde",
+    "year": 1961,
+    "text_original": "Jede Generation muss in relativer Undurchsichtigkeit ihre Mission entdecken, sie erfuellen oder verraten.",
+    "chapter": "Die Verdammten dieser Erde",
+    "category": [
+      "Kolonialismus",
+      "Emanzipation",
+      "Geschichte"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_frantz_fanon",
+    "explanation_short": "Zitat von Frantz Fanon: Jede Generation muss in relativer Undurchsichtigkeit ihre Mission entdecken, sie erfuellen oder verraten.",
+    "explanation_long": "Historisches Zitat von Frantz Fanon aus \"Die Verdammten dieser Erde\".",
+    "related_ids": []
+  },
+  {
+    "id": "douglass_001",
+    "author": "Frederick Douglass",
+    "author_type": "politician",
+    "text_de": "Macht raeumt nichts ohne Forderung ein. Sie hat es nie getan und wird es nie tun.",
+    "source": "Rede in Canandaigua",
+    "year": 1857,
+    "text_original": "Macht raeumt nichts ohne Forderung ein. Sie hat es nie getan und wird es nie tun.",
+    "chapter": "Rede in Canandaigua",
+    "category": [
+      "Rechte",
+      "Klassenkampf",
+      "Revolution"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_frederick_douglass",
+    "explanation_short": "Zitat von Frederick Douglass: Macht raeumt nichts ohne Forderung ein. Sie hat es nie getan und wird es nie tun.",
+    "explanation_long": "Historisches Zitat von Frederick Douglass aus \"Rede in Canandaigua\".",
+    "related_ids": []
+  },
+  {
     "id": "nietzsche_007",
     "author": "Friedrich Nietzsche",
     "author_type": "philosopher",
     "text_de": "Der Glaube ist ein Instinkt, ein moralischer Instinkt.",
     "source": "MorgenrÃ¶te",
     "year": 1881,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Der Glaube ist ein Instinkt, ein moralischer Instinkt.",
     "chapter": "MorgenrÃ¶te",
     "category": [
@@ -367,7 +748,6 @@
     "text_de": "Ich lehre euch den Ãœbermenschen. Der Mensch ist etwas, das Ã¼berwunden werden soll.",
     "source": "Also sprach Zarathustra",
     "year": 1885,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Ich lehre euch den Ãœbermenschen. Der Mensch ist etwas, das Ã¼berwunden werden soll.",
     "chapter": "Also sprach Zarathustra",
     "category": [
@@ -386,7 +766,6 @@
     "text_de": "Die Wahrheit ist hÃ¤ufiger lÃ¼gen als die LÃ¼ge.",
     "source": "Jenseits von Gut und BÃ¶se",
     "year": 1886,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Die Wahrheit ist hÃ¤ufiger lÃ¼gen als die LÃ¼ge.",
     "chapter": "Jenseits von Gut und BÃ¶se",
     "category": [
@@ -405,7 +784,6 @@
     "text_de": "Wer lange in AbgrÃ¼nde blickt, in den blickt der Abgrund auch zurÃ¼ck.",
     "source": "Jenseits von Gut und BÃ¶se",
     "year": 1886,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Wer lange in AbgrÃ¼nde blickt, in den blickt der Abgrund auch zurÃ¼ck.",
     "chapter": "Jenseits von Gut und BÃ¶se",
     "category": [
@@ -424,7 +802,6 @@
     "text_de": "Es gibt keine Tatsachen, nur Interpretationen.",
     "source": "Nachgelassene Fragmente",
     "year": 1886,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Es gibt keine Tatsachen, nur Interpretationen.",
     "chapter": "Nachgelassene Fragmente",
     "category": [
@@ -443,7 +820,6 @@
     "text_de": "Alles, was mich nicht umbringt, macht mich stÃ¤rker.",
     "source": "GÃ¶tzen-DÃ¤mmerung",
     "year": 1889,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Alles, was mich nicht umbringt, macht mich stÃ¤rker.",
     "chapter": "GÃ¶tzen-DÃ¤mmerung",
     "category": [
@@ -462,7 +838,6 @@
     "text_de": "Ohne Musik wÃ¤re das Leben ein Irrtum.",
     "source": "GÃ¶tzen-DÃ¤mmerung",
     "year": 1889,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Ohne Musik wÃ¤re das Leben ein Irrtum.",
     "chapter": "GÃ¶tzen-DÃ¤mmerung",
     "category": [
@@ -481,7 +856,6 @@
     "text_de": "Werde, wer du bist.",
     "source": "Ecce Homo",
     "year": 1908,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Werde, wer du bist.",
     "chapter": "Ecce Homo",
     "category": [
@@ -494,13 +868,32 @@
     "related_ids": []
   },
   {
+    "id": "schiller_001",
+    "author": "Friedrich Schiller",
+    "author_type": "philosopher",
+    "text_de": "Der Mensch ist nur da ganz Mensch, wo er spielt.",
+    "source": "Ueber die aesthetische Erziehung des Menschen",
+    "year": 1795,
+    "text_original": "Der Mensch ist nur da ganz Mensch, wo er spielt.",
+    "chapter": "Ueber die aesthetische Erziehung des Menschen",
+    "category": [
+      "Kunst",
+      "Kultur",
+      "Philosophie"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_friedrich_schiller",
+    "explanation_short": "Zitat von Friedrich Schiller: Der Mensch ist nur da ganz Mensch, wo er spielt.",
+    "explanation_long": "Historisches Zitat von Friedrich Schiller aus \"Ueber die aesthetische Erziehung des Menschen\".",
+    "related_ids": []
+  },
+  {
     "id": "schelling_002",
     "author": "Friedrich Wilhelm Joseph Schelling",
     "author_type": "philosopher",
     "text_de": "Natur ist das sichtbar gewordene Geist, und Geist ist die unsichtbar gewordene Natur.",
     "source": "System des Idealismus",
     "year": 1800,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Natur ist das sichtbar gewordene Geist, und Geist ist die unsichtbar gewordene Natur.",
     "chapter": "System des Idealismus",
     "category": [
@@ -519,7 +912,6 @@
     "text_de": "Kunst ist Zeugnis fÃ¼r das HÃ¶chste, dessen der Mensch fÃ¤hig ist.",
     "source": "Philosophie der Kunst",
     "year": 1859,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Kunst ist Zeugnis fÃ¼r das HÃ¶chste, dessen der Mensch fÃ¤hig ist.",
     "chapter": "Philosophie der Kunst",
     "category": [
@@ -538,7 +930,6 @@
     "text_de": "Das Wirkliche ist vernÃ¼nftig, und das VernÃ¼nftige ist wirklich.",
     "source": "Grundlinien der Philosophie des Rechts",
     "year": 1820,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Das Wirkliche ist vernÃ¼nftig, und das VernÃ¼nftige ist wirklich.",
     "chapter": "Grundlinien der Philosophie des Rechts",
     "category": [
@@ -557,7 +948,6 @@
     "text_de": "Die Geschichte ist nichts anderes als die Entwicklung des Bewusstseins der Freiheit.",
     "source": "Vorlesungen Ã¼ber die Philosophie der Geschichte",
     "year": 1837,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Die Geschichte ist nichts anderes als die Entwicklung des Bewusstseins der Freiheit.",
     "chapter": "Vorlesungen Ã¼ber die Philosophie der Geschichte",
     "category": [
@@ -576,7 +966,6 @@
     "text_de": "Wir lernen aus der Geschichte, dass die Menschen aus der Geschichte nichts lernen.",
     "source": "Vorlesungen Ã¼ber die Philosophie der Geschichte",
     "year": 1837,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Wir lernen aus der Geschichte, dass die Menschen aus der Geschichte nichts lernen.",
     "chapter": "Vorlesungen Ã¼ber die Philosophie der Geschichte",
     "category": [
@@ -589,13 +978,32 @@
     "related_ids": []
   },
   {
+    "id": "orwell_001",
+    "author": "George Orwell",
+    "author_type": "philosopher",
+    "text_de": "In Zeiten universeller Taeuschung ist das Aussprechen der Wahrheit ein revolutionaerer Akt.",
+    "source": "Zugeschriebene politische Formel",
+    "year": 1945,
+    "text_original": "In Zeiten universeller Taeuschung ist das Aussprechen der Wahrheit ein revolutionaerer Akt.",
+    "chapter": "Zugeschriebene politische Formel",
+    "category": [
+      "Politik",
+      "Rechte",
+      "Kritik"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_george_orwell",
+    "explanation_short": "Zitat von George Orwell: In Zeiten universeller Taeuschung ist das Aussprechen der Wahrheit ein revolutionaerer Akt.",
+    "explanation_long": "Historisches Zitat von George Orwell aus \"Zugeschriebene politische Formel\".",
+    "related_ids": []
+  },
+  {
     "id": "philosopher_bulk_02",
     "author": "Hannah Arendt",
     "author_type": "philosopher",
     "text_de": "Politische Freiheit entsteht dort, wo Menschen gemeinsam handeln und sprechen.",
     "source": "Vita activa",
     "year": 1958,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Politische Freiheit entsteht dort, wo Menschen gemeinsam handeln und sprechen.",
     "chapter": "Vita activa",
     "category": [
@@ -608,13 +1016,52 @@
     "related_ids": []
   },
   {
+    "id": "arendt_001",
+    "author": "Hannah Arendt",
+    "author_type": "philosopher",
+    "text_de": "Niemand hat das Recht zu gehorchen.",
+    "source": "Denktagebuch / Interviews",
+    "year": 1964,
+    "text_original": "Niemand hat das Recht zu gehorchen.",
+    "chapter": "Denktagebuch / Interviews",
+    "category": [
+      "Politik",
+      "Rechte",
+      "Verantwortung"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_hannah_arendt",
+    "explanation_short": "Zitat von Hannah Arendt: Niemand hat das Recht zu gehorchen.",
+    "explanation_long": "Historisches Zitat von Hannah Arendt aus \"Denktagebuch / Interviews\".",
+    "related_ids": []
+  },
+  {
+    "id": "heine_001",
+    "author": "Heinrich Heine",
+    "author_type": "philosopher",
+    "text_de": "Dort wo man Buecher verbrennt, verbrennt man am Ende auch Menschen.",
+    "source": "Almansor",
+    "year": 1821,
+    "text_original": "Dort wo man Buecher verbrennt, verbrennt man am Ende auch Menschen.",
+    "chapter": "Almansor",
+    "category": [
+      "Kultur",
+      "Politik",
+      "Rechte"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_heinrich_heine",
+    "explanation_short": "Zitat von Heinrich Heine: Dort wo man Buecher verbrennt, verbrennt man am Ende auch Menschen.",
+    "explanation_long": "Historisches Zitat von Heinrich Heine aus \"Almansor\".",
+    "related_ids": []
+  },
+  {
     "id": "kant_002",
     "author": "Immanuel Kant",
     "author_type": "philosopher",
     "text_de": "Habe Mut, dich deines eigenen Verstandes zu bedienen!",
     "source": "Beantwortung der Frage: Was ist AufklÃ¤rung?",
     "year": 1784,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Habe Mut, dich deines eigenen Verstandes zu bedienen!",
     "chapter": "Beantwortung der Frage: Was ist AufklÃ¤rung?",
     "category": [
@@ -633,7 +1080,6 @@
     "text_de": "Handle nur nach derjenigen Maxime, durch die du zugleich wollen kannst, dass sie ein allgemeines Gesetz werde.",
     "source": "Grundlegung zur Metaphysik der Sitten",
     "year": 1785,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Handle nur nach derjenigen Maxime, durch die du zugleich wollen kannst, dass sie ein allgemeines Gesetz werde.",
     "chapter": "Grundlegung zur Metaphysik der Sitten",
     "category": [
@@ -652,7 +1098,6 @@
     "text_de": "Der Mensch ist das einzige GeschÃ¶pf, das erzogen werden muss.",
     "source": "Ãœber PÃ¤dagogik",
     "year": 1803,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Der Mensch ist das einzige GeschÃ¶pf, das erzogen werden muss.",
     "chapter": "Ãœber PÃ¤dagogik",
     "category": [
@@ -665,13 +1110,32 @@
     "related_ids": []
   },
   {
+    "id": "nehru_001",
+    "author": "Jawaharlal Nehru",
+    "author_type": "politician",
+    "text_de": "Kultur ist die Erweiterung des Geistes und des Geisteslebens.",
+    "source": "The Discovery of India",
+    "year": 1946,
+    "text_original": "Kultur ist die Erweiterung des Geistes und des Geisteslebens.",
+    "chapter": "The Discovery of India",
+    "category": [
+      "Kultur",
+      "Bildung",
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_jawaharlal_nehru",
+    "explanation_short": "Zitat von Jawaharlal Nehru: Kultur ist die Erweiterung des Geistes und des Geisteslebens.",
+    "explanation_long": "Historisches Zitat von Jawaharlal Nehru aus \"The Discovery of India\".",
+    "related_ids": []
+  },
+  {
     "id": "politician_bulk_06",
     "author": "Jawaharlal Nehru",
     "author_type": "politician",
     "text_de": "Entwicklung verbindet wissenschaftlichen Fortschritt mit pluraler Kultur und sozialer Gerechtigkeit.",
     "source": "The Discovery of India",
     "year": 1946,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Entwicklung verbindet wissenschaftlichen Fortschritt mit pluraler Kultur und sozialer Gerechtigkeit.",
     "chapter": "The Discovery of India",
     "category": [
@@ -690,7 +1154,6 @@
     "text_de": "Die erste Person, die ein StÃ¼ck Land eingezÃ¤unt hat und auf die Idee kam zu sagen: Das gehÃ¶rt mir, und genug einfÃ¤ltige Leute fand, die es glaubten, war der wirkliche GrÃ¼nder der bÃ¼rgerlichen Gesellschaft.",
     "source": "Abhandlung Ã¼ber den Ursprung der Ungleichheit",
     "year": 1755,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Die erste Person, die ein StÃ¼ck Land eingezÃ¤unt hat und auf die Idee kam zu sagen: Das gehÃ¶rt mir, und genug einfÃ¤ltige Leute fand, die es glaubten, war der wirkliche GrÃ¼nder der bÃ¼rgerlichen Gesellschaft.",
     "chapter": "Abhandlung Ã¼ber den Ursprung der Ungleichheit",
     "category": [
@@ -709,7 +1172,6 @@
     "text_de": "Der Mensch wird frei geboren, und Ã¼berall liegt er in Ketten.",
     "source": "Vom Gesellschaftsvertrag",
     "year": 1762,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Der Mensch wird frei geboren, und Ã¼berall liegt er in Ketten.",
     "chapter": "Vom Gesellschaftsvertrag",
     "category": [
@@ -728,7 +1190,6 @@
     "text_de": "Das grÃ¶ÃŸtmÃ¶gliche GlÃ¼ck fÃ¼r die grÃ¶ÃŸtmÃ¶gliche Zahl.",
     "source": "Introduction to the Principles of Morals and Legislation",
     "year": 1789,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Das grÃ¶ÃŸtmÃ¶gliche GlÃ¼ck fÃ¼r die grÃ¶ÃŸtmÃ¶gliche Zahl.",
     "chapter": "Introduction to the Principles of Morals and Legislation",
     "category": [
@@ -747,7 +1208,6 @@
     "text_de": "Die Geschichte der Menschheit ist die Geschichte ihrer Bildung.",
     "source": "Ideen zur Philosophie der Geschichte der Menschheit",
     "year": 1784,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Die Geschichte der Menschheit ist die Geschichte ihrer Bildung.",
     "chapter": "Ideen zur Philosophie der Geschichte der Menschheit",
     "category": [
@@ -766,7 +1226,6 @@
     "text_de": "Der Mensch handelt, und durch sein Handeln wird er das, was er ist.",
     "source": "Die Bestimmung des Menschen",
     "year": 1800,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Der Mensch handelt, und durch sein Handeln wird er das, was er ist.",
     "chapter": "Die Bestimmung des Menschen",
     "category": [
@@ -785,7 +1244,6 @@
     "text_de": "Ich bin darum, weil ich mich selbst bedingt habe.",
     "source": "Wissenschaftslehre",
     "year": 1807,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Ich bin darum, weil ich mich selbst bedingt habe.",
     "chapter": "Wissenschaftslehre",
     "category": [
@@ -798,13 +1256,32 @@
     "related_ids": []
   },
   {
+    "id": "goethe_001",
+    "author": "Johann Wolfgang von Goethe",
+    "author_type": "philosopher",
+    "text_de": "Wer immer strebend sich bemueht, den koennen wir erloesen.",
+    "source": "Faust II",
+    "year": 1832,
+    "text_original": "Wer immer strebend sich bemueht, den koennen wir erloesen.",
+    "chapter": "Faust II",
+    "category": [
+      "Kultur",
+      "Literatur",
+      "Menschenbild"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_johann_wolfgang_von_goethe",
+    "explanation_short": "Zitat von Johann Wolfgang von Goethe: Wer immer strebend sich bemueht, den koennen wir erloesen.",
+    "explanation_long": "Historisches Zitat von Johann Wolfgang von Goethe aus \"Faust II\".",
+    "related_ids": []
+  },
+  {
     "id": "philosopher_bulk_08",
     "author": "John Dewey",
     "author_type": "philosopher",
     "text_de": "Demokratie ist eine Lebensform, die Bildung, Erfahrung und Teilhabe verbindet.",
     "source": "Democracy and Education",
     "year": 1916,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Demokratie ist eine Lebensform, die Bildung, Erfahrung und Teilhabe verbindet.",
     "chapter": "Democracy and Education",
     "category": [
@@ -817,13 +1294,52 @@
     "related_ids": []
   },
   {
+    "id": "dewey_001",
+    "author": "John Dewey",
+    "author_type": "philosopher",
+    "text_de": "Demokratie muss in jeder Generation neu geboren werden, und Bildung ist ihre Hebamme.",
+    "source": "The Need of an Industrial Education in an Industrial Democracy",
+    "year": 1916,
+    "text_original": "Demokratie muss in jeder Generation neu geboren werden, und Bildung ist ihre Hebamme.",
+    "chapter": "The Need of an Industrial Education in an Industrial Democracy",
+    "category": [
+      "Demokratie",
+      "Bildung",
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_john_dewey",
+    "explanation_short": "Zitat von John Dewey: Demokratie muss in jeder Generation neu geboren werden, und Bildung ist ihre Hebamme.",
+    "explanation_long": "Historisches Zitat von John Dewey aus \"The Need of an Industrial Education in an Industrial Democracy\".",
+    "related_ids": []
+  },
+  {
+    "id": "kennedy_001",
+    "author": "John F. Kennedy",
+    "author_type": "politician",
+    "text_de": "Fragt nicht, was euer Land fuer euch tun kann – fragt, was ihr fuer euer Land tun koennt.",
+    "source": "Inaugural Address",
+    "year": 1961,
+    "text_original": "Fragt nicht, was euer Land fuer euch tun kann – fragt, was ihr fuer euer Land tun koennt.",
+    "chapter": "Inaugural Address",
+    "category": [
+      "Politik",
+      "Verantwortung",
+      "Demokratie"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_john_f._kennedy",
+    "explanation_short": "Zitat von John F. Kennedy: Fragt nicht, was euer Land fuer euch tun kann – fragt, was ihr fuer euer Land tun koennt.",
+    "explanation_long": "Historisches Zitat von John F. Kennedy aus \"Inaugural Address\".",
+    "related_ids": []
+  },
+  {
     "id": "locke_002",
     "author": "John Locke",
     "author_type": "philosopher",
     "text_de": "Der Verstand aller Menschen ist anfangs eine leere Tafel, und alles, was sich darin befindet, stammt aus der Erfahrung.",
     "source": "Essay Ã¼ber den menschlichen Verstand",
     "year": 1689,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Der Verstand aller Menschen ist anfangs eine leere Tafel, und alles, was sich darin befindet, stammt aus der Erfahrung.",
     "chapter": "Essay Ã¼ber den menschlichen Verstand",
     "category": [
@@ -842,7 +1358,6 @@
     "text_de": "Wo es kein Gesetz gibt, gibt es keine Freiheit.",
     "source": "Zweite Abhandlung Ã¼ber die Regierung",
     "year": 1689,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Wo es kein Gesetz gibt, gibt es keine Freiheit.",
     "chapter": "Zweite Abhandlung Ã¼ber die Regierung",
     "category": [
@@ -855,13 +1370,32 @@
     "related_ids": []
   },
   {
+    "id": "mill_001__2",
+    "author": "John Stuart Mill",
+    "author_type": "philosopher",
+    "text_de": "Der einzige Zweck, um derentwillen Macht rechtmaessig ueber ein Mitglied einer zivilisierten Gemeinschaft ausgeuebt werden darf, ist die Verhuetung von Schaden an anderen.",
+    "source": "On Liberty",
+    "year": 1859,
+    "text_original": "Der einzige Zweck, um derentwillen Macht rechtmaessig ueber ein Mitglied einer zivilisierten Gemeinschaft ausgeuebt werden darf, ist die Verhuetung von Schaden an anderen.",
+    "chapter": "On Liberty",
+    "category": [
+      "Liberalismus",
+      "Rechte",
+      "Freiheit"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_john_stuart_mill",
+    "explanation_short": "Zitat von John Stuart Mill: Der einzige Zweck, um derentwillen Macht rechtmaessig ueber ein Mitglied einer zivilisierten Gemeinschaft ausgeuebt werd",
+    "explanation_long": "Historisches Zitat von John Stuart Mill aus \"On Liberty\".",
+    "related_ids": []
+  },
+  {
     "id": "mill_002",
     "author": "John Stuart Mill",
     "author_type": "philosopher",
     "text_de": "Die einzige Freiheit, die der Bezeichnung wÃ¼rdig ist, ist die, die eigenen Neigungen zu verfolgen, solange man nicht anderen schadet.",
     "source": "Ãœber die Freiheit",
     "year": 1859,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Die einzige Freiheit, die der Bezeichnung wÃ¼rdig ist, ist die, die eigenen Neigungen zu verfolgen, solange man nicht anderen schadet.",
     "chapter": "Ãœber die Freiheit",
     "category": [
@@ -880,7 +1414,6 @@
     "text_de": "Es ist besser, ein unzufriedener Mensch zu sein, als ein zufriedenes Schwein; besser, Sokrates unzufrieden als ein Narr zufrieden.",
     "source": "Utilitarismus",
     "year": 1863,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Es ist besser, ein unzufriedener Mensch zu sein, als ein zufriedenes Schwein; besser, Sokrates unzufrieden als ein Narr zufrieden.",
     "chapter": "Utilitarismus",
     "category": [
@@ -893,13 +1426,32 @@
     "related_ids": []
   },
   {
+    "id": "habermas_001",
+    "author": "Juergen Habermas",
+    "author_type": "philosopher",
+    "text_de": "Die normative Substanz der Demokratie liegt im Verfahren der oeffentlichen Deliberation.",
+    "source": "Faktizitaet und Geltung",
+    "year": 1992,
+    "text_original": "Die normative Substanz der Demokratie liegt im Verfahren der oeffentlichen Deliberation.",
+    "chapter": "Faktizitaet und Geltung",
+    "category": [
+      "Demokratie",
+      "Rechte",
+      "Philosophie"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_juergen_habermas",
+    "explanation_short": "Zitat von Juergen Habermas: Die normative Substanz der Demokratie liegt im Verfahren der oeffentlichen Deliberation.",
+    "explanation_long": "Historisches Zitat von Juergen Habermas aus \"Faktizitaet und Geltung\".",
+    "related_ids": []
+  },
+  {
     "id": "philosopher_bulk_10",
     "author": "Juergen Habermas",
     "author_type": "philosopher",
     "text_de": "Legitime Ordnung braucht oeffentliche Vernunft und argumentativen Streit statt blosser Autoritaet.",
     "source": "Faktizitaet und Geltung",
     "year": 1992,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Legitime Ordnung braucht oeffentliche Vernunft und argumentativen Streit statt blosser Autoritaet.",
     "chapter": "Faktizitaet und Geltung",
     "category": [
@@ -918,7 +1470,6 @@
     "text_de": "Kritik der politischen Oekonomie beginnt bei den realen Lebensbedingungen der Arbeit.",
     "source": "Oekonomisch-philosophische Manuskripte",
     "year": 1844,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Kritik der politischen Oekonomie beginnt bei den realen Lebensbedingungen der Arbeit.",
     "chapter": "Oekonomisch-philosophische Manuskripte",
     "category": [
@@ -937,7 +1488,6 @@
     "text_de": "Die Philosophen haben die Welt nur verschieden interpretiert; es kommt darauf an, sie zu verÃ¤ndern.",
     "source": "Thesen Ã¼ber Feuerbach",
     "year": 1845,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Die Philosophen haben die Welt nur verschieden interpretiert; es kommt darauf an, sie zu verÃ¤ndern.",
     "chapter": "Thesen Ã¼ber Feuerbach",
     "category": [
@@ -956,7 +1506,6 @@
     "text_de": "Die Geschichte aller bisherigen Gesellschaft ist die Geschichte von KlassenkÃ¤mpfen.",
     "source": "Manifest der Kommunistischen Partei",
     "year": 1848,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Die Geschichte aller bisherigen Gesellschaft ist die Geschichte von KlassenkÃ¤mpfen.",
     "chapter": "Manifest der Kommunistischen Partei",
     "category": [
@@ -975,7 +1524,6 @@
     "text_de": "Das gesellschaftliche Sein bestimmt das Bewusstsein.",
     "source": "Zur Kritik der politischen Ã–konomie",
     "year": 1859,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Das gesellschaftliche Sein bestimmt das Bewusstsein.",
     "chapter": "Zur Kritik der politischen Ã–konomie",
     "category": [
@@ -988,13 +1536,32 @@
     "related_ids": []
   },
   {
+    "id": "popper_001",
+    "author": "Karl Popper",
+    "author_type": "philosopher",
+    "text_de": "Optimismus ist Pflicht.",
+    "source": "Alles Leben ist Problemlosen",
+    "year": 1994,
+    "text_original": "Optimismus ist Pflicht.",
+    "chapter": "Alles Leben ist Problemlosen",
+    "category": [
+      "Philosophie",
+      "Ethik",
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_karl_popper",
+    "explanation_short": "Zitat von Karl Popper: Optimismus ist Pflicht.",
+    "explanation_long": "Historisches Zitat von Karl Popper aus \"Alles Leben ist Problemlosen\".",
+    "related_ids": []
+  },
+  {
     "id": "politician_bulk_10",
     "author": "Lech Walesa",
     "author_type": "politician",
     "text_de": "Gewerkschaftliche Organisation kann Freiheitsrechte mit Wuerde in der Arbeit verbinden.",
     "source": "Reden zur Solidarność-Bewegung",
     "year": 1981,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Gewerkschaftliche Organisation kann Freiheitsrechte mit Wuerde in der Arbeit verbinden.",
     "chapter": "Reden zur Solidarność-Bewegung",
     "category": [
@@ -1007,13 +1574,32 @@
     "related_ids": []
   },
   {
+    "id": "senghor_001",
+    "author": "Leopold Sedar Senghor",
+    "author_type": "politician",
+    "text_de": "Kultur ist der Anfang und das Ende von Entwicklung.",
+    "source": "Discours",
+    "year": 1966,
+    "text_original": "Kultur ist der Anfang und das Ende von Entwicklung.",
+    "chapter": "Discours",
+    "category": [
+      "Kultur",
+      "Kolonialismus",
+      "Entwicklung"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_leopold_sedar_senghor",
+    "explanation_short": "Zitat von Leopold Sedar Senghor: Kultur ist der Anfang und das Ende von Entwicklung.",
+    "explanation_long": "Historisches Zitat von Leopold Sedar Senghor aus \"Discours\".",
+    "related_ids": []
+  },
+  {
     "id": "wittgenstein_001",
     "author": "Ludwig Wittgenstein",
     "author_type": "philosopher",
     "text_de": "WorÃ¼ber man nicht sprechen kann, darÃ¼ber muss man schweigen.",
     "source": "Tractatus Logico-Philosophicus",
     "year": 1921,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "WorÃ¼ber man nicht sprechen kann, darÃ¼ber muss man schweigen.",
     "chapter": "Tractatus Logico-Philosophicus",
     "category": [
@@ -1032,7 +1618,6 @@
     "text_de": "Die Philosophie ist kein Gebilde von LehrsÃ¤tzen, sondern eine AktivitÃ¤t.",
     "source": "Tractatus Logico-Philosophicus",
     "year": 1921,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Die Philosophie ist kein Gebilde von LehrsÃ¤tzen, sondern eine AktivitÃ¤t.",
     "chapter": "Tractatus Logico-Philosophicus",
     "category": [
@@ -1045,13 +1630,52 @@
     "related_ids": []
   },
   {
+    "id": "gandhi_001",
+    "author": "Mahatma Gandhi",
+    "author_type": "politician",
+    "text_de": "Es gibt keinen Weg zum Frieden, denn Frieden ist der Weg.",
+    "source": "Reden und Schriften",
+    "year": 1938,
+    "text_original": "Es gibt keinen Weg zum Frieden, denn Frieden ist der Weg.",
+    "chapter": "Reden und Schriften",
+    "category": [
+      "Frieden",
+      "Politik",
+      "Ethik"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_mahatma_gandhi",
+    "explanation_short": "Zitat von Mahatma Gandhi: Es gibt keinen Weg zum Frieden, denn Frieden ist der Weg.",
+    "explanation_long": "Historisches Zitat von Mahatma Gandhi aus \"Reden und Schriften\".",
+    "related_ids": []
+  },
+  {
+    "id": "curie_001",
+    "author": "Marie Curie",
+    "author_type": "philosopher",
+    "text_de": "Man braucht nichts im Leben zu fuerchten, man muss nur alles verstehen.",
+    "source": "Reden und Schriften",
+    "year": 1933,
+    "text_original": "Man braucht nichts im Leben zu fuerchten, man muss nur alles verstehen.",
+    "chapter": "Reden und Schriften",
+    "category": [
+      "Wissenschaft",
+      "Forschung",
+      "Bildung"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_marie_curie",
+    "explanation_short": "Zitat von Marie Curie: Man braucht nichts im Leben zu fuerchten, man muss nur alles verstehen.",
+    "explanation_long": "Historisches Zitat von Marie Curie aus \"Reden und Schriften\".",
+    "related_ids": []
+  },
+  {
     "id": "philosopher_bulk_09",
     "author": "Martha Nussbaum",
     "author_type": "philosopher",
     "text_de": "Gerechte Politik muss die realen Faehigkeiten von Menschen entwickeln, nicht nur formale Rechte zaehlen.",
     "source": "Creating Capabilities",
     "year": 2011,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Gerechte Politik muss die realen Faehigkeiten von Menschen entwickeln, nicht nur formale Rechte zaehlen.",
     "chapter": "Creating Capabilities",
     "category": [
@@ -1070,7 +1694,6 @@
     "text_de": "Die Angst ist das Grundbefinden schlechthin.",
     "source": "Sein und Zeit",
     "year": 1927,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Die Angst ist das Grundbefinden schlechthin.",
     "chapter": "Sein und Zeit",
     "category": [
@@ -1089,7 +1712,6 @@
     "text_de": "Die Sprache ist das Haus des Seins.",
     "source": "Ãœber den Humanismus",
     "year": 1947,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Die Sprache ist das Haus des Seins.",
     "chapter": "Ãœber den Humanismus",
     "category": [
@@ -1102,13 +1724,92 @@
     "related_ids": []
   },
   {
+    "id": "luther_001",
+    "author": "Martin Luther",
+    "author_type": "philosopher",
+    "text_de": "Hier stehe ich, ich kann nicht anders.",
+    "source": "Reichstag zu Worms",
+    "year": 1521,
+    "text_original": "Hier stehe ich, ich kann nicht anders.",
+    "chapter": "Reichstag zu Worms",
+    "category": [
+      "Religion",
+      "Reformation",
+      "Rechte"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_martin_luther",
+    "explanation_short": "Zitat von Martin Luther: Hier stehe ich, ich kann nicht anders.",
+    "explanation_long": "Historisches Zitat von Martin Luther aus \"Reichstag zu Worms\".",
+    "related_ids": []
+  },
+  {
+    "id": "king_001",
+    "author": "Martin Luther King Jr.",
+    "author_type": "politician",
+    "text_de": "Ungerechtigkeit irgendwo bedroht die Gerechtigkeit ueberall.",
+    "source": "Letter from Birmingham Jail",
+    "year": 1963,
+    "text_original": "Ungerechtigkeit irgendwo bedroht die Gerechtigkeit ueberall.",
+    "chapter": "Letter from Birmingham Jail",
+    "category": [
+      "Rechte",
+      "Gerechtigkeit",
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_martin_luther_king_jr.",
+    "explanation_short": "Zitat von Martin Luther King Jr.: Ungerechtigkeit irgendwo bedroht die Gerechtigkeit ueberall.",
+    "explanation_long": "Historisches Zitat von Martin Luther King Jr. aus \"Letter from Birmingham Jail\".",
+    "related_ids": []
+  },
+  {
+    "id": "wollstonecraft_001",
+    "author": "Mary Wollstonecraft",
+    "author_type": "philosopher",
+    "text_de": "Ich wuensche nicht, dass Frauen Macht ueber Maenner haben, sondern ueber sich selbst.",
+    "source": "A Vindication of the Rights of Woman",
+    "year": 1792,
+    "text_original": "Ich wuensche nicht, dass Frauen Macht ueber Maenner haben, sondern ueber sich selbst.",
+    "chapter": "A Vindication of the Rights of Woman",
+    "category": [
+      "Frauenrechte",
+      "Rechte",
+      "Emanzipation"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_mary_wollstonecraft",
+    "explanation_short": "Zitat von Mary Wollstonecraft: Ich wuensche nicht, dass Frauen Macht ueber Maenner haben, sondern ueber sich selbst.",
+    "explanation_long": "Historisches Zitat von Mary Wollstonecraft aus \"A Vindication of the Rights of Woman\".",
+    "related_ids": []
+  },
+  {
+    "id": "weber_001",
+    "author": "Max Weber",
+    "author_type": "philosopher",
+    "text_de": "Politik bedeutet ein starkes langsames Bohren von harten Brettern mit Leidenschaft und Augenmass zugleich.",
+    "source": "Politik als Beruf",
+    "year": 1919,
+    "text_original": "Politik bedeutet ein starkes langsames Bohren von harten Brettern mit Leidenschaft und Augenmass zugleich.",
+    "chapter": "Politik als Beruf",
+    "category": [
+      "Politik",
+      "Staat",
+      "Verantwortung"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_max_weber",
+    "explanation_short": "Zitat von Max Weber: Politik bedeutet ein starkes langsames Bohren von harten Brettern mit Leidenschaft und Augenmass zugleich.",
+    "explanation_long": "Historisches Zitat von Max Weber aus \"Politik als Beruf\".",
+    "related_ids": []
+  },
+  {
     "id": "robespierre_002",
     "author": "Maximilien de Robespierre",
     "author_type": "politician",
     "text_de": "Der Ãœberbringer des Lichts setzt die Finsternis dem Tode gleich.",
     "source": "Reden vor dem Nationalkonvent",
     "year": 1793,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Der Ãœberbringer des Lichts setzt die Finsternis dem Tode gleich.",
     "chapter": "Reden vor dem Nationalkonvent",
     "category": [
@@ -1127,7 +1828,6 @@
     "text_de": "Die heimliche Triebfeder des Volksregiments in der Revolution ist zugleich Tugend und Schrecken.",
     "source": "Ãœber die Prinzipien der politischen Moral",
     "year": 1794,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Die heimliche Triebfeder des Volksregiments in der Revolution ist zugleich Tugend und Schrecken.",
     "chapter": "Ãœber die Prinzipien der politischen Moral",
     "category": [
@@ -1146,7 +1846,6 @@
     "text_de": "Macht wirkt nicht nur von oben, sie durchzieht Institutionen, Sprache und Alltag.",
     "source": "Ueberwachen und Strafen",
     "year": 1975,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Macht wirkt nicht nur von oben, sie durchzieht Institutionen, Sprache und Alltag.",
     "chapter": "Ueberwachen und Strafen",
     "category": [
@@ -1159,13 +1858,32 @@
     "related_ids": []
   },
   {
+    "id": "montesquieu_001",
+    "author": "Montesquieu",
+    "author_type": "philosopher",
+    "text_de": "Damit man die Macht nicht missbrauchen kann, muss durch die Anordnung der Dinge die Macht der Macht Schranken setzen.",
+    "source": "Vom Geist der Gesetze",
+    "year": 1748,
+    "text_original": "Damit man die Macht nicht missbrauchen kann, muss durch die Anordnung der Dinge die Macht der Macht Schranken setzen.",
+    "chapter": "Vom Geist der Gesetze",
+    "category": [
+      "Staat",
+      "Demokratie",
+      "Liberalismus"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_montesquieu",
+    "explanation_short": "Zitat von Montesquieu: Damit man die Macht nicht missbrauchen kann, muss durch die Anordnung der Dinge die Macht der Macht Schranken setzen.",
+    "explanation_long": "Historisches Zitat von Montesquieu aus \"Vom Geist der Gesetze\".",
+    "related_ids": []
+  },
+  {
     "id": "napoleon_001",
     "author": "Napoleon Bonaparte",
     "author_type": "politician",
     "text_de": "UnmÃ¶glich ist ein Wort, das man nur im WÃ¶rterbuch der Narren findet.",
     "source": "Briefe",
     "year": 1813,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "UnmÃ¶glich ist ein Wort, das man nur im WÃ¶rterbuch der Narren findet.",
     "chapter": "Briefe",
     "category": [
@@ -1184,7 +1902,6 @@
     "text_de": "Ein FÃ¼hrer ist ein HÃ¤ndler der Hoffnung.",
     "source": "Maximen und Gedanken",
     "year": 1820,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Ein FÃ¼hrer ist ein HÃ¤ndler der Hoffnung.",
     "chapter": "Maximen und Gedanken",
     "category": [
@@ -1197,13 +1914,32 @@
     "related_ids": []
   },
   {
+    "id": "mandela_001",
+    "author": "Nelson Mandela",
+    "author_type": "politician",
+    "text_de": "Niemand wird geboren, um einen anderen Menschen wegen seiner Hautfarbe, Herkunft oder Religion zu hassen.",
+    "source": "Long Walk to Freedom",
+    "year": 1994,
+    "text_original": "Niemand wird geboren, um einen anderen Menschen wegen seiner Hautfarbe, Herkunft oder Religion zu hassen.",
+    "chapter": "Long Walk to Freedom",
+    "category": [
+      "Rechte",
+      "Emanzipation",
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_nelson_mandela",
+    "explanation_short": "Zitat von Nelson Mandela: Niemand wird geboren, um einen anderen Menschen wegen seiner Hautfarbe, Herkunft oder Religion zu hassen.",
+    "explanation_long": "Historisches Zitat von Nelson Mandela aus \"Long Walk to Freedom\".",
+    "related_ids": []
+  },
+  {
     "id": "politician_bulk_01",
     "author": "Nelson Mandela",
     "author_type": "politician",
     "text_de": "Versoehnung verlangt Gerechtigkeit, aber auch den Mut, Institutionen gemeinsam neu aufzubauen.",
     "source": "Long Walk to Freedom",
     "year": 1994,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Versoehnung verlangt Gerechtigkeit, aber auch den Mut, Institutionen gemeinsam neu aufzubauen.",
     "chapter": "Long Walk to Freedom",
     "category": [
@@ -1222,7 +1958,6 @@
     "text_de": "Ein starker Sozialstaat schuetzt Freiheit, weil er reale Chancen statt blosser Versprechen schafft.",
     "source": "Parlamentsreden",
     "year": 1974,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Ein starker Sozialstaat schuetzt Freiheit, weil er reale Chancen statt blosser Versprechen schafft.",
     "chapter": "Parlamentsreden",
     "category": [
@@ -1235,13 +1970,32 @@
     "related_ids": []
   },
   {
+    "id": "gouges_001",
+    "author": "Olympe de Gouges",
+    "author_type": "politician",
+    "text_de": "Die Frau wird frei geboren und bleibt dem Manne gleich in allen Rechten.",
+    "source": "Erklaerung der Rechte der Frau und Buergerin",
+    "year": 1791,
+    "text_original": "Die Frau wird frei geboren und bleibt dem Manne gleich in allen Rechten.",
+    "chapter": "Erklaerung der Rechte der Frau und Buergerin",
+    "category": [
+      "Frauenrechte",
+      "Gleichberechtigung",
+      "Demokratie"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_olympe_de_gouges",
+    "explanation_short": "Zitat von Olympe de Gouges: Die Frau wird frei geboren und bleibt dem Manne gleich in allen Rechten.",
+    "explanation_long": "Historisches Zitat von Olympe de Gouges aus \"Erklaerung der Rechte der Frau und Buergerin\".",
+    "related_ids": []
+  },
+  {
     "id": "bismarck_002",
     "author": "Otto von Bismarck",
     "author_type": "politician",
     "text_de": "Die groÃŸen Fragen der Zeit werden nicht durch Reden und MehrheitsbeschlÃ¼sse entschieden, sondern durch Eisen und Blut.",
     "source": "Rede vor dem preuÃŸischen Abgeordnetenhaus",
     "year": 1862,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Die groÃŸen Fragen der Zeit werden nicht durch Reden und MehrheitsbeschlÃ¼sse entschieden, sondern durch Eisen und Blut.",
     "chapter": "Rede vor dem preuÃŸischen Abgeordnetenhaus",
     "category": [
@@ -1260,7 +2014,6 @@
     "text_de": "Die Politik ist die Kunst des MÃ¶glichen.",
     "source": "Interview mit Friedrich Meyer von Waldeck",
     "year": 1867,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Die Politik ist die Kunst des MÃ¶glichen.",
     "chapter": "Interview mit Friedrich Meyer von Waldeck",
     "category": [
@@ -1279,7 +2032,6 @@
     "text_de": "Unwissenheit ist die Wurzel des Ãœbels.",
     "source": "Menon",
     "year": -380,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Unwissenheit ist die Wurzel des Ãœbels.",
     "chapter": "Menon",
     "category": [
@@ -1298,7 +2050,6 @@
     "text_de": "Der Anfang ist der wichtigste Teil jedes Werkes.",
     "source": "Der Staat",
     "year": -375,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Der Anfang ist der wichtigste Teil jedes Werkes.",
     "chapter": "Der Staat",
     "category": [
@@ -1317,7 +2068,6 @@
     "text_de": "Gute Menschen brauchen keine Gesetze, um zu sagen, wie sie handeln sollen, und schlechte Menschen werden Wege finden, Gesetze zu umgehen.",
     "source": "Der Staat",
     "year": -375,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Gute Menschen brauchen keine Gesetze, um zu sagen, wie sie handeln sollen, und schlechte Menschen werden Wege finden, Gesetze zu umgehen.",
     "chapter": "Der Staat",
     "category": [
@@ -1336,7 +2086,6 @@
     "text_de": "Ich denke, also bin ich.",
     "source": "Discourse on Method",
     "year": 1637,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Ich denke, also bin ich.",
     "chapter": "Discourse on Method",
     "category": [
@@ -1355,7 +2104,6 @@
     "text_de": "Die Ãœberzeugungen, die wir am lÃ¤ngsten bewahrt haben, sind solche, die wir Ã¼berhaupt nicht zu untersuchen gewagt haben.",
     "source": "Meditations",
     "year": 1641,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Die Ãœberzeugungen, die wir am lÃ¤ngsten bewahrt haben, sind solche, die wir Ã¼berhaupt nicht zu untersuchen gewagt haben.",
     "chapter": "Meditations",
     "category": [
@@ -1368,13 +2116,32 @@
     "related_ids": []
   },
   {
+    "id": "feynman_001",
+    "author": "Richard Feynman",
+    "author_type": "philosopher",
+    "text_de": "Das erste Prinzip ist, dass man sich selbst nicht taeuschen darf – und man selbst ist am leichtesten zu taeuschen.",
+    "source": "Caltech Commencement Address",
+    "year": 1974,
+    "text_original": "Das erste Prinzip ist, dass man sich selbst nicht taeuschen darf – und man selbst ist am leichtesten zu taeuschen.",
+    "chapter": "Caltech Commencement Address",
+    "category": [
+      "Wissenschaft",
+      "Methode",
+      "Erkenntnis"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_richard_feynman",
+    "explanation_short": "Zitat von Richard Feynman: Das erste Prinzip ist, dass man sich selbst nicht taeuschen darf – und man selbst ist am leichtesten zu taeuschen.",
+    "explanation_long": "Historisches Zitat von Richard Feynman aus \"Caltech Commencement Address\".",
+    "related_ids": []
+  },
+  {
     "id": "luxemburg_003",
     "author": "Rosa Luxemburg",
     "author_type": "politician",
     "text_de": "Wer sich nicht bewegt, spÃ¼rt seine Fesseln nicht.",
     "source": "Gesammelte Schriften",
     "year": 1913,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Wer sich nicht bewegt, spÃ¼rt seine Fesseln nicht.",
     "chapter": "Gesammelte Schriften",
     "category": [
@@ -1393,7 +2160,6 @@
     "text_de": "Freiheit ist immer die Freiheit des Andersdenkenden.",
     "source": "Die russische Revolution",
     "year": 1918,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Freiheit ist immer die Freiheit des Andersdenkenden.",
     "chapter": "Die russische Revolution",
     "category": [
@@ -1412,7 +2178,6 @@
     "text_de": "Ohne allgemeine Wahlen, ungehemmte Presse- und Redefreiheit, freien Meinungskampf erstirbt das Leben in jeder Ã¶ffentlichen Institution, wird zum Scheinleben.",
     "source": "Die russische Revolution",
     "year": 1918,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Ohne allgemeine Wahlen, ungehemmte Presse- und Redefreiheit, freien Meinungskampf erstirbt das Leben in jeder Ã¶ffentlichen Institution, wird zum Scheinleben.",
     "chapter": "Die russische Revolution",
     "category": [
@@ -1425,13 +2190,32 @@
     "related_ids": []
   },
   {
+    "id": "luxemburg_004",
+    "author": "Rosa Luxemburg",
+    "author_type": "politician",
+    "text_de": "Freiheit ist immer Freiheit der Andersdenkenden.",
+    "source": "Zur russischen Revolution",
+    "year": 1918,
+    "text_original": "Freiheit ist immer Freiheit der Andersdenkenden.",
+    "chapter": "Zur russischen Revolution",
+    "category": [
+      "Rechte",
+      "Demokratie",
+      "Freiheit"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_rosa_luxemburg",
+    "explanation_short": "Zitat von Rosa Luxemburg: Freiheit ist immer Freiheit der Andersdenkenden.",
+    "explanation_long": "Historisches Zitat von Rosa Luxemburg aus \"Zur russischen Revolution\".",
+    "related_ids": []
+  },
+  {
     "id": "politician_bulk_05",
     "author": "Salvador Allende",
     "author_type": "politician",
     "text_de": "Demokratische Transformation braucht Beteiligung der Vielen und Kontrolle wirtschaftlicher Macht.",
     "source": "Rede vor den Vereinten Nationen",
     "year": 1972,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Demokratische Transformation braucht Beteiligung der Vielen und Kontrolle wirtschaftlicher Macht.",
     "chapter": "Rede vor den Vereinten Nationen",
     "category": [
@@ -1444,13 +2228,32 @@
     "related_ids": []
   },
   {
+    "id": "beauvoir_001",
+    "author": "Simone de Beauvoir",
+    "author_type": "philosopher",
+    "text_de": "Man kommt nicht als Frau zur Welt, man wird es.",
+    "source": "Das andere Geschlecht",
+    "year": 1949,
+    "text_original": "Man kommt nicht als Frau zur Welt, man wird es.",
+    "chapter": "Das andere Geschlecht",
+    "category": [
+      "Frauen",
+      "Frauenrechte",
+      "Philosophie"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_simone_de_beauvoir",
+    "explanation_short": "Zitat von Simone de Beauvoir: Man kommt nicht als Frau zur Welt, man wird es.",
+    "explanation_long": "Historisches Zitat von Simone de Beauvoir aus \"Das andere Geschlecht\".",
+    "related_ids": []
+  },
+  {
     "id": "philosopher_bulk_03",
     "author": "Simone de Beauvoir",
     "author_type": "philosopher",
     "text_de": "Gesellschaftliche Rollen sind historisch gemacht und koennen historisch veraendert werden.",
     "source": "Das andere Geschlecht",
     "year": 1949,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Gesellschaftliche Rollen sind historisch gemacht und koennen historisch veraendert werden.",
     "chapter": "Das andere Geschlecht",
     "category": [
@@ -1463,13 +2266,52 @@
     "related_ids": []
   },
   {
+    "id": "sunzi_001",
+    "author": "Sunzi",
+    "author_type": "philosopher",
+    "text_de": "Der hoechste Sieg ist der, der ohne Kampf errungen wird.",
+    "source": "Die Kunst des Krieges",
+    "year": -500,
+    "text_original": "Der hoechste Sieg ist der, der ohne Kampf errungen wird.",
+    "chapter": "Die Kunst des Krieges",
+    "category": [
+      "Krieg",
+      "Strategie",
+      "Taktik"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_sunzi",
+    "explanation_short": "Zitat von Sunzi: Der hoechste Sieg ist der, der ohne Kampf errungen wird.",
+    "explanation_long": "Historisches Zitat von Sunzi aus \"Die Kunst des Krieges\".",
+    "related_ids": []
+  },
+  {
+    "id": "sontag_001",
+    "author": "Susan Sontag",
+    "author_type": "philosopher",
+    "text_de": "Interpretation ist die Rache des Intellekts am Kunstwerk.",
+    "source": "Against Interpretation",
+    "year": 1966,
+    "text_original": "Interpretation ist die Rache des Intellekts am Kunstwerk.",
+    "chapter": "Against Interpretation",
+    "category": [
+      "Kunst",
+      "Kultur",
+      "Philosophie"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_susan_sontag",
+    "explanation_short": "Zitat von Susan Sontag: Interpretation ist die Rache des Intellekts am Kunstwerk.",
+    "explanation_long": "Historisches Zitat von Susan Sontag aus \"Against Interpretation\".",
+    "related_ids": []
+  },
+  {
     "id": "kierkegaard_001",
     "author": "SÃ¸ren Kierkegaard",
     "author_type": "philosopher",
     "text_de": "Das Leben kann nur rÃ¼ckwÃ¤rts verstanden werden, muss aber vorwÃ¤rts gelebt werden.",
     "source": "Gesammelte Werke",
     "year": 1843,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Das Leben kann nur rÃ¼ckwÃ¤rts verstanden werden, muss aber vorwÃ¤rts gelebt werden.",
     "chapter": "Gesammelte Werke",
     "category": [
@@ -1488,7 +2330,6 @@
     "text_de": "In unserem Zeitalter haben wir vergessen, dass es sowohl ein ÃœbermaÃŸ an Genuss als auch einen ÃœbermaÃŸ an Schmerz gibt.",
     "source": "Der Augenblick",
     "year": 1848,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "In unserem Zeitalter haben wir vergessen, dass es sowohl ein ÃœbermaÃŸ an Genuss als auch einen ÃœbermaÃŸ an Schmerz gibt.",
     "chapter": "Der Augenblick",
     "category": [
@@ -1507,7 +2348,6 @@
     "text_de": "Die wahrhafte Freiheit ist: vor Gott einsam vor sich selbst zu stehen.",
     "source": "Die Krankheit zum Tode",
     "year": 1849,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Die wahrhafte Freiheit ist: vor Gott einsam vor sich selbst zu stehen.",
     "chapter": "Die Krankheit zum Tode",
     "category": [
@@ -1526,7 +2366,6 @@
     "text_de": "Aufklaerung muss auch sich selbst kritisch prüfen, wenn sie nicht in Mythos zurueckfallen will.",
     "source": "Dialektik der Aufklaerung",
     "year": 1944,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Aufklaerung muss auch sich selbst kritisch prüfen, wenn sie nicht in Mythos zurueckfallen will.",
     "chapter": "Dialektik der Aufklaerung",
     "category": [
@@ -1539,13 +2378,32 @@
     "related_ids": []
   },
   {
+    "id": "adorno_001",
+    "author": "Theodor W. Adorno",
+    "author_type": "philosopher",
+    "text_de": "Es gibt kein richtiges Leben im falschen.",
+    "source": "Minima Moralia",
+    "year": 1951,
+    "text_original": "Es gibt kein richtiges Leben im falschen.",
+    "chapter": "Minima Moralia",
+    "category": [
+      "Philosophie",
+      "Gesellschaft",
+      "Kritik"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_theodor_w._adorno",
+    "explanation_short": "Zitat von Theodor W. Adorno: Es gibt kein richtiges Leben im falschen.",
+    "explanation_long": "Historisches Zitat von Theodor W. Adorno aus \"Minima Moralia\".",
+    "related_ids": []
+  },
+  {
     "id": "politician_bulk_08",
     "author": "Thomas Sankara",
     "author_type": "politician",
     "text_de": "Politische Unabhaengigkeit bleibt leer, wenn wirtschaftliche Abhaengigkeit fortbesteht.",
     "source": "Rede in Addis Abeba",
     "year": 1987,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Politische Unabhaengigkeit bleibt leer, wenn wirtschaftliche Abhaengigkeit fortbesteht.",
     "chapter": "Rede in Addis Abeba",
     "category": [
@@ -1558,13 +2416,52 @@
     "related_ids": []
   },
   {
+    "id": "sankara_001",
+    "author": "Thomas Sankara",
+    "author_type": "politician",
+    "text_de": "Die Schulden koennen nicht bezahlt werden, weil wir nicht verantwortlich sind fuer sie.",
+    "source": "Rede vor der OAU",
+    "year": 1987,
+    "text_original": "Die Schulden koennen nicht bezahlt werden, weil wir nicht verantwortlich sind fuer sie.",
+    "chapter": "Rede vor der OAU",
+    "category": [
+      "Kolonialismus",
+      "Oekonomie",
+      "Emanzipation"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_thomas_sankara",
+    "explanation_short": "Zitat von Thomas Sankara: Die Schulden koennen nicht bezahlt werden, weil wir nicht verantwortlich sind fuer sie.",
+    "explanation_long": "Historisches Zitat von Thomas Sankara aus \"Rede vor der OAU\".",
+    "related_ids": []
+  },
+  {
+    "id": "havel_001",
+    "author": "Vaclav Havel",
+    "author_type": "politician",
+    "text_de": "Hoffnung ist nicht die Ueberzeugung, dass etwas gut ausgeht, sondern die Gewissheit, dass etwas Sinn hat, egal wie es ausgeht.",
+    "source": "Disturbing the Peace",
+    "year": 1986,
+    "text_original": "Hoffnung ist nicht die Ueberzeugung, dass etwas gut ausgeht, sondern die Gewissheit, dass etwas Sinn hat, egal wie es ausgeht.",
+    "chapter": "Disturbing the Peace",
+    "category": [
+      "Politik",
+      "Ethik",
+      "Menschenbild"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_vaclav_havel",
+    "explanation_short": "Zitat von Vaclav Havel: Hoffnung ist nicht die Ueberzeugung, dass etwas gut ausgeht, sondern die Gewissheit, dass etwas Sinn hat, egal wie es au",
+    "explanation_long": "Historisches Zitat von Vaclav Havel aus \"Disturbing the Peace\".",
+    "related_ids": []
+  },
+  {
     "id": "voltaire_001",
     "author": "Voltaire",
     "author_type": "philosopher",
     "text_de": "Ich mag verdammen, was du sagst, aber ich werde dein Recht, es zu sagen, bis zum Tod verteidigen.",
     "source": "Briefe Ã¼ber die EnglÃ¤nder",
     "year": 1734,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Ich mag verdammen, was du sagst, aber ich werde dein Recht, es zu sagen, bis zum Tod verteidigen.",
     "chapter": "Briefe Ã¼ber die EnglÃ¤nder",
     "category": [
@@ -1583,7 +2480,6 @@
     "text_de": "Wenn Gott uns nach seinem Bilde erschaffen hat, haben wir es ihm reichlich vergolten.",
     "source": "NotizbÃ¼cher",
     "year": 1764,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Wenn Gott uns nach seinem Bilde erschaffen hat, haben wir es ihm reichlich vergolten.",
     "chapter": "NotizbÃ¼cher",
     "category": [
@@ -1596,13 +2492,32 @@
     "related_ids": []
   },
   {
+    "id": "bois_001",
+    "author": "W. E. B. Du Bois",
+    "author_type": "philosopher",
+    "text_de": "Das Problem des 20. Jahrhunderts ist das Problem der color line.",
+    "source": "The Souls of Black Folk",
+    "year": 1903,
+    "text_original": "Das Problem des 20. Jahrhunderts ist das Problem der color line.",
+    "chapter": "The Souls of Black Folk",
+    "category": [
+      "Rechte",
+      "Kolonialismus",
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_w._e._b._du_bois",
+    "explanation_short": "Zitat von W. E. B. Du Bois: Das Problem des 20. Jahrhunderts ist das Problem der color line.",
+    "explanation_long": "Historisches Zitat von W. E. B. Du Bois aus \"The Souls of Black Folk\".",
+    "related_ids": []
+  },
+  {
     "id": "philosopher_bulk_05",
     "author": "Walter Benjamin",
     "author_type": "philosopher",
     "text_de": "Technik veraendert Wahrnehmung und politische Oeffentlichkeit zugleich.",
     "source": "Das Kunstwerk im Zeitalter seiner technischen Reproduzierbarkeit",
     "year": 1936,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Technik veraendert Wahrnehmung und politische Oeffentlichkeit zugleich.",
     "chapter": "Das Kunstwerk im Zeitalter seiner technischen Reproduzierbarkeit",
     "category": [
@@ -1615,13 +2530,32 @@
     "related_ids": []
   },
   {
+    "id": "brandt_001",
+    "author": "Willy Brandt",
+    "author_type": "politician",
+    "text_de": "Wir wollen mehr Demokratie wagen.",
+    "source": "Regierungserklaerung",
+    "year": 1969,
+    "text_original": "Wir wollen mehr Demokratie wagen.",
+    "chapter": "Regierungserklaerung",
+    "category": [
+      "Demokratie",
+      "Reform",
+      "Politik"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_willy_brandt",
+    "explanation_short": "Zitat von Willy Brandt: Wir wollen mehr Demokratie wagen.",
+    "explanation_long": "Historisches Zitat von Willy Brandt aus \"Regierungserklaerung\".",
+    "related_ids": []
+  },
+  {
     "id": "politician_bulk_02",
     "author": "Willy Brandt",
     "author_type": "politician",
     "text_de": "Demokratische Reform gelingt, wenn soziale Sicherheit und Freiheit zusammen gedacht werden.",
     "source": "Regierungserklaerungen",
     "year": 1970,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Demokratische Reform gelingt, wenn soziale Sicherheit und Freiheit zusammen gedacht werden.",
     "chapter": "Regierungserklaerungen",
     "category": [
@@ -1634,13 +2568,32 @@
     "related_ids": []
   },
   {
+    "id": "churchill_001",
+    "author": "Winston Churchill",
+    "author_type": "politician",
+    "text_de": "Demokratie ist die schlechteste Regierungsform, abgesehen von allen anderen, die von Zeit zu Zeit ausprobiert wurden.",
+    "source": "Rede im House of Commons",
+    "year": 1947,
+    "text_original": "Demokratie ist die schlechteste Regierungsform, abgesehen von allen anderen, die von Zeit zu Zeit ausprobiert wurden.",
+    "chapter": "Rede im House of Commons",
+    "category": [
+      "Demokratie",
+      "Politik",
+      "Staat"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_winston_churchill",
+    "explanation_short": "Zitat von Winston Churchill: Demokratie ist die schlechteste Regierungsform, abgesehen von allen anderen, die von Zeit zu Zeit ausprobiert wurden.",
+    "explanation_long": "Historisches Zitat von Winston Churchill aus \"Rede im House of Commons\".",
+    "related_ids": []
+  },
+  {
     "id": "lenin_003",
     "author": "Wladimir Iljitsch Lenin",
     "author_type": "politician",
     "text_de": "Es gibt keine absolute Wahrheit, nur eine in ihrer historischen Entwicklung begriffene.",
     "source": "Materialismus und Empiriokritizismus",
     "year": 1909,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Es gibt keine absolute Wahrheit, nur eine in ihrer historischen Entwicklung begriffene.",
     "chapter": "Materialismus und Empiriokritizismus",
     "category": [
@@ -1659,7 +2612,6 @@
     "text_de": "Der Imperialismus ist das hÃ¶chste Stadium des Kapitalismus.",
     "source": "Der Imperialismus als hÃ¶chstes Stadium des Kapitalismus",
     "year": 1916,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Der Imperialismus ist das hÃ¶chste Stadium des Kapitalismus.",
     "chapter": "Der Imperialismus als hÃ¶chstes Stadium des Kapitalismus",
     "category": [
@@ -1678,7 +2630,6 @@
     "text_de": "Vertrauen ist gut, Kontrolle ist besser.",
     "source": "Politische Reden",
     "year": 1917,
-    "_source_file": "thinkers_quotes.json",
     "text_original": "Vertrauen ist gut, Kontrolle ist besser.",
     "chapter": "Politische Reden",
     "category": [

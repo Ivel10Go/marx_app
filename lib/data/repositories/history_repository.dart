@@ -110,22 +110,25 @@ class HistoryRepository {
 
     return HistoryFact(
       id: row.id,
-      headline: normalizeGermanDisplayText(row.headline)!,
-      body: normalizeGermanDisplayText(row.body)!,
-      dateDisplay: normalizeGermanDisplayText(row.dateDisplay)!,
+      headline: (normalizeGermanDisplayText(row.headline) ?? '').trim(),
+      body: (normalizeGermanDisplayText(row.body) ?? '').trim(),
+      dateDisplay: (normalizeGermanDisplayText(row.dateDisplay) ?? '').trim(),
       dateIso: row.dateIso,
       dayOfYear: row.dayOfYear,
-      era: normalizeGermanDisplayText(row.era)!,
-      region: normalizeGermanDisplayText(row.region)!,
+      era: (normalizeGermanDisplayText(row.era) ?? '').trim(),
+      region: (normalizeGermanDisplayText(row.region) ?? '').trim(),
       category: categories
-          .map((item) => normalizeGermanDisplayText(item)!)
+          .map((item) => (normalizeGermanDisplayText(item) ?? '').trim())
+          .where((item) => item.isNotEmpty)
           .toList(),
       difficulty: row.difficulty,
       person: normalizeGermanDisplayText(row.person),
       personRole: normalizeGermanDisplayText(row.personRole),
-      connectionToMarx: normalizeGermanDisplayText(row.connectionToMarx)!,
+      connectionToMarx: (normalizeGermanDisplayText(row.connectionToMarx) ?? '')
+          .trim(),
       relatedQuoteIds: relatedIds
-          .map((item) => normalizeGermanDisplayText(item)!)
+          .map((item) => (normalizeGermanDisplayText(item) ?? '').trim())
+          .where((item) => item.isNotEmpty)
           .toList(),
       funFact: normalizeGermanDisplayText(row.funFact),
       source: normalizeGermanDisplayText(row.source),
