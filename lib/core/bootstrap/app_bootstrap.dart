@@ -39,6 +39,8 @@ Future<_IsolateDailyContent> _initializeDatabaseInIsolate(
     debugPrint('[DeferredData] Starting content resolution in isolate...');
     final quoteRepository = QuoteRepository(db);
     final historyRepository = HistoryRepository(db);
+    await quoteRepository.ensureSeeded();
+    await historyRepository.ensureSeeded();
 
     // Parse persisted settings passed from main isolate.
     final prefsStart = Stopwatch()..start();
@@ -301,7 +303,9 @@ abstract final class AppBootstrap {
           // No new content resolved, but still trigger a widget refresh so the
           // widget displays whatever was previously stored rather than staying
           // stuck on the loading placeholder.
-          debugPrint('[Deferred] No content resolved — force-refreshing widget');
+          debugPrint(
+            '[Deferred] No content resolved — force-refreshing widget',
+          );
           await WidgetSyncService.forceRefresh();
         }
 
@@ -353,13 +357,34 @@ abstract final class AppBootstrap {
     required UserProfile profile,
     required DailyContentResolver resolver,
   }) async {
-    return resolver.resolveDailyContentFromRepository(
-      quoteRepository: quoteRepository,
-      historyRepository: historyRepository,
-      homeContentMode: homeContentMode,
-      appMode: appMode,
-      profile: profile,
-    );
+    try {
+      final content = await resolver.resolveDailyContentFromRepository(
+        quoteRepository: quoteRepository,
+        historyRepository: historyRepository,
+        homeContentMode: homeContentMode,
+        appMode: appMode,
+        profile: profile,
+      );
+
+      if (content != null) {
+        return content;
+      }
+    } catch (e, st) {
+      debugPrint('[DeferredData] Resolver failed, using fallback content: $e');
+      debugPrintStack(stackTrace: st);
+    }
+
+    final quotes = await quoteRepository.watchAllQuotes().first;
+    if (quotes.isNotEmpty) {
+      return DailyContent.quote(quote: quotes.first);
+    }
+
+    final facts = await historyRepository.watchAllHistoryFacts().first;
+    if (facts.isNotEmpty) {
+      return DailyContent.fact(fact: facts.first);
+    }
+
+    return null;
   }
 
   static UserProfile _resolveProfile(String? raw) {

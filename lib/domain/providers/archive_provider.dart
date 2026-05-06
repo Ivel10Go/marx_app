@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/utils/quote_attribution.dart';
 import '../../data/models/history_fact.dart';
 import '../../data/models/quote.dart';
 import '../../data/models/user_profile.dart';
@@ -261,3 +262,95 @@ bool _matchesOrientation({
 List<Quote> _filterQuotesByProfile(List<Quote> all, UserProfile profile) {
   return all;
 }
+
+// ===== HIERARCHICAL ARCHIVE STRUCTURE: Theme → Philosopher → Quotes =====
+
+/// Selection state for hierarchical archive navigation
+final archiveHierarchyThemeProvider = StateProvider<String?>((Ref ref) => null);
+final archiveHierarchyPhilosopherProvider = StateProvider<String?>(
+  (Ref ref) => null,
+);
+
+/// Get all available themes from quotes
+final archiveHierarchyAllThemesProvider = Provider<List<String>>((Ref ref) {
+  final poolAsync = ref.watch(archivePoolProvider).valueOrNull;
+  if (poolAsync == null) return <String>[];
+
+  final themes = <String>{};
+  for (final item in poolAsync) {
+    if (item.isQuote) {
+      themes.addAll(item.quote!.category);
+    }
+  }
+
+  return themes.toList()..sort();
+});
+
+/// Get philosophers (authors) that have quotes in the selected theme
+final archiveHierarchyPhilosophersProvider = Provider<List<String>>((Ref ref) {
+  final selectedTheme = ref.watch(archiveHierarchyThemeProvider);
+  if (selectedTheme == null) return <String>[];
+
+  final poolAsync = ref.watch(archivePoolProvider).valueOrNull;
+  if (poolAsync == null) return <String>[];
+
+  final philosophers = <String>{};
+  for (final item in poolAsync) {
+    if (item.isQuote && item.quote!.category.contains(selectedTheme)) {
+      final author = quoteAuthorLabel(item.quote!);
+      philosophers.add(author);
+    }
+  }
+
+  return philosophers.toList()..sort();
+});
+
+/// Get quotes filtered by selected theme and philosopher
+final archiveHierarchyQuotesProvider = Provider<List<ArchiveItem>>((Ref ref) {
+  final selectedTheme = ref.watch(archiveHierarchyThemeProvider);
+  final selectedPhilosopher = ref.watch(archiveHierarchyPhilosopherProvider);
+  final query = ref.watch(archiveQueryProvider).trim().toLowerCase();
+
+  final poolAsync = ref.watch(archivePoolProvider).valueOrNull;
+  if (poolAsync == null) return <ArchiveItem>[];
+
+  var filtered = poolAsync;
+
+  // Filter by theme if selected
+  if (selectedTheme != null) {
+    filtered = filtered.where((item) {
+      if (item.isQuote) {
+        return item.quote!.category.contains(selectedTheme);
+      }
+      return false;
+    }).toList();
+  }
+
+  // Filter by philosopher if selected
+  if (selectedPhilosopher != null) {
+    filtered = filtered.where((item) {
+      if (item.isQuote) {
+        return quoteAuthorLabel(item.quote!) == selectedPhilosopher;
+      }
+      return false;
+    }).toList();
+  }
+
+  // Apply text search if present
+  if (query.isNotEmpty) {
+    filtered = filtered.where((item) {
+      if (item.isQuote) {
+        final quote = item.quote!;
+        return quote.textDe.toLowerCase().contains(query) ||
+            quote.source.toLowerCase().contains(query) ||
+            quote.series.toLowerCase().contains(query) ||
+            quote.category.any(
+              (category) => category.toLowerCase().contains(query),
+            );
+      }
+      return false;
+    }).toList();
+  }
+
+  return filtered;
+});

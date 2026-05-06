@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import '../../core/utils/german_text_normalizer.dart';
+import '../../core/utils/quote_attribution.dart';
 import '../../data/models/history_fact.dart';
 import '../../data/models/quote.dart';
 import '../../data/models/user_profile.dart';
@@ -11,10 +12,41 @@ class PersonalizationService {
       return all;
     }
 
-    return _expandByWeight<Quote>(
-      all,
-      (Quote quote) => _quoteWeight(quote, profile),
-    );
+    // First pass: calculate base weights
+    final baseWeights = <Quote, double>{};
+    for (final quote in all) {
+      baseWeights[quote] = _quoteWeight(quote, profile);
+    }
+
+    // Second pass: Apply author diversity booster to reduce redundancy
+    // Count quotes by author to identify over-represented authors
+    final authorCounts = <String, int>{};
+    for (final quote in all) {
+      final author = quoteAuthorLabel(quote).toLowerCase();
+      authorCounts[author] = (authorCounts[author] ?? 0) + 1;
+    }
+
+    // Find the median and high-representation threshold
+    if (authorCounts.isNotEmpty) {
+      final counts = authorCounts.values.toList()..sort();
+      final median = counts[counts.length ~/ 2];
+      final highThreshold = (median * 1.5).ceil();
+
+      // Apply diversity booster: reduce weight for over-represented authors
+      for (final quote in all) {
+        final author = quoteAuthorLabel(quote).toLowerCase();
+        final count = authorCounts[author] ?? 0;
+        if (count > highThreshold) {
+          // Over-represented: apply 0.7x multiplier to reduce their dominance
+          baseWeights[quote] = baseWeights[quote]! * 0.7;
+        } else if (count < (median ~/ 2) && count > 0) {
+          // Under-represented: apply 1.3x multiplier to increase diversity
+          baseWeights[quote] = baseWeights[quote]! * 1.3;
+        }
+      }
+    }
+
+    return _expandByWeight<Quote>(all, (quote) => baseWeights[quote]!);
   }
 
   List<HistoryFact> getWeightedFacts(
@@ -97,8 +129,10 @@ class PersonalizationService {
           'familie',
           'werte',
           'kontinuit',
+          'verantwortung',
+          'eigentum',
         ])) {
-          score += 1.0;
+          score += 1.2;
         }
     }
 

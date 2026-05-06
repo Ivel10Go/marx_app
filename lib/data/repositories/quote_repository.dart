@@ -220,11 +220,15 @@ class QuoteRepository {
     bool allowEmpty = false,
   }) {
     final value = item[key];
-    if (value is! List<dynamic>) {
-      throw FormatException('Missing or invalid list "$key" at index $index');
-    }
+    final entries = switch (value) {
+      final List<dynamic> list => list,
+      final String stringValue => [stringValue],
+      _ => throw FormatException(
+        'Missing or invalid list "$key" at index $index',
+      ),
+    };
 
-    final casted = value
+    final casted = entries
         .whereType<String>()
         .map((String entry) => entry.trim())
         .where((String entry) => entry.isNotEmpty)

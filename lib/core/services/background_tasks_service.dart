@@ -70,13 +70,33 @@ Future<DailyContent?> _resolveDailyContent({
   required UserProfile profile,
 }) async {
   final resolver = DailyContentResolver();
-  return resolver.resolveDailyContentFromRepository(
-    quoteRepository: quoteRepository,
-    historyRepository: historyRepository,
-    homeContentMode: homeContentMode,
-    appMode: appMode,
-    profile: profile,
-  );
+  try {
+    final content = await resolver.resolveDailyContentFromRepository(
+      quoteRepository: quoteRepository,
+      historyRepository: historyRepository,
+      homeContentMode: homeContentMode,
+      appMode: appMode,
+      profile: profile,
+    );
+
+    if (content != null) {
+      return content;
+    }
+  } catch (_) {
+    // Fall back below.
+  }
+
+  final quotes = await quoteRepository.watchAllQuotes().first;
+  if (quotes.isNotEmpty) {
+    return DailyContent.quote(quote: quotes.first);
+  }
+
+  final facts = await historyRepository.watchAllHistoryFacts().first;
+  if (facts.isNotEmpty) {
+    return DailyContent.fact(fact: facts.first);
+  }
+
+  return null;
 }
 
 AppMode _resolveAppMode(String? stored) {

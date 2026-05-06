@@ -349,12 +349,22 @@ class DailyContentResolver {
         final conservativeMatches = nonMarxQuotes
             .where((quote) => _matchesAnyLens(quote, _conservativeLensTerms))
             .toList();
+        // Primary: Conservative-tagged quotes
         if (conservativeMatches.isNotEmpty) {
           return conservativeMatches;
         }
+        // Secondary: All non-Marx, non-Liberal quotes (neutral/centrist)
+        final neutralMatches = nonMarxQuotes
+            .where((quote) => !_matchesAnyLens(quote, _liberalLensTerms))
+            .toList();
+        if (neutralMatches.isNotEmpty) {
+          return neutralMatches;
+        }
+        // Tertiary: All non-Marx quotes as fallback
         if (nonMarxQuotes.isNotEmpty) {
           return nonMarxQuotes;
         }
+        // Final fallback: everything
         return allQuotes;
     }
   }

@@ -30,19 +30,34 @@ final dailyContentProvider = FutureProvider<DailyContent>((Ref ref) async {
   final historyRepository = ref.watch(historyRepositoryProvider);
   final resolver = ref.watch(dailyContentResolverProvider);
   final homeContentMode = settings.homeContentMode;
-  final content = await resolver.resolveDailyContentFromRepository(
-    quoteRepository: quoteRepository,
-    historyRepository: historyRepository,
-    homeContentMode: homeContentMode,
-    appMode: appMode,
-    profile: profile,
-  );
+  try {
+    final content = await resolver.resolveDailyContentFromRepository(
+      quoteRepository: quoteRepository,
+      historyRepository: historyRepository,
+      homeContentMode: homeContentMode,
+      appMode: appMode,
+      profile: profile,
+    );
 
-  if (content == null) {
-    throw Exception('No quote content available');
+    if (content != null) {
+      return content;
+    }
+  } catch (_) {
+    // Fall through to a direct repository fallback so the home screen
+    // still renders even if personalization or filtering fails.
   }
 
-  return content;
+  final quotes = await quoteRepository.watchAllQuotes().first;
+  if (quotes.isNotEmpty) {
+    return DailyContent.quote(quote: quotes.first);
+  }
+
+  final facts = await historyRepository.watchAllHistoryFacts().first;
+  if (facts.isNotEmpty) {
+    return DailyContent.fact(fact: facts.first);
+  }
+
+  throw Exception('No quote content available');
 });
 
 final premiumDailyQuotesProvider = FutureProvider<List<Quote>>((Ref ref) async {
