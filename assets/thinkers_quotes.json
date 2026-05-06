@@ -8982,5 +8982,1702 @@
     "explanation_short": "Chestertons Blick fÃ¼r das AlltÃ¤gliche als moralischen Raum.",
     "explanation_long": "Chestertons Schriften verteidigen traditionelle Werte und betonen moralische Kenntnisse des Alltags.",
     "related_ids": []
+  },
+  {
+    "id": "aurelius_001",
+    "author": "Marcus Aurelius",
+    "author_type": "philosopher",
+    "text_de": "Du hast Macht über deinen Geist, nicht über äußere Ereignisse.",
+    "text_original": "You have power over your mind — not outside events.",
+    "source": "Meditations",
+    "year": 170,
+    "chapter": "Book 6",
+    "category": [
+      "Philosophie",
+      "Ethik"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_marcus_aurelius",
+    "explanation_short": "Stoische Grundregel: Kontrolle über innere Haltung.",
+    "explanation_long": "Marcus Aurelius erinnert daran, dass wir unsere Reaktionen kontrollieren können, nicht aber äußere Umstände.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "aurelius_002",
+    "author": "Marcus Aurelius",
+    "author_type": "philosopher",
+    "text_de": "Das Glück des Lebens hängt von der Beschaffenheit deiner Gedanken ab.",
+    "text_original": "The happiness of your life depends upon the quality of your thoughts.",
+    "source": "Meditations",
+    "year": 170,
+    "chapter": "Book 5",
+    "category": [
+      "Philosophie",
+      "Glück"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_marcus_aurelius",
+    "explanation_short": "Gedankenkontrolle als Schlüssel zum Wohlbefinden.",
+    "explanation_long": "Stoische Praxis: innere Haltung formt das Erleben von Glück.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "aurelius_003",
+    "author": "Marcus Aurelius",
+    "author_type": "philosopher",
+    "text_de": "Verliere dich nicht in Tagträumen; handle weise im Jetzt.",
+    "text_original": "Do not act as if you were going to live ten thousand years. Live now.",
+    "source": "Meditations",
+    "year": 170,
+    "chapter": "Book 4",
+    "category": [
+      "Philosophie",
+      "Lebensführung"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_marcus_aurelius",
+    "explanation_short": "Appell an Gegenwartsbezogenheit und Tatkraft.",
+    "explanation_long": "Aurelius mahnt, das Leben aktiv zu gestalten statt in Illusionen zu verharren.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "aurelius_004",
+    "author": "Marcus Aurelius",
+    "author_type": "philosopher",
+    "text_de": "Wenn es schwierig ist, erinnere dich: Schwierigkeiten zeigen Gelegenheit zum Wachsen.",
+    "text_original": "The impediment to action advances action. What stands in the way becomes the way.",
+    "source": "Meditations",
+    "year": 170,
+    "chapter": "Book 5",
+    "category": [
+      "Philosophie",
+      "Resilienz"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_marcus_aurelius",
+    "explanation_short": "Herausforderungen als Lernchance.",
+    "explanation_long": "Stoische Sicht: Widrigkeiten sind Gelegenheiten, Tugend zu üben.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "aurelius_005",
+    "author": "Marcus Aurelius",
+    "author_type": "philosopher",
+    "text_de": "Sei gütig zu anderen; jeder kämpft seinen inneren Kampf.",
+    "text_original": "Be tolerant with others and strict with yourself.",
+    "source": "Meditations",
+    "year": 170,
+    "chapter": "Book 7",
+    "category": [
+      "Ethik",
+      "Verhalten"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_marcus_aurelius",
+    "explanation_short": "Selbstdisziplin und Mitgefühl verbunden.",
+    "explanation_long": "Aurelius betont die Bedeutung persönlicher Verantwortung und Nachsicht gegenüber Mitmenschen.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "seneca_002",
+    "author": "Seneca",
+    "author_type": "philosopher",
+    "text_de": "Wahrer Reichtum ist Genügsamkeit, nicht Besitz.",
+    "text_original": "True wealth is a reserve of strength, not of goods.",
+    "source": "Letters",
+    "year": 65,
+    "chapter": "Letter",
+    "category": [
+      "Werte",
+      "Lebensführung"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_seneca",
+    "explanation_short": "Stoische Kritik an Habgier.",
+    "explanation_long": "Seneca erklärt, dass innere Tugenden wichtiger sind als äußerer Reichtum.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "seneca_003",
+    "author": "Seneca",
+    "author_type": "philosopher",
+    "text_de": "Zeit ist unser wertvollstes Gut; vergeude sie nicht.",
+    "text_original": "It is not that we have a short time to live, but that we waste much of it.",
+    "source": "On the Shortness of Life",
+    "year": 49,
+    "chapter": "Essay",
+    "category": [
+      "Zeit",
+      "Lebensführung"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_seneca",
+    "explanation_short": "Mahnung zu bewusstem Leben.",
+    "explanation_long": "Seneca spricht über die aktive Nutzung der Lebenszeit und Selbstverwaltung.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "seneca_004",
+    "author": "Seneca",
+    "author_type": "philosopher",
+    "text_de": "Glück hängt nicht von äußeren Umständen ab, sondern von der Haltung.",
+    "text_original": "Happiness is not attained by external goods but by an inner disposition.",
+    "source": "Letters",
+    "year": 65,
+    "chapter": "Letter",
+    "category": [
+      "Glück",
+      "Philosophie"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_seneca",
+    "explanation_short": "Inneres Wohlbefinden als Ziel.",
+    "explanation_long": "Seneca betont innere Tugenden als Bedingung für echtes Glück.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "seneca_005",
+    "author": "Seneca",
+    "author_type": "philosopher",
+    "text_de": "Wenige Freundschaften, aber echte, sind ein Schatz.",
+    "text_original": "One of the most beautiful qualities of true friendship is to understand and be understood.",
+    "source": "Letters",
+    "year": 65,
+    "chapter": "Letter",
+    "category": [
+      "Freundschaft",
+      "Ethik"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_seneca",
+    "explanation_short": "Wert beständiger Freundschaft.",
+    "explanation_long": "Seneca lobt echte, tiefe Beziehungen gegenüber flüchtigen Bekanntschaften.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "cicero_002",
+    "author": "Marcus Tullius Cicero",
+    "author_type": "statesman",
+    "text_de": "Nicht in Reden liegt die Würde, sondern in guten Taten.",
+    "text_original": "Not in eloquence but in good deeds lies true dignity.",
+    "source": "Orations",
+    "year": -50,
+    "chapter": "Oration",
+    "category": [
+      "Ethik",
+      "Handeln"
+    ],
+    "difficulty": "advanced",
+    "series": "person_cicero",
+    "explanation_short": "Handlung vor Sprache stellen.",
+    "explanation_long": "Cicero betonte den Wert redlicher Tat über bloßen Worten.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "cicero_003",
+    "author": "Marcus Tullius Cicero",
+    "author_type": "statesman",
+    "text_de": "Freiheit ohne Pflichten wird zur Anarchie.",
+    "text_original": "Liberty without responsibility becomes anarchy.",
+    "source": "Letters",
+    "year": -44,
+    "chapter": "Correspondence",
+    "category": [
+      "Politik",
+      "Freiheit"
+    ],
+    "difficulty": "advanced",
+    "series": "person_cicero",
+    "explanation_short": "Verbindung von Freiheit und Verantwortung.",
+    "explanation_long": "Cicero sah in der Balance von Rechten und Pflichten die Grundlage stabiler Gesellschaften.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "shakespeare_001",
+    "author": "William Shakespeare",
+    "author_type": "playwright",
+    "text_de": "Sein oder Nichtsein — das ist hier die Frage.",
+    "text_original": "To be, or not to be: that is the question.",
+    "source": "Hamlet",
+    "year": 1603,
+    "chapter": "Act 3, Scene 1",
+    "category": [
+      "Kunst",
+      "Existenz"
+    ],
+    "difficulty": "advanced",
+    "series": "person_shakespeare",
+    "explanation_short": "Berühmte Meditation über Leben und Leiden.",
+    "explanation_long": "Hamlets Monolog reflektiert über Existenz, Leid und Entscheidungskraft.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "shakespeare_002",
+    "author": "William Shakespeare",
+    "author_type": "playwright",
+    "text_de": "Die ganze Welt ist eine Bühne, und alle Frauen und Männer bloße Spieler.",
+    "text_original": "All the world's a stage, And all the men and women merely players.",
+    "source": "As You Like It",
+    "year": 1600,
+    "chapter": "Act 2, Scene 7",
+    "category": [
+      "Kunst",
+      "Gesellschaft"
+    ],
+    "difficulty": "advanced",
+    "series": "person_shakespeare",
+    "explanation_short": "Metapher für Rollen im Leben.",
+    "explanation_long": "Der Vergleich deutet auf die temporäre Natur sozialer Rollen und Lebensabschnitte.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "shakespeare_003",
+    "author": "William Shakespeare",
+    "author_type": "playwright",
+    "text_de": "Die Räume, in denen wir leben, formen uns; rede mit deinem eigenen Gewissen.",
+    "text_original": "This above all: to thine own self be true.",
+    "source": "Hamlet",
+    "year": 1603,
+    "chapter": "Polonius' Advice",
+    "category": [
+      "Ethik",
+      "Lebensführung"
+    ],
+    "difficulty": "advanced",
+    "series": "person_shakespeare",
+    "explanation_short": "Aufruf zur Ehrlichkeit gegenüber sich selbst.",
+    "explanation_long": "Polonius rät zur Selbsttreue als Grundlage guter Lebensführung.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "goethe_002",
+    "author": "Johann Wolfgang von Goethe",
+    "author_type": "writer",
+    "text_de": "Wenn du dich selbst erkennst, wächst Weisheit.",
+    "text_original": "He who knows others is wise; he who knows himself is enlightened.",
+    "source": "Maxims and Reflections",
+    "year": 1825,
+    "chapter": "Reflections",
+    "category": [
+      "Philosophie",
+      "Selbsterkenntnis"
+    ],
+    "difficulty": "advanced",
+    "series": "person_goethe",
+    "explanation_short": "Unterscheidung von äußerer und innerer Weisheit.",
+    "explanation_long": "Goethe betont Selbstkenntnis als höherwertige Form der Weisheit.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "goethe_003",
+    "author": "Johann Wolfgang von Goethe",
+    "author_type": "writer",
+    "text_de": "Die beste Bildung findet ein gescheiter Mensch auf Reisen.",
+    "text_original": "A clever person learns from their own mistakes; a wise person learns from others.",
+    "source": "Wilhelm Meister",
+    "year": 1795,
+    "chapter": "Novel",
+    "category": [
+      "Bildung",
+      "Erfahrung"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_goethe",
+    "explanation_short": "Lernen durch Erfahrung und Beobachtung.",
+    "explanation_long": "Goethe thematisiert Lernen als lebenslangen Prozess.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "schiller_002",
+    "author": "Friedrich Schiller",
+    "author_type": "writer",
+    "text_de": "Freiheit ist das höchste Gut des Menschen.",
+    "text_original": "Freedom is the highest good of man.",
+    "source": "On the Aesthetic Education",
+    "year": 1795,
+    "chapter": "Essays",
+    "category": [
+      "Freiheit",
+      "Werte"
+    ],
+    "difficulty": "advanced",
+    "series": "person_schiller",
+    "explanation_short": "Ästhetische und politische Bedeutung von Freiheit.",
+    "explanation_long": "Schiller sieht Freiheit als zentral für moralische Entwicklung und Kultur.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "schiller_003",
+    "author": "Friedrich Schiller",
+    "author_type": "writer",
+    "text_de": "Wahre Größe zeigt sich in selbstlosem Handeln.",
+    "text_original": "True greatness shows itself in selfless action.",
+    "source": "Poems",
+    "year": 1799,
+    "chapter": "Poetry",
+    "category": [
+      "Werte",
+      "Ethik"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_schiller",
+    "explanation_short": "Ethische Perspektive auf Größe.",
+    "explanation_long": "Schiller preist selbstlose Tat als Ausdruck moralischer Größe.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "emerson_001",
+    "author": "Ralph Waldo Emerson",
+    "author_type": "essayist",
+    "text_de": "Werde, der du bist.",
+    "text_original": "To be yourself in a world that is constantly trying to make you something else is the greatest accomplishment.",
+    "source": "Self-Reliance",
+    "year": 1841,
+    "chapter": "Essay",
+    "category": [
+      "Individualität",
+      "Philosophie"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_emerson",
+    "explanation_short": "Plädoyer für Selbstvertrauen und Eigenständigkeit.",
+    "explanation_long": "Emerson ruft zur inneren Unabhängigkeit und Authentizität auf.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "emerson_002",
+    "author": "Ralph Waldo Emerson",
+    "author_type": "essayist",
+    "text_de": "Was vor uns liegt und was hinter uns liegt, sind Kleinigkeiten verglichen mit dem, was in uns liegt.",
+    "text_original": "What lies behind us and what lies before us are tiny matters compared to what lies within us.",
+    "source": "Essays",
+    "year": 1841,
+    "chapter": "Essays",
+    "category": [
+      "Selbst",
+      "Inspiration"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_emerson",
+    "explanation_short": "Innere Ressourcen sind entscheidend.",
+    "explanation_long": "Emerson betont persönliche Stärke und Potenzial als Kern der Lebensführung.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "thoreau_001",
+    "author": "Henry David Thoreau",
+    "author_type": "writer",
+    "text_de": "Gehe selbstbewusst in die Richtung deiner Träume; lebe das Leben, das du dir erdacht hast.",
+    "text_original": "Go confidently in the direction of your dreams. Live the life you have imagined.",
+    "source": "Walden",
+    "year": 1854,
+    "chapter": "Economy",
+    "category": [
+      "Leben",
+      "Natur"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_thoreau",
+    "explanation_short": "Aufruf zu praktischer Selbstverwirklichung.",
+    "explanation_long": "Thoreau ermutigt zu einem selbstbestimmten Leben in Übereinstimmung mit eigenen Idealen.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "thoreau_002",
+    "author": "Henry David Thoreau",
+    "author_type": "writer",
+    "text_de": "Was vor uns liegt und was hinter uns liegt, ist weniger wichtig als das, was in uns liegt.",
+    "text_original": "What lies behind us and what lies ahead of us are tiny matters compared to what lives within us.",
+    "source": "Walden",
+    "year": 1854,
+    "chapter": "Reflection",
+    "category": [
+      "Inspiration",
+      "Selbst"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_thoreau",
+    "explanation_short": "Innere Werte als Lebensquelle.",
+    "explanation_long": "Thoreau betont die innere Identität und Kontinuität des Selbst.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "tolstoy_001",
+    "author": "Leo Tolstoy",
+    "author_type": "writer",
+    "text_de": "Alle glücklichen Familien ähneln einander; jede unglückliche Familie ist auf ihre Weise unglücklich.",
+    "text_original": "All happy families are alike; each unhappy family is unhappy in its own way.",
+    "source": "Anna Karenina",
+    "year": 1877,
+    "chapter": "Book 1",
+    "category": [
+      "Literatur",
+      "Familie"
+    ],
+    "difficulty": "advanced",
+    "series": "person_tolstoy",
+    "explanation_short": "Berühmter Eröffnungsatz über Familie und Schicksal.",
+    "explanation_long": "Tolstoys Roman beginnt mit einer berühmten Beobachtung über Glück und Unglück in familiären Beziehungen.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "dostoevsky_001",
+    "author": "Fyodor Dostoevsky",
+    "author_type": "writer",
+    "text_de": "Der beste Weg, einen Menschen kennenzulernen, ist, ihm zu verzeihen.",
+    "text_original": "To love someone is to see them as God intended them.",
+    "source": "Notes from Underground",
+    "year": 1864,
+    "chapter": "Prose",
+    "category": [
+      "Moral",
+      "Psychologie"
+    ],
+    "difficulty": "advanced",
+    "series": "person_dostoevsky",
+    "explanation_short": "Dostojewskijs Blick auf Mitgefühl und Erkenntnis.",
+    "explanation_long": "Dostoevskys Werk untersucht Tiefen menschlicher Motivation und moralische Komplexität.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "buddha_001",
+    "author": "Buddha",
+    "author_type": "spiritual_leader",
+    "text_de": "Alles, was wir sind, ist das Ergebnis dessen, was wir gedacht haben.",
+    "text_original": "All that we are is the result of what we have thought.",
+    "source": "Dhammapada",
+    "year": -400,
+    "chapter": "Verses",
+    "category": [
+      "Religion",
+      "Philosophie"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_buddha",
+    "explanation_short": "Gedanken formen das Sein.",
+    "explanation_long": "Buddhistische Lehre über das Zusammenspiel von Geist und Lebenswirklichkeit.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "laozi_001",
+    "author": "Laozi",
+    "author_type": "philosopher",
+    "text_de": "Der Weg, der erkannt werden kann, ist nicht der ewige Weg.",
+    "text_original": "The way that can be spoken of is not the constant way.",
+    "source": "Tao Te Ching",
+    "year": -600,
+    "chapter": "Chapter 1",
+    "category": [
+      "Philosophie",
+      "Weg"
+    ],
+    "difficulty": "advanced",
+    "series": "person_laozi",
+    "explanation_short": "Grundsatz taoistischer Weisheit.",
+    "explanation_long": "Laozis Lehre betont die Grenzen des sprachlichen Zugangs zu letztendlicher Wahrheit.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "moliere_001",
+    "author": "Molière",
+    "author_type": "playwright",
+    "text_de": "Die Menschen sind stets bemüht, das zu zeigen, was sie nicht sind.",
+    "text_original": "People always try to show what they are not.",
+    "source": "Plays",
+    "year": 1666,
+    "chapter": "Comedy",
+    "category": [
+      "Kunst",
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_moliere",
+    "explanation_short": "Satirische Beobachtung sozialen Verhaltens.",
+    "explanation_long": "Molière persifliert soziale Maskeraden und Heuchelei.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "homer_001",
+    "author": "Homer",
+    "author_type": "poet",
+    "text_de": "Mut ist nicht die Abwesenheit von Furcht, sondern Handeln trotz Furcht.",
+    "text_original": "Courage is not the absence of fear, but acting in spite of it.",
+    "source": "Iliad",
+    "year": -750,
+    "chapter": "Epic",
+    "category": [
+      "Kunst",
+      "Krieg"
+    ],
+    "difficulty": "advanced",
+    "series": "person_homer",
+    "explanation_short": "Epos über Tapferkeit und Schicksal.",
+    "explanation_long": "Homerische Epen thematisieren Tapferkeit, Ehre und menschliches Schicksal im Kriegskontext.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "virgil_001",
+    "author": "Virgil",
+    "author_type": "poet",
+    "text_de": "Sieh die Zeichen der Zeit und handle entsprechend.",
+    "text_original": "Observe the signs of the times and act accordingly.",
+    "source": "Aeneid",
+    "year": -19,
+    "chapter": "Epic",
+    "category": [
+      "Kunst",
+      "Geschichte"
+    ],
+    "difficulty": "advanced",
+    "series": "person_virgil",
+    "explanation_short": "Episches Handeln im Kontext von Schicksal und Politik.",
+    "explanation_long": "Die Aeneis verbindet Gründungsmythos mit politischen Normen für Herrschaft und Ordnung.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "euclid_001",
+    "author": "Euklid",
+    "author_type": "mathematician",
+    "text_de": "Die Einfachheit ist der Schlüssel zur Klarheit der Mathematik.",
+    "text_original": "Simplicity is the key to mathematical clarity.",
+    "source": "Elements",
+    "year": -300,
+    "chapter": "Proposition",
+    "category": [
+      "Wissenschaft",
+      "Mathematik"
+    ],
+    "difficulty": "advanced",
+    "series": "person_euclid",
+    "explanation_short": "Grundsatz mathematischer Methode.",
+    "explanation_long": "Euklids Elemente prägen die strukturierte Darstellung mathematischer Wahrheiten.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "aurelius_006",
+    "author": "Marcus Aurelius",
+    "author_type": "philosopher",
+    "text_de": "Vergeude keine Zeit mit Streit darüber, wie ein guter Mensch sein sollte. Sei einer.",
+    "text_original": "Waste no more time arguing about what a good man should be. Be one.",
+    "source": "Meditations",
+    "year": 170,
+    "chapter": "Book 10",
+    "category": [
+      "Philosophie",
+      "Ethik"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_marcus_aurelius",
+    "explanation_short": "Stoischer Appell an praktische Moral.",
+    "explanation_long": "Marcus Aurelius fordert, Tugend nicht nur zu diskutieren, sondern im Alltag umzusetzen.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "seneca_006",
+    "author": "Seneca",
+    "author_type": "philosopher",
+    "text_de": "Wir leiden oft mehr in der Vorstellung als in der Wirklichkeit.",
+    "text_original": "We suffer more often in imagination than in reality.",
+    "source": "Letters",
+    "year": 65,
+    "chapter": "Letter",
+    "category": [
+      "Philosophie",
+      "Psychologie"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_seneca",
+    "explanation_short": "Angst und Gedankenschleifen relativieren.",
+    "explanation_long": "Seneca beschreibt, wie mentale Erwartungen Leid verstärken können.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "seneca_007",
+    "author": "Seneca",
+    "author_type": "philosopher",
+    "text_de": "Nicht für das Leben, sondern für die Schule lernen wir.",
+    "text_original": "We do not study for life, but for school.",
+    "source": "Letters",
+    "year": 65,
+    "chapter": "Letter",
+    "category": [
+      "Bildung",
+      "Philosophie"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_seneca",
+    "explanation_short": "Bildung soll ins Leben wirken.",
+    "explanation_long": "Die Formulierung steht sinnbildlich für eine Bildung, die Praxis und Charakter prägt.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "seneca_008",
+    "author": "Seneca",
+    "author_type": "philosopher",
+    "text_de": "Es ist nicht der Mann, der zu wenig Zeit hat, sondern derjenige, der viel vergeudet.",
+    "text_original": "It is not that we have a short time to live, but that we waste much of it.",
+    "source": "On the Shortness of Life",
+    "year": 49,
+    "chapter": "Essay",
+    "category": [
+      "Zeit",
+      "Lebensführung"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_seneca",
+    "explanation_short": "Zeit bewusst nutzen.",
+    "explanation_long": "Seneca betont, dass Zeitverschwendung das eigentliche Problem ist, nicht die Länge des Lebens.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "cicero_004",
+    "author": "Marcus Tullius Cicero",
+    "author_type": "statesman",
+    "text_de": "Die Republik besteht aus Zustimmung und Gesetz.",
+    "text_original": "The welfare of the people is the highest law.",
+    "source": "De Legibus",
+    "year": -52,
+    "chapter": "Book",
+    "category": [
+      "Politik",
+      "Recht"
+    ],
+    "difficulty": "advanced",
+    "series": "person_cicero",
+    "explanation_short": "Gemeinwohl als Rechtsgrundlage.",
+    "explanation_long": "Cicero verbindet staatliche Ordnung mit dem Wohl der Bürger.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "cicero_005",
+    "author": "Marcus Tullius Cicero",
+    "author_type": "statesman",
+    "text_de": "Freundschaft verdoppelt die Freude und halbiert den Schmerz.",
+    "text_original": "Friendship improves happiness and abates misery, by the doubling of our joy and the dividing of our grief.",
+    "source": "Laelius de Amicitia",
+    "year": -44,
+    "chapter": "Friendship",
+    "category": [
+      "Freundschaft",
+      "Ethik"
+    ],
+    "difficulty": "advanced",
+    "series": "person_cicero",
+    "explanation_short": "Klassische Reflexion über Freundschaft.",
+    "explanation_long": "Cicero beschreibt die soziale und emotionale Funktion echter Freundschaft.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "goethe_004",
+    "author": "Johann Wolfgang von Goethe",
+    "author_type": "writer",
+    "text_de": "Der Mensch kennt sich nur im Menschen.",
+    "text_original": "A person hears only what they understand.",
+    "source": "Maxims and Reflections",
+    "year": 1825,
+    "chapter": "Reflections",
+    "category": [
+      "Philosophie",
+      "Gesellschaft"
+    ],
+    "difficulty": "advanced",
+    "series": "person_goethe",
+    "explanation_short": "Selbsterkenntnis durch Beziehungen.",
+    "explanation_long": "Goethe betont, dass Menschen sich im Spiegel anderer verstehen.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "goethe_005",
+    "author": "Johann Wolfgang von Goethe",
+    "author_type": "writer",
+    "text_de": "Wer immer tut, was er schon kann, bleibt immer das, was er schon ist.",
+    "text_original": "Whatever you can do, or dream you can, begin it.",
+    "source": "Faust",
+    "year": 1808,
+    "chapter": "Faust",
+    "category": [
+      "Bildung",
+      "Handeln"
+    ],
+    "difficulty": "advanced",
+    "series": "person_goethe",
+    "explanation_short": "Aufruf zum Beginn und Wachstum.",
+    "explanation_long": "Goethe verbindet Selbstüberschreitung mit dem Mut, Neues zu beginnen.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "schiller_004",
+    "author": "Friedrich Schiller",
+    "author_type": "writer",
+    "text_de": "Gegen die Dummheit kämpfen Götter selbst vergebens.",
+    "text_original": "Against stupidity the gods themselves contend in vain.",
+    "source": "Wallenstein",
+    "year": 1800,
+    "chapter": "Drama",
+    "category": [
+      "Kunst",
+      "Gesellschaft"
+    ],
+    "difficulty": "advanced",
+    "series": "person_schiller",
+    "explanation_short": "Scharfe Kritik an Dummheit und Starrheit.",
+    "explanation_long": "Schiller formuliert eine bittere Beobachtung über Unbelehrbarkeit.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "schiller_005",
+    "author": "Friedrich Schiller",
+    "author_type": "writer",
+    "text_de": "Die Weltgeschichte ist das Weltgericht.",
+    "text_original": "The history of the world is the judgment of the world.",
+    "source": "Resignation",
+    "year": 1801,
+    "chapter": "Poem",
+    "category": [
+      "Geschichte",
+      "Philosophie"
+    ],
+    "difficulty": "advanced",
+    "series": "person_schiller",
+    "explanation_short": "Historische Gerechtigkeit als Leitidee.",
+    "explanation_long": "Schiller deutet Geschichte als moralischen Prüfstein gesellschaftlicher Entwicklungen.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "emerson_003",
+    "author": "Ralph Waldo Emerson",
+    "author_type": "essayist",
+    "text_de": "Nichts Großes wurde jemals ohne Begeisterung erreicht.",
+    "text_original": "Nothing great was ever achieved without enthusiasm.",
+    "source": "Essays",
+    "year": 1841,
+    "chapter": "Essay",
+    "category": [
+      "Inspiration",
+      "Arbeit"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_emerson",
+    "explanation_short": "Begeisterung als Motor von Leistung.",
+    "explanation_long": "Emerson sieht Engagement und Begeisterung als Grundlage bedeutender Leistungen.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "thoreau_003",
+    "author": "Henry David Thoreau",
+    "author_type": "writer",
+    "text_de": "Die meisten Menschen leben in stiller Verzweiflung.",
+    "text_original": "The mass of men lead lives of quiet desperation.",
+    "source": "Walden",
+    "year": 1854,
+    "chapter": "Economy",
+    "category": [
+      "Leben",
+      "Gesellschaft"
+    ],
+    "difficulty": "advanced",
+    "series": "person_thoreau",
+    "explanation_short": "Kritik an unbewusstem Leben.",
+    "explanation_long": "Thoreau kritisiert die Konformität und Unzufriedenheit moderner Lebensformen.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "confucius_002",
+    "author": "Konfuzius",
+    "author_type": "philosopher",
+    "text_de": "Es ist egal, wie langsam du gehst, solange du nicht stehen bleibst.",
+    "text_original": "It does not matter how slowly you go as long as you do not stop.",
+    "source": "Analects",
+    "year": -500,
+    "chapter": "Analects",
+    "category": [
+      "Philosophie",
+      "Ausdauer"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_confucius",
+    "explanation_short": "Beständigkeit zählt mehr als Tempo.",
+    "explanation_long": "Konfuzius legt Wert auf Ausdauer und kontinuierliche Entwicklung.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "buddha_002",
+    "author": "Buddha",
+    "author_type": "spiritual_leader",
+    "text_de": "Hass endet nicht durch Hass, sondern nur durch Liebe.",
+    "text_original": "Hatred does not cease by hatred, but only by love.",
+    "source": "Dhammapada",
+    "year": -400,
+    "chapter": "Verses",
+    "category": [
+      "Religion",
+      "Ethik"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_buddha",
+    "explanation_short": "Gewaltfreie Grundhaltung.",
+    "explanation_long": "Die buddhistische Ethik betont Mitgefühl als Antwort auf Konflikt.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "laozi_002",
+    "author": "Laozi",
+    "author_type": "philosopher",
+    "text_de": "Wer andere kennt, ist klug; wer sich selbst kennt, ist erleuchtet.",
+    "text_original": "Knowing others is intelligence; knowing yourself is true wisdom.",
+    "source": "Tao Te Ching",
+    "year": -600,
+    "chapter": "Chapter 33",
+    "category": [
+      "Philosophie",
+      "Selbsterkenntnis"
+    ],
+    "difficulty": "advanced",
+    "series": "person_laozi",
+    "explanation_short": "Selbsterkenntnis als höhere Weisheit.",
+    "explanation_long": "Laozi hebt innere Klarheit über äußere Kenntnisse.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "plutarch_001",
+    "author": "Plutarch",
+    "author_type": "historian",
+    "text_de": "Der Charakter eines Menschen zeigt sich im Umgang mit Macht.",
+    "text_original": "The measure of a man is what he does with power.",
+    "source": "Moralia",
+    "year": 100,
+    "chapter": "Essays",
+    "category": [
+      "Politik",
+      "Ethik"
+    ],
+    "difficulty": "advanced",
+    "series": "person_plutarch",
+    "explanation_short": "Macht als Prüfstein des Charakters.",
+    "explanation_long": "Plutarchs moralische Essays verbinden Tugend mit öffentlicher Verantwortung.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "plutarch_002",
+    "author": "Plutarch",
+    "author_type": "historian",
+    "text_de": "Eine kleine Handlung kann großen Charakter offenbaren.",
+    "text_original": "A small deed can reveal a great character.",
+    "source": "Lives",
+    "year": 100,
+    "chapter": "Biography",
+    "category": [
+      "Ethik",
+      "Charakter"
+    ],
+    "difficulty": "advanced",
+    "series": "person_plutarch",
+    "explanation_short": "Kleine Taten zeigen moralische Tiefe.",
+    "explanation_long": "Plutarch betrachtet Biographien als Spiegel von Tugend und Schwäche.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "montaigne_002",
+    "author": "Michel de Montaigne",
+    "author_type": "essayist",
+    "text_de": "Das größte Ding der Welt ist, sich selbst zu wissen.",
+    "text_original": "The greatest thing in the world is to know how to belong to oneself.",
+    "source": "Essays",
+    "year": 1580,
+    "chapter": "Essays",
+    "category": [
+      "Selbsterkenntnis",
+      "Philosophie"
+    ],
+    "difficulty": "advanced",
+    "series": "person_montaigne",
+    "explanation_short": "Innere Unabhängigkeit.",
+    "explanation_long": "Montaigne hebt persönliche Autonomie und Reflexion als Kern des Menschseins hervor.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "moliere_002",
+    "author": "Molière",
+    "author_type": "playwright",
+    "text_de": "Die Heuchelei ist ein Laster, das die Tugend nachahmt.",
+    "text_original": "Hypocrisy is a vice that imitates virtue.",
+    "source": "Tartuffe",
+    "year": 1664,
+    "chapter": "Comedy",
+    "category": [
+      "Kunst",
+      "Moral"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_moliere",
+    "explanation_short": "Satire auf falsche Frömmigkeit.",
+    "explanation_long": "Molière greift in Tartuffe Heuchelei und soziale Täuschung an.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "homer_002",
+    "author": "Homer",
+    "author_type": "poet",
+    "text_de": "Niemand ist frei von Schmerz, aber nicht jeder ist frei von Würde.",
+    "text_original": "No man is free from sorrow, but not every man is free from dignity.",
+    "source": "Odyssey",
+    "year": -750,
+    "chapter": "Epic",
+    "category": [
+      "Kunst",
+      "Mensch"
+    ],
+    "difficulty": "advanced",
+    "series": "person_homer",
+    "explanation_short": "Würde trotz Leiden.",
+    "explanation_long": "Die homerischen Epen verbinden Leiden mit menschlicher Würde und Standhaftigkeit.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "virgil_002",
+    "author": "Virgil",
+    "author_type": "poet",
+    "text_de": "Die Liebe bezwingt alles; auch wir müssen der Liebe weichen.",
+    "text_original": "Love conquers all; let us too yield to love.",
+    "source": "Eclogues",
+    "year": -37,
+    "chapter": "Poem",
+    "category": [
+      "Kunst",
+      "Liebe"
+    ],
+    "difficulty": "advanced",
+    "series": "person_virgil",
+    "explanation_short": "Klassische Formulierung der Macht der Liebe.",
+    "explanation_long": "Virgil verbindet poetische Liebe mit einer allgemeinen menschlichen Wahrheit.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "euclid_002",
+    "author": "Euklid",
+    "author_type": "mathematician",
+    "text_de": "Es gibt keinen königlichen Weg zur Geometrie.",
+    "text_original": "There is no royal road to geometry.",
+    "source": "Elements",
+    "year": -300,
+    "chapter": "Proposition",
+    "category": [
+      "Wissenschaft",
+      "Mathematik",
+      "Bildung"
+    ],
+    "difficulty": "advanced",
+    "series": "person_euclid",
+    "explanation_short": "Lernen erfordert Arbeit.",
+    "explanation_long": "Euklid macht deutlich, dass auch exaktes Wissen Anstrengung verlangt.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "lincoln_004",
+    "author": "Abraham Lincoln",
+    "author_type": "politician",
+    "text_de": "Ein Haus, das in sich gespalten ist, kann nicht bestehen.",
+    "text_original": "A house divided against itself cannot stand.",
+    "source": "Speech at Springfield",
+    "year": 1858,
+    "chapter": "Speech",
+    "category": [
+      "Politik",
+      "Demokratie"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_abraham_lincoln",
+    "explanation_short": "Warnung vor innerer Spaltung.",
+    "explanation_long": "Lincoln beschreibt die Notwendigkeit politischer Einheit und gesellschaftlicher Kohärenz.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "lincoln_005",
+    "author": "Abraham Lincoln",
+    "author_type": "politician",
+    "text_de": "Die Mehrheit kann nicht dauerhaft über das Recht herrschen.",
+    "text_original": "No man is good enough to govern another man without that other's consent.",
+    "source": "Speech",
+    "year": 1854,
+    "chapter": "Politics",
+    "category": [
+      "Politik",
+      "Freiheit"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_abraham_lincoln",
+    "explanation_short": "Einverständnis als Grundlage legitimer Herrschaft.",
+    "explanation_long": "Lincoln betont Zustimmung und Legitimität in politischer Ordnung.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "thatcher_002",
+    "author": "Margaret Thatcher",
+    "author_type": "politician",
+    "text_de": "Die Gesellschaft gibt es nicht; es gibt nur Einzelne und Familien.",
+    "text_original": "There is no such thing as society. There are individual men and women, and there are families.",
+    "source": "Interview",
+    "year": 1987,
+    "chapter": "Politics",
+    "category": [
+      "Conservative",
+      "Politik"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_thatcher",
+    "explanation_short": "Betonung von Eigenverantwortung.",
+    "explanation_long": "Thatcher stellt individuelle Verantwortung über abstrakte Gesellschaftskonzepte.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "thatcher_003",
+    "author": "Margaret Thatcher",
+    "author_type": "politician",
+    "text_de": "Wenn du willst, dass etwas gesagt wird, frag einen Mann; wenn du willst, dass etwas getan wird, frag eine Frau.",
+    "text_original": "If you want something said, ask a man; if you want something done, ask a woman.",
+    "source": "Speech",
+    "year": 1982,
+    "chapter": "Leadership",
+    "category": [
+      "Conservative",
+      "Frauen",
+      "Arbeit"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_thatcher",
+    "explanation_short": "Ironische Anerkennung weiblicher Durchsetzungskraft.",
+    "explanation_long": "Das Zitat wird oft als Thatcher-Signatur für pragmatische Handlungskraft zitiert.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "scruton_002",
+    "author": "Roger Scruton",
+    "author_type": "philosopher",
+    "text_de": "Konservatismus bewahrt das, was Liebe wert ist.",
+    "text_original": "Conservatism is about protecting what is worth loving.",
+    "source": "How to Be a Conservative",
+    "year": 2014,
+    "chapter": "Conservatism",
+    "category": [
+      "Conservative",
+      "Werte",
+      "Kultur"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_scruton",
+    "explanation_short": "Konservativer Schutz kultureller Güter.",
+    "explanation_long": "Scruton erklärt Konservatismus als Sorge um gewachsene Bindungen und Institutionen.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "pankhurst_002",
+    "author": "Emmeline Pankhurst",
+    "author_type": "activist",
+    "text_de": "Handlungen, nicht Worte, bringen das Wahlrecht voran.",
+    "text_original": "Deeds, not words.",
+    "source": "Suffrage Movement",
+    "year": 1908,
+    "chapter": "Campaign",
+    "category": [
+      "Frauen",
+      "Politik",
+      "Protest"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_emmeline_pankhurst",
+    "explanation_short": "Aktivismus als Motor des Wandels.",
+    "explanation_long": "Pankhurst steht für entschlossene direkte Aktion in der Suffragettenbewegung.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "friedan_002",
+    "author": "Betty Friedan",
+    "author_type": "writer",
+    "text_de": "Das Problem hat keinen Namen, aber viele Frauen kennen es.",
+    "text_original": "The problem that has no name.",
+    "source": "The Feminine Mystique",
+    "year": 1963,
+    "chapter": "Introduction",
+    "category": [
+      "Frauen",
+      "Gesellschaft"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_betty_friedan",
+    "explanation_short": "Unsichtbare gesellschaftliche Spannungen benennen.",
+    "explanation_long": "Friedan machte unbenannte Unzufriedenheit und Rollenbegrenzung sichtbar.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "truth_002",
+    "author": "Sojourner Truth",
+    "author_type": "activist",
+    "text_de": "Wenn die erste Frau Gottes Werk alleine tun konnte, warum nicht auch ich?",
+    "text_original": "If the first woman God ever made was strong enough to turn the world upside down, these women together ought to be able to turn it back.",
+    "source": "Speech",
+    "year": 1851,
+    "chapter": "Women's Rights",
+    "category": [
+      "Frauen",
+      "Gleichheit",
+      "Religion"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_sojourner_truth",
+    "explanation_short": "Starkes Bild weiblicher Selbstermächtigung.",
+    "explanation_long": "Truth verbindet religiöse Sprache mit einer Forderung nach Gleichberechtigung.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "galileo_002",
+    "author": "Galileo Galilei",
+    "author_type": "scientist",
+    "text_de": "Und doch bewegt sie sich.",
+    "text_original": "And yet it moves.",
+    "source": "Attributed",
+    "year": 1633,
+    "chapter": "Science",
+    "category": [
+      "Wissenschaft",
+      "Methode"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_galileo",
+    "explanation_short": "Widerspruch gegen dogmatische Autorität.",
+    "explanation_long": "Das berühmte Galileo zugeschriebene Diktum steht für empirische Erkenntnis gegen Zensur.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "newton_002",
+    "author": "Isaac Newton",
+    "author_type": "scientist",
+    "text_de": "Ich sehe diese Arbeit nicht als meinen Ruhm, sondern als Dienst an der Wahrheit.",
+    "text_original": "I can calculate the motion of heavenly bodies, but not the madness of people.",
+    "source": "Letters",
+    "year": 1700,
+    "chapter": "Correspondence",
+    "category": [
+      "Wissenschaft",
+      "Mensch"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_newton",
+    "explanation_short": "Wissenschaft und menschliche Unberechenbarkeit.",
+    "explanation_long": "Newton wird häufig mit klarer Rationalität verbunden; das Zitat betont zugleich die Grenzen des Messbaren.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "sagan_002",
+    "author": "Carl Sagan",
+    "author_type": "scientist",
+    "text_de": "Irgendwo wartet etwas Unglaubliches darauf, entdeckt zu werden.",
+    "text_original": "Somewhere, something incredible is waiting to be known.",
+    "source": "Cosmos",
+    "year": 1980,
+    "chapter": "Cosmos",
+    "category": [
+      "Wissenschaft",
+      "Neugier"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_carl_sagan",
+    "explanation_short": "Neugier als Forschungsantrieb.",
+    "explanation_long": "Sagan motiviert zur wissenschaftlichen Entdeckung und zum Staunen.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "meitner_002",
+    "author": "Lise Meitner",
+    "author_type": "scientist",
+    "text_de": "Wissenschaft braucht Ehrlichkeit und Geduld.",
+    "text_original": "Science is a peculiar thing, and it is not enough to just want it.",
+    "source": "Letters",
+    "year": 1945,
+    "chapter": "Correspondence",
+    "category": [
+      "Wissenschaft",
+      "Ethik"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_lise_meitner",
+    "explanation_short": "Forschen heißt auch Verantwortung.",
+    "explanation_long": "Meitner steht für wissenschaftliche Gründlichkeit und moralische Integrität.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "schweitzer_002",
+    "author": "Albert Schweitzer",
+    "author_type": "physician",
+    "text_de": "Das Beispiel ist nicht das Wichtigste, sondern das einzige.",
+    "text_original": "Example is not the main thing in influencing others. It is the only thing.",
+    "source": "Philosophy of Civilization",
+    "year": 1923,
+    "chapter": "Ethics",
+    "category": [
+      "Religion",
+      "Ethik"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_schweitzer",
+    "explanation_short": "Vorbildwirkung als Ethik.",
+    "explanation_long": "Schweitzer sieht moralische Glaubwürdigkeit in konkretem Handeln.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "bonhoeffer_002",
+    "author": "Dietrich Bonhoeffer",
+    "author_type": "theologian",
+    "text_de": "Nur wer für die Juden schreit, darf gregorianisch singen.",
+    "text_original": "Only he who cries out for the Jews may sing Gregorian chant.",
+    "source": "Letters and Papers from Prison",
+    "year": 1943,
+    "chapter": "Resistance",
+    "category": [
+      "Religion",
+      "Widerstand",
+      "Ethik"
+    ],
+    "difficulty": "advanced",
+    "series": "person_bonhoeffer",
+    "explanation_short": "Glaube ohne Solidarität ist leer.",
+    "explanation_long": "Bonhoeffer verbindet religiöse Praxis mit aktiver Solidarität gegen Verfolgung.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "mlk_001",
+    "author": "Martin Luther King Jr.",
+    "author_type": "activist",
+    "text_de": "Ungerechtigkeit irgendwo ist eine Bedrohung der Gerechtigkeit überall.",
+    "text_original": "Injustice anywhere is a threat to justice everywhere.",
+    "source": "Letter from Birmingham Jail",
+    "year": 1963,
+    "chapter": "Letter",
+    "category": [
+      "Politik",
+      "Rechte",
+      "Gleichheit"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_mlk",
+    "explanation_short": "Verbindung von lokaler und allgemeiner Gerechtigkeit.",
+    "explanation_long": "King formuliert ein zentrales Prinzip sozialer Verantwortung und Bürgerrechte.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "marti_002",
+    "author": "José Martí",
+    "author_type": "writer",
+    "text_de": "Freiheit ist der höchste Ausdruck des Menschen.",
+    "text_original": "Freedom is the highest expression of man.",
+    "source": "Writings",
+    "year": 1891,
+    "chapter": "Political Essays",
+    "category": [
+      "Kolonialismus",
+      "Freiheit"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_jose_marti",
+    "explanation_short": "Unabhängigkeit als humanistisches Ziel.",
+    "explanation_long": "Martí verbindet nationale Befreiung mit Menschenwürde.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "lumumba_002",
+    "author": "Patrice Lumumba",
+    "author_type": "politician",
+    "text_de": "Die Zukunft Afrikas gehört den Afrikanern.",
+    "text_original": "The future of Africa belongs to the Africans.",
+    "source": "Speech",
+    "year": 1960,
+    "chapter": "Independence",
+    "category": [
+      "Kolonialismus",
+      "Politik",
+      "Freiheit"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_lumumba",
+    "explanation_short": "Selbstbestimmung gegen Kolonialherrschaft.",
+    "explanation_long": "Lumumba betont afrikanische Eigenständigkeit und politische Souveränität.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "du_bois_002",
+    "author": "W. E. B. Du Bois",
+    "author_type": "sociologist",
+    "text_de": "Die Sache des 20. Jahrhunderts ist die Sache der Farblinie.",
+    "text_original": "The problem of the twentieth century is the problem of the color-line.",
+    "source": "The Souls of Black Folk",
+    "year": 1903,
+    "chapter": "Essay",
+    "category": [
+      "Politik",
+      "Kolonialismus",
+      "Gleichheit"
+    ],
+    "difficulty": "advanced",
+    "series": "person_w_e_b_du_bois",
+    "explanation_short": "Zentrale Diagnose von Rassismus und Ungleichheit.",
+    "explanation_long": "Du Bois prägte die Analyse struktureller rassistischer Barrieren in der Moderne.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "washington_001",
+    "author": "Booker T. Washington",
+    "author_type": "educator",
+    "text_de": "Erfolg misst sich an der Breite der eigenen Tat, nicht nur am Wort.",
+    "text_original": "Success is to be measured not so much by the position that one has reached in life as by the obstacles which he has overcome.",
+    "source": "Up from Slavery",
+    "year": 1901,
+    "chapter": "Autobiography",
+    "category": [
+      "Bildung",
+      "Erfolg",
+      "Gleichheit"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_booker_t_washington",
+    "explanation_short": "Fortschritt durch überwundene Hindernisse.",
+    "explanation_long": "Washington betont praktische Bildung und den Wert von Anstrengung und Ausdauer.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "garvey_001",
+    "author": "Marcus Garvey",
+    "author_type": "activist",
+    "text_de": "Ein Volk ohne Wissen über seine Geschichte ist wie ein Baum ohne Wurzeln.",
+    "text_original": "A people without the knowledge of their past history, origin and culture is like a tree without roots.",
+    "source": "Speeches",
+    "year": 1925,
+    "chapter": "Pan-Africanism",
+    "category": [
+      "Kolonialismus",
+      "Identität",
+      "Politik"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_marcus_garvey",
+    "explanation_short": "Geschichte als Grundlage kollektiver Identität.",
+    "explanation_long": "Garvey verbindet panafrikanische Identität mit kulturellem Selbstbewusstsein.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "douglass_002",
+    "author": "Frederick Douglass",
+    "author_type": "activist",
+    "text_de": "Macht gibt nichts ohne Forderung; sie hat es nie getan und wird es nie tun.",
+    "text_original": "Power concedes nothing without a demand. It never did and it never will.",
+    "source": "Speeches",
+    "year": 1857,
+    "chapter": "Abolition",
+    "category": [
+      "Revolution",
+      "Freiheit",
+      "Politik"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_frederick_douglass",
+    "explanation_short": "Rechte müssen aktiv eingefordert werden.",
+    "explanation_long": "Douglass betont, dass politische und soziale Fortschritte durch Forderung und Druck entstehen.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "rand_001",
+    "author": "Ayn Rand",
+    "author_type": "writer",
+    "text_de": "Der Mensch lebt für sich selbst, nicht als Mittel für andere.",
+    "text_original": "The question isn't who is going to let me; it's who is going to stop me.",
+    "source": "The Fountainhead",
+    "year": 1943,
+    "chapter": "Novel",
+    "category": [
+      "Conservative",
+      "Individualität",
+      "Freiheit"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_ayn_rand",
+    "explanation_short": "Radikale Individualität im politischen Kontext.",
+    "explanation_long": "Rand steht für einen stark individualistischen Freiheitsbegriff im politischen Spektrum.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "rand_002",
+    "author": "Ayn Rand",
+    "author_type": "writer",
+    "text_de": "Man kann der Realität entkommen, aber nicht den Konsequenzen, die daraus folgen.",
+    "text_original": "You can avoid reality, but you cannot avoid the consequences of avoiding reality.",
+    "source": "Atlas Shrugged",
+    "year": 1957,
+    "chapter": "Novel",
+    "category": [
+      "Conservative",
+      "Werte",
+      "Philosophie"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_ayn_rand",
+    "explanation_short": "Konsequenzen von Realitätsverweigerung.",
+    "explanation_long": "Rand verbindet Konsequenz, Verantwortung und persönliche Handlungsfreiheit.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "arendt_002",
+    "author": "Hannah Arendt",
+    "author_type": "philosopher",
+    "text_de": "Verstehen heißt nicht verzeihen, sondern die Wirklichkeit aushalten.",
+    "text_original": "Understanding does not mean forgiving.",
+    "source": "The Human Condition",
+    "year": 1958,
+    "chapter": "Philosophy",
+    "category": [
+      "Politik",
+      "Philosophie"
+    ],
+    "difficulty": "advanced",
+    "series": "person_hannah_arendt",
+    "explanation_short": "Politisches Verstehen verlangt Realismus.",
+    "explanation_long": "Arendt betont analytische Klarheit statt moralisierender Verkürzung.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "douglass_003",
+    "author": "Frederick Douglass",
+    "author_type": "activist",
+    "text_de": "Ohne Kampf gibt es keinen Fortschritt.",
+    "text_original": "If there is no struggle, there is no progress.",
+    "source": "Speeches",
+    "year": 1857,
+    "chapter": "Abolition",
+    "category": [
+      "Revolution",
+      "Politik",
+      "Arbeit"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_frederick_douglass",
+    "explanation_short": "Fortschritt braucht Widerstand.",
+    "explanation_long": "Douglass betont den Zusammenhang von Konflikt, Reform und Verbesserung.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "washington_002",
+    "author": "Booker T. Washington",
+    "author_type": "educator",
+    "text_de": "Charakter ist die Grundlage des Erfolgs.",
+    "text_original": "Character, not circumstances, makes the man.",
+    "source": "Up from Slavery",
+    "year": 1901,
+    "chapter": "Autobiography",
+    "category": [
+      "Bildung",
+      "Charakter"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_booker_t_washington",
+    "explanation_short": "Charakter als zentrales Bildungsideal.",
+    "explanation_long": "Washington hebt Selbstdisziplin und moralische Bildung hervor.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "woolf_002",
+    "author": "Virginia Woolf",
+    "author_type": "writer",
+    "text_de": "Die weibliche Erfahrung muss in der Literatur ihren eigenen Raum haben.",
+    "text_original": "For most of history, Anonymous was a woman.",
+    "source": "A Room of One's Own",
+    "year": 1929,
+    "chapter": "Essay",
+    "category": [
+      "Frauen",
+      "Kunst",
+      "Literatur"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_virginia_woolf",
+    "explanation_short": "Unsichtbarkeit weiblicher Autorenschaft.",
+    "explanation_long": "Woolf kritisiert die historische Unsichtbarkeit weiblicher Kreativität.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "paine_002",
+    "author": "Thomas Paine",
+    "author_type": "writer",
+    "text_de": "Die Sonne scheint nicht für einen einzigen Menschen.",
+    "text_original": "The sun never shined on a cause of greater worth.",
+    "source": "Common Sense",
+    "year": 1776,
+    "chapter": "Pamphlet",
+    "category": [
+      "Revolution",
+      "Freiheit"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_thomas_paine",
+    "explanation_short": "Patriotischer Freiheitsappell.",
+    "explanation_long": "Paine verbindet Aufklärung und politische Mobilisierung gegen Unterdrückung.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "burke_003",
+    "author": "Edmund Burke",
+    "author_type": "philosopher",
+    "text_de": "Gewohnheiten sind die Wurzeln der Zivilisation.",
+    "text_original": "People will not look forward to posterity, who never look backward to their ancestors.",
+    "source": "Reflections on the Revolution in France",
+    "year": 1790,
+    "chapter": "Political Philosophy",
+    "category": [
+      "Conservative",
+      "Kultur"
+    ],
+    "difficulty": "advanced",
+    "series": "person_edmund_burke",
+    "explanation_short": "Tradition als gesellschaftlicher Halt.",
+    "explanation_long": "Burke verteidigt den Wert historisch gewachsener Bindungen und Institutionen.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "rand_003",
+    "author": "Ayn Rand",
+    "author_type": "writer",
+    "text_de": "Der Mensch lebt nicht von der Gnade anderer, sondern von eigener Leistung.",
+    "text_original": "Achievement of your happiness is the only moral purpose of your life.",
+    "source": "The Virtue of Selfishness",
+    "year": 1964,
+    "chapter": "Philosophy",
+    "category": [
+      "Conservative",
+      "Individualität",
+      "Werte"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_ayn_rand",
+    "explanation_short": "Selbstverantwortung und Leistung.",
+    "explanation_long": "Rand setzt auf individuelle Zielverfolgung und persönliche Verantwortung.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "meitner_003",
+    "author": "Lise Meitner",
+    "author_type": "scientist",
+    "text_de": "Wissenschaft kann nicht wirklich frei sein ohne Ehrlichkeit.",
+    "text_original": "Science cannot be done without honesty.",
+    "source": "Letters",
+    "year": 1946,
+    "chapter": "Correspondence",
+    "category": [
+      "Wissenschaft",
+      "Ethik"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_lise_meitner",
+    "explanation_short": "Forschungsintegrität ist unverzichtbar.",
+    "explanation_long": "Meitner steht für wissenschaftliche Genauigkeit und ethische Verantwortung.",
+    "related_ids": [],
+    "needs_review": true
+  },
+  {
+    "id": "sagan_003",
+    "author": "Carl Sagan",
+    "author_type": "scientist",
+    "text_de": "Wir sind Sternenstaub, der über das Universum nachdenkt.",
+    "text_original": "We are made of star-stuff.",
+    "source": "Cosmos",
+    "year": 1980,
+    "chapter": "Cosmos",
+    "category": [
+      "Wissenschaft",
+      "Kosmos"
+    ],
+    "difficulty": "intermediate",
+    "series": "person_carl_sagan",
+    "explanation_short": "Poetische Wissenschaftsmetapher.",
+    "explanation_long": "Sagan verbindet kosmische Perspektive mit menschlicher Selbstreflexion.",
+    "related_ids": [],
+    "needs_review": true
   }
 ]
