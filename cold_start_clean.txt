@@ -1,0 +1,20 @@
+﻿--------- beginning of main
+05-07 17:03:11.584 E/gralloc5(  568): ERROR: Format allocation info not found for format: 3b
+05-07 17:03:11.584 E/gralloc5(  568): ERROR: Format allocation info not found for format: 0
+05-07 17:03:11.584 E/gralloc5(  568): Invalid base format! req_base_format = (<unrecognized format> 0x0), req_format = (<unrecognized format> 0x3b), type = 0x0
+05-07 17:03:11.584 E/gralloc5(  568): ERROR: Unrecognized and/or unsupported format (<unrecognized format> 0x3b) and usage (CPU_READ_NEVER|CPU_WRITE_NEVER|GPU_TEXTURE|GPU_RENDER_TARGET|COMPOSER_OVERLAY 0xb00)
+05-07 17:03:11.586 E/gralloc5(  568): ERROR: Format allocation info not found for format: 3b
+05-07 17:03:11.586 E/gralloc5(  568): ERROR: Format allocation info not found for format: 0
+05-07 17:03:11.586 E/gralloc5(  568): Invalid base format! req_base_format = (<unrecognized format> 0x0), req_format = (<unrecognized format> 0x3b), type = 0x0
+05-07 17:03:11.586 E/gralloc5(  568): ERROR: Unrecognized and/or unsupported format (<unrecognized format> 0x3b) and usage (CPU_READ_NEVER|CPU_WRITE_NEVER|GPU_TEXTURE|GPU_RENDER_TARGET|COMPOSER_OVERLAY 0xb00)
+05-07 17:03:11.966 E/tflite  (27862): third_party/tensorflow/lite/core/subgraph.cc:1084 tensor.data.raw != nullptr was not true.
+05-07 17:03:12.625 E/powerhal-libperfmgr(  630): Error: shouldn't report duration during pause state.
+05-07 17:03:16.627 E/[Purchases] - ERROR( 5029): ­ƒÿ┐ÔÇ╝´©Å PurchasesError(code=NetworkError, underlyingErrorMessage=Unable to resolve host "api.revenuecat.com": No address associated with hostname, message='Error performing request.')
+05-07 17:03:16.628 E/[Purchases] - ERROR( 5029): Error fetching customer data: PurchasesError(code=NetworkError, underlyingErrorMessage=Unable to resolve host "api.revenuecat.com": No address associated with hostname, message='Error performing request.').
+--------- beginning of system
+05-07 17:03:16.811 E/BoundServiceSession( 1569): Bad key 1 received in binderTransactionCompleted! Closing all transactions on CR{b76ad70 1569->com.google.android.as/com.google.android.apps.miphone.aiai.common.notification.service.AiAiNotificationListenerService flags=0x805000101}. Current keys: {onNotificationPostedFull=0}; Counts: [3]
+05-07 17:03:16.811 E/BoundServiceSession( 1569): Bad key 0 received in binderTransactionCompleted! Closing all transactions on CR{b76ad70 1569->com.google.android.as/com.google.android.apps.miphone.aiai.common.notification.service.AiAiNotificationListenerService flags=0x805000101}. Current keys: {}; Counts: []
+05-07 17:03:16.813 E/BoundServiceSession( 1569): Bad key 1 received in binderTransactionCompleted! Closing all transactions on CR{b76ad70 1569->com.google.android.as/com.google.android.apps.miphone.aiai.common.notification.service.AiAiNotificationListenerService flags=0x805000101}. Current keys: {}; Counts: []
+05-07 17:03:16.820 E/BoundServiceSession( 1569): Bad key 0 received in binderTransactionCompleted! Closing all transactions on CR{b76ad70 1569->com.google.android.as/com.google.android.apps.miphone.aiai.common.notification.service.AiAiNotificationListenerService flags=0x805000101}. Current keys: {}; Counts: []
+05-07 17:03:16.824 E/BoundServiceSession( 1569): Bad key 1 received in binderTransactionCompleted! Closing all transactions on CR{b76ad70 1569->com.google.android.as/com.google.android.apps.miphone.aiai.common.notification.service.AiAiNotificationListenerService flags=0x805000101}. Current keys: {}; Counts: []
+05-07 17:03:16.825 E/BoundServiceSession( 1569): Bad key 0 received in binderTransactionCompleted! Closing all transactions on CR{b76ad70 1569->com.google.android.as/com.google.android.apps.miphone.aiai.common.notification.service.AiAiNotificationListenerService flags=0x805000101}. Current keys: {}; Counts: []

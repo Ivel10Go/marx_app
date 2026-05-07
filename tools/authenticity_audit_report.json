@@ -1,0 +1,12 @@
+{
+  "total_quotes": 522,
+  "suspicious_count": 0,
+  "suspicious_percentage": 0.0,
+  "issues": {
+    "generic_explanations": [],
+    "placeholder_sources": [],
+    "invalid_years": [],
+    "suspicious_text": [],
+    "all_suspicious": []
+  }
+}

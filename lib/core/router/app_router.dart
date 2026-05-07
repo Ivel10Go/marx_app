@@ -4,12 +4,12 @@ import 'package:go_router/go_router.dart';
 
 import '../../presentation/admin/admin_dashboard_screen.dart';
 import '../../presentation/detail/quote_detail_screen_new.dart';
+import '../../presentation/archive/archive_screen.dart';
 import '../../presentation/favorites/favorites_screen.dart';
 import '../../presentation/home/home_screen.dart';
 import '../../presentation/onboarding/onboarding_screen.dart';
 import '../../presentation/premium/premium_features_screen.dart';
 import '../../presentation/settings/settings_screen.dart';
-import '../../presentation/thinkers/thinkers_screen.dart';
 import '../../presentation/paywall/purchase_page.dart';
 import '../../domain/providers/admin_access_provider.dart';
 
@@ -22,9 +22,6 @@ final appRouterProvider = Provider<GoRouter>((Ref ref) {
   return GoRouter(
     initialLocation: initialRoute,
     redirect: (context, state) {
-      if (state.matchedLocation == '/thinkers') {
-        return '/archive';
-      }
       if (state.matchedLocation == '/admin' && !isAdmin) {
         return '/';
       }
@@ -54,7 +51,7 @@ final appRouterProvider = Provider<GoRouter>((Ref ref) {
       GoRoute(
         path: '/archive',
         name: 'archive',
-        builder: (context, state) => const ThinkersScreen(),
+        builder: (context, state) => const ArchiveScreen(),
       ),
       GoRoute(
         path: '/favorites',

@@ -1,0 +1,490 @@
+﻿--------- beginning of system
+05-07 17:03:16.811 E/BoundServiceSession( 1569): Bad key 1 received in binderTransactionCompleted! Closing all transactions on CR{b76ad70 1569->com.google.android.as/com.google.android.apps.miphone.aiai.common.notification.service.AiAiNotificationListenerService flags=0x805000101}. Current keys: {onNotificationPostedFull=0}; Counts: [3]
+05-07 17:03:16.811 E/BoundServiceSession( 1569): Bad key 0 received in binderTransactionCompleted! Closing all transactions on CR{b76ad70 1569->com.google.android.as/com.google.android.apps.miphone.aiai.common.notification.service.AiAiNotificationListenerService flags=0x805000101}. Current keys: {}; Counts: []
+05-07 17:03:16.813 E/BoundServiceSession( 1569): Bad key 1 received in binderTransactionCompleted! Closing all transactions on CR{b76ad70 1569->com.google.android.as/com.google.android.apps.miphone.aiai.common.notification.service.AiAiNotificationListenerService flags=0x805000101}. Current keys: {}; Counts: []
+05-07 17:03:16.820 E/BoundServiceSession( 1569): Bad key 0 received in binderTransactionCompleted! Closing all transactions on CR{b76ad70 1569->com.google.android.as/com.google.android.apps.miphone.aiai.common.notification.service.AiAiNotificationListenerService flags=0x805000101}. Current keys: {}; Counts: []
+05-07 17:03:16.824 E/BoundServiceSession( 1569): Bad key 1 received in binderTransactionCompleted! Closing all transactions on CR{b76ad70 1569->com.google.android.as/com.google.android.apps.miphone.aiai.common.notification.service.AiAiNotificationListenerService flags=0x805000101}. Current keys: {}; Counts: []
+05-07 17:03:16.825 E/BoundServiceSession( 1569): Bad key 0 received in binderTransactionCompleted! Closing all transactions on CR{b76ad70 1569->com.google.android.as/com.google.android.apps.miphone.aiai.common.notification.service.AiAiNotificationListenerService flags=0x805000101}. Current keys: {}; Counts: []
+05-07 17:04:24.653 E/AppOps  ( 1569): attributionTag IWLAN not declared in manifest of com.google.android.iwlan
+05-07 17:04:25.930 E/FingerprintProvider/default( 1569): onPointerUp received during client: null
+05-07 17:04:25.933 E/AidlResponseHandler( 1569): Client monitor is not an instance of com.android.server.biometrics.sensors.AcquisitionClient
+05-07 17:04:26.372 E/BiometricScheduler( 1569): Current operation is null,no need to start watchdog
+05-07 17:04:26.441 E/AppOps  ( 1569): attributionTag  not declared in manifest of com.android.systemui
+05-07 17:04:26.442 E/AppOps  ( 1569): attributionTag  not declared in manifest of com.android.systemui
+05-07 17:04:26.606 E/AppOps  ( 1569): attributionTag  not declared in manifest of com.android.systemui
+05-07 17:04:26.606 E/AppOps  ( 1569): attributionTag  not declared in manifest of com.android.systemui
+05-07 17:04:28.044 E/HandwritingModeController( 1569): Cannot get requestId: Handwriting was not initialized.
+05-07 17:04:29.004 E/HandwritingModeController( 1569): Cannot get requestId: Handwriting was not initialized.
+05-07 17:04:29.016 E/HandwritingModeController( 1569): Cannot get requestId: Handwriting was not initialized.
+05-07 17:04:29.025 E/HandwritingModeController( 1569): Cannot get requestId: Handwriting was not initialized.
+05-07 17:04:29.726 E/VibratorInfo( 5391): Invalid frequency profile received from HAL. resonantFrequencyHz=147.87964, frequenciesHz=null, outputAccelerationsGs=null
+05-07 17:04:29.980 E/HandwritingModeController( 1569): Cannot get requestId: Handwriting was not initialized.
+--------- beginning of main
+05-07 17:04:30.938 E/AccessibilityService(27573): bindInput must be paired with unbindInput.
+05-07 17:04:31.183 E/libbinder.IPCThreadState( 1569): Binder transaction failure. id: 356098833, cmd: BR_DEAD_REPLY (29189), error: -3 (No such process)
+05-07 17:04:31.189 E/libprocessgroup( 1569): Failed to write 1 to /sys/fs/cgroup/apps/uid_10473/pid_27985/cgroup.kill: No such file or directory
+05-07 17:04:31.189 E/libprocessgroup( 1569): Failed to open /sys/fs/cgroup/apps/uid_10473/pid_27985/cgroup.procs: No such file or directory
+05-07 17:04:31.421 E/m55.rdx (28345): *~*~*~ Previous channel {0} was garbage collected without being shut down! ~*~*~*
+05-07 17:04:31.421 E/m55.rdx (28345):     Make sure to call shutdown()/shutdownNow()
+05-07 17:04:31.421 E/m55.rdx (28345): java.lang.RuntimeException: ManagedChannel allocation site
+05-07 17:04:31.421 E/m55.rdx (28345): 	at m55.rdw.<init>(:com.google.android.gms.optional_play_cloud_search@261631017@26.16.31 (100000-0):21)
+05-07 17:04:31.421 E/m55.rdx (28345): 	at m55.rdx.<init>(:com.google.android.gms.optional_play_cloud_search@261631017@26.16.31 (100000-0):10)
+05-07 17:04:31.421 E/m55.rdx (28345): 	at m55.qog.a(:com.google.android.gms.optional_play_cloud_search@261631017@26.16.31 (100000-0):322)
+05-07 17:04:31.421 E/m55.rdx (28345): 	at m55.iho.a(:com.google.android.gms.optional_play_cloud_search@261631017@26.16.31 (100000-0):159)
+05-07 17:04:31.421 E/m55.rdx (28345): 	at m55.mys.a(:com.google.android.gms.optional_play_cloud_search@261631017@26.16.31 (100000-0):200)
+05-07 17:04:31.421 E/m55.rdx (28345): 	at m55.kpg.a(:com.google.android.gms.optional_play_cloud_search@261631017@26.16.31 (100000-0):13)
+05-07 17:04:31.421 E/m55.rdx (28345): 	at m55.mnz.a(:com.google.android.gms.optional_play_cloud_search@261631017@26.16.31 (100000-0):3)
+05-07 17:04:31.421 E/m55.rdx (28345): 	at m55.mnc.run(:com.google.android.gms.optional_play_cloud_search@261631017@26.16.31 (100000-0):19)
+05-07 17:04:31.421 E/m55.rdx (28345): 	at m55.mob.run(:com.google.android.gms.optional_play_cloud_search@261631017@26.16.31 (100000-0):5)
+05-07 17:04:31.421 E/m55.rdx (28345): 	at m55.akr.c(:com.google.android.gms.optional_play_cloud_search@261631017@26.16.31 (100000-0):50)
+05-07 17:04:31.421 E/m55.rdx (28345): 	at m55.akr.run(:com.google.android.gms.optional_play_cloud_search@261631017@26.16.31 (100000-0):73)
+05-07 17:04:31.421 E/m55.rdx (28345): 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1154)
+05-07 17:04:31.421 E/m55.rdx (28345): 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:652)
+05-07 17:04:31.421 E/m55.rdx (28345): 	at bkcd.run(:com.google.android.gms@261631035@26.16.31 (260400-900800821):8)
+05-07 17:04:31.421 E/m55.rdx (28345): 	at java.lang.Thread.run(Thread.java:1564)
+05-07 17:04:31.577 E/DatabaseUtils( 2348): Writing exception to parcel
+05-07 17:04:31.577 E/DatabaseUtils( 2348): java.lang.SecurityException: No permission to access APN settings
+05-07 17:04:31.577 E/DatabaseUtils( 2348): 	at com.android.providers.telephony.TelephonyProvider.checkPermissionForApnTable(TelephonyProvider.java:5680)
+05-07 17:04:31.577 E/DatabaseUtils( 2348): 	at com.android.providers.telephony.TelephonyProvider.checkPermission(TelephonyProvider.java:5650)
+05-07 17:04:31.577 E/DatabaseUtils( 2348): 	at com.android.providers.telephony.TelephonyProvider.checkPermissionCompat(TelephonyProvider.java:5697)
+05-07 17:04:31.577 E/DatabaseUtils( 2348): 	at com.android.providers.telephony.TelephonyProvider.query(TelephonyProvider.java:4496)
+05-07 17:04:31.577 E/DatabaseUtils( 2348): 	at android.content.ContentProvider.query(ContentProvider.java:1670)
+05-07 17:04:31.577 E/DatabaseUtils( 2348): 	at android.content.ContentProvider.query(ContentProvider.java:1766)
+05-07 17:04:31.577 E/DatabaseUtils( 2348): 	at android.content.ContentProvider$Transport.query(ContentProvider.java:304)
+05-07 17:04:31.577 E/DatabaseUtils( 2348): 	at android.content.ContentProviderNative.onTransact(ContentProviderNative.java:109)
+05-07 17:04:31.577 E/DatabaseUtils( 2348): 	at android.os.Binder.execTransactInternal(Binder.java:1466)
+05-07 17:04:31.577 E/DatabaseUtils( 2348): 	at android.os.Binder.execTransact(Binder.java:1411)
+05-07 17:04:31.578 E/RequestContextBuilder(19410): Could not get APN after (but including) LollipopMr1: 
+05-07 17:04:31.578 E/RequestContextBuilder(19410): java.lang.SecurityException: No permission to access APN settings
+05-07 17:04:31.578 E/RequestContextBuilder(19410): 	at android.os.Parcel.createExceptionOrNull(Parcel.java:3370)
+05-07 17:04:31.578 E/RequestContextBuilder(19410): 	at android.os.Parcel.createException(Parcel.java:3354)
+05-07 17:04:31.578 E/RequestContextBuilder(19410): 	at android.os.Parcel.readException(Parcel.java:3337)
+05-07 17:04:31.578 E/RequestContextBuilder(19410): 	at android.database.DatabaseUtils.readExceptionFromParcel(DatabaseUtils.java:225)
+05-07 17:04:31.578 E/RequestContextBuilder(19410): 	at android.database.DatabaseUtils.readExceptionFromParcel(DatabaseUtils.java:177)
+05-07 17:04:31.578 E/RequestContextBuilder(19410): 	at android.content.ContentProviderProxy.query(ContentProviderNative.java:497)
+05-07 17:04:31.578 E/RequestContextBuilder(19410): 	at android.content.ContentResolver.query(ContentResolver.java:1269)
+05-07 17:04:31.578 E/RequestContextBuilder(19410): 	at android.content.ContentResolver.query(ContentResolver.java:1200)
+05-07 17:04:31.578 E/RequestContextBuilder(19410): 	at android.content.ContentResolver.query(ContentResolver.java:1155)
+05-07 17:04:31.578 E/RequestContextBuilder(19410): 	at bkmf.b(PG:113)
+05-07 17:04:31.578 E/RequestContextBuilder(19410): 	at bkmf.a(PG:137)
+05-07 17:04:31.578 E/RequestContextBuilder(19410): 	at bkid.a(PG:608)
+05-07 17:04:31.578 E/RequestContextBuilder(19410): 	at bkic.s(PG:5)
+05-07 17:04:31.578 E/RequestContextBuilder(19410): 	at bkic.n(PG:52)
+05-07 17:04:31.578 E/RequestContextBuilder(19410): 	at qre.call(PG:435)
+05-07 17:04:31.578 E/RequestContextBuilder(19410): 	at bmtl.a(PG:3)
+05-07 17:04:31.578 E/RequestContextBuilder(19410): 	at bmsq.run(PG:19)
+05-07 17:04:31.578 E/RequestContextBuilder(19410): 	at bmtm.run(PG:5)
+05-07 17:04:31.578 E/RequestContextBuilder(19410): 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1154)
+05-07 17:04:31.578 E/RequestContextBuilder(19410): 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:652)
+05-07 17:04:31.578 E/RequestContextBuilder(19410): 	at vot.run(PG:636)
+05-07 17:04:31.578 E/RequestContextBuilder(19410): 	at java.lang.Thread.run(Thread.java:1564)
+05-07 17:04:31.673 E/msys    (28855): E[N mccw.liger]onReadError(732)=>read/error - ex: AsyncSocketException: recv() failed (peer=[2a03:2880:f257:e6:face:b00c:0:6e2e]:80), type = Internal error, errno = 103 (Software caused connection abort), errno: 103
+05-07 17:04:31.841 E/msys    (28855): E[N WA]_WCCXMPPStreamDisconnectHandler(340)=>xmpp/disconnect - WCIStreamStateErrorCode: 2, domain: WCIStreamState, subdomain: MCCWLigerStream: Error Domain=WCIStreamState Code=2 UserInfo=0xb4000076d5384010 {MCFErrorDirectUnderlyingErrorKey=0xb4000077146bbfd0 "Error Domain=MCCWLigerStream Code=2 UserInfo=0xb4000076d533a8c0 {MCFErrorDirectLocalizedFailureReasonKey=AsyncSocketException: recv() failed (peer=[2a03:2880:f257:e6:face:b00c:0:6e2e]:80), type = Internal error, errno = 103 (Software caused connection abort)}"}
+05-07 17:04:31.841 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMLifecycleEventHandler(2240)=>[INFO] connection/xmpp/lifecycle_event/not-connected, [5.6399s]
+05-07 17:04:31.842 E/msys    (28855): E[N WA]_WCCXMPPStreamDoDisconnect(1307)=>xmpp/disconnect - flags: 256
+05-07 17:04:31.842 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMDisconnectHandler(2351)=>connection/disconnected, peer reset
+05-07 17:04:31.842 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMEmitStateChange(3256)=>[INFO] connection/new_state/not-connected [connection_id=350690938, wcc_source=1, wcc_reason=18]
+05-07 17:04:31.865 E/msys    (28855): E[C MEMConnectionManager]_MEMConnectionManagerStateChangeHandler(585)=>[Critical] MEMConnectionState updated to ID: 0 with connectionId: 350690938
+05-07 17:04:31.941 E/msys    (28855): E[C 1]_MCCLogErrorInternal(330)=>8/374/3970/65536
+05-07 17:04:31.942 E/msys    (28855): E[C 1]_MCCLogErrorInternal(330)=>8/374/3972/18
+05-07 17:04:31.942 E/msys    (28855): E[C mem.context]_LogConnectFailure(4804)=>Establishing connection failure reason and flags: disconnect/Doze/-1/reason/18/flags/65536/[-, -, -, -, -, -, -, -, -, peer_reset, -, -, -, -]
+05-07 17:04:31.944 E/msys    (28855): E[C mem.context]_LogConnectFailure(4836)=>[Happy Eyeball] Connect failed with source=1, winner stream ip=2a03:2880:f257:e6:face:b00c:0:6e2e, port=80, dnsResolutionMethod=1, combined_ip_addresses=2a03:2880:f257:e6:face:b00c:0:6e2e, 157.240.223.175
+05-07 17:04:31.988 E/AppCenter( 5660): Initializing Appcenter, isEarlyLoad: false
+05-07 17:04:32.001 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMEmitStateChange(3256)=>[INFO] connection/new_state/connecting [connection_id=350690939, wcc_source=1, wcc_reason=18]
+05-07 17:04:32.001 E/msys    (28855): E[C MEMConnectionManager]_MEMConnectionManagerStateChangeHandler(585)=>[Critical] MEMConnectionState updated to ID: 1 with connectionId: 350690939
+05-07 17:04:32.209 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMDoConnectWithAuthKeys(1558)=>[INFO] connection/connect/start/[host=z-p42-chat-e2ee-ig.facebook.com port=5222]/[157.240.223.175:5222]/socketAddressCount=2
+05-07 17:04:32.210 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMLifecycleEventHandler(2232)=>[INFO] connection/xmpp/lifecycle_event/will-connect
+05-07 17:04:32.210 E/msys    (28855): E[A WA]WCCHandshakeCreate(191)=>handshake/create, pq mode:0
+05-07 17:04:32.248 E/eerdj.rekordbox( 6017): No package ID 6a found for resource ID 0x6a0b0013.
+05-07 17:04:32.420 E/hwc-display(  569): [PrimaryDisplay] resetColorMappingInfoForClientComp:: resetColorMappingInfo() idx=3 error(-22)
+05-07 17:04:32.420 E/hwc-display(  569): Fail to open file /data/vendor/log/hwc/PrimaryDisplay_hwc_error_log0.txt, error: Permission denied
+05-07 17:04:32.420 E/hwc-display(  569): Fail to open file /data/log/PrimaryDisplay_hwc_error_log0.txt, error: No such file or directory
+05-07 17:04:32.420 E/hwc-display(  569): Unable to open log file for PrimaryDisplay_hwc_error_log0.txt
+05-07 17:04:32.486 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMLifecycleEventHandler(2240)=>[INFO] connection/xmpp/lifecycle_event/did-connect, [0.2755s]
+05-07 17:04:32.488 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMLifecycleEventHandler(2240)=>[INFO] connection/xmpp/lifecycle_event/did-send-initial-payload, [0.0023s]
+05-07 17:04:32.539 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMLifecycleEventHandler(2240)=>[INFO] connection/xmpp/lifecycle_event/will-handshake, [0.0506s]
+05-07 17:04:32.540 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMLifecycleEventHandler(2240)=>[INFO] connection/xmpp/lifecycle_event/did-handshake, [0.0013s]
+05-07 17:04:32.546 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMReceiveHandler(2412)=>[INFO] connection/receive/login-success
+05-07 17:04:32.547 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMEmitStateChange(3256)=>[INFO] connection/new_state/connected [connection_id=350690939, wcc_source=1, wcc_reason=18]
+05-07 17:04:32.547 E/msys    (28855): E[C MEMConnectionManager]_MEMConnectionManagerStateChangeHandler(585)=>[Critical] MEMConnectionState updated to ID: 2 with connectionId: 350690939
+05-07 17:04:32.560 E/fatal   (28855): runForegroundReporters
+05-07 17:04:32.628 E/DefaultStreamRef.cpp(28855): trying to start an already started/disconnected stream.
+05-07 17:04:32.628 E/DefaultStreamRef.cpp(28855): trying to start an already started/disconnected stream.
+05-07 17:04:32.628 E/DefaultStreamRef.cpp(28855): trying to start an already started/disconnected stream.
+05-07 17:04:32.628 E/DefaultStreamRef.cpp(28855): trying to start an already started/disconnected stream.
+05-07 17:04:32.628 E/DefaultStreamRef.cpp(28855): trying to start an already started/disconnected stream.
+05-07 17:04:32.667 E/msys    (28855): E[N MCCWLigerStream]_NetworkChangedCallbackInternal(57)=>skip the network state change source=3
+05-07 17:04:32.667 E/msys    (28855): E[C mem.context]_NetworkStateChangedCallbackOnExecutionContext(7781)=>[INFO]skip the network state change source=3
+05-07 17:04:32.690 E/msys    (28855): E[S send]_MCDEpochCreateByData(297)=>Failed to find an existing network_requests row ( queue name = (null), sync database id = 223, network task identifier = (null)): Error Domain=Facebook_MCD_epoch Code=200004
+05-07 17:04:32.691 E/MDCoreSyncManagerImpl(28855): [userId=-748044889] Unknown event type: SUBSCRIPTION_STATE_CHANGED
+05-07 17:04:32.691 E/IgnitionDebug(28855): [userId=-748044889] Unknown event type: SUBSCRIPTION_STATE_CHANGED
+05-07 17:04:32.693 E/MDCoreSyncManagerImpl(28855): [userId=-748044889] Unknown event type: SUBSCRIPTION_STATE_CHANGED
+05-07 17:04:32.693 E/IgnitionDebug(28855): [userId=-748044889] Unknown event type: SUBSCRIPTION_STATE_CHANGED
+05-07 17:04:32.821 E/gralloc5(  568): Producer and consumer not identified.
+05-07 17:04:32.842 E/MDCoreSyncManagerImpl(28855): [userId=-748044889] Unknown event type: SUBSCRIPTION_STATE_CHANGED
+05-07 17:04:32.842 E/IgnitionDebug(28855): [userId=-748044889] Unknown event type: SUBSCRIPTION_STATE_CHANGED
+05-07 17:04:32.945 E/stagram.android(28855): Failed to query component interface for required system resources: 6
+05-07 17:04:32.971 E/Codec2-ComponentInterface( 1188): We have a failed config
+05-07 17:04:33.045 E/AppOps  ( 1569): Bad call made by uid 1000. Package "com.google.android.apps.photos" does not belong to uid 1000.
+05-07 17:04:33.100 E/stagram.android(28855): Failed to query component interface for required system resources: 6
+05-07 17:04:33.122 E/VideoPlayerImpl(28855): IgBaseVideoPlayer Warning: AV1_INSTANTIATION AV1_INSTANTIATION AV1 decoding using HardwareDecoder;c2.google.av1.decoder
+05-07 17:04:33.183 E/SlowAppComponent(18512): 0ms: InappFbnsService instantiatingÔÇª
+05-07 17:04:33.183 E/SlowAppComponent(18512): Main thread was blocked for 57ms in the background starting with InappFbnsService
+05-07 17:04:33.277 E/GraphicsTracker(28855): Tried to deallocate non dequeued buffer
+05-07 17:04:33.277 E/GraphicsTracker(28855): Tried to deallocate non dequeued buffer
+05-07 17:04:33.281 E/GraphicsTracker(28855): cannot deallocate due to being stopped
+05-07 17:04:33.322 E/IgHttpDataSource(28855): runtime exception happens during downloadVideo request
+05-07 17:04:33.322 E/IgHttpDataSource(28855): java.lang.RuntimeException: Interrupted while waiting for byte stream.
+05-07 17:04:33.322 E/IgHttpDataSource(28855): 	at X.3cR.A00(Unknown Source:15)
+05-07 17:04:33.322 E/IgHttpDataSource(28855): 	at com.facebook.video.cache.igdatasource.IgHttpDataSource.open(Unknown Source:962)
+05-07 17:04:33.322 E/IgHttpDataSource(28855): 	at X.3fP.open(Unknown Source:357)
+05-07 17:04:33.322 E/IgHttpDataSource(28855): 	at X.3fQ.A06(Unknown Source:1040)
+05-07 17:04:33.322 E/IgHttpDataSource(28855): 	at X.3fQ.open(Unknown Source:248)
+05-07 17:04:33.322 E/IgHttpDataSource(28855): 	at X.4sD.open(Unknown Source:6)
+05-07 17:04:33.322 E/IgHttpDataSource(28855): 	at X.4yD.open(Unknown Source:12)
+05-07 17:04:33.322 E/IgHttpDataSource(28855): 	at X.4uU.Dtg(Unknown Source:304)
+05-07 17:04:33.322 E/IgHttpDataSource(28855): 	at X.4uW.run(Unknown Source:44)
+05-07 17:04:33.322 E/IgHttpDataSource(28855): 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1154)
+05-07 17:04:33.322 E/IgHttpDataSource(28855): 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:652)
+05-07 17:04:33.322 E/IgHttpDataSource(28855): 	at java.lang.Thread.run(Thread.java:1564)
+05-07 17:04:33.322 E/IgHttpDataSource(28855): 	at X.4vC.run(Unknown Source:43)
+05-07 17:04:33.323 E/IgHttpDataSource(28855): runtime exception happens during downloadVideo request
+05-07 17:04:33.323 E/IgHttpDataSource(28855): java.lang.RuntimeException: Interrupted while waiting for byte stream.
+05-07 17:04:33.323 E/IgHttpDataSource(28855): 	at X.3cR.A00(Unknown Source:15)
+05-07 17:04:33.323 E/IgHttpDataSource(28855): 	at com.facebook.video.cache.igdatasource.IgHttpDataSource.open(Unknown Source:962)
+05-07 17:04:33.323 E/IgHttpDataSource(28855): 	at X.3fP.open(Unknown Source:357)
+05-07 17:04:33.323 E/IgHttpDataSource(28855): 	at X.3fQ.A06(Unknown Source:1040)
+05-07 17:04:33.323 E/IgHttpDataSource(28855): 	at X.3fQ.open(Unknown Source:248)
+05-07 17:04:33.323 E/IgHttpDataSource(28855): 	at X.4sD.open(Unknown Source:6)
+05-07 17:04:33.323 E/IgHttpDataSource(28855): 	at X.4yD.open(Unknown Source:12)
+05-07 17:04:33.323 E/IgHttpDataSource(28855): 	at X.4uU.Dtg(Unknown Source:304)
+05-07 17:04:33.323 E/IgHttpDataSource(28855): 	at X.4uW.run(Unknown Source:44)
+05-07 17:04:33.323 E/IgHttpDataSource(28855): 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1154)
+05-07 17:04:33.323 E/IgHttpDataSource(28855): 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:652)
+05-07 17:04:33.323 E/IgHttpDataSource(28855): 	at java.lang.Thread.run(Thread.java:1564)
+05-07 17:04:33.323 E/IgHttpDataSource(28855): 	at X.4vC.run(Unknown Source:43)
+05-07 17:04:33.324 E/IdleQueuePayloadBasedServiceLayer(28855): Request empty, but still some servings left: 69489
+05-07 17:04:33.325 E/IdleQueuePayloadBasedServiceLayer(28855): Request empty, but still some servings left: -69489
+05-07 17:04:33.332 E/msys    (28855): E[N mns:TigonMNS]_OnResolverSuccess(308)=>Cache refresh succeeded with system DNS resolver. IP count: 2
+05-07 17:04:33.338 E/msys    (28855): E[N mns:TigonMNS]_OnResolverSuccess(308)=>Cache refresh succeeded with system DNS resolver. IP count: 2
+05-07 17:04:33.393 E/SlowAppComponent(28855): 0ms: TaskLifeDetectingService instantiatingÔÇª
+05-07 17:04:33.393 E/SlowAppComponent(28855): 173ms: SystemEventReceiver instantiatingÔÇª
+05-07 17:04:33.393 E/SlowAppComponent(28855): 218ms: FbnsInitBroadcastReceiver instantiatingÔÇª
+05-07 17:04:33.393 E/SlowAppComponent(28855): Main thread was blocked for 270ms in the foreground starting with TaskLifeDetectingService
+05-07 17:04:33.395 E/AccessibilityService(27573): bindInput must be paired with unbindInput.
+05-07 17:04:33.590 E/powerhal-libperfmgr(  630): Error: shouldn't report duration during pause state.
+05-07 17:04:33.607 E/powerhal-libperfmgr(  630): Error: shouldn't report duration during pause state.
+05-07 17:04:33.611 E/powerhal-libperfmgr(  630): Error: shouldn't report duration during pause state.
+05-07 17:04:33.613 E/msys    (28855): E[N mns:TigonMNS]_OnResolverSuccess(308)=>Cache refresh succeeded with system DNS resolver. IP count: 2
+05-07 17:04:33.622 E/powerhal-libperfmgr(  630): Error: shouldn't report duration during pause state.
+05-07 17:04:33.634 E/powerhal-libperfmgr(  630): Error: shouldn't report duration during pause state.
+05-07 17:04:33.645 E/powerhal-libperfmgr(  630): Error: shouldn't report duration during pause state.
+05-07 17:04:33.655 E/powerhal-libperfmgr(  630): Error: shouldn't report duration during pause state.
+05-07 17:04:33.667 E/powerhal-libperfmgr(  630): Error: shouldn't report duration during pause state.
+05-07 17:04:33.678 E/powerhal-libperfmgr(  630): Error: shouldn't report duration during pause state.
+05-07 17:04:33.689 E/powerhal-libperfmgr(  630): Error: shouldn't report duration during pause state.
+05-07 17:04:33.701 E/powerhal-libperfmgr(  630): Error: shouldn't report duration during pause state.
+05-07 17:04:34.079 E/OfficeAssetManager( 5403): getAssetFileLoc - Asset not found in APK/OBB msointlandroid.dll
+05-07 17:04:34.347 E/msys    (28855): E[N mns:TigonMNS]_OnResolverSuccess(308)=>Cache refresh succeeded with system DNS resolver. IP count: 2
+05-07 17:04:34.513 E/ClipboardService( 1569): Denying clipboard access to com.microsoft.office.word, application is not in focus nor is it a system service for user 0
+05-07 17:04:34.556 E/VideoPlayerImpl(28855): IgBaseVideoPlayer Warning: AV1_INSTANTIATION AV1_INSTANTIATION AV1 decoding using HardwareDecoder;c2.google.av1.decoder
+05-07 17:04:34.580 E/stagram.android(28855): Failed to query component interface for required system resources: 6
+05-07 17:04:34.680 E/IdleQueuePayloadBasedServiceLayer(28855): Request empty, but still some servings left: 1642474
+05-07 17:04:34.811 E/IdleQueuePayloadBasedServiceLayer(28855): Request empty, but still some servings left: -1188034
+05-07 17:04:34.838 E/IdleQueuePayloadBasedServiceLayer(28855): Request empty, but still some servings left: -241664
+05-07 17:04:34.853 E/IdleQueuePayloadBasedServiceLayer(28855): Request empty, but still some servings left: -208680
+05-07 17:04:35.114 E/IdleQueuePayloadBasedServiceLayer(28855): Request empty, but still some servings left: 3163
+05-07 17:04:35.130 E/IdleQueuePayloadBasedServiceLayer(28855): Request empty, but still some servings left: -3163
+05-07 17:04:36.105 E/TraceStack( 5403): Detect invalid callstack state adddress, IP: 0x741057232c
+05-07 17:04:36.106 E/TraceStack( 5403): Detect invalid callstack state adddress, IP: 0x7410c017bc
+05-07 17:04:36.148 E/TraceStack( 5403): Detect invalid callstack state adddress, IP: 0x741057232c
+05-07 17:04:36.148 E/TraceStack( 5403): Detect invalid callstack state adddress, IP: 0x7410c017bc
+05-07 17:04:36.577 E/msys    (28855): E[N mns:TigonMNS]_OnResolverSuccess(308)=>Cache refresh succeeded with system DNS resolver. IP count: 2
+05-07 17:04:36.651 E/BoundServiceSession( 1569): Bad key 1 received in binderTransactionCompleted! Closing all transactions on CR{b76ad70 1569->com.google.android.as/com.google.android.apps.miphone.aiai.common.notification.service.AiAiNotificationListenerService flags=0x805000101}. Current keys: {onNotificationPostedFull=0}; Counts: [1]
+05-07 17:04:36.651 E/BoundServiceSession( 1569): Bad key 0 received in binderTransactionCompleted! Closing all transactions on CR{b76ad70 1569->com.google.android.as/com.google.android.apps.miphone.aiai.common.notification.service.AiAiNotificationListenerService flags=0x805000101}. Current keys: {}; Counts: []
+05-07 17:04:36.652 E/IdleQueuePayloadBasedServiceLayer(28855): Request empty, but still some servings left: 3270986
+05-07 17:04:36.852 E/IdleQueuePayloadBasedServiceLayer(28855): Request empty, but still some servings left: -2976678
+05-07 17:04:36.901 E/IdleQueuePayloadBasedServiceLayer(28855): Request empty, but still some servings left: -233349
+05-07 17:04:36.913 E/IdleQueuePayloadBasedServiceLayer(28855): Request empty, but still some servings left: 19346
+05-07 17:04:36.919 E/IdleQueuePayloadBasedServiceLayer(28855): Request empty, but still some servings left: 2423
+05-07 17:04:36.927 E/IdleQueuePayloadBasedServiceLayer(28855): Request empty, but still some servings left: -47042
+05-07 17:04:36.939 E/IdleQueuePayloadBasedServiceLayer(28855): Request empty, but still some servings left: -35686
+05-07 17:04:36.989 E/GraphicsTracker(28855): Tried to deallocate non dequeued buffer
+05-07 17:04:36.997 E/GraphicsTracker(28855): cannot deallocate due to being stopped
+05-07 17:04:37.018 E/stagram.android(28855): Failed to query component interface for required system resources: 6
+05-07 17:04:37.088 E/stagram.android(28855): Failed to query component interface for required system resources: 6
+05-07 17:04:37.092 E/Codec2-ComponentInterface( 1188): We have a failed config
+05-07 17:04:37.131 E/IdleQueuePayloadBasedServiceLayer(28855): Request empty, but still some servings left: 49172
+05-07 17:04:37.151 E/IdleQueuePayloadBasedServiceLayer(28855): Request empty, but still some servings left: -49172
+05-07 17:04:37.221 E/AppOps  ( 1569): attributionTag  not declared in manifest of com.instagram.android
+05-07 17:04:37.222 E/AppOps  ( 1569): attributionTag  not declared in manifest of com.instagram.android
+05-07 17:04:37.230 E/audio_route(  926): unable to find path 'speaker-post'
+05-07 17:04:37.359 E/stagram.android(28855): Failed to query component interface for required system resources: 6
+05-07 17:04:37.374 E/stagram.android(28855): Failed to query component interface for required system resources: 6
+05-07 17:04:37.392 E/stagram.android(28855): Failed to query component interface for required system resources: 6
+05-07 17:04:37.395 E/Codec2-ComponentInterface( 1188): We have a failed config
+05-07 17:04:37.425 E/stagram.android(28855): Failed to query component interface for required system resources: 6
+05-07 17:04:37.431 E/Codec2-ComponentInterface( 1188): We have a failed config
+05-07 17:04:37.672 E/IdleQueuePayloadBasedServiceLayer(28855): Request empty, but still some servings left: 1496
+05-07 17:04:37.673 E/IdleQueuePayloadBasedServiceLayer(28855): Request empty, but still some servings left: -1496
+05-07 17:04:37.793 E/IdleQueuePayloadBasedServiceLayer(28855): Request empty, but still some servings left: 537877
+05-07 17:04:37.847 E/IdleQueuePayloadBasedServiceLayer(28855): Request empty, but still some servings left: -533781
+05-07 17:04:37.886 E/AppOps  ( 1569): attributionTag  not declared in manifest of com.instagram.android
+05-07 17:04:37.887 E/AppOps  ( 1569): attributionTag  not declared in manifest of com.instagram.android
+05-07 17:04:37.922 E/IdleQueuePayloadBasedServiceLayer(28855): Request empty, but still some servings left: 340758
+05-07 17:04:37.951 E/IdleQueuePayloadBasedServiceLayer(28855): Request empty, but still some servings left: -237558
+05-07 17:04:37.959 E/IdleQueuePayloadBasedServiceLayer(28855): Request empty, but still some servings left: -92303
+05-07 17:04:37.977 E/IdleQueuePayloadBasedServiceLayer(28855): Request empty, but still some servings left: 77370
+05-07 17:04:38.001 E/IdleQueuePayloadBasedServiceLayer(28855): Request empty, but still some servings left: -88267
+05-07 17:04:38.069 E/IdleQueuePayloadBasedServiceLayer(28855): Request empty, but still some servings left: 1675203
+05-07 17:04:38.248 E/IdleQueuePayloadBasedServiceLayer(28855): Request empty, but still some servings left: -1349416
+05-07 17:04:38.292 E/IdleQueuePayloadBasedServiceLayer(28855): Request empty, but still some servings left: -310851
+05-07 17:04:38.297 E/IdleQueuePayloadBasedServiceLayer(28855): Request empty, but still some servings left: -14936
+05-07 17:04:38.305 E/IdleQueuePayloadBasedServiceLayer(28855): Request empty, but still some servings left: 331539
+05-07 17:04:38.380 E/IdleQueuePayloadBasedServiceLayer(28855): Request empty, but still some servings left: -190255
+05-07 17:04:38.388 E/IdleQueuePayloadBasedServiceLayer(28855): Request empty, but still some servings left: -124663
+05-07 17:04:38.389 E/IdleQueuePayloadBasedServiceLayer(28855): Request empty, but still some servings left: -16621
+05-07 17:04:38.642 E/IdleQueuePayloadBasedServiceLayer(28855): Request empty, but still some servings left: 57684
+05-07 17:04:38.663 E/IdleQueuePayloadBasedServiceLayer(28855): Request empty, but still some servings left: 23427
+05-07 17:04:38.674 E/IdleQueuePayloadBasedServiceLayer(28855): Request empty, but still some servings left: -81111
+05-07 17:04:38.730 E/IdleQueuePayloadBasedServiceLayer(28855): Request empty, but still some servings left: 1769242
+05-07 17:04:38.920 E/IdleQueuePayloadBasedServiceLayer(28855): Request empty, but still some servings left: -1769242
+05-07 17:04:39.214 E/TraceStack( 5403): Detect invalid callstack state adddress, IP: 0x741057232c
+05-07 17:04:39.214 E/TraceStack( 5403): Detect invalid callstack state adddress, IP: 0x7410c017bc
+05-07 17:04:39.252 E/TraceStack( 5403): Detect invalid callstack state adddress, IP: 0x741057232c
+05-07 17:04:39.252 E/TraceStack( 5403): Detect invalid callstack state adddress, IP: 0x7410c017bc
+05-07 17:04:39.941 E/TraceStack( 5403): Detect invalid callstack state adddress, IP: 0x741358f0a4
+05-07 17:04:39.942 E/TraceStack( 5403): Detect invalid callstack state adddress, IP: 0x741381c790
+05-07 17:04:39.951 E/TraceStack( 5403): Detect invalid callstack state adddress, IP: 0x741358f0a4
+05-07 17:04:39.951 E/TraceStack( 5403): Detect invalid callstack state adddress, IP: 0x741381c790
+05-07 17:04:40.910 E/audio_route(  926): unable to find path 'speaker-post'
+05-07 17:04:41.481 E/GWP-MobilityDetectionSe( 6411): Intent is null. Maybe the service is restarted by the system.
+05-07 17:04:42.105 E/libc    ( 6428): SetHeapTaggingLevel: re-enabling tagging after it was disabled is not supported
+05-07 17:04:43.264 E/TransitionChain( 1569): Can't collect into a chain with no transition
+05-07 17:04:43.264 E/TransitionChain( 1569): Can't collect into a chain with no transition
+05-07 17:04:44.703 E/SupplicantStaIfaceHalAidlBase( 1569): Can't call getKeyMgmtCapabilities, ISupplicantStaIface is null for iface=wlan0
+05-07 17:04:44.703 E/SupplicantStaIfaceHalAidlBase( 1569): Can't call getWpaDriverCapabilities, ISupplicantStaIface is null for iface=wlan0
+05-07 17:04:44.728 E/WifiHAL (  995): open: failed to configure setup; result = -1
+05-07 17:04:44.728 E/WifiHAL (  995): wifi_twt_get_capabilities : failed in create twt_cap req, error = -1
+05-07 17:04:44.728 E/WifiHAL (  995): TwtFeatureRequest destroyed
+05-07 17:04:44.745 E/WifiStaIfaceAidlImpl( 1569): getTwtCapabilities failed with service-specific exception: android.os.ServiceSpecificException:  (code 4)
+05-07 17:04:44.745 E/SupplicantStaIfaceHalAidlBase( 1569): Can't call getUsdCapabilities, ISupplicantStaIface is null for iface=wlan0
+05-07 17:04:44.794 E/WifiHAL (  995): failed to stop RSSI monitoring = -5
+05-07 17:04:44.809 E/SupplicantStaIfaceHalAidlBase( 1569): Can't call setPowerSave, ISupplicantStaIface is null for iface=wlan0
+05-07 17:04:44.814 E/SupplicantStaIfaceHalAidlBase( 1569): Can't call setBtCoexistenceMode, ISupplicantStaIface is null for iface=wlan0
+05-07 17:04:44.884 E/SupplicantStaIfaceHalAidlBase( 1569): Can't call disableCurrentNetwork, SupplicantStaNetwork for iface=wlan0 is null.
+05-07 17:04:44.885 E/SupplicantStaIfaceHalAidlBase( 1569): Can't call disconnect, ISupplicantStaIface is null for iface=wlan0
+05-07 17:04:44.909 E/SatelliteController( 2348): notifyNtnEligibility: mSatellitePhone is null
+05-07 17:04:44.993 E/msys    (28855): E[N MQTT]onOSNetworkDisconnected(740)=>LigerBasedStreamTransport onOSNetworkDisconnected
+05-07 17:04:45.000 E/WifiScanningService( 1569): wifi driver loaded received while already loaded
+05-07 17:04:45.010 E/msys    (28855): E[N mns:TigonMNS]_LogError(280)=>Failed to resolve using system DNS resolver, getaddrinfo(): No address associated with hostname
+05-07 17:04:45.010 E/TelephonyConfigUpdateInstallReceiver( 2348): Failed to read current content : /data/misc/telephonyconfig/valid_telephony_config.pb
+05-07 17:04:45.010 E/msys    (28855): E[N mns:TigonMNS]_LogError(280)=>Failed to resolve using system DNS resolver, getaddrinfo(): No address associated with hostname
+05-07 17:04:45.011 E/TelephonyConfigUpdateInstallReceiver( 2348): Failed to read current content : /data/misc/telephonyconfig/valid_telephony_config.pb
+05-07 17:04:45.011 E/SatelliteController( 2348): registerForSatelliteModemStateChanged: mSatelliteSessionController is not initialized yet
+05-07 17:04:45.011 E/SatelliteController( 2348): unregisterForModemStateChanged: mSatelliteSessionController is not initialized yet
+05-07 17:04:45.011 E/msys    (28855): E[N mccw.liger]onReadError(732)=>read/error - ex: AsyncSocketException: recv() failed (peer=[2a03:2880:f257:e6:face:b00c:0:6e2e]:443), type = Internal error, errno = 103 (Software caused connection abort), errno: 103
+05-07 17:04:45.016 E/SatelliteController( 2348): registerForSatelliteModemStateChanged: mSatelliteSessionController is not initialized yet
+05-07 17:04:45.016 E/SatelliteController( 2348): unregisterForModemStateChanged: mSatelliteSessionController is not initialized yet
+05-07 17:04:45.018 E/msys    (28855): E[N WA]_WCCXMPPStreamDisconnectHandler(340)=>xmpp/disconnect - WCIStreamStateErrorCode: 2, domain: WCIStreamState, subdomain: MCCWLigerStream: Error Domain=WCIStreamState Code=2 UserInfo=0xb4000076d4efbe30 {MCFErrorDirectUnderlyingErrorKey=0xb40000771445ec50 "Error Domain=MCCWLigerStream Code=2 UserInfo=0xb4000076d5458c20 {MCFErrorDirectLocalizedFailureReasonKey=AsyncSocketException: recv() failed (peer=[2a03:2880:f257:e6:face:b00c:0:6e2e]:443), type = Internal error, errno = 103 (Software caused connection abort)}"}
+05-07 17:04:45.018 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMLifecycleEventHandler(2240)=>[INFO] connection/xmpp/lifecycle_event/not-connected, [12.4777s]
+05-07 17:04:45.018 E/WifiStaIfaceAidlImpl( 1569): setScanMode failed with service-specific exception: android.os.ServiceSpecificException:  (code 4)
+05-07 17:04:45.018 E/SatelliteController( 2348): notifyNtnEligibility: mSatellitePhone is null
+05-07 17:04:45.018 E/msys    (28855): E[N WA]_WCCXMPPStreamDoDisconnect(1307)=>xmpp/disconnect - flags: 256
+05-07 17:04:45.018 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMDisconnectHandler(2351)=>connection/disconnected, peer reset
+05-07 17:04:45.018 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMEmitStateChange(3256)=>[INFO] connection/new_state/not-connected [connection_id=350690939, wcc_source=1, wcc_reason=18]
+05-07 17:04:45.018 E/SupplicantStaIfaceHalAidlBase( 1569): Can't call listNetworks, ISupplicantStaIface is null for iface=wlan0
+05-07 17:04:45.019 E/SupplicantStaIfaceHalAidlBase( 1569): removeAllNetworks failed, got null networks
+05-07 17:04:45.019 E/WifiClientModeImpl[1138185403:wlan0]( 1569): Failed to remove networks on exiting connect mode
+05-07 17:04:45.019 E/SupplicantStaIfaceHalAidlBase( 1569): Can't call setPowerSave, ISupplicantStaIface is null for iface=wlan0
+05-07 17:04:45.019 E/SupplicantStaIfaceHalAidlBase( 1569): Can't call setBtCoexistenceMode, ISupplicantStaIface is null for iface=wlan0
+05-07 17:04:45.020 E/msys    (28855): E[N mns:TigonMNS]_LogError(280)=>Failed to resolve using system DNS resolver, getaddrinfo(): No address associated with hostname
+05-07 17:04:45.021 E/msys    (28855): E[C MEMConnectionManager]_MEMConnectionManagerStateChangeHandler(585)=>[Critical] MEMConnectionState updated to ID: 0 with connectionId: 350690939
+05-07 17:04:45.024 E/msys    (28855): E[N MQTT]onConnectError(562)=>Connect Error: folly::AsyncSocketException: AsyncSocketException: connect failed (immediately), type = Socket not open, errno = 101 (Network is unreachable)
+05-07 17:04:45.026 E/WifiHAL (  995): Ring name: level:0 sec:0 ring_name:fw_verbose
+05-07 17:04:45.029 E/msys    (28855): E[C 1]_MCCLogErrorInternal(330)=>8/374/3970/65536
+05-07 17:04:45.029 E/msys    (28855): E[C 1]_MCCLogErrorInternal(330)=>8/374/3972/18
+05-07 17:04:45.029 E/msys    (28855): E[C mem.context]_LogConnectFailure(4804)=>Establishing connection failure reason and flags: disconnect/Doze/-1/reason/18/flags/65536/[-, -, -, -, -, -, -, -, -, peer_reset, -, -, -, -]
+05-07 17:04:45.029 E/msys    (28855): E[C mem.context]_LogConnectFailure(4836)=>[Happy Eyeball] Connect failed with source=1, winner stream ip=2a03:2880:f257:e6:face:b00c:0:6e2e, port=443, dnsResolutionMethod=1, combined_ip_addresses=2a03:2880:f257:e6:face:b00c:0:6e2e, 157.240.223.175
+05-07 17:04:45.035 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMEmitStateChange(3256)=>[INFO] connection/new_state/connecting [connection_id=350690940, wcc_source=1, wcc_reason=18]
+05-07 17:04:45.035 E/msys    (28855): E[C MEMConnectionManager]_MEMConnectionManagerStateChangeHandler(585)=>[Critical] MEMConnectionState updated to ID: 1 with connectionId: 350690940
+05-07 17:04:45.041 E/msys    (28855): E[N mns:TigonMNS]_LogError(280)=>Failed to resolve using system DNS resolver, getaddrinfo(): No address associated with hostname
+05-07 17:04:45.041 E/msys    (28855): E[N mns:TigonMNS]_LogError(280)=>Failed to resolve using system DNS resolver, getaddrinfo(): No address associated with hostname
+05-07 17:04:45.041 E/msys    (28855): E[N mns:TigonMNS]_LogError(280)=>Failed to resolve using system DNS resolver, getaddrinfo(): No address associated with hostname
+05-07 17:04:45.041 E/msys    (28855): E[N mns:TigonMNS]_LogError(280)=>Failed to resolve using system DNS resolver, getaddrinfo(): No address associated with hostname
+05-07 17:04:45.041 E/msys    (28855): E[N mns:TigonMNS]_LogError(280)=>Failed to resolve using system DNS resolver, getaddrinfo(): No address associated with hostname
+05-07 17:04:45.041 E/msys    (28855): E[N mns:TigonMNS]_LogError(280)=>Failed to resolve using system DNS resolver, getaddrinfo(): No address associated with hostname
+05-07 17:04:45.044 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMDoConnectWithAuthKeys(1558)=>[INFO] connection/connect/start/[host=z-p42-chat-e2ee-ig.facebook.com port=5222]/[157.240.223.175:5222]/socketAddressCount=2
+05-07 17:04:45.044 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMLifecycleEventHandler(2232)=>[INFO] connection/xmpp/lifecycle_event/will-connect
+05-07 17:04:45.044 E/msys    (28855): E[A WA]WCCHandshakeCreate(191)=>handshake/create, pq mode:0
+05-07 17:04:45.045 E/msys    (28855): E[N mns:TigonMNS]_LogError(280)=>Failed to resolve using system DNS resolver, getaddrinfo(): No address associated with hostname
+05-07 17:04:45.047 E/msys    (28855): E[N mns:TigonMNS]_LogError(280)=>Failed to resolve using system DNS resolver, getaddrinfo(): No address associated with hostname
+05-07 17:04:45.049 E/msys    (28855): E[N mns:TigonMNS]_LogError(280)=>Failed to resolve using system DNS resolver, getaddrinfo(): No address associated with hostname
+05-07 17:04:45.049 E/msys    (28855): E[N mns:TigonMNS]_LogError(280)=>Failed to resolve using system DNS resolver, getaddrinfo(): No address associated with hostname
+05-07 17:04:45.052 E/msys    (28855): E[N mccw.liger]onConnectError(579)=>connect/error - address: 2a03:2880:f257:e6:face:b00c:0:6e2e, port: 5222, ex: folly::AsyncSocketException: AsyncSocketException: connect failed (immediately), type = Socket not open, errno = 101 (Network is unreachable)
+05-07 17:04:45.053 E/msys    (28855): E[N mns:TigonMNS]_LogError(280)=>Failed to resolve using system DNS resolver, getaddrinfo(): No address associated with hostname
+05-07 17:04:45.053 E/msys    (28855): E[N mns:TigonMNS]_LogError(280)=>Failed to resolve using system DNS resolver, getaddrinfo(): No address associated with hostname
+05-07 17:04:45.053 E/msys    (28855): E[N mccw.liger]onConnectError(579)=>connect/error - address: 2a03:2880:f257:e6:face:b00c:0:6e2e, port: 443, ex: folly::AsyncSocketException: AsyncSocketException: connect failed (immediately), type = Socket not open, errno = 101 (Network is unreachable)
+05-07 17:04:45.055 E/msys    (28855): E[N mccw.liger]onConnectError(579)=>connect/error - address: 2a03:2880:f257:e6:face:b00c:0:6e2e, port: 80, ex: folly::AsyncSocketException: AsyncSocketException: connect failed (immediately), type = Socket not open, errno = 101 (Network is unreachable)
+05-07 17:04:45.055 E/msys    (28855): E[N mns:TigonMNS]_LogError(280)=>Failed to resolve using system DNS resolver, getaddrinfo(): No address associated with hostname
+05-07 17:04:45.056 E/msys    (28855): E[N mccw.liger]onConnectError(579)=>connect/error - address: 157.240.223.175, port: 5222, ex: folly::AsyncSocketException: AsyncSocketException: connect failed (immediately), type = Socket not open, errno = 101 (Network is unreachable)
+05-07 17:04:45.056 E/msys    (28855): E[N mccw.liger]onConnectError(579)=>connect/error - address: 157.240.223.175, port: 443, ex: folly::AsyncSocketException: AsyncSocketException: connect failed (immediately), type = Socket not open, errno = 101 (Network is unreachable)
+05-07 17:04:45.057 E/WifiHAL (  995): Ring name: level:0 sec:0 ring_name:driver_log
+05-07 17:04:45.057 E/WifiHAL (  995): Ring name: level:0 sec:0 ring_name:roam_stats
+05-07 17:04:45.057 E/WifiHAL (  995): Ring name: level:0 sec:0 ring_name:packet_log
+05-07 17:04:45.057 E/msys    (28855): E[N mccw.liger]onConnectError(579)=>connect/error - address: 157.240.223.175, port: 80, ex: folly::AsyncSocketException: AsyncSocketException: connect failed (immediately), type = Socket not open, errno = 101 (Network is unreachable)
+05-07 17:04:45.057 E/WifiHAL (  995): Ring name: level:0 sec:0 ring_name:debug_dump1_
+05-07 17:04:45.057 E/WifiHAL (  995): Ring name: level:0 sec:0 ring_name:debug_dump2_
+05-07 17:04:45.057 E/msys    (28855): E[N WA]_WCCXMPPStreamDisconnectHandler(340)=>xmpp/disconnect - WCIStreamStateErrorCode: 0, domain: WCIStreamState, subdomain: MCCWLigerStream: Error Domain=WCIStreamState Code=0 UserInfo=0xb4000076d4d64680 {MCFErrorDirectUnderlyingErrorKey=0xb40000771460d450 "Error Domain=MCCWLigerStream Code=1 UserInfo=0xb4000076d46457f0 {MCFErrorDirectLocalizedFailureReasonKey=folly::AsyncSocketException: AsyncSocketException: connect failed (immediately), type = Socket not open, errno = 101 (Network is unreachable)}"}
+05-07 17:04:45.057 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMLifecycleEventHandler(2240)=>[INFO] connection/xmpp/lifecycle_event/not-connected, [0.0129s]
+05-07 17:04:45.057 E/msys    (28855): E[N WA]_WCCXMPPStreamDoDisconnect(1307)=>xmpp/disconnect - flags: 163
+05-07 17:04:45.057 E/WifiHAL (  995): Ring name: level:0 sec:0 ring_name:mem_dump
+05-07 17:04:45.057 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMDisconnectHandler(2272)=>connection/disconnected, backoff on socket failed to connect
+05-07 17:04:45.057 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMDisconnectHandler(2307)=>connection/disconnected, transport error
+05-07 17:04:45.057 E/msys    (28855): E[C 1]_MCCLogErrorInternal(330)=>8/1066/2864/0
+05-07 17:04:45.057 E/WifiHAL (  995): Ring name: level:0 sec:0 ring_name:ecntrs_
+05-07 17:04:45.057 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMDisconnectHandler(2338)=>connection/disconnected, handshake failure
+05-07 17:04:45.057 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMEmitStateChange(3256)=>[INFO] connection/new_state/not-connected [connection_id=350690939, wcc_source=1, wcc_reason=18]
+05-07 17:04:45.058 E/msys    (28855): E[C MEMConnectionManager]_MEMConnectionManagerStateChangeHandler(585)=>[Critical] MEMConnectionState updated to ID: 0 with connectionId: 350690939
+05-07 17:04:45.058 E/WifiHAL (  995): Loghandler reset, wifi_request_id = 0, handle = 0xb400006e848e4f90
+05-07 17:04:45.058 E/msys    (28855): E[C 1]_MCCLogErrorInternal(330)=>8/374/3970/49155
+05-07 17:04:45.058 E/msys    (28855): E[C 1]_MCCLogErrorInternal(330)=>8/374/3972/18
+05-07 17:04:45.058 E/msys    (28855): E[C mem.context]_LogConnectFailure(4804)=>Establishing connection failure reason and flags: disconnect/Doze/-1/reason/18/flags/49155/[no_connect, -, handshake_failure, transport_error, no_bytes_read, -, -, -, -, -, -, -, -, -]
+05-07 17:04:45.058 E/msys    (28855): E[C mem.context]_LogConnectFailure(4836)=>[Happy Eyeball] Connect failed with source=1, winner stream ip=2a03:2880:f257:e6:face:b00c:0:6e2e, port=443, dnsResolutionMethod=1, combined_ip_addresses=2a03:2880:f257:e6:face:b00c:0:6e2e, 157.240.223.175
+05-07 17:04:45.073 E/JNotifGatewayStreamGroupHandlerProxy.cpp(18512): onStreamError:TransientError domain: MNSSecureTCP code: 0 detail: mbedtls_ssl_read(): NET - Reading information from the socket failed (-0x004C), error = Software caused connection abort
+05-07 17:04:45.085 E/JNotifGatewayStreamHandlerProxy.cpp(18512): onStreamError:TransientError domain: MNSSecureTCP code: 0 detail: mbedtls_ssl_read(): NET - Reading information from the socket failed (-0x004C), error = Software caused connection abort
+05-07 17:04:45.085 E/JNotifGatewayStreamHandlerProxy.cpp(18512): onStreamError:TransientError domain: MNSSecureTCP code: 0 detail: mbedtls_ssl_read(): NET - Reading information from the socket failed (-0x004C), error = Software caused connection abort
+05-07 17:04:45.086 E/JNotifGatewayStreamHandlerProxy.cpp(18512): onStreamError:TransientError domain: MNSSecureTCP code: 0 detail: mbedtls_ssl_read(): NET - Reading information from the socket failed (-0x004C), error = Software caused connection abort
+05-07 17:04:45.087 E/JNotifGatewayStreamHandlerProxy.cpp(18512): onStreamError:TransientError domain: MNSSecureTCP code: 0 detail: mbedtls_ssl_read(): NET - Reading information from the socket failed (-0x004C), error = Software caused connection abort
+05-07 17:04:45.103 E/statsd  (  909): Stats puller failed for tag: 10011 at 1143141595636790
+05-07 17:04:45.122 E/WifiAwareNativeApi( 1569): disable: null interface
+05-07 17:04:45.132 E/WifiAwareStateManager( 1569): onDisableResponseLocal: FAILED!? command={ when=-6d12h41m21s845ms what=1 arg1=124 obj=true target=com.android.wifi.x.com.android.internal.util.StateMachine$SmHandler async=false heapIndex=-1 }, reason=9
+05-07 17:04:45.149 E/WifiService( 1569): Attempt to retrieve passpoint with invalid scanResult List
+05-07 17:04:45.174 E/statsd  (  909): Stats puller failed for tag: 10011 at 1143141595636790
+05-07 17:04:45.385 E/NearbyMediums(28345): MEDIUM_ERROR [SYSTEM][WIFI_LAN][START_LISTENING_INCOMING_CONNECTION][ACCEPT_CONNECTION_FAILED][SOCKET_CLOSED], service-id=nearby.sharedconnectivity
+05-07 17:04:45.385 E/NearbyMediums(28345): Extra Sensitive/PII message : Socket closed
+05-07 17:04:46.045 E/msys    (28855): E[N MQTT]onConnectError(562)=>Connect Error: folly::AsyncSocketException: AsyncSocketException: connect failed (immediately), type = Socket not open, errno = 101 (Network is unreachable)
+05-07 17:04:46.232 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMEmitStateChange(3256)=>[INFO] connection/new_state/connecting [connection_id=350690941, wcc_source=1, wcc_reason=18]
+05-07 17:04:46.233 E/msys    (28855): E[C MEMConnectionManager]_MEMConnectionManagerStateChangeHandler(585)=>[Critical] MEMConnectionState updated to ID: 1 with connectionId: 350690941
+05-07 17:04:46.240 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMDoConnectWithAuthKeys(1558)=>[INFO] connection/connect/start/[host=z-p42-chat-e2ee-ig.facebook.com port=443]/[157.240.223.175:443]/socketAddressCount=2
+05-07 17:04:46.240 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMLifecycleEventHandler(2232)=>[INFO] connection/xmpp/lifecycle_event/will-connect
+05-07 17:04:46.240 E/msys    (28855): E[A WA]WCCHandshakeCreate(191)=>handshake/create, pq mode:0
+05-07 17:04:46.243 E/msys    (28855): E[N mccw.liger]onConnectError(579)=>connect/error - address: 2a03:2880:f257:e6:face:b00c:0:6e2e, port: 5222, ex: folly::AsyncSocketException: AsyncSocketException: connect failed (immediately), type = Socket not open, errno = 101 (Network is unreachable)
+05-07 17:04:46.246 E/msys    (28855): E[N mccw.liger]onConnectError(579)=>connect/error - address: 2a03:2880:f257:e6:face:b00c:0:6e2e, port: 443, ex: folly::AsyncSocketException: AsyncSocketException: connect failed (immediately), type = Socket not open, errno = 101 (Network is unreachable)
+05-07 17:04:46.251 E/msys    (28855): E[N mccw.liger]onConnectError(579)=>connect/error - address: 2a03:2880:f257:e6:face:b00c:0:6e2e, port: 80, ex: folly::AsyncSocketException: AsyncSocketException: connect failed (immediately), type = Socket not open, errno = 101 (Network is unreachable)
+05-07 17:04:46.254 E/msys    (28855): E[N mccw.liger]onConnectError(579)=>connect/error - address: 157.240.223.175, port: 5222, ex: folly::AsyncSocketException: AsyncSocketException: connect failed (immediately), type = Socket not open, errno = 101 (Network is unreachable)
+05-07 17:04:46.257 E/msys    (28855): E[N mccw.liger]onConnectError(579)=>connect/error - address: 157.240.223.175, port: 443, ex: folly::AsyncSocketException: AsyncSocketException: connect failed (immediately), type = Socket not open, errno = 101 (Network is unreachable)
+05-07 17:04:46.260 E/msys    (28855): E[N mccw.liger]onConnectError(579)=>connect/error - address: 157.240.223.175, port: 80, ex: folly::AsyncSocketException: AsyncSocketException: connect failed (immediately), type = Socket not open, errno = 101 (Network is unreachable)
+05-07 17:04:46.261 E/msys    (28855): E[N WA]_WCCXMPPStreamDisconnectHandler(340)=>xmpp/disconnect - WCIStreamStateErrorCode: 0, domain: WCIStreamState, subdomain: MCCWLigerStream: Error Domain=WCIStreamState Code=0 UserInfo=0xb4000076d54c7580 {MCFErrorDirectUnderlyingErrorKey=0xb400007713ee8ed0 "Error Domain=MCCWLigerStream Code=1 UserInfo=0xb4000076d54c6ef0 {MCFErrorDirectLocalizedFailureReasonKey=folly::AsyncSocketException: AsyncSocketException: connect failed (immediately), type = Socket not open, errno = 101 (Network is unreachable)}"}
+05-07 17:04:46.261 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMLifecycleEventHandler(2240)=>[INFO] connection/xmpp/lifecycle_event/not-connected, [0.0209s]
+05-07 17:04:46.261 E/msys    (28855): E[N WA]_WCCXMPPStreamDoDisconnect(1307)=>xmpp/disconnect - flags: 163
+05-07 17:04:46.261 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMDisconnectHandler(2272)=>connection/disconnected, backoff on socket failed to connect
+05-07 17:04:46.261 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMDisconnectHandler(2307)=>connection/disconnected, transport error
+05-07 17:04:46.261 E/msys    (28855): E[C 1]_MCCLogErrorInternal(330)=>8/1066/2864/0
+05-07 17:04:46.262 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMDisconnectHandler(2338)=>connection/disconnected, handshake failure
+05-07 17:04:46.262 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMEmitStateChange(3256)=>[INFO] connection/new_state/not-connected [connection_id=350690939, wcc_source=1, wcc_reason=18]
+05-07 17:04:46.262 E/msys    (28855): E[C MEMConnectionManager]_MEMConnectionManagerStateChangeHandler(585)=>[Critical] MEMConnectionState updated to ID: 0 with connectionId: 350690939
+05-07 17:04:46.263 E/msys    (28855): E[C 1]_MCCLogErrorInternal(330)=>8/374/3970/49155
+05-07 17:04:46.263 E/msys    (28855): E[C 1]_MCCLogErrorInternal(330)=>8/374/3972/18
+05-07 17:04:46.264 E/msys    (28855): E[C mem.context]_LogConnectFailure(4804)=>Establishing connection failure reason and flags: disconnect/Doze/-1/reason/18/flags/49155/[no_connect, -, handshake_failure, transport_error, no_bytes_read, -, -, -, -, -, -, -, -, -]
+05-07 17:04:46.264 E/msys    (28855): E[C mem.context]_LogConnectFailure(4836)=>[Happy Eyeball] Connect failed with source=1, winner stream ip=2a03:2880:f257:e6:face:b00c:0:6e2e, port=443, dnsResolutionMethod=1, combined_ip_addresses=2a03:2880:f257:e6:face:b00c:0:6e2e, 157.240.223.175
+05-07 17:04:46.638 E/hwc-display(  569): [PrimaryDisplay] resetColorMappingInfoForClientComp:: resetColorMappingInfo() idx=1 error(-22)
+05-07 17:04:46.639 E/hwc-display(  569): Fail to open file /data/vendor/log/hwc/PrimaryDisplay_hwc_error_log0.txt, error: Permission denied
+05-07 17:04:46.639 E/hwc-display(  569): Fail to open file /data/log/PrimaryDisplay_hwc_error_log0.txt, error: No such file or directory
+05-07 17:04:46.639 E/hwc-display(  569): Unable to open log file for PrimaryDisplay_hwc_error_log0.txt
+05-07 17:04:46.695 E/hwc-display(  569): [PrimaryDisplay] resetColorMappingInfoForClientComp:: resetColorMappingInfo() idx=2 error(-22)
+05-07 17:04:46.695 E/hwc-display(  569): Fail to open file /data/vendor/log/hwc/PrimaryDisplay_hwc_error_log0.txt, error: Permission denied
+05-07 17:04:46.695 E/hwc-display(  569): Fail to open file /data/log/PrimaryDisplay_hwc_error_log0.txt, error: No such file or directory
+05-07 17:04:46.695 E/hwc-display(  569): Unable to open log file for PrimaryDisplay_hwc_error_log0.txt
+05-07 17:04:47.051 E/msys    (28855): E[N MQTT]onConnectError(562)=>Connect Error: folly::AsyncSocketException: AsyncSocketException: connect failed (immediately), type = Socket not open, errno = 101 (Network is unreachable)
+05-07 17:04:47.145 E/SlowAppComponent(28855): 0ms: KeepWarmReceiver instantiatingÔÇª
+05-07 17:04:47.146 E/SlowAppComponent(28855): Main thread was blocked for 21ms in the foreground starting with KeepWarmReceiver
+05-07 17:04:47.366 E/libbinder.IPCThreadState(  991): attemptIncStrongHandle(2): Not supported
+05-07 17:04:47.540 E/gralloc5(  568): ERROR: Format allocation info not found for format: 3b
+05-07 17:04:47.541 E/gralloc5(  568): ERROR: Format allocation info not found for format: 0
+05-07 17:04:47.541 E/gralloc5(  568): Invalid base format! req_base_format = (<unrecognized format> 0x0), req_format = (<unrecognized format> 0x3b), type = 0x0
+05-07 17:04:47.541 E/gralloc5(  568): ERROR: Unrecognized and/or unsupported format (<unrecognized format> 0x3b) and usage (CPU_READ_NEVER|CPU_WRITE_NEVER|GPU_TEXTURE|GPU_RENDER_TARGET|COMPOSER_OVERLAY 0xb00)
+05-07 17:04:47.541 E/gralloc5(  568): ERROR: Format allocation info not found for format: 3b
+05-07 17:04:47.541 E/gralloc5(  568): ERROR: Format allocation info not found for format: 0
+05-07 17:04:47.541 E/gralloc5(  568): Invalid base format! req_base_format = (<unrecognized format> 0x0), req_format = (<unrecognized format> 0x3b), type = 0x0
+05-07 17:04:47.541 E/gralloc5(  568): ERROR: Unrecognized and/or unsupported format (<unrecognized format> 0x3b) and usage (CPU_READ_NEVER|CPU_WRITE_NEVER|GPU_TEXTURE|GPU_RENDER_TARGET|COMPOSER_OVERLAY 0xb00)
+05-07 17:04:47.771 E/AccessibilityService(27573): bindInput must be paired with unbindInput.
+05-07 17:04:47.790 E/[Purchases] - ERROR( 6541): ­ƒÿ┐ÔÇ╝´©Å PurchasesError(code=NetworkError, underlyingErrorMessage=Unable to resolve host "api-production.8-lives-cat.io": No address associated with hostname, message='Error performing request.')
+05-07 17:04:47.790 E/[Purchases] - ERROR( 6541): ­ƒñûÔÇ╝´©Å Error fetching offerings - PurchasesError(code=NetworkError, underlyingErrorMessage=Unable to resolve host "api-production.8-lives-cat.io": No address associated with hostname, message='Error performing request.')
+05-07 17:04:47.807 E/msys    (28855): E[N mns:TigonMNS]_LogError(280)=>Failed to resolve using system DNS resolver, getaddrinfo(): No address associated with hostname
+05-07 17:04:47.810 E/[Purchases] - ERROR( 6541): ­ƒÿ┐ÔÇ╝´©Å PurchasesError(code=NetworkError, underlyingErrorMessage=Unable to resolve host "api.revenuecat.com": No address associated with hostname, message='Error performing request.')
+05-07 17:04:47.810 E/[Purchases] - ERROR( 6541): Error fetching customer data: PurchasesError(code=NetworkError, underlyingErrorMessage=Unable to resolve host "api.revenuecat.com": No address associated with hostname, message='Error performing request.').
+05-07 17:04:47.811 E/[Purchases] - ERROR( 6541): Error fetching customer data: PurchasesError(code=NetworkError, underlyingErrorMessage=Unable to resolve host "api.revenuecat.com": No address associated with hostname, message='Error performing request.').
+05-07 17:04:47.814 E/msys    (28855): E[N mns:TigonMNS]_LogError(280)=>Failed to resolve using system DNS resolver, getaddrinfo(): No address associated with hostname
+05-07 17:04:47.842 E/AppHost.Android( 5601): Low memory. Level : 40. App part of LRU list. Likely to be killed anytime
+05-07 17:04:47.855 E/[Purchases] - ERROR( 6541): ­ƒÿ┐ÔÇ╝´©Å PurchasesError(code=NetworkError, underlyingErrorMessage=Unable to resolve host "api.revenuecat.com": No address associated with hostname, message='Error performing request.')
+05-07 17:04:47.855 E/[Purchases] - ERROR( 6541): Error fetching customer data: PurchasesError(code=NetworkError, underlyingErrorMessage=Unable to resolve host "api.revenuecat.com": No address associated with hostname, message='Error performing request.').
+05-07 17:04:48.038 E/tflite  (27862): third_party/tensorflow/lite/core/subgraph.cc:1084 tensor.data.raw != nullptr was not true.
+05-07 17:04:48.062 E/TransitionChain( 1569): Can't collect into a chain with no transition
+05-07 17:04:48.062 E/TransitionChain( 1569): Can't collect into a chain with no transition
+05-07 17:04:48.062 E/TransitionChain( 1569): Can't collect into a chain with no transition
+05-07 17:04:48.062 E/TransitionChain( 1569): Can't collect into a chain with no transition
+05-07 17:04:48.291 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMEmitStateChange(3256)=>[INFO] connection/new_state/connecting [connection_id=350690942, wcc_source=1, wcc_reason=18]
+05-07 17:04:48.291 E/msys    (28855): E[C MEMConnectionManager]_MEMConnectionManagerStateChangeHandler(585)=>[Critical] MEMConnectionState updated to ID: 1 with connectionId: 350690942
+05-07 17:04:48.295 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMDoConnectWithAuthKeys(1558)=>[INFO] connection/connect/start/[host=z-p42-chat-e2ee-ig.facebook.com port=5222]/[157.240.0.175:5222]/socketAddressCount=1
+05-07 17:04:48.295 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMLifecycleEventHandler(2232)=>[INFO] connection/xmpp/lifecycle_event/will-connect
+05-07 17:04:48.295 E/msys    (28855): E[A WA]WCCHandshakeCreate(191)=>handshake/create, pq mode:0
+05-07 17:04:48.297 E/msys    (28855): E[N mccw.liger]onConnectError(579)=>connect/error - address: 157.240.0.175, port: 5222, ex: folly::AsyncSocketException: AsyncSocketException: connect failed (immediately), type = Socket not open, errno = 101 (Network is unreachable)
+05-07 17:04:48.300 E/msys    (28855): E[N mccw.liger]onConnectError(579)=>connect/error - address: 157.240.0.175, port: 443, ex: folly::AsyncSocketException: AsyncSocketException: connect failed (immediately), type = Socket not open, errno = 101 (Network is unreachable)
+05-07 17:04:48.302 E/msys    (28855): E[N mccw.liger]onConnectError(579)=>connect/error - address: 157.240.0.175, port: 80, ex: folly::AsyncSocketException: AsyncSocketException: connect failed (immediately), type = Socket not open, errno = 101 (Network is unreachable)
+05-07 17:04:48.302 E/msys    (28855): E[N WA]_WCCXMPPStreamDisconnectHandler(340)=>xmpp/disconnect - WCIStreamStateErrorCode: 0, domain: WCIStreamState, subdomain: MCCWLigerStream: Error Domain=WCIStreamState Code=0 UserInfo=0xb4000076d4db9680 {MCFErrorDirectUnderlyingErrorKey=0xb400007713a9e390 "Error Domain=MCCWLigerStream Code=1 UserInfo=0xb4000076d4dc19c0 {MCFErrorDirectLocalizedFailureReasonKey=folly::AsyncSocketException: AsyncSocketException: connect failed (immediately), type = Socket not open, errno = 101 (Network is unreachable)}"}
+05-07 17:04:48.302 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMLifecycleEventHandler(2240)=>[INFO] connection/xmpp/lifecycle_event/not-connected, [0.0070s]
+05-07 17:04:48.302 E/msys    (28855): E[N WA]_WCCXMPPStreamDoDisconnect(1307)=>xmpp/disconnect - flags: 163
+05-07 17:04:48.302 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMDisconnectHandler(2272)=>connection/disconnected, backoff on socket failed to connect
+05-07 17:04:48.302 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMDisconnectHandler(2307)=>connection/disconnected, transport error
+05-07 17:04:48.303 E/msys    (28855): E[C 1]_MCCLogErrorInternal(330)=>8/1066/2864/0
+05-07 17:04:48.303 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMDisconnectHandler(2338)=>connection/disconnected, handshake failure
+05-07 17:04:48.303 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMEmitStateChange(3256)=>[INFO] connection/new_state/not-connected [connection_id=350690939, wcc_source=1, wcc_reason=18]
+05-07 17:04:48.304 E/msys    (28855): E[C MEMConnectionManager]_MEMConnectionManagerStateChangeHandler(585)=>[Critical] MEMConnectionState updated to ID: 0 with connectionId: 350690939
+05-07 17:04:48.305 E/msys    (28855): E[C 1]_MCCLogErrorInternal(330)=>8/374/3970/49155
+05-07 17:04:48.306 E/msys    (28855): E[C 1]_MCCLogErrorInternal(330)=>8/374/3972/18
+05-07 17:04:48.306 E/msys    (28855): E[C mem.context]_LogConnectFailure(4804)=>Establishing connection failure reason and flags: disconnect/Doze/-1/reason/18/flags/49155/[no_connect, -, handshake_failure, transport_error, no_bytes_read, -, -, -, -, -, -, -, -, -]
+05-07 17:04:48.306 E/msys    (28855): E[C mem.context]_LogConnectFailure(4836)=>[Happy Eyeball] Connect failed with source=1, winner stream ip=2a03:2880:f257:e6:face:b00c:0:6e2e, port=443, dnsResolutionMethod=1, combined_ip_addresses=157.240.0.175
+05-07 17:04:51.062 E/msys    (28855): E[N MQTT]onConnectError(562)=>Connect Error: folly::AsyncSocketException: AsyncSocketException: connect failed (immediately), type = Socket not open, errno = 101 (Network is unreachable)
+05-07 17:04:51.484 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMEmitStateChange(3256)=>[INFO] connection/new_state/connecting [connection_id=350690943, wcc_source=1, wcc_reason=18]
+05-07 17:04:51.485 E/msys    (28855): E[C MEMConnectionManager]_MEMConnectionManagerStateChangeHandler(585)=>[Critical] MEMConnectionState updated to ID: 1 with connectionId: 350690943
+05-07 17:04:51.494 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMDoConnectWithAuthKeys(1558)=>[INFO] connection/connect/start/[host=z-p42-chat-e2ee-ig.facebook.com port=443]/[157.240.0.175:443]/socketAddressCount=1
+05-07 17:04:51.494 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMLifecycleEventHandler(2232)=>[INFO] connection/xmpp/lifecycle_event/will-connect
+05-07 17:04:51.494 E/msys    (28855): E[A WA]WCCHandshakeCreate(191)=>handshake/create, pq mode:0
+05-07 17:04:51.501 E/msys    (28855): E[N mccw.liger]onConnectError(579)=>connect/error - address: 157.240.0.175, port: 5222, ex: folly::AsyncSocketException: AsyncSocketException: connect failed (immediately), type = Socket not open, errno = 101 (Network is unreachable)
+05-07 17:04:51.511 E/msys    (28855): E[N mccw.liger]onConnectError(579)=>connect/error - address: 157.240.0.175, port: 443, ex: folly::AsyncSocketException: AsyncSocketException: connect failed (immediately), type = Socket not open, errno = 101 (Network is unreachable)
+05-07 17:04:51.516 E/msys    (28855): E[N mccw.liger]onConnectError(579)=>connect/error - address: 157.240.0.175, port: 80, ex: folly::AsyncSocketException: AsyncSocketException: connect failed (immediately), type = Socket not open, errno = 101 (Network is unreachable)
+05-07 17:04:51.518 E/msys    (28855): E[N WA]_WCCXMPPStreamDisconnectHandler(340)=>xmpp/disconnect - WCIStreamStateErrorCode: 0, domain: WCIStreamState, subdomain: MCCWLigerStream: Error Domain=WCIStreamState Code=0 UserInfo=0xb4000076d4f19ed0 {MCFErrorDirectUnderlyingErrorKey=0xb400007713a83ed0 "Error Domain=MCCWLigerStream Code=1 UserInfo=0xb4000076d4ccab20 {MCFErrorDirectLocalizedFailureReasonKey=folly::AsyncSocketException: AsyncSocketException: connect failed (immediately), type = Socket not open, errno = 101 (Network is unreachable)}"}
+05-07 17:04:51.518 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMLifecycleEventHandler(2240)=>[INFO] connection/xmpp/lifecycle_event/not-connected, [0.0237s]
+05-07 17:04:51.518 E/msys    (28855): E[N WA]_WCCXMPPStreamDoDisconnect(1307)=>xmpp/disconnect - flags: 163
+05-07 17:04:51.518 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMDisconnectHandler(2272)=>connection/disconnected, backoff on socket failed to connect
+05-07 17:04:51.518 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMDisconnectHandler(2307)=>connection/disconnected, transport error
+05-07 17:04:51.518 E/msys    (28855): E[C 1]_MCCLogErrorInternal(330)=>8/1066/2864/0
+05-07 17:04:51.519 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMDisconnectHandler(2338)=>connection/disconnected, handshake failure
+05-07 17:04:51.519 E/msys    (28855): E[N WCCConnectionMEM]_WCCConnectionMEMEmitStateChange(3256)=>[INFO] connection/new_state/not-connected [connection_id=350690939, wcc_source=1, wcc_reason=18]
+05-07 17:04:51.519 E/msys    (28855): E[C MEMConnectionManager]_MEMConnectionManagerStateChangeHandler(585)=>[Critical] MEMConnectionState updated to ID: 0 with connectionId: 350690939
+05-07 17:04:51.521 E/msys    (28855): E[C 1]_MCCLogErrorInternal(330)=>8/374/3970/49155
+05-07 17:04:51.522 E/msys    (28855): E[C 1]_MCCLogErrorInternal(330)=>8/374/3972/18
+05-07 17:04:51.522 E/msys    (28855): E[C mem.context]_LogConnectFailure(4804)=>Establishing connection failure reason and flags: disconnect/Doze/-1/reason/18/flags/49155/[no_connect, -, handshake_failure, transport_error, no_bytes_read, -, -, -, -, -, -, -, -, -]
+05-07 17:04:51.522 E/msys    (28855): E[C mem.context]_LogConnectFailure(4836)=>[Happy Eyeball] Connect failed with source=1, winner stream ip=2a03:2880:f257:e6:face:b00c:0:6e2e, port=443, dnsResolutionMethod=1, combined_ip_addresses=157.240.0.175
+05-07 17:04:51.665 E/AppStates.cpp(28855): Event 2 is not expected in BACKGROUND_VOIPOFF
+05-07 17:04:51.685 E/MQTTBypassDGWStreamGroupCallbacks.cpp(28855): onStreamGroupError TransientError domain: MNSQUICConnection code: 0 detail: Error on socket write Network is unreachable, 
+05-07 17:04:51.689 E/msys    (28855): E[S MSync]_ModularSyncHandleNetworkResponse(689)=>DB[223] - Encountered a network error (2002: TransientError domain: MNSQUICConnection code: 0 detail: Error on socket write Network is unreachable, )
+05-07 17:04:51.689 E/msys    (28855): E[S MSync]_ModularSyncHandleNetworkErrorResponse(514)=>DB[223] - handle network error response
+05-07 17:04:51.694 E/MDCoreSyncManagerImpl(28855): [userId=-748044889] Unknown event type: SUBSCRIPTION_STATE_CHANGED
+05-07 17:04:51.694 E/IgnitionDebug(28855): [userId=-748044889] Unknown event type: SUBSCRIPTION_STATE_CHANGED
+05-07 17:04:51.696 E/msys    (28855): E[N mns:DGWClient]_LogError(280)=>Failed to resolve using system DNS resolver, getaddrinfo(): No address associated with hostname
+05-07 17:04:51.700 E/MDCoreSyncManagerImpl(28855): [userId=-748044889] Unknown event type: SUBSCRIPTION_STATE_CHANGED
+05-07 17:04:51.700 E/IgnitionDebug(28855): [userId=-748044889] Unknown event type: SUBSCRIPTION_STATE_CHANGED
+05-07 17:04:51.709 E/GraphicsTracker(28855): cannot deallocate due to being stopped
+05-07 17:04:51.709 E/msys    (28855): E[N mns:DGWClient]_LogError(280)=>Failed to resolve using system DNS resolver, getaddrinfo(): No address associated with hostname
+05-07 17:04:51.709 E/msys    (28855): E[N mns:DGWClient]_LogError(280)=>Failed to resolve using system DNS resolver, getaddrinfo(): No address associated with hostname
+05-07 17:04:51.714 E/msys    (28855): E[N mns:DGWClient]_LogError(280)=>Failed to resolve using system DNS resolver, getaddrinfo(): No address associated with hostname
+05-07 17:04:51.719 E/msys    (28855): E[N mns:TigonMNS]_LogError(280)=>Failed to resolve using system DNS resolver, getaddrinfo(): No address associated with hostname
+05-07 17:04:51.725 E/msys    (28855): E[N mns:TigonMNS]_LogError(280)=>Failed to resolve using system DNS resolver, getaddrinfo(): No address associated with hostname
+05-07 17:04:51.759 E/GraphicsTracker(28855): Tried to deallocate non dequeued buffer
+05-07 17:04:51.763 E/GraphicsTracker(28855): cannot deallocate due to being stopped
+05-07 17:04:52.107 E/msys    (28855): E[N mns:DGWClient]_LogError(280)=>Failed to resolve using system DNS resolver, getaddrinfo(): No address associated with hostname
+05-07 17:04:52.109 E/msys    (28855): E[N mns:DGWClient]_LogError(280)=>Failed to resolve using system DNS resolver, getaddrinfo(): No address associated with hostname
+05-07 17:04:52.117 E/msys    (28855): E[N mns:DGWClient]_LogError(280)=>Failed to resolve using system DNS resolver, getaddrinfo(): No address associated with hostname
+05-07 17:04:52.119 E/msys    (28855): E[N mns:DGWClient]_LogError(280)=>Failed to resolve using system DNS resolver, getaddrinfo(): No address associated with hostname

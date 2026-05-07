@@ -353,7 +353,6 @@ class AppFullscreenRecoveryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       backgroundColor: AppColors.paper,
       body: SafeArea(
@@ -374,17 +373,54 @@ class AppFullscreenRecoveryScreen extends StatelessWidget {
                 children: <Widget>[
                   Container(width: 44, height: 2, color: AppColors.red),
                   const SizedBox(height: 16),
-                  const Icon(
-                    Icons.error_outline_rounded,
-                    size: 36,
-                    color: AppColors.red,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      const Icon(
+                        Icons.error_outline_rounded,
+                        size: 28,
+                        color: AppColors.red,
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          title,
+                          style: GoogleFonts.ibmPlexSans(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.ink,
+                            height: 1.2,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 12),
-                  Text(title, style: textTheme.headlineSmall),
-                  const SizedBox(height: 8),
-                  Text(message, style: textTheme.bodyMedium),
-                  const SizedBox(height: 6),
-                  Text(details, style: textTheme.labelSmall),
+                  Text(
+                    message,
+                    style: GoogleFonts.ibmPlexSans(
+                      fontSize: 14,
+                      color: AppColors.ink,
+                      height: 1.5,
+                    ),
+                  ),
+                  const SizedBox(height: 14),
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: AppColors.rule.withValues(alpha: 0.14),
+                      border: Border.all(color: AppColors.rule, width: 1),
+                    ),
+                    child: Text(
+                      details,
+                      style: GoogleFonts.ibmPlexSans(
+                        fontSize: 11,
+                        color: AppColors.inkLight,
+                        height: 1.45,
+                      ),
+                    ),
+                  ),
                   if (onRetry != null) ...<Widget>[
                     const SizedBox(height: 18),
                     SizedBox(

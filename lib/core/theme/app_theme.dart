@@ -58,6 +58,26 @@ abstract final class AppTheme {
   static late TextStyle _elevatedButtonTextDark;
   static late TextStyle _outlinedButtonTextDark;
 
+  // ─── SPACING & LAYOUT CONSTANTS ────────────────
+  static const double spacingXs = 4.0;
+  static const double spacingSmall = 8.0;
+  static const double spacingMedium = 12.0;
+  static const double spacingBase = 16.0;
+  static const double spacingLarge = 20.0;
+  static const double spacingXl = 24.0;
+  static const double spacingXxl = 32.0;
+  
+  // Common padding patterns
+  static const EdgeInsets paddingXs = EdgeInsets.all(spacingXs);
+  static const EdgeInsets paddingSmall = EdgeInsets.all(spacingSmall);
+  static const EdgeInsets paddingMedium = EdgeInsets.all(spacingMedium);
+  static const EdgeInsets paddingBase = EdgeInsets.all(spacingBase);
+  static const EdgeInsets paddingLarge = EdgeInsets.all(spacingLarge);
+  
+  // Common screen padding (left/right for full-width content)
+  static const EdgeInsets screenPadding = EdgeInsets.symmetric(horizontal: spacingLarge);
+  static const EdgeInsets screenPaddingVertical = EdgeInsets.fromLTRB(spacingLarge, spacingBase, spacingLarge, spacingBase);
+
   /// Initialize all text styles during bootstrap (called once at startup)
   /// This prevents runtime font fetches throughout app lifecycle
   static void initializeTextStyles() {
@@ -311,7 +331,11 @@ abstract final class AppTheme {
 
   // Public getters for Material text styles
   static TextStyle get titleLarge => _titleLarge;
+  static TextStyle get titleMedium => _titleMedium;
+  static TextStyle get bodyLarge => _bodyLarge;
   static TextStyle get bodyMedium => _bodyMedium;
+  static TextStyle get labelLarge => _labelLarge;
+  static TextStyle get labelSmall => _labelSmall;
 
   // Public getters for custom widget styles (light)
   static TextStyle get masthead => _masthead;
@@ -330,6 +354,10 @@ abstract final class AppTheme {
   static TextStyle get streakBadgeValue => _streakBadgeValue;
   static TextStyle get categoryChipLabel => _categoryChipLabel;
   static TextStyle get quoteCardKicker => _quoteCardKicker;
+
+  // ─── DEPRECATED: Use spacing constants instead ───────
+  // Example: EdgeInsets.fromLTRB(AppTheme.spacingLarge, ...)
+  // instead of: EdgeInsets.fromLTRB(20, ...)
 
   static TextTheme get _textTheme => TextTheme(
     displayLarge: _displayLarge,

@@ -47,16 +47,6 @@ class $QuoteEntriesTable extends QuoteEntries
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
-  static const VerificationMeta _authorMeta = const VerificationMeta('author');
-  @override
-  late final GeneratedColumn<String> author = GeneratedColumn<String>(
-    'author',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-    defaultValue: const Constant(''),
-  );
   static const VerificationMeta _yearMeta = const VerificationMeta('year');
   @override
   late final GeneratedColumn<int> year = GeneratedColumn<int>(
@@ -158,7 +148,6 @@ class $QuoteEntriesTable extends QuoteEntries
     textDe,
     textOriginal,
     source,
-    author,
     year,
     chapter,
     categoryCsv,
@@ -212,12 +201,6 @@ class $QuoteEntriesTable extends QuoteEntries
       );
     } else if (isInserting) {
       context.missing(_sourceMeta);
-    }
-    if (data.containsKey('author')) {
-      context.handle(
-        _authorMeta,
-        author.isAcceptableOrUnknown(data['author']!, _authorMeta),
-      );
     }
     if (data.containsKey('year')) {
       context.handle(
@@ -310,84 +293,54 @@ class $QuoteEntriesTable extends QuoteEntries
   QuoteEntry map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return QuoteEntry(
-      id:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}id'],
-          ) ??
-          '',
-      textDe:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}text_de'],
-          ) ??
-          '',
-      textOriginal:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}text_original'],
-          ) ??
-          '',
-      source:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}source'],
-          ) ??
-          '',
-      author:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}author'],
-          ) ??
-          '',
-      year:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.int,
-            data['${effectivePrefix}year'],
-          ) ??
-          0,
-      chapter:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}chapter'],
-          ) ??
-          '',
-      categoryCsv:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}category_csv'],
-          ) ??
-          '',
-      difficulty:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}difficulty'],
-          ) ??
-          '',
-      series:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}series'],
-          ) ??
-          '',
-      explanationShort:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}explanation_short'],
-          ) ??
-          '',
-      explanationLong:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}explanation_long'],
-          ) ??
-          '',
-      relatedIdsCsv:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}related_ids_csv'],
-          ) ??
-          '',
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      textDe: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}text_de'],
+      )!,
+      textOriginal: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}text_original'],
+      )!,
+      source: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}source'],
+      )!,
+      year: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}year'],
+      )!,
+      chapter: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}chapter'],
+      )!,
+      categoryCsv: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}category_csv'],
+      )!,
+      difficulty: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}difficulty'],
+      )!,
+      series: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}series'],
+      )!,
+      explanationShort: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}explanation_short'],
+      )!,
+      explanationLong: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}explanation_long'],
+      )!,
+      relatedIdsCsv: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}related_ids_csv'],
+      )!,
       funFact: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}fun_fact'],
@@ -406,7 +359,6 @@ class QuoteEntry extends DataClass implements Insertable<QuoteEntry> {
   final String textDe;
   final String textOriginal;
   final String source;
-  final String author;
   final int year;
   final String chapter;
   final String categoryCsv;
@@ -421,7 +373,6 @@ class QuoteEntry extends DataClass implements Insertable<QuoteEntry> {
     required this.textDe,
     required this.textOriginal,
     required this.source,
-    required this.author,
     required this.year,
     required this.chapter,
     required this.categoryCsv,
@@ -439,7 +390,6 @@ class QuoteEntry extends DataClass implements Insertable<QuoteEntry> {
     map['text_de'] = Variable<String>(textDe);
     map['text_original'] = Variable<String>(textOriginal);
     map['source'] = Variable<String>(source);
-    map['author'] = Variable<String>(author);
     map['year'] = Variable<int>(year);
     map['chapter'] = Variable<String>(chapter);
     map['category_csv'] = Variable<String>(categoryCsv);
@@ -460,7 +410,6 @@ class QuoteEntry extends DataClass implements Insertable<QuoteEntry> {
       textDe: Value(textDe),
       textOriginal: Value(textOriginal),
       source: Value(source),
-      author: Value(author),
       year: Value(year),
       chapter: Value(chapter),
       categoryCsv: Value(categoryCsv),
@@ -485,7 +434,6 @@ class QuoteEntry extends DataClass implements Insertable<QuoteEntry> {
       textDe: serializer.fromJson<String>(json['textDe']),
       textOriginal: serializer.fromJson<String>(json['textOriginal']),
       source: serializer.fromJson<String>(json['source']),
-      author: serializer.fromJson<String>(json['author']),
       year: serializer.fromJson<int>(json['year']),
       chapter: serializer.fromJson<String>(json['chapter']),
       categoryCsv: serializer.fromJson<String>(json['categoryCsv']),
@@ -505,7 +453,6 @@ class QuoteEntry extends DataClass implements Insertable<QuoteEntry> {
       'textDe': serializer.toJson<String>(textDe),
       'textOriginal': serializer.toJson<String>(textOriginal),
       'source': serializer.toJson<String>(source),
-      'author': serializer.toJson<String>(author),
       'year': serializer.toJson<int>(year),
       'chapter': serializer.toJson<String>(chapter),
       'categoryCsv': serializer.toJson<String>(categoryCsv),
@@ -523,7 +470,6 @@ class QuoteEntry extends DataClass implements Insertable<QuoteEntry> {
     String? textDe,
     String? textOriginal,
     String? source,
-    String? author,
     int? year,
     String? chapter,
     String? categoryCsv,
@@ -538,7 +484,6 @@ class QuoteEntry extends DataClass implements Insertable<QuoteEntry> {
     textDe: textDe ?? this.textDe,
     textOriginal: textOriginal ?? this.textOriginal,
     source: source ?? this.source,
-    author: author ?? this.author,
     year: year ?? this.year,
     chapter: chapter ?? this.chapter,
     categoryCsv: categoryCsv ?? this.categoryCsv,
@@ -557,7 +502,6 @@ class QuoteEntry extends DataClass implements Insertable<QuoteEntry> {
           ? data.textOriginal.value
           : this.textOriginal,
       source: data.source.present ? data.source.value : this.source,
-      author: data.author.present ? data.author.value : this.author,
       year: data.year.present ? data.year.value : this.year,
       chapter: data.chapter.present ? data.chapter.value : this.chapter,
       categoryCsv: data.categoryCsv.present
@@ -587,7 +531,6 @@ class QuoteEntry extends DataClass implements Insertable<QuoteEntry> {
           ..write('textDe: $textDe, ')
           ..write('textOriginal: $textOriginal, ')
           ..write('source: $source, ')
-          ..write('author: $author, ')
           ..write('year: $year, ')
           ..write('chapter: $chapter, ')
           ..write('categoryCsv: $categoryCsv, ')
@@ -607,7 +550,6 @@ class QuoteEntry extends DataClass implements Insertable<QuoteEntry> {
     textDe,
     textOriginal,
     source,
-    author,
     year,
     chapter,
     categoryCsv,
@@ -626,7 +568,6 @@ class QuoteEntry extends DataClass implements Insertable<QuoteEntry> {
           other.textDe == this.textDe &&
           other.textOriginal == this.textOriginal &&
           other.source == this.source &&
-          other.author == this.author &&
           other.year == this.year &&
           other.chapter == this.chapter &&
           other.categoryCsv == this.categoryCsv &&
@@ -643,7 +584,6 @@ class QuoteEntriesCompanion extends UpdateCompanion<QuoteEntry> {
   final Value<String> textDe;
   final Value<String> textOriginal;
   final Value<String> source;
-  final Value<String> author;
   final Value<int> year;
   final Value<String> chapter;
   final Value<String> categoryCsv;
@@ -659,7 +599,6 @@ class QuoteEntriesCompanion extends UpdateCompanion<QuoteEntry> {
     this.textDe = const Value.absent(),
     this.textOriginal = const Value.absent(),
     this.source = const Value.absent(),
-    this.author = const Value.absent(),
     this.year = const Value.absent(),
     this.chapter = const Value.absent(),
     this.categoryCsv = const Value.absent(),
@@ -676,7 +615,6 @@ class QuoteEntriesCompanion extends UpdateCompanion<QuoteEntry> {
     required String textDe,
     required String textOriginal,
     required String source,
-    this.author = const Value.absent(),
     required int year,
     required String chapter,
     required String categoryCsv,
@@ -704,7 +642,6 @@ class QuoteEntriesCompanion extends UpdateCompanion<QuoteEntry> {
     Expression<String>? textDe,
     Expression<String>? textOriginal,
     Expression<String>? source,
-    Expression<String>? author,
     Expression<int>? year,
     Expression<String>? chapter,
     Expression<String>? categoryCsv,
@@ -721,7 +658,6 @@ class QuoteEntriesCompanion extends UpdateCompanion<QuoteEntry> {
       if (textDe != null) 'text_de': textDe,
       if (textOriginal != null) 'text_original': textOriginal,
       if (source != null) 'source': source,
-      if (author != null) 'author': author,
       if (year != null) 'year': year,
       if (chapter != null) 'chapter': chapter,
       if (categoryCsv != null) 'category_csv': categoryCsv,
@@ -740,7 +676,6 @@ class QuoteEntriesCompanion extends UpdateCompanion<QuoteEntry> {
     Value<String>? textDe,
     Value<String>? textOriginal,
     Value<String>? source,
-    Value<String>? author,
     Value<int>? year,
     Value<String>? chapter,
     Value<String>? categoryCsv,
@@ -757,7 +692,6 @@ class QuoteEntriesCompanion extends UpdateCompanion<QuoteEntry> {
       textDe: textDe ?? this.textDe,
       textOriginal: textOriginal ?? this.textOriginal,
       source: source ?? this.source,
-      author: author ?? this.author,
       year: year ?? this.year,
       chapter: chapter ?? this.chapter,
       categoryCsv: categoryCsv ?? this.categoryCsv,
@@ -785,9 +719,6 @@ class QuoteEntriesCompanion extends UpdateCompanion<QuoteEntry> {
     }
     if (source.present) {
       map['source'] = Variable<String>(source.value);
-    }
-    if (author.present) {
-      map['author'] = Variable<String>(author.value);
     }
     if (year.present) {
       map['year'] = Variable<int>(year.value);
@@ -829,7 +760,6 @@ class QuoteEntriesCompanion extends UpdateCompanion<QuoteEntry> {
           ..write('textDe: $textDe, ')
           ..write('textOriginal: $textOriginal, ')
           ..write('source: $source, ')
-          ..write('author: $author, ')
           ..write('year: $year, ')
           ..write('chapter: $chapter, ')
           ..write('categoryCsv: $categoryCsv, ')
@@ -2539,7 +2469,6 @@ typedef $$QuoteEntriesTableCreateCompanionBuilder =
       required String textDe,
       required String textOriginal,
       required String source,
-      Value<String> author,
       required int year,
       required String chapter,
       required String categoryCsv,
@@ -2557,7 +2486,6 @@ typedef $$QuoteEntriesTableUpdateCompanionBuilder =
       Value<String> textDe,
       Value<String> textOriginal,
       Value<String> source,
-      Value<String> author,
       Value<int> year,
       Value<String> chapter,
       Value<String> categoryCsv,
@@ -2596,11 +2524,6 @@ class $$QuoteEntriesTableFilterComposer
 
   ColumnFilters<String> get source => $composableBuilder(
     column: $table.source,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get author => $composableBuilder(
-    column: $table.author,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -2679,11 +2602,6 @@ class $$QuoteEntriesTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get author => $composableBuilder(
-    column: $table.author,
-    builder: (column) => ColumnOrderings(column),
-  );
-
   ColumnOrderings<int> get year => $composableBuilder(
     column: $table.year,
     builder: (column) => ColumnOrderings(column),
@@ -2752,9 +2670,6 @@ class $$QuoteEntriesTableAnnotationComposer
 
   GeneratedColumn<String> get source =>
       $composableBuilder(column: $table.source, builder: (column) => column);
-
-  GeneratedColumn<String> get author =>
-      $composableBuilder(column: $table.author, builder: (column) => column);
 
   GeneratedColumn<int> get year =>
       $composableBuilder(column: $table.year, builder: (column) => column);
@@ -2829,7 +2744,6 @@ class $$QuoteEntriesTableTableManager
                 Value<String> textDe = const Value.absent(),
                 Value<String> textOriginal = const Value.absent(),
                 Value<String> source = const Value.absent(),
-                Value<String> author = const Value.absent(),
                 Value<int> year = const Value.absent(),
                 Value<String> chapter = const Value.absent(),
                 Value<String> categoryCsv = const Value.absent(),
@@ -2845,7 +2759,6 @@ class $$QuoteEntriesTableTableManager
                 textDe: textDe,
                 textOriginal: textOriginal,
                 source: source,
-                author: author,
                 year: year,
                 chapter: chapter,
                 categoryCsv: categoryCsv,
@@ -2863,7 +2776,6 @@ class $$QuoteEntriesTableTableManager
                 required String textDe,
                 required String textOriginal,
                 required String source,
-                Value<String> author = const Value.absent(),
                 required int year,
                 required String chapter,
                 required String categoryCsv,
@@ -2879,7 +2791,6 @@ class $$QuoteEntriesTableTableManager
                 textDe: textDe,
                 textOriginal: textOriginal,
                 source: source,
-                author: author,
                 year: year,
                 chapter: chapter,
                 categoryCsv: categoryCsv,

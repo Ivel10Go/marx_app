@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../core/theme/app_colors.dart';
+import '../../core/theme/app_theme.dart';
 import '../../domain/providers/archive_provider.dart';
 import '../../widgets/app_decorated_scaffold.dart';
 import '../../widgets/android_back_guard.dart';
@@ -60,7 +60,12 @@ class _ArchiveScreenState extends ConsumerState<ArchiveScreen> {
                   bottom: BorderSide(color: scheme.outline, width: 1),
                 ),
               ),
-              padding: const EdgeInsets.fromLTRB(20, 18, 20, 18),
+              padding: EdgeInsets.fromLTRB(
+                AppTheme.spacingLarge,
+                AppTheme.spacingBase,
+                AppTheme.spacingLarge,
+                AppTheme.spacingBase,
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -71,30 +76,15 @@ class _ArchiveScreenState extends ConsumerState<ArchiveScreen> {
                         child: archiveAsync.when(
                           data: (_) => Text(
                             'ARCHIV',
-                            style: GoogleFonts.playfairDisplay(
-                              fontSize: 32,
-                              fontWeight: FontWeight.w700,
-                              color: AppColors.ink,
-                              letterSpacing: -0.5,
-                            ),
+                            style: AppTheme.masthead,
                           ),
                           loading: () => Text(
                             'ARCHIV',
-                            style: GoogleFonts.playfairDisplay(
-                              fontSize: 32,
-                              fontWeight: FontWeight.w700,
-                              color: AppColors.ink,
-                              letterSpacing: -0.5,
-                            ),
+                            style: AppTheme.masthead,
                           ),
                           error: (_, __) => Text(
                             'ARCHIV',
-                            style: GoogleFonts.playfairDisplay(
-                              fontSize: 32,
-                              fontWeight: FontWeight.w700,
-                              color: AppColors.ink,
-                              letterSpacing: -0.5,
-                            ),
+                            style: AppTheme.masthead,
                           ),
                         ),
                       ),
@@ -105,27 +95,15 @@ class _ArchiveScreenState extends ConsumerState<ArchiveScreen> {
                           archiveAsync.when(
                             data: (items) => Text(
                               '${items.length} Einträge',
-                              style: GoogleFonts.ibmPlexSans(
-                                fontSize: 11,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.inkMuted,
-                              ),
+                              style: AppTheme.mastHeadSubtitle,
                             ),
                             loading: () => Text(
                               'Wird geladen',
-                              style: GoogleFonts.ibmPlexSans(
-                                fontSize: 11,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.inkMuted,
-                              ),
+                              style: AppTheme.mastHeadSubtitle,
                             ),
                             error: (_, __) => Text(
                               'Nicht verfügbar',
-                              style: GoogleFonts.ibmPlexSans(
-                                fontSize: 11,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.inkMuted,
-                              ),
+                              style: AppTheme.mastHeadSubtitle,
                             ),
                           ),
                           const SizedBox(height: 4),
@@ -137,15 +115,13 @@ class _ArchiveScreenState extends ConsumerState<ArchiveScreen> {
                   const SizedBox(height: 10),
                   Text(
                     'Suche, filtere und springe zwischen Themen, Interessen und Geschichte.',
-                    style: GoogleFonts.ibmPlexSans(
-                      fontSize: 12,
+                    style: AppTheme.bodyMedium.copyWith(
                       height: 1.4,
-                      color: AppColors.inkMuted,
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: AppTheme.spacingBase),
                   Container(
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(AppTheme.spacingSmall),
                     decoration: BoxDecoration(
                       color: scheme.surface,
                       border: Border.all(color: scheme.outline, width: 1),
@@ -159,7 +135,7 @@ class _ArchiveScreenState extends ConsumerState<ArchiveScreen> {
                             onTap: () => setTab(ArchiveTab.all),
                           ),
                         ),
-                        const SizedBox(width: 8),
+                        const SizedBox(width: AppTheme.spacingSmall),
                         Expanded(
                           child: _ArchiveTabButton(
                             label: 'GESCHICHTE',
@@ -170,15 +146,12 @@ class _ArchiveScreenState extends ConsumerState<ArchiveScreen> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: AppTheme.spacingMedium),
                   TextField(
                     decoration: InputDecoration(
                       labelText: 'SUCHE',
                       hintText: 'Begriffe, Personen, Quellen',
-                      labelStyle: GoogleFonts.ibmPlexSans(
-                        fontSize: 11,
-                        fontWeight: FontWeight.w700,
-                        letterSpacing: 1.0,
+                      labelStyle: AppTheme.labelLarge.copyWith(
                         color: scheme.onSurfaceVariant,
                       ),
                       prefixIcon: Icon(Icons.search, color: scheme.onSurface),
@@ -195,15 +168,14 @@ class _ArchiveScreenState extends ConsumerState<ArchiveScreen> {
                       border: InputBorder.none,
                       isDense: true,
                     ),
-                    style: GoogleFonts.ibmPlexSans(
-                      fontSize: 12,
+                    style: AppTheme.bodyMedium.copyWith(
                       color: scheme.onSurface,
                     ),
                     onChanged: (value) {
                       ref.read(archiveQueryProvider.notifier).state = value;
                     },
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: AppTheme.spacingMedium),
                   Row(
                     children: <Widget>[
                       Expanded(
@@ -216,9 +188,9 @@ class _ArchiveScreenState extends ConsumerState<ArchiveScreen> {
                                   if (selectedOrientation != null)
                                     'Orientierung: $selectedOrientation',
                                 ].join(' · '),
-                          style: GoogleFonts.ibmPlexSans(
-                            fontSize: 11,
+                          style: AppTheme.labelSmall.copyWith(
                             color: AppColors.inkMuted,
+                            fontWeight: FontWeight.w400,
                           ),
                         ),
                       ),
@@ -231,8 +203,8 @@ class _ArchiveScreenState extends ConsumerState<ArchiveScreen> {
                         style: TextButton.styleFrom(
                           foregroundColor: AppColors.ink,
                           padding: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 8,
+                            horizontal: AppTheme.spacingSmall,
+                            vertical: AppTheme.spacingSmall,
                           ),
                           shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.zero,
@@ -248,17 +220,13 @@ class _ArchiveScreenState extends ConsumerState<ArchiveScreen> {
                         ),
                         label: Text(
                           _filtersExpanded ? 'FILTER SCHLIESSEN' : 'FILTER',
-                          style: GoogleFonts.ibmPlexSans(
-                            fontSize: 10,
-                            fontWeight: FontWeight.w700,
-                            letterSpacing: 1.0,
-                          ),
+                          style: AppTheme.labelSmall,
                         ),
                       ),
                     ],
                   ),
                   if (_filtersExpanded) ...<Widget>[
-                    const SizedBox(height: 10),
+                    const SizedBox(height: AppTheme.spacingSmall),
                     ArchiveFilterChips(
                       onClearFilters:
                           selectedTheme == null && selectedOrientation == null
@@ -267,14 +235,14 @@ class _ArchiveScreenState extends ConsumerState<ArchiveScreen> {
                     ),
                   ] else if (selectedTheme != null ||
                       selectedOrientation != null) ...<Widget>[
-                    const SizedBox(height: 10),
+                    const SizedBox(height: AppTheme.spacingSmall),
                     TextButton.icon(
                       onPressed: clearFilters,
                       style: TextButton.styleFrom(
                         foregroundColor: AppColors.ink,
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 8,
+                          horizontal: AppTheme.spacingSmall,
+                          vertical: AppTheme.spacingSmall,
                         ),
                         shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.zero,
@@ -284,11 +252,7 @@ class _ArchiveScreenState extends ConsumerState<ArchiveScreen> {
                       icon: const Icon(Icons.close, size: 16),
                       label: Text(
                         'FILTER LÖSCHEN',
-                        style: GoogleFonts.ibmPlexSans(
-                          fontSize: 10,
-                          fontWeight: FontWeight.w700,
-                          letterSpacing: 1.0,
-                        ),
+                        style: AppTheme.labelSmall,
                       ),
                     ),
                   ],
@@ -306,12 +270,19 @@ class _ArchiveScreenState extends ConsumerState<ArchiveScreen> {
                     );
                   }
                   return ListView.builder(
-                    padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
+                    padding: EdgeInsets.fromLTRB(
+                      AppTheme.spacingLarge,
+                      AppTheme.spacingBase,
+                      AppTheme.spacingLarge,
+                      AppTheme.spacingXl,
+                    ),
                     itemCount: items.length,
                     itemBuilder: (context, index) {
                       final item = items[index];
                       return Padding(
-                        padding: const EdgeInsets.only(bottom: 12),
+                        padding: const EdgeInsets.only(
+                          bottom: AppTheme.spacingMedium,
+                        ),
                         child: item.isQuote
                             ? QuoteCard(
                                 quote: item.quote!,
@@ -364,10 +335,15 @@ class _ArchiveEmptyStateCard extends StatelessWidget {
 
     return Center(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
+        padding: EdgeInsets.fromLTRB(
+          AppTheme.spacingLarge,
+          AppTheme.spacingSmall,
+          AppTheme.spacingLarge,
+          AppTheme.spacingXl,
+        ),
         child: Container(
           width: 460,
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(AppTheme.spacingBase),
           decoration: BoxDecoration(
             color: scheme.surface,
             border: Border.all(color: scheme.outline, width: 1),
@@ -377,21 +353,17 @@ class _ArchiveEmptyStateCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(width: 34, height: 2, color: AppColors.red),
-              const SizedBox(height: 10),
+              const SizedBox(height: AppTheme.spacingSmall),
               Text(
                 title,
-                style: GoogleFonts.ibmPlexSans(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w700,
+                style: AppTheme.titleMedium.copyWith(
                   color: scheme.onSurface,
-                  letterSpacing: 0.9,
                 ),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: AppTheme.spacingSmall),
               Text(
                 body,
-                style: GoogleFonts.ibmPlexSans(
-                  fontSize: 11,
+                style: AppTheme.bodyMedium.copyWith(
                   color: scheme.onSurfaceVariant,
                   height: 1.45,
                 ),
@@ -424,7 +396,10 @@ class _ArchiveTabButton extends StatelessWidget {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 160),
         curve: Curves.easeOut,
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+        padding: const EdgeInsets.symmetric(
+          vertical: AppTheme.spacingSmall,
+          horizontal: AppTheme.spacingMedium,
+        ),
         decoration: BoxDecoration(
           color: active ? AppColors.ink : scheme.surface,
           border: Border.all(color: AppColors.ink, width: 1),
@@ -435,10 +410,8 @@ class _ArchiveTabButton extends StatelessWidget {
           children: <Widget>[
             Text(
               label,
-              style: GoogleFonts.ibmPlexSans(
-                fontSize: 10,
+              style: AppTheme.labelSmall.copyWith(
                 fontWeight: active ? FontWeight.w700 : FontWeight.w500,
-                letterSpacing: 1.0,
                 color: active ? AppColors.paper : AppColors.inkMuted,
               ),
               textAlign: TextAlign.center,
