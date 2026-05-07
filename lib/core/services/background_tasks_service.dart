@@ -1,5 +1,5 @@
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:workmanager/workmanager.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../data/database/app_database.dart';
 import '../../data/models/daily_content.dart';
@@ -30,13 +30,23 @@ void workmanagerCallbackDispatcher() {
       await quoteRepository.ensureSeeded();
       await historyRepository.ensureSeeded();
 
-      final prefs = await SharedPreferences.getInstance();
-      final streak = prefs.getInt(SettingsKeys.streak) ?? 0;
-      final appMode = _resolveAppMode(prefs.getString('app_mode'));
-      final homeContentMode = HomeContentMode.fromStorage(
-        prefs.getString(SettingsKeys.homeContentMode),
+      // Read small primitive values passed from the main isolate via
+      // `inputData`. Avoid calling platform-channel plugins from the
+      // background (DartWorker) isolate.
+      final streak = (inputData != null && inputData['streak'] != null)
+          ? (inputData['streak'] is int
+                ? inputData['streak'] as int
+                : int.tryParse('${inputData['streak']}') ?? 0)
+          : 0;
+      final appMode = _resolveAppMode(
+        inputData != null ? inputData['app_mode'] as String? : null,
       );
-      final profile = _resolveProfile(prefs.getString(UserProfile.storageKey));
+      final homeContentMode = HomeContentMode.fromStorage(
+        inputData != null ? inputData['home_content_mode'] as String? : null,
+      );
+      final profile = _resolveProfile(
+        inputData != null ? inputData['user_profile'] as String? : null,
+      );
       final content = await _resolveDailyContent(
         quoteRepository: quoteRepository,
         historyRepository: historyRepository,
@@ -133,6 +143,17 @@ abstract final class BackgroundTasksService {
       return;
     }
 
+    // Collect small primitive preferences on the main isolate and pass them
+    // to the background callback via `inputData` to avoid platform-channel
+    // calls from the background (DartWorker) isolate.
+    final prefs = await SharedPreferences.getInstance();
+    final inputData = <String, dynamic>{
+      'streak': prefs.getInt(SettingsKeys.streak) ?? 0,
+      'app_mode': prefs.getString('app_mode') ?? '',
+      'home_content_mode': prefs.getString(SettingsKeys.homeContentMode) ?? '',
+      'user_profile': prefs.getString(UserProfile.storageKey) ?? '',
+    };
+
     await Workmanager().initialize(workmanagerCallbackDispatcher);
 
     await Workmanager().registerPeriodicTask(
@@ -141,6 +162,7 @@ abstract final class BackgroundTasksService {
       frequency: const Duration(hours: 24),
       constraints: Constraints(networkType: NetworkType.notRequired),
       existingWorkPolicy: ExistingPeriodicWorkPolicy.replace,
+      inputData: inputData,
     );
 
     _initialized = true;

@@ -7,6 +7,7 @@ import '../../core/utils/image_loader.dart';
 import '../../data/models/thinker_quote.dart';
 import '../../domain/providers/thinkers_provider.dart';
 import '../../widgets/app_decorated_scaffold.dart';
+import '../../widgets/android_back_guard.dart';
 import '../../widgets/app_navigation_bar.dart';
 import '../loading/app_loading_screen.dart';
 
@@ -21,16 +22,19 @@ class ThinkersScreen extends ConsumerWidget {
     final isSearching = searchQuery.trim().isNotEmpty;
     final scheme = Theme.of(context).colorScheme;
 
-    return PopScope(
-      canPop: selectedAuthor == null && !isSearching,
-      onPopInvokedWithResult: (didPop, _) {
-        if (!didPop && isSearching) {
+    return AndroidBackGuard(
+      onBlockedPop: () {
+        if (isSearching) {
           ref.read(thinkerSearchQueryProvider.notifier).state = '';
-          return;
+          return true;
         }
-        if (!didPop && selectedAuthor != null) {
+
+        if (selectedAuthor != null) {
           ref.read(selectedAuthorProvider.notifier).state = null;
+          return true;
         }
+
+        return false;
       },
       child: AppDecoratedScaffold(
         appBar: null,
@@ -45,7 +49,7 @@ class ThinkersScreen extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    'ARCHIV',
+                    'DENKERATLAS',
                     style: GoogleFonts.playfairDisplay(
                       fontSize: 32,
                       fontWeight: FontWeight.w700,
@@ -119,11 +123,11 @@ class ThinkersScreen extends ConsumerWidget {
             ),
             const Padding(
               padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-              child: const SizedBox.shrink(),
+              child: SizedBox.shrink(),
             ),
             Expanded(
               child: isSearching
-                  ? const _SearchQuoteList()
+                  ? _SearchQuoteList()
                   : selectedAuthor == null
                   ? _AuthorList(type: selectedType)
                   : _QuoteList(author: selectedAuthor),
@@ -253,11 +257,11 @@ class _AuthorList extends ConsumerWidget {
         );
       },
       loading: () => const AppInlineLoadingState(
-        title: 'Archiv wird geladen',
+        title: 'Denker werden geladen',
         subtitle: 'Autorenliste wird vorbereitet ...',
       ),
       error: (error, _) => AppInlineErrorState(
-        title: 'Archiv konnte nicht geladen werden',
+        title: 'Denker konnten nicht geladen werden',
         message: 'Fehler: $error',
         onRetry: () => ref.invalidate(thinkerAuthorsProvider),
       ),
@@ -357,7 +361,7 @@ class _SearchQuoteList extends ConsumerWidget {
         if (quotes.isEmpty) {
           return Center(
             child: Text(
-              'Keine Treffer fur "$searchQuery".',
+              'Keine Treffer für "$searchQuery".',
               style: Theme.of(context).textTheme.bodyLarge,
             ),
           );

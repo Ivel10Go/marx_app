@@ -18,6 +18,7 @@ import '../../domain/providers/daily_content_provider.dart';
 import '../../domain/providers/app_mode_provider.dart';
 import '../../domain/providers/streak_provider.dart';
 import '../../widgets/app_decorated_scaffold.dart';
+import '../../widgets/android_back_guard.dart';
 import '../../widgets/app_navigation_bar.dart';
 import '../../widgets/adaptive_quote_text.dart';
 import '../../widgets/quote_card.dart';
@@ -201,209 +202,215 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
     final appMode = ref.watch(appModeNotifierProvider);
     final isAdmin = ref.watch(adminAccessProvider);
 
-    return AppDecoratedScaffold(
-      appBar: null,
-      bottomNavigationBar: const AppNavigationBar(selectedIndex: 0),
-      child: RefreshIndicator(
-        onRefresh: () async => ref.invalidate(dailyContentProvider),
-        child: ListView(
-          padding: EdgeInsets.zero,
-          physics: const AlwaysScrollableScrollPhysics(
-            parent: BouncingScrollPhysics(),
-          ),
-          children: <Widget>[
-            Container(
-              color: scheme.surface,
-              padding: const EdgeInsets.fromLTRB(20, 16, 20, 10),
-              child: LayoutBuilder(
-                builder: (BuildContext context, BoxConstraints constraints) {
-                  final compact = constraints.maxWidth < 420;
+    return AndroidBackGuard(
+      child: AppDecoratedScaffold(
+        appBar: null,
+        bottomNavigationBar: const AppNavigationBar(selectedIndex: 0),
+        child: RefreshIndicator(
+          onRefresh: () async => ref.invalidate(dailyContentProvider),
+          child: ListView(
+            padding: EdgeInsets.zero,
+            physics: const AlwaysScrollableScrollPhysics(
+              parent: BouncingScrollPhysics(),
+            ),
+            children: <Widget>[
+              Container(
+                color: scheme.surface,
+                padding: const EdgeInsets.fromLTRB(20, 16, 20, 10),
+                child: LayoutBuilder(
+                  builder: (BuildContext context, BoxConstraints constraints) {
+                    final compact = constraints.maxWidth < 420;
 
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  'TAGESAUSGABE',
-                                  style: GoogleFonts.ibmPlexSans(
-                                    fontSize: 9,
-                                    fontWeight: FontWeight.w700,
-                                    color: AppColors.red,
-                                    letterSpacing: 1.4,
-                                  ),
-                                ),
-                                const SizedBox(height: 6),
-                                Text('ZITATATLAS', style: AppTheme.masthead),
-                                const SizedBox(height: 4),
-                                Text(
-                                  _mastheadSubtitle(),
-                                  style: AppTheme.mastHeadSubtitle,
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          _HeaderIconAction(
-                            icon: Icons.settings_outlined,
-                            tooltip: 'Einstellungen',
-                            onTap: () => context.push('/settings'),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 12),
-                      Container(width: 40, height: 2, color: AppColors.red),
-                      const SizedBox(height: 6),
-                      if (compact)
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: <Widget>[
-                            if (isAdmin)
-                              _BroadsheetOutlineButton(
-                                onPressed: _showModeDialog,
-                                label: _modeLabel(appMode),
-                              ),
-                            if (isAdmin) ...<Widget>[
-                              const SizedBox(height: 10),
-                              _BroadsheetButton(
-                                onPressed: () => context.push('/admin'),
-                                label: 'ADMIN',
-                              ),
-                            ],
-                          ],
-                        )
-                      else
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
                         Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            if (isAdmin)
-                              Expanded(
-                                child: _BroadsheetOutlineButton(
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    'TAGESAUSGABE',
+                                    style: GoogleFonts.ibmPlexSans(
+                                      fontSize: 9,
+                                      fontWeight: FontWeight.w700,
+                                      color: AppColors.red,
+                                      letterSpacing: 1.4,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 6),
+                                  Text('ZITATATLAS', style: AppTheme.masthead),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    _mastheadSubtitle(),
+                                    style: AppTheme.mastHeadSubtitle,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            _HeaderIconAction(
+                              icon: Icons.settings_outlined,
+                              tooltip: 'Einstellungen',
+                              onTap: () => context.push('/settings'),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 12),
+                        Container(width: 40, height: 2, color: AppColors.red),
+                        const SizedBox(height: 6),
+                        if (compact)
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: <Widget>[
+                              if (isAdmin)
+                                _BroadsheetOutlineButton(
                                   onPressed: _showModeDialog,
                                   label: _modeLabel(appMode),
                                 ),
-                              ),
-                            if (isAdmin) ...<Widget>[
-                              const SizedBox(width: 10),
-                              _BroadsheetButton(
-                                onPressed: () => context.push('/admin'),
-                                label: 'ADMIN',
-                              ),
-                            ],
-                          ],
-                        ),
-                    ],
-                  );
-                },
-              ),
-            ),
-            const SizedBox.shrink(),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 12, 20, 24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  dailyContent.when(
-                    data: (content) {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          FadeTransition(
-                            opacity: _fade,
-                            child: SlideTransition(
-                              position: _slide,
-                              child: content.when(
-                                quote: (quote) {
-                                  final fallbackCard = QuoteCard(
-                                    quote: quote,
-                                    onShare: () => ShareCardRenderer()
-                                        .shareQuote(quote, context),
-                                    onTap: () =>
-                                        _showQuoteInsightSheet(context, quote),
-                                    onLongPress: () =>
-                                        _showQuoteInsightSheet(context, quote),
-                                  );
-
-                                  if (!isPro) {
-                                    return fallbackCard;
-                                  }
-
-                                  return premiumQuotesAsync.when(
-                                    data: (quotes) {
-                                      final visibleQuotes = quotes.isEmpty
-                                          ? <Quote>[quote]
-                                          : quotes;
-                                      return _MainQuoteScroller(
-                                        quotes: visibleQuotes,
-                                        onQuoteTap: (Quote selectedQuote) =>
-                                            _showQuoteInsightSheet(
-                                              context,
-                                              selectedQuote,
-                                            ),
-                                      );
-                                    },
-                                    loading: () => fallbackCard,
-                                    error: (_, __) => fallbackCard,
-                                  );
-                                },
-                                fact: (fact) => FactBlock(
-                                  fact: fact,
-                                  onShareTap: () => ShareCardRenderer()
-                                      .shareFact(fact, context),
-                                  onRelatedQuoteTap:
-                                      fact.relatedQuoteIds.isNotEmpty
-                                      ? () => context.push(
-                                          '/detail/${fact.relatedQuoteIds.first}',
-                                        )
-                                      : null,
+                              if (isAdmin) ...<Widget>[
+                                const SizedBox(height: 10),
+                                _BroadsheetButton(
+                                  onPressed: () => context.push('/admin'),
+                                  label: 'ADMIN',
                                 ),
-                                thinkerQuote: (ThinkerQuote quote) =>
-                                    _ThinkerQuoteCard(quote: quote),
+                              ],
+                            ],
+                          )
+                        else
+                          Row(
+                            children: <Widget>[
+                              if (isAdmin)
+                                Expanded(
+                                  child: _BroadsheetOutlineButton(
+                                    onPressed: _showModeDialog,
+                                    label: _modeLabel(appMode),
+                                  ),
+                                ),
+                              if (isAdmin) ...<Widget>[
+                                const SizedBox(width: 10),
+                                _BroadsheetButton(
+                                  onPressed: () => context.push('/admin'),
+                                  label: 'ADMIN',
+                                ),
+                              ],
+                            ],
+                          ),
+                      ],
+                    );
+                  },
+                ),
+              ),
+              const SizedBox.shrink(),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 12, 20, 24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    dailyContent.when(
+                      data: (content) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            FadeTransition(
+                              opacity: _fade,
+                              child: SlideTransition(
+                                position: _slide,
+                                child: content.when(
+                                  quote: (quote) {
+                                    final fallbackCard = QuoteCard(
+                                      quote: quote,
+                                      onShare: () => ShareCardRenderer()
+                                          .shareQuote(quote, context),
+                                      onTap: () => _showQuoteInsightSheet(
+                                        context,
+                                        quote,
+                                      ),
+                                      onLongPress: () => _showQuoteInsightSheet(
+                                        context,
+                                        quote,
+                                      ),
+                                    );
+
+                                    if (!isPro) {
+                                      return fallbackCard;
+                                    }
+
+                                    return premiumQuotesAsync.when(
+                                      data: (quotes) {
+                                        final visibleQuotes = quotes.isEmpty
+                                            ? <Quote>[quote]
+                                            : quotes;
+                                        return _MainQuoteScroller(
+                                          quotes: visibleQuotes,
+                                          onQuoteTap: (Quote selectedQuote) =>
+                                              _showQuoteInsightSheet(
+                                                context,
+                                                selectedQuote,
+                                              ),
+                                        );
+                                      },
+                                      loading: () => fallbackCard,
+                                      error: (_, __) => fallbackCard,
+                                    );
+                                  },
+                                  fact: (fact) => FactBlock(
+                                    fact: fact,
+                                    onShareTap: () => ShareCardRenderer()
+                                        .shareFact(fact, context),
+                                    onRelatedQuoteTap:
+                                        fact.relatedQuoteIds.isNotEmpty
+                                        ? () => context.push(
+                                            '/detail/${fact.relatedQuoteIds.first}',
+                                          )
+                                        : null,
+                                  ),
+                                  thinkerQuote: (ThinkerQuote quote) =>
+                                      _ThinkerQuoteCard(quote: quote),
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      );
-                    },
-                    loading: () => const _LoadingCard(),
-                    error: (error, _) => _EmptyStateCard(
-                      icon: Icons.error_outline_rounded,
-                      title: 'Ladevorgang fehlgeschlagen',
-                      body: '$error',
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-                  streakAsync.when(
-                    data: (streak) => StreakBadge(
-                      days: streak,
-                      expanded: _calendarExpanded,
-                      onTap: () {
-                        setState(() {
-                          _calendarExpanded = !_calendarExpanded;
-                        });
+                          ],
+                        );
                       },
+                      loading: () => const _LoadingCard(),
+                      error: (error, _) => _EmptyStateCard(
+                        icon: Icons.error_outline_rounded,
+                        title: 'Ladevorgang fehlgeschlagen',
+                        body: '$error',
+                      ),
                     ),
-                    loading: () => const StreakBadge(days: 0),
-                    error: (_, __) => const StreakBadge(days: 0),
-                  ),
-                  AnimatedSize(
-                    duration: const Duration(milliseconds: 250),
-                    curve: Curves.easeOut,
-                    child: _calendarExpanded
-                        ? const Padding(
-                            padding: EdgeInsets.only(top: 8),
-                            child: StreakCalendar(),
-                          )
-                        : const SizedBox.shrink(),
-                  ),
-                ],
+                    const SizedBox(height: 24),
+                    streakAsync.when(
+                      data: (streak) => StreakBadge(
+                        days: streak,
+                        expanded: _calendarExpanded,
+                        onTap: () {
+                          setState(() {
+                            _calendarExpanded = !_calendarExpanded;
+                          });
+                        },
+                      ),
+                      loading: () => const StreakBadge(days: 0),
+                      error: (_, __) => const StreakBadge(days: 0),
+                    ),
+                    AnimatedSize(
+                      duration: const Duration(milliseconds: 250),
+                      curve: Curves.easeOut,
+                      child: _calendarExpanded
+                          ? const Padding(
+                              padding: EdgeInsets.only(top: 8),
+                              child: StreakCalendar(),
+                            )
+                          : const SizedBox.shrink(),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
