@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../core/utils/pdf_export_service.dart';
 import '../../core/theme/app_colors.dart';
+import '../../core/theme/app_theme.dart';
 import '../../domain/providers/favorites_provider.dart';
 import '../../widgets/app_decorated_scaffold.dart';
 import '../../widgets/android_back_guard.dart';
@@ -28,7 +29,12 @@ class FavoritesScreen extends ConsumerWidget {
             // Masthead
             Container(
               color: AppColors.paper,
-              padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
+              padding: EdgeInsets.fromLTRB(
+                AppTheme.spacingLarge,
+                AppTheme.spacingBase,
+                AppTheme.spacingLarge,
+                AppTheme.spacingBase,
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -46,9 +52,11 @@ class FavoritesScreen extends ConsumerWidget {
                               letterSpacing: -0.5,
                             ),
                           ),
-                          const SizedBox(width: 10),
+                          SizedBox(width: 10),
                           Padding(
-                            padding: const EdgeInsets.only(bottom: 4),
+                            padding: EdgeInsets.only(
+                              bottom: AppTheme.spacingXs,
+                            ),
                             child: Text(
                               '${quotes.length} Einträge',
                               style: GoogleFonts.ibmPlexSans(
@@ -61,23 +69,57 @@ class FavoritesScreen extends ConsumerWidget {
                         ],
                       );
                     },
-                    loading: () => Text(
-                      'FAVORITEN',
-                      style: GoogleFonts.playfairDisplay(
-                        fontSize: 32,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.ink,
-                        letterSpacing: -0.5,
-                      ),
+                    loading: () => Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                        Text(
+                          'FAVORITEN',
+                          style: GoogleFonts.playfairDisplay(
+                            fontSize: 32,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.ink,
+                            letterSpacing: -0.5,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 4),
+                          child: Text(
+                            '— Einträge',
+                            style: GoogleFonts.ibmPlexSans(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.inkMuted,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    error: (_, __) => Text(
-                      'FAVORITEN',
-                      style: GoogleFonts.playfairDisplay(
-                        fontSize: 32,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.ink,
-                        letterSpacing: -0.5,
-                      ),
+                    error: (_, __) => Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                        Text(
+                          'FAVORITEN',
+                          style: GoogleFonts.playfairDisplay(
+                            fontSize: 32,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.ink,
+                            letterSpacing: -0.5,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 4),
+                          child: Text(
+                            '— Einträge',
+                            style: GoogleFonts.ibmPlexSans(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.inkMuted,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   Align(
@@ -106,13 +148,18 @@ class FavoritesScreen extends ConsumerWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  SizedBox(height: AppTheme.spacingMedium),
                   Container(width: 40, height: 2, color: AppColors.red),
                 ],
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+            Padding(
+              padding: EdgeInsets.fromLTRB(
+                AppTheme.spacingLarge,
+                0,
+                AppTheme.spacingLarge,
+                0,
+              ),
               child: SizedBox.shrink(),
             ),
             Expanded(
@@ -125,12 +172,19 @@ class FavoritesScreen extends ConsumerWidget {
                   }
 
                   return ListView.builder(
-                    padding: const EdgeInsets.fromLTRB(20, 10, 20, 24),
+                    padding: EdgeInsets.fromLTRB(
+                      AppTheme.spacingLarge,
+                      AppTheme.spacingSmall,
+                      AppTheme.spacingLarge,
+                      AppTheme.spacingXl,
+                    ),
                     itemCount: quotes.length,
                     itemBuilder: (context, index) {
                       final quote = quotes[index];
                       return Padding(
-                        padding: const EdgeInsets.only(bottom: 12),
+                        padding: EdgeInsets.only(
+                          bottom: AppTheme.spacingMedium,
+                        ),
                         child: QuoteCard(
                           quote: quote,
                           onTap: () => context.push(

@@ -35,7 +35,12 @@ class SettingsScreen extends ConsumerWidget {
             // Masthead
             Container(
               color: scheme.surface,
-              padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
+              padding: EdgeInsets.fromLTRB(
+                AppTheme.spacingLarge,
+                AppTheme.spacingBase,
+                AppTheme.spacingLarge,
+                AppTheme.spacingBase,
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -50,7 +55,7 @@ class SettingsScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: 12),
                   Container(width: 40, height: 2, color: AppColors.red),
-                  const SizedBox(height: 10),
+                  SizedBox(height: 10),
                   Text(
                     'Steuere, was du täglich siehst und wie du lernst.',
                     style: GoogleFonts.ibmPlexSans(
@@ -67,10 +72,15 @@ class SettingsScreen extends ConsumerWidget {
               child: settingsAsync.when(
                 data: (settings) {
                   return ListView(
-                    padding: const EdgeInsets.fromLTRB(20, 20, 20, 24),
+                    padding: EdgeInsets.fromLTRB(
+                      AppTheme.spacingLarge,
+                      AppTheme.spacingLarge,
+                      AppTheme.spacingLarge,
+                      AppTheme.spacingXl,
+                    ),
                     children: <Widget>[
                       const ProfileSection(),
-                      const SizedBox(height: 20),
+                      SizedBox(height: AppTheme.spacingLarge),
                       _SettingsGroup(
                         title: 'BENACHRICHTIGUNGEN',
                         children: <Widget>[
@@ -89,7 +99,7 @@ class SettingsScreen extends ConsumerWidget {
                                         color: AppColors.ink,
                                       ),
                                     ),
-                                    const SizedBox(height: 4),
+                                    SizedBox(height: AppTheme.spacingXs),
                                     Text(
                                       'Bei Aktivierung wird dein Tagesinhalt (Zitat oder Fact) jeden Tag zur gewählten Uhrzeit geplant.',
                                       style: GoogleFonts.ibmPlexSans(
@@ -127,7 +137,7 @@ class SettingsScreen extends ConsumerWidget {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 14),
+                          SizedBox(height: 14),
                           GestureDetector(
                             onTap: () async {
                               if (!settings.notificationEnabled) {
@@ -173,14 +183,14 @@ class SettingsScreen extends ConsumerWidget {
                                         : AppColors.inkLight,
                                   ),
                                 ),
-                                const SizedBox(height: 4),
+                                SizedBox(height: AppTheme.spacingXs),
                                 Text(
                                   '${settings.notificationHour.toString().padLeft(2, '0')}:${settings.notificationMinute.toString().padLeft(2, '0')}',
                                   style: GoogleFonts.ibmPlexSans(
                                     fontSize: 10,
                                     color: settings.notificationEnabled
                                         ? AppColors.inkLight
-                                        : const Color(0xFF9D9D9D),
+                                        : AppColors.inkMuted,
                                   ),
                                 ),
                               ],
@@ -188,7 +198,7 @@ class SettingsScreen extends ConsumerWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 20),
+                      SizedBox(height: AppTheme.spacingLarge),
                       _SettingsGroup(
                         title: 'SAMMLUNG',
                         children: <Widget>[
@@ -200,7 +210,7 @@ class SettingsScreen extends ConsumerWidget {
                               height: 1.5,
                             ),
                           ),
-                          const SizedBox(height: 12),
+                          SizedBox(height: AppTheme.spacingMedium),
                           Row(
                             children: <Widget>[
                               Expanded(
@@ -210,7 +220,7 @@ class SettingsScreen extends ConsumerWidget {
                                   onTap: () => context.push('/favorites'),
                                 ),
                               ),
-                              const SizedBox(width: 10),
+                              SizedBox(width: 10),
                               Expanded(
                                 child: _SettingsActionButton(
                                   label: 'ARCHIV',
@@ -222,7 +232,24 @@ class SettingsScreen extends ConsumerWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 20),
+                      SizedBox(height: AppTheme.spacingLarge),
+                      _SettingsGroup(
+                        title: 'PRO',
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: _SettingsActionButton(
+                                  label: 'UPGRADE AUF PRO',
+                                  filled: true,
+                                  onTap: () => context.push('/purchase'),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: AppTheme.spacingMedium),
+                        ],
+                      ),
                       if (isAdmin) ...<Widget>[
                         _SettingsGroup(
                           title: 'ADMIN',

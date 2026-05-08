@@ -66,17 +66,24 @@ abstract final class AppTheme {
   static const double spacingLarge = 20.0;
   static const double spacingXl = 24.0;
   static const double spacingXxl = 32.0;
-  
+
   // Common padding patterns
   static const EdgeInsets paddingXs = EdgeInsets.all(spacingXs);
   static const EdgeInsets paddingSmall = EdgeInsets.all(spacingSmall);
   static const EdgeInsets paddingMedium = EdgeInsets.all(spacingMedium);
   static const EdgeInsets paddingBase = EdgeInsets.all(spacingBase);
   static const EdgeInsets paddingLarge = EdgeInsets.all(spacingLarge);
-  
+
   // Common screen padding (left/right for full-width content)
-  static const EdgeInsets screenPadding = EdgeInsets.symmetric(horizontal: spacingLarge);
-  static const EdgeInsets screenPaddingVertical = EdgeInsets.fromLTRB(spacingLarge, spacingBase, spacingLarge, spacingBase);
+  static const EdgeInsets screenPadding = EdgeInsets.symmetric(
+    horizontal: spacingLarge,
+  );
+  static const EdgeInsets screenPaddingVertical = EdgeInsets.fromLTRB(
+    spacingLarge,
+    spacingBase,
+    spacingLarge,
+    spacingBase,
+  );
 
   /// Initialize all text styles during bootstrap (called once at startup)
   /// This prevents runtime font fetches throughout app lifecycle

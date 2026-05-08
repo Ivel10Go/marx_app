@@ -76,6 +76,17 @@ class PurchasesService {
     }
   }
 
+  /// Convenience initializer that reads the API key from Dart environment
+  /// (`--dart-define=REVENUECAT_API_KEY=...`). Falls back to a sensible
+  /// test key when none is provided.
+  Future<void> initFromEnvironment({bool debugLogs = false}) async {
+    final apiKey = const String.fromEnvironment(
+      'REVENUECAT_API_KEY',
+      defaultValue: 'test_PjGielVRVSTMPwgxgCkbstAiMjR',
+    );
+    return init(apiKey, debugLogs: debugLogs);
+  }
+
   Future<OfferingsFetchResult> fetchOfferingsWithStatus({
     int maxAttempts = 2,
     Duration timeout = const Duration(seconds: 8),

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../core/theme/app_colors.dart';
+import '../../core/theme/app_theme.dart';
 import '../../core/utils/image_loader.dart';
 import '../../data/models/thinker_quote.dart';
 import '../../domain/providers/thinkers_provider.dart';
@@ -44,7 +45,12 @@ class ThinkersScreen extends ConsumerWidget {
             // Masthead
             Container(
               color: scheme.surface,
-              padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
+              padding: EdgeInsets.fromLTRB(
+                AppTheme.spacingLarge,
+                AppTheme.spacingBase,
+                AppTheme.spacingLarge,
+                AppTheme.spacingBase,
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -121,8 +127,13 @@ class ThinkersScreen extends ConsumerWidget {
                 ],
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+            Padding(
+              padding: EdgeInsets.fromLTRB(
+                AppTheme.spacingLarge,
+                0,
+                AppTheme.spacingLarge,
+                0,
+              ),
               child: SizedBox.shrink(),
             ),
             Expanded(
@@ -203,7 +214,12 @@ class _AuthorList extends ConsumerWidget {
           );
         }
         return ListView.separated(
-          padding: const EdgeInsets.fromLTRB(20, 20, 20, 24),
+          padding: EdgeInsets.fromLTRB(
+            AppTheme.spacingLarge,
+            AppTheme.spacingLarge,
+            AppTheme.spacingLarge,
+            AppTheme.spacingXl,
+          ),
           itemCount: authors.length,
           separatorBuilder: (_, __) =>
               Container(height: 1, color: AppColors.rule),
@@ -286,11 +302,16 @@ class _QuoteList extends ConsumerWidget {
           child: InkWell(
             onTap: () => ref.read(selectedAuthorProvider.notifier).state = null,
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(12, 10, 20, 10),
+              padding: EdgeInsets.fromLTRB(
+                AppTheme.spacingMedium,
+                10,
+                AppTheme.spacingLarge,
+                10,
+              ),
               child: Row(
                 children: <Widget>[
                   const Icon(Icons.arrow_back, size: 18, color: AppColors.ink),
-                  const SizedBox(width: 8),
+                  SizedBox(width: AppTheme.spacingSmall),
                   Text(
                     'ZURÜCK',
                     style: GoogleFonts.ibmPlexSans(
@@ -322,7 +343,12 @@ class _QuoteList extends ConsumerWidget {
                 return const Center(child: Text('Keine Zitate gefunden.'));
               }
               return ListView.builder(
-                padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
+                padding: EdgeInsets.fromLTRB(
+                  AppTheme.spacingLarge,
+                  AppTheme.spacingBase,
+                  AppTheme.spacingLarge,
+                  AppTheme.spacingXl,
+                ),
                 itemCount: quotes.length,
                 itemBuilder: (context, index) {
                   return Padding(
@@ -367,11 +393,16 @@ class _SearchQuoteList extends ConsumerWidget {
           );
         }
         return ListView.builder(
-          padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
+          padding: EdgeInsets.fromLTRB(
+            AppTheme.spacingLarge,
+            AppTheme.spacingBase,
+            AppTheme.spacingLarge,
+            AppTheme.spacingXl,
+          ),
           itemCount: quotes.length,
           itemBuilder: (context, index) {
             return Padding(
-              padding: const EdgeInsets.only(bottom: 16),
+              padding: EdgeInsets.only(bottom: AppTheme.spacingBase),
               child: _ThinkerQuoteCard(quote: quotes[index]),
             );
           },

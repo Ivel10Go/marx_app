@@ -3,7 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:purchases_flutter/purchases_flutter.dart'
-    show Offerings, Offering, Package, PurchasesError, PurchasesErrorCode;
+    show
+        Offerings,
+        Offering,
+        Package,
+        PackageType,
+        PurchasesError,
+        PurchasesErrorCode;
 
 import '../../core/theme/app_colors.dart';
 import '../../core/providers/purchases_provider.dart';
@@ -18,6 +24,7 @@ class PurchasePage extends ConsumerStatefulWidget {
 
 class _PurchasePageState extends ConsumerState<PurchasePage> {
   Offerings? _offerings;
+  Offering? _currentOffering;
   bool _loading = false;
   bool _purchaseBusy = false;
   bool _restoreBusy = false;
@@ -47,24 +54,22 @@ class _PurchasePageState extends ConsumerState<PurchasePage> {
     try {
       final result = await PurchasesService.instance.fetchOfferingsWithStatus();
       final off = result.offerings;
-      final hasPackages =
-          off != null &&
-          off.all.values.any(
-            (offering) => offering.availablePackages.isNotEmpty,
-          );
+      final current = off?.current;
+      final hasPackages = _packagesForDisplay(off).isNotEmpty;
 
       if (!mounted) {
         return;
       }
       setState(() {
         _offerings = off;
+        _currentOffering = current;
         if (off == null) {
           _errorMessage = result.isTimeout
               ? 'Angebote konnten nicht rechtzeitig geladen werden. Bitte erneut versuchen.'
               : 'Angebote konnten nicht geladen werden. Bitte Verbindung und RevenueCat-Setup prüfen.';
         } else if (!hasPackages) {
           _errorMessage =
-              'Angebote geladen, aber ohne kaufbare Pakete. Bitte Offering-Konfiguration prüfen.';
+              'Das aktuelle Offering enthält keine kaufbaren Pakete. Bitte RevenueCat-Konfiguration prüfen.';
         } else {
           _errorMessage = null;
         }
@@ -77,12 +82,11 @@ class _PurchasePageState extends ConsumerState<PurchasePage> {
         _errorMessage = 'Angebote konnten nicht geladen werden: $e';
       });
     } finally {
-      if (!mounted) {
-        return;
+      if (mounted) {
+        setState(() {
+          _loading = false;
+        });
       }
-      setState(() {
-        _loading = false;
-      });
     }
   }
 
@@ -320,9 +324,10 @@ class _PurchasePageState extends ConsumerState<PurchasePage> {
                             ),
                           )
                         : ListView(
-                            children: _offerings!.all.values
-                                .map((offering) => _buildOffering(offering))
-                                .toList(),
+                            children: [
+                              if (_currentOffering != null)
+                                _buildOffering(_currentOffering!),
+                            ],
                           ),
                   ),
                   const SizedBox(height: 8),
@@ -359,6 +364,11 @@ class _PurchasePageState extends ConsumerState<PurchasePage> {
   }
 
   Widget _buildOffering(Offering offering) {
+    final packages = _packagesForDisplay(
+      _offerings,
+      preferredOffering: offering,
+    );
+
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 8),
       child: Padding(
@@ -366,6 +376,29 @@ class _PurchasePageState extends ConsumerState<PurchasePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    'Aktuelles Offering',
+                    style: GoogleFonts.ibmPlexSans(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.ink,
+                    ),
+                  ),
+                ),
+                if (offering.identifier.isNotEmpty)
+                  Text(
+                    offering.identifier,
+                    style: GoogleFonts.ibmPlexSans(
+                      fontSize: 10,
+                      color: AppColors.inkLight,
+                    ),
+                  ),
+              ],
+            ),
+            const SizedBox(height: 4),
             Text(
               offering.serverDescription,
               style: GoogleFonts.ibmPlexSans(
@@ -375,28 +408,111 @@ class _PurchasePageState extends ConsumerState<PurchasePage> {
               ),
             ),
             const SizedBox(height: 8),
-            ...offering.availablePackages.map((pkg) {
-              final price = pkg.storeProduct.priceString;
-              final title = pkg.storeProduct.title;
-              return ListTile(
-                title: Text(title),
-                subtitle: Text(price),
-                trailing: ElevatedButton(
-                  onPressed: _purchaseBusy ? null : () => _buyPackage(pkg),
-                  child: _purchaseBusy
-                      ? const SizedBox(
-                          width: 16,
-                          height: 16,
-                          child: CircularProgressIndicator(strokeWidth: 2),
-                        )
-                      : const Text('Kaufen'),
-                ),
-              );
-            }),
+            ...packages.map((pkg) => _buildPackageTile(pkg)),
           ],
         ),
       ),
     );
+  }
+
+  Widget _buildPackageTile(Package pkg) {
+    final product = pkg.storeProduct;
+    final label = _packageLabel(pkg);
+    final subtitleParts = <String>[
+      product.priceString,
+      if (product.description.isNotEmpty) product.description,
+    ];
+
+    return ListTile(
+      contentPadding: EdgeInsets.zero,
+      title: Text(label),
+      subtitle: Text(subtitleParts.join(' • ')),
+      trailing: ElevatedButton(
+        onPressed: _purchaseBusy ? null : () => _buyPackage(pkg),
+        child: _purchaseBusy
+            ? const SizedBox(
+                width: 16,
+                height: 16,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              )
+            : const Text('Kaufen'),
+      ),
+    );
+  }
+
+  List<Package> _packagesForDisplay(
+    Offerings? offerings, {
+    Offering? preferredOffering,
+  }) {
+    final offering = preferredOffering ?? offerings?.current;
+    final packages = <Package>[];
+
+    if (offering != null && offering.availablePackages.isNotEmpty) {
+      packages.addAll(offering.availablePackages);
+    } else if (offerings != null) {
+      for (final candidate in offerings.all.values) {
+        if (candidate.availablePackages.isNotEmpty) {
+          packages.addAll(candidate.availablePackages);
+          break;
+        }
+      }
+    }
+
+    packages.sort((a, b) {
+      final weightA = _packageSortWeight(a.packageType);
+      final weightB = _packageSortWeight(b.packageType);
+      if (weightA != weightB) {
+        return weightA.compareTo(weightB);
+      }
+      return a.storeProduct.price.compareTo(b.storeProduct.price);
+    });
+
+    return packages;
+  }
+
+  int _packageSortWeight(PackageType type) {
+    switch (type) {
+      case PackageType.lifetime:
+        return 0;
+      case PackageType.annual:
+        return 1;
+      case PackageType.monthly:
+        return 2;
+      case PackageType.sixMonth:
+        return 3;
+      case PackageType.threeMonth:
+        return 4;
+      case PackageType.twoMonth:
+        return 5;
+      case PackageType.weekly:
+        return 6;
+      case PackageType.custom:
+      case PackageType.unknown:
+        return 7;
+    }
+  }
+
+  String _packageLabel(Package pkg) {
+    switch (pkg.packageType) {
+      case PackageType.lifetime:
+        return 'Lifetime';
+      case PackageType.annual:
+        return 'Yearly';
+      case PackageType.monthly:
+        return 'Monthly';
+      case PackageType.sixMonth:
+        return '6 Monate';
+      case PackageType.threeMonth:
+        return '3 Monate';
+      case PackageType.twoMonth:
+        return '2 Monate';
+      case PackageType.weekly:
+        return 'Wöchentlich';
+      case PackageType.custom:
+        return 'Custom';
+      case PackageType.unknown:
+        return pkg.identifier;
+    }
   }
 }
 

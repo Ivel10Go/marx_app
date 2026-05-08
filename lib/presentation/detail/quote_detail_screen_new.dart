@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../core/theme/app_colors.dart';
+import '../../core/theme/app_theme.dart';
 import '../../core/utils/image_loader.dart';
 import '../../core/utils/share_card_renderer.dart';
 import '../../core/utils/quote_attribution.dart';
@@ -13,6 +16,7 @@ import '../../domain/providers/repository_providers.dart';
 import '../../domain/services/tts_service.dart';
 import '../../widgets/adaptive_quote_text.dart';
 import '../../widgets/app_decorated_scaffold.dart';
+import '../../widgets/android_back_guard.dart';
 import '../../widgets/category_chip.dart';
 import '../loading/app_loading_screen.dart';
 
@@ -62,7 +66,12 @@ class _QuoteDetailScreenState extends ConsumerState<QuoteDetailScreen> {
       builder: (BuildContext context) {
         return SafeArea(
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 4, 20, 24),
+            padding: EdgeInsets.fromLTRB(
+              AppTheme.spacingLarge,
+              AppTheme.spacingXs,
+              AppTheme.spacingLarge,
+              AppTheme.spacingXl,
+            ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,7 +84,7 @@ class _QuoteDetailScreenState extends ConsumerState<QuoteDetailScreen> {
                     letterSpacing: 1.2,
                   ),
                 ),
-                const SizedBox(height: 12),
+                SizedBox(height: AppTheme.spacingMedium),
                 Text(
                   quote.explanationShort,
                   style: GoogleFonts.ibmPlexSans(fontSize: 12, height: 1.6),
@@ -99,197 +108,220 @@ class _QuoteDetailScreenState extends ConsumerState<QuoteDetailScreen> {
     final quoteAsync = ref.watch(quoteByIdProvider(quoteId));
     final favoriteAsync = ref.watch(isFavoriteProvider(quoteId));
 
-    return AppDecoratedScaffold(
-      appBar: null,
-      bottomNavigationBar: quoteAsync.when(
-        data: (quote) {
-          if (quote == null) {
-            return const SizedBox.shrink();
-          }
+    return AndroidBackGuard(
+      onBlockedPop: () {
+        final navigator = Navigator.of(context);
+        if (navigator.canPop()) {
+          unawaited(navigator.maybePop());
+          return true;
+        }
 
-          return SafeArea(
-            minimum: const EdgeInsets.fromLTRB(20, 0, 20, 12),
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  child: _BroadsheetOutlineButton(
-                    onPressed: () => _shareQuote(quote),
-                    label: 'TEILEN',
+        return false;
+      },
+      child: AppDecoratedScaffold(
+        appBar: null,
+        bottomNavigationBar: quoteAsync.when(
+          data: (quote) {
+            if (quote == null) {
+              return const SizedBox.shrink();
+            }
+
+            return SafeArea(
+              minimum: EdgeInsets.fromLTRB(
+                AppTheme.spacingLarge,
+                0,
+                AppTheme.spacingLarge,
+                AppTheme.spacingMedium,
+              ),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: _BroadsheetOutlineButton(
+                      onPressed: () => _shareQuote(quote),
+                      label: 'TEILEN',
+                    ),
                   ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: _BroadsheetButton(
-                    onPressed: () => _showExplanation(quote),
-                    label: 'ERKLÄRUNG',
+                  SizedBox(width: AppTheme.spacingMedium),
+                  Expanded(
+                    child: _BroadsheetButton(
+                      onPressed: () => _showExplanation(quote),
+                      label: 'ERKLÄRUNG',
+                    ),
                   ),
-                ),
-                const SizedBox(width: 12),
-                favoriteAsync.when(
-                  data: (isFavorite) {
-                    return SizedBox(
-                      width: 48,
-                      child: Material(
-                        color: isFavorite ? AppColors.red : Colors.transparent,
-                        child: InkWell(
-                          onTap: () async {
-                            final repo = ref.read(quoteRepositoryProvider);
-                            if (isFavorite) {
-                              await repo.removeFavorite(quoteId);
-                            } else {
-                              await repo.addFavorite(quoteId);
-                            }
-                          },
-                          child: Center(
-                            child: Icon(
-                              isFavorite
-                                  ? Icons.favorite_rounded
-                                  : Icons.favorite_border_rounded,
-                              color: isFavorite
-                                  ? AppColors.redOnRed
-                                  : scheme.onSurface,
-                              size: 20,
+                  SizedBox(width: AppTheme.spacingMedium),
+                  favoriteAsync.when(
+                    data: (isFavorite) {
+                      return SizedBox(
+                        width: 48,
+                        child: Material(
+                          color: isFavorite
+                              ? AppColors.red
+                              : Colors.transparent,
+                          child: InkWell(
+                            onTap: () async {
+                              final repo = ref.read(quoteRepositoryProvider);
+                              if (isFavorite) {
+                                await repo.removeFavorite(quoteId);
+                              } else {
+                                await repo.addFavorite(quoteId);
+                              }
+                            },
+                            child: Center(
+                              child: Icon(
+                                isFavorite
+                                    ? Icons.favorite_rounded
+                                    : Icons.favorite_border_rounded,
+                                color: isFavorite
+                                    ? AppColors.redOnRed
+                                    : scheme.onSurface,
+                                size: 20,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    );
-                  },
-                  loading: () => const SizedBox.shrink(),
-                  error: (_, __) => const SizedBox.shrink(),
-                ),
-              ],
-            ),
-          );
-        },
-        loading: () => const SizedBox.shrink(),
-        error: (_, __) => const SizedBox.shrink(),
-      ),
-      child: quoteAsync.when(
-        data: (quote) {
-          if (quote == null) {
-            return const _DetailEmptyStateCard();
-          }
-
-          return ListView(
-            padding: EdgeInsets.zero,
-            children: <Widget>[
-              Container(
-                color: AppColors.red,
-                padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      '${quoteAuthorLabel(quote).toUpperCase()} · ${quote.year}',
-                      style: GoogleFonts.ibmPlexSans(
-                        fontSize: 11,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.redOnRed,
-                        letterSpacing: 1.2,
-                      ),
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      '${quote.source} · ${quote.chapter}',
-                      style: GoogleFonts.ibmPlexSans(
-                        fontSize: 9,
-                        color: AppColors.redOnRed.withValues(alpha: 0.8),
-                      ),
-                    ),
-                  ],
-                ),
+                      );
+                    },
+                    loading: () => const SizedBox.shrink(),
+                    error: (_, __) => const SizedBox.shrink(),
+                  ),
+                ],
               ),
-              const SizedBox.shrink(),
-              if (quote.imageUrl != null && quote.imageUrl!.isNotEmpty)
-                CachedImageLoader(
-                  imageUrl: quote.imageUrl!,
-                  width: double.infinity,
-                  height: 300,
-                  fit: BoxFit.cover,
-                  cacheConfig: const ImageCacheConfig(
-                    cacheDurationDays: 7,
-                    maxMemoryCacheSizeMB: 50,
+            );
+          },
+          loading: () => const SizedBox.shrink(),
+          error: (_, __) => const SizedBox.shrink(),
+        ),
+        child: quoteAsync.when(
+          data: (quote) {
+            if (quote == null) {
+              return const _DetailEmptyStateCard();
+            }
+
+            return ListView(
+              padding: EdgeInsets.zero,
+              children: <Widget>[
+                Container(
+                  color: AppColors.red,
+                  padding: EdgeInsets.fromLTRB(
+                    AppTheme.spacingLarge,
+                    AppTheme.spacingBase,
+                    AppTheme.spacingLarge,
+                    AppTheme.spacingBase,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        '${quoteAuthorLabel(quote).toUpperCase()} · ${quote.year}',
+                        style: GoogleFonts.ibmPlexSans(
+                          fontSize: 11,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.redOnRed,
+                          letterSpacing: 1.2,
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        '${quote.source} · ${quote.chapter}',
+                        style: GoogleFonts.ibmPlexSans(
+                          fontSize: 9,
+                          color: AppColors.redOnRed.withValues(alpha: 0.8),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 24, 20, 24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    AdaptiveQuoteText(
-                      text: quote.textDe,
-                      minFontSize: 28,
-                      maxFontSize: 42,
-                      maxLines: 9,
-                      style: Theme.of(context).textTheme.displayLarge,
+                const SizedBox.shrink(),
+                if (quote.imageUrl != null && quote.imageUrl!.isNotEmpty)
+                  CachedImageLoader(
+                    imageUrl: quote.imageUrl!,
+                    width: double.infinity,
+                    height: 300,
+                    fit: BoxFit.cover,
+                    cacheConfig: const ImageCacheConfig(
+                      cacheDurationDays: 7,
+                      maxMemoryCacheSizeMB: 50,
                     ),
-                    const SizedBox(height: 14),
-                    Container(width: 28, height: 2, color: AppColors.red),
-                    const SizedBox(height: 14),
-                    Text(
-                      '— ${quote.source}',
-                      style: GoogleFonts.playfairDisplay(
-                        fontSize: 12,
-                        color: AppColors.inkLight,
+                  ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 24, 20, 24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      AdaptiveQuoteText(
+                        text: quote.textDe,
+                        minFontSize: 28,
+                        maxFontSize: 42,
+                        maxLines: 9,
+                        style: Theme.of(context).textTheme.displayLarge,
                       ),
-                    ),
-                    const SizedBox(height: 20),
-                    Wrap(
-                      spacing: 6,
-                      runSpacing: 6,
-                      children: quote.category
-                          .map((String item) => CategoryChip(label: item))
-                          .toList(),
-                    ),
-                    const SizedBox(height: 24),
-                    _SectionCard(
-                      title: 'KURZERKLÄRUNG',
-                      body: quote.explanationShort,
-                    ),
-                    const SizedBox(height: 16),
-                    _SectionCard(
-                      title: 'AUSFÜHRLICHE ERKLÄRUNG',
-                      body: quote.explanationLong,
-                    ),
-                    const SizedBox(height: 16),
-                    _AudioExplainerSection(
-                      ttsService: _ttsService,
-                      explanationShort: quote.explanationShort,
-                      explanationLong: quote.explanationLong,
-                      audioPlaying: _audioPlaying,
-                      onPlayingChanged: (playing) {
-                        setState(() {
-                          _audioPlaying = playing;
-                        });
-                      },
-                    ),
-                    if (quote.funFact != null) ...<Widget>[
-                      const SizedBox(height: 16),
-                      _SectionCard(title: 'KONTEXT', body: quote.funFact!),
-                    ],
-                    if (quote.relatedIds.isNotEmpty) ...<Widget>[
+                      const SizedBox(height: 14),
+                      Container(width: 28, height: 2, color: AppColors.red),
+                      const SizedBox(height: 14),
+                      Text(
+                        '— ${quote.source}',
+                        style: GoogleFonts.playfairDisplay(
+                          fontSize: 12,
+                          color: AppColors.inkLight,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Wrap(
+                        spacing: 6,
+                        runSpacing: 6,
+                        children: quote.category
+                            .map((String item) => CategoryChip(label: item))
+                            .toList(),
+                      ),
+                      const SizedBox(height: 24),
+                      _SectionCard(
+                        title: 'KURZERKLÄRUNG',
+                        body: quote.explanationShort,
+                      ),
                       const SizedBox(height: 16),
                       _SectionCard(
-                        title: 'VERWANDTE ZITATE',
-                        body: quote.relatedIds.join(' · '),
+                        title: 'AUSFÜHRLICHE ERKLÄRUNG',
+                        body: quote.explanationLong,
                       ),
+                      const SizedBox(height: 16),
+                      _AudioExplainerSection(
+                        ttsService: _ttsService,
+                        explanationShort: quote.explanationShort,
+                        explanationLong: quote.explanationLong,
+                        audioPlaying: _audioPlaying,
+                        onPlayingChanged: (playing) {
+                          setState(() {
+                            _audioPlaying = playing;
+                          });
+                        },
+                      ),
+                      if (quote.funFact != null) ...<Widget>[
+                        const SizedBox(height: 16),
+                        _SectionCard(title: 'KONTEXT', body: quote.funFact!),
+                      ],
+                      if (quote.relatedIds.isNotEmpty) ...<Widget>[
+                        const SizedBox(height: 16),
+                        _SectionCard(
+                          title: 'VERWANDTE ZITATE',
+                          body: quote.relatedIds.join(' · '),
+                        ),
+                      ],
+                      const SizedBox(height: 30),
                     ],
-                    const SizedBox(height: 30),
-                  ],
+                  ),
                 ),
-              ),
-            ],
-          );
-        },
-        loading: () => const AppInlineLoadingState(
-          title: 'Zitat wird geladen',
-          subtitle: 'Detailansicht und Kontext werden vorbereitet ...',
-        ),
-        error: (error, _) => AppInlineErrorState(
-          title: 'Zitat konnte nicht geladen werden',
-          message: 'Fehler: $error',
-          onRetry: () => ref.invalidate(quoteByIdProvider(quoteId)),
+              ],
+            );
+          },
+          loading: () => const AppInlineLoadingState(
+            title: 'Zitat wird geladen',
+            subtitle: 'Detailansicht und Kontext werden vorbereitet ...',
+          ),
+          error: (error, _) => AppInlineErrorState(
+            title: 'Zitat konnte nicht geladen werden',
+            message: 'Fehler: $error',
+            onRetry: () => ref.invalidate(quoteByIdProvider(quoteId)),
+          ),
         ),
       ),
     );

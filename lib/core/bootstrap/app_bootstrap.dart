@@ -164,7 +164,7 @@ abstract final class AppBootstrap {
       try {
         _emitProgress(0.18, 'Zahlungsdienste werden initialisiert ...');
         await PurchasesService.instance
-            .init('test_PekobyLoTBNwtOUgnVmtfRCAclN', debugLogs: kDebugMode)
+            .initFromEnvironment(debugLogs: kDebugMode)
             .timeout(
               const Duration(seconds: 5),
               onTimeout: () {

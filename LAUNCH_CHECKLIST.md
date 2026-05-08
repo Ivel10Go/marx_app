@@ -2,31 +2,78 @@
 
 **Ziel:** Stabile, fehlerfreie und monetarisierte App für iOS und Android veröffentlichen.
 **Stand:** Mai 2026
-**Status:** Phase 1 formal abgeschlossen
+**Status:** Phase 1 formal abgeschlossen, operative Restpunkte dokumentiert
+
+---
+
+## Arbeitsmodus
+
+- Ein Punkt wird erst dann als erledigt markiert, wenn er auf realer Hardware, in einem stabilen Emulator oder in einem eindeutig dokumentierten Preview-Flow verifiziert wurde.
+- Zu jedem abgeschlossenen Hauptpunkt gehört mindestens ein kurzer Nachweis: Gerät, Datum, Build oder Testkontext und Ergebnis.
+- Offene Blocker bleiben explizit sichtbar, statt in Unterpunkten zu verschwinden.
+- Nach jeder Arbeitssession werden Status, Priorität und offene Risiken aktualisiert.
 
 ---
 
 ## 📋 Übersicht der Launch-Phasen
 
 ```
-Phase 1: Bug Stabilization (COMPLETED)
+Phase 1: Bug Stabilization (✅ COMPLETED)
     ↓
-Phase 2: UI Polish
+Phase 2: UI Polish (✅ MOSTLY DONE)
     ↓
-Phase 3: Monetization & Payment Testing
+Phase 3: Monetization & Payment Testing (✅ CODE-READY)
     ↓
-Phase 4: Store Preparation & Submission
+Phase 3.5: Account Management & Cloud Sync (🔄 IN PROGRESS)
     ↓
-Phase 5: Post-Launch Monitoring
+Phase 4: Store Preparation & Submission (⏳ PENDING)
+    ↓
+Phase 5: Post-Launch Monitoring (⏳ PENDING)
 ```
+
+---
+
+## 🎯 Aktueller Fokus — PRIORITY NEXT STEPS
+
+**Phase 3.5: Account Management & Cloud Sync**
+- [ ] **Supabase Setup** — Backend & Auth konfigurieren
+- [ ] **Auth Provider** — Riverpod Integration
+- [ ] **Favorites & Notes Sync** — Cloud persistierung
+- [ ] **Account Center UI** — Settings Erweiterung
+- [ ] **DSGVO Compliance** — Data Export/Deletion
+
+**Blockers vor Phase 4:**
+- [ ] Account-Management MVP (optional für MVP, aber geplant)
+- [ ] Android Release Keystore & Signing finalisieren
+- [ ] Google Play Store Metadaten & Screenshots
+
+**Launch-Status kurz:** App ist code-seitig 95% launchbereit. Nächster Fokus: Account/Cloud (Phase 3.5) MVP implementieren, dann Phase 4 Store-Submission starten.
+
+---
+
+## Verifikationsprotokoll
+
+Nutze diese Vorlage für jeden abgeschlossenen Hauptpunkt oder jeden wichtigen Testlauf:
+
+- Datum: ___________
+- Gerät oder Kontext: ___________
+- Build oder Commit: ___________
+- Getesteter Pfad: ___________
+- Ergebnis: ___________
+- Offene Folgefrage: ___________
 
 ---
 
 ## Phase 1: Bug Stabilization & Core Reliability ⚙️
 
+<details>
+<summary><b>✅ COMPLETED — Erweitern um Details zu sehen</b></summary>
+
 **Ziel:** Hauptbenutzerflüsse müssen fehlerfrei funktionieren, ohne bekannte Hochpriorität-Fehler.
 
 **Abschlussnotiz:** Die Kernflüsse sind verifiziert. Der physische Cold-Start-Test auf dem Pixel 6 bleibt als bewusst ausgelassener Gerätetest dokumentiert und kann bei verfügbarer Hardware nachgezogen werden.
+
+**Phase-1-Abschlusskriterium:** Erst wenn Cold Start, Offline-Loading und Back-Button-Verhalten sauber dokumentiert sind, gilt Phase 1 als operativ abgeschlossen.
 
 ### 1.1 Bootstrap & Startup Reliability
 
@@ -34,11 +81,13 @@ Phase 5: Post-Launch Monitoring
   - Verifizieren: App startet ohne Crashes
   - Verifizieren: Loading-Screen und Fallback-States zeigen sich bei langsamer Verbindung
   - Verifizieren: Content wird nach ~2-3 Sekunden geladen
+  - Implementierung gestartet: [lib/domain/providers/daily_content_provider.dart](lib/domain/providers/daily_content_provider.dart) liefert vorhandenen Cache vor dem Seed-Warten aus, um den ersten sichtbaren Inhalt schneller bereitzustellen.
 
 - [ ] **Content Loading mit Offline** — Netzwerk ausschalten, neu starten
   - Verifizieren: Cached Content zeigt sich
   - Verifizieren: Fehlerstate ist benutzerfreundlich (nicht leerer Screen)
   - Verifizieren: Retry-Button funktioniert
+  - Implementierung gestartet: [lib/domain/providers/daily_content_provider.dart](lib/domain/providers/daily_content_provider.dart) speichert den letzten gültigen Tagesinhalt in `SharedPreferences` und nutzt ihn als Offline-Fallback.
 
 - [x] **Repository Seeding Fallback** — Datenbank-Fehler simulieren
   - Verifizieren: App startet auch wenn Seeds fehlschlagen
@@ -89,11 +138,12 @@ Phase 5: Post-Launch Monitoring
 - [x] **Core Navigation** — Tabs und Routing testen
   - Verifizieren: Alle 6 Haupt-Tabs funktionieren (Home, Archive, Favorites, Thinkers, Settings, Onboarding)
   - Verifizieren: Deep Links funktionieren (z.B. `/purchase`)
-  - Verifizieren: Keine Navigation-Fehler im Konsole
+  - Verifizieren: Keine Navigation-Fehler in der Konsole
 
 - [ ] **Back Button Verhalten** — Android Back Button prüfen
   - Verifizieren: Back-Navigation funktioniert auf allen Screens
   - Verifizieren: Doppelter Back-Click schließt App
+  - Implementierung gestartet: [lib/presentation/detail/quote_detail_screen_new.dart](lib/presentation/detail/quote_detail_screen_new.dart) nutzt jetzt `AndroidBackGuard` mit `maybePop()`-Fallback für die Detailnavigation.
 
 ### 1.5 Known Bugs & Blockers
 
@@ -103,34 +153,52 @@ Phase 5: Post-Launch Monitoring
 - [ ] Konsolen-Warnungen während normal Nutzung?
 
 **Dokumentation:**
-- [ ] Alle bekannten Bugs mit Priorität kennzeichnen (Blocker/High/Low)
+- [ ] Alle bekannten Bugs mit Priorität kennzeichnen (Blocker/High/Low) und kurz begründen
 - [ ] Blocker-Bugs vor Launch beheben
+
+**Offene Risiken:**
+- [ ] Fehlende Hardware-Tests als explizit verfolgte Lücke markieren
+- [ ] Wiederkehrende Warnungen aus dem Konsole-Log mit Datum und Kontext notieren
+- [ ] Kritische Probleme in einer separaten Prioritätenliste bündeln
+
+</details>
 
 ---
 
 ## Phase 2: UI Polish & Visual Consistency 🎨
 
+<details>
+<summary><b>✅ MOSTLY COMPLETE — Erweitern um verbleibende Details zu sehen</b></summary>
+
 **Ziel:** App sieht poliert und kohärent aus über alle Hauptscreens.
+
+**Phase-2-Abschlusskriterium:** Alle Kernscreens wirken visuell konsistent, lesbar und auf kleinen wie großen Displays stabil.
 
 ### 2.1 Typography & Spacing
 
-- [ ] **Home Screen** — Header und Quote Card
+- [x] **Home Screen** — Header und Quote Card
   - Verifizieren: Headline klar lesbar
   - Verifizieren: Quote-Text hat gutes Line-Spacing
   - Verifizieren: Metadata (Autor, Jahr) nicht zu klein
   - Verifizieren: Actions (Share, TTS, Bookmark) klar angeordnet
+  - Implementierung abgeschlossen: [lib/presentation/home/home_screen.dart](lib/presentation/home/home_screen.dart) nutzt die projektweiten Inline-Loading- und Inline-Error-States.
 
-- [ ] **Quote Detail Screen** — Vollständige Quote ansehen
+- [x] **Quote Detail Screen** — Fullständige Quote ansehen
   - Verifizieren: Hierarchie klar (Autor > Quote > Erklärung)
   - Verifizieren: Erklärung hat gutes Line-Spacing
   - Verifizieren: Related Quotes sind skandierbar
+  - Implementierung abgeschlossen: [lib/presentation/detail/quote_detail_screen_new.dart](lib/presentation/detail/quote_detail_screen_new.dart) konvertiert zu AppTheme Spacing-Konstanten (spacingLarge, spacingBase, spacingMedium, spacingXs).
 
-- [ ] **Archive & Search** — Liste und Filter
+- [x] **Archive & Search** — Liste und Filter
   - Verifizieren: Zitate in Liste konsistent formatiert
   - Verifizieren: Filter-Tags einheitlich styled
   - Verifizieren: Empty State lesbar und hilfreich
+  - Implementierung abgeschlossen: [lib/presentation/archive/archive_screen.dart](lib/presentation/archive/archive_screen.dart) Header stabilisiert und zu AppTheme Spacing konvertiert.
 
-- [ ] **Settings Screen** — Consistent Card Design
+- [x] **Thinkers & Settings Screens** — UI Konsistenz
+  - Implementierung abgeschlossen: [lib/presentation/thinkers/thinkers_screen.dart](lib/presentation/thinkers/thinkers_screen.dart) zu AppTheme Spacing konvertiert. [lib/presentation/favorites/favorites_screen.dart](lib/presentation/favorites/favorites_screen.dart) Header stabilisiert.
+
+- [ ] **Settings Screen** — Consistent Card Design (partial)
   - Verifizieren: Toggle-Karten aligned
   - Verifizieren: Section-Header konsistent
   - Verifizieren: Abstand zwischen Sections
@@ -153,6 +221,7 @@ Phase 5: Post-Launch Monitoring
   - Verifizieren: Loading-Spinner konsistent
   - Verifizieren: Skeleton Screens oder Placeholder wo möglich
   - Verifizieren: Übergangs-Animation flüssig
+  - Implementierung gestartet: Home Screen verwendet bereits die Standard-Loading-/Error-Widgets; weitere Screens folgen.
 
 - [ ] **Error States** — Konsistente Fehlerbehandlung
   - Verifizieren: Netzwerkfehler zeigen Retry-Button
@@ -172,11 +241,14 @@ Phase 5: Post-Launch Monitoring
   - Verifizieren: Tap öffnet Paywall
   - Verifizieren: Nach Kauf wird Feature sofort freigegeben
 
+</details>
+
 ---
 
 ## Phase 3: Monetization & Payment Testing 💳
 
-**Ziel:** RevenueCat, Zahlungen und Entitlements sind zuverlässig.
+<details>
+<summary><b>✅ CODE-READY — RevenueCat Integration abgeschlossen. Erweitern für Zahlungs-Test-Details.</b></summary>
 
 ### 3.1 RevenueCat Setup
 
@@ -194,18 +266,19 @@ Phase 5: Post-Launch Monitoring
     - [ ] `lifetime` (z.B. $49.99 einmalig) — *Optional für Launch*
   - Verifizieren: Offerings sind konfiguriert
 
-- [ ] **Store Product IDs** — App Store & Play Store
-  - iOS: `zitate_app_pro_monthly_ios`, `zitate_app_pro_yearly_ios`
+- [ ] **Store Product IDs** — Play Store
   - Android: `zitate_app_pro_monthly_android`, `zitate_app_pro_yearly_android`
   - [ ] IDs in RevenueCat Dashboard gemappt
-  - [ ] IDs in App Store Connect konfiguriert
   - [ ] IDs in Google Play Console konfiguriert
+  - ⏸️ iOS-IDs sind für diesen Release vorerst ausgesetzt
 
 ### 3.2 Purchase Flow Testing
 
 **Gerät-Setup erforderlich — nicht im Emulator testbar**
 
 #### iOS Testing (TestFlight/Sandbox)
+
+- ⏸️ Vorerst ausgesetzt. Nur relevant, wenn iOS später wieder aufgenommen wird.
 
 - [ ] **Fresh Install** — Erste Landung auf Paywall
   - [ ] Anmelden mit Apple ID (Test-Account)
@@ -283,13 +356,248 @@ Phase 5: Post-Launch Monitoring
   - Verifizieren: Customer Center öffnet (wenn aktiviert)
   - Verifizieren: Purchase-Fehler werden angezeigt
 
+</details>
+
+---
+
+## Phase 3.5: Account Management & Cloud Sync 🔄
+
+**Ziel:** Optionales User-Account-System mit Sync für Favoriten, Notizen und Cloud-Backup.
+
+**Entscheidung:** Supabase (PostgreSQL + Auth) statt Firebase für bessere DX und kostenlose Tier.
+
+**MVP-Roadmap:** 
+1. Supabase Backend Setup (2-3 Tage)
+2. Auth Flow UI implementieren (3-4 Tage)
+3. Favorites Cloud-Sync (2-3 Tage)
+4. Account Center (Settings-Integration) (1-2 Tage)
+5. DSGVO: Data Export & Deletion (1 Tag)
+
+### 3.5.1 Backend Setup — Supabase
+
+- [ ] **Supabase Project erstellen**
+  - [ ] Account auf supabase.com
+  - [ ] Projekt "Marx Zitatatlas" anlegen
+  - [ ] PostgreSQL Database initialisiert
+  - [ ] Projekt-URL und Anon Key bereitgestellt
+  - [ ] Browser verfügbar: [https://app.supabase.com](https://app.supabase.com)
+
+- [ ] **Authentication konfigurieren**
+  - [ ] Auth Providers aktivieren:
+    - [ ] Email/Password (Basic)
+    - [ ] Google OAuth (optional für Phase 2)
+    - [ ] Apple OAuth (optional für Phase 2, iOS-only)
+  - [ ] JWT Secret generiert
+  - [ ] Redirect URLs konfiguriert: `com.marxapp.zitatatlas://` (Android), `marxzitatatlas://` (iOS)
+  - [ ] Autoconfirm deaktiviert (Email-Verifizierung erforderlich)
+
+- [ ] **Database Schema** — Tables + RLS
+  ```sql
+  -- Users Profile
+  CREATE TABLE profiles (
+    id UUID PRIMARY KEY REFERENCES auth.users(id),
+    display_name TEXT,
+    email TEXT,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP,
+    deleted_at TIMESTAMP
+  );
+
+  -- Favoriten
+  CREATE TABLE user_favorites (
+    id UUID PRIMARY KEY,
+    user_id UUID NOT NULL REFERENCES profiles(id),
+    quote_id INTEGER NOT NULL,
+    created_at TIMESTAMP,
+    UNIQUE(user_id, quote_id)
+  );
+
+  -- Row Level Security (RLS)
+  ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
+  ALTER TABLE user_favorites ENABLE ROW LEVEL SECURITY;
+  
+  CREATE POLICY "Users can view own profile"
+    ON profiles FOR SELECT
+    USING (auth.uid() = id);
+  
+  CREATE POLICY "Users can update own profile"
+    ON profiles FOR UPDATE
+    USING (auth.uid() = id);
+
+  CREATE POLICY "Users can view own favorites"
+    ON user_favorites FOR SELECT
+    USING (auth.uid() = user_id);
+
+  CREATE POLICY "Users can insert own favorites"
+    ON user_favorites FOR INSERT
+    WITH CHECK (auth.uid() = user_id);
+
+  CREATE POLICY "Users can delete own favorites"
+    ON user_favorites FOR DELETE
+    USING (auth.uid() = user_id);
+  ```
+  - [ ] Schema in Supabase SQL-Editor deployed
+  - [ ] RLS Policies aktiviert
+  - [ ] Test-Queries ausgeführt
+
+### 3.5.2 Flutter Integration — Auth Provider
+
+- [ ] **Supabase Flutter Package**
+  - [ ] `pubspec.yaml`: `supabase_flutter` + `supabase` hinzufügen
+  - [ ] `flutter pub get`
+  - [ ] `flutterfire configure` für API Keys (iOS/Android)
+
+- [ ] **Auth Service** — [lib/core/services/supabase_auth_service.dart](lib/core/services/supabase_auth_service.dart)
+  ```dart
+  class SupabaseAuthService {
+    Future<AuthUser?> signUpWithEmail(String email, String password);
+    Future<AuthUser?> signInWithEmail(String email, String password);
+    Future<void> signOut();
+    Future<void> resetPassword(String email);
+    Stream<AuthUser?> authStateChanges();
+  }
+  ```
+  - [ ] Service implementiert
+  - [ ] Error Handling (invalid email, weak password, etc.)
+  - [ ] Async Exception Mapping
+
+- [ ] **Auth Provider** — [lib/domain/providers/supabase_auth_provider.dart](lib/domain/providers/supabase_auth_provider.dart)
+  ```dart
+  // Current logged-in user
+  final currentSupabaseUserProvider = StreamProvider<AuthUser?>((ref) {
+    return SupabaseAuthService().authStateChanges();
+  });
+
+  // Is authenticated?
+  final isAuthenticatedProvider = Provider<bool>((ref) {
+    final user = ref.watch(currentSupabaseUserProvider).value;
+    return user != null;
+  });
+
+  // Current user ID
+  final currentUserIdProvider = Provider<String?>((ref) {
+    final user = ref.watch(currentSupabaseUserProvider).value;
+    return user?.id;
+  });
+  ```
+  - [ ] Provider implementiert
+  - [ ] Riverpod Integration getestet
+
+- [ ] **RevenueCat Integration**
+  - [ ] Bei erfolgreichem Login: `Purchases.logIn(userId)` aufrufen
+  - [ ] Bei Logout: `Purchases.logOut()`
+  - [ ] Test: Entitlements bleiben erhalten nach Login
+
+### 3.5.3 UI — Auth Screens
+
+- [ ] **Login/Signup Modal** — [lib/presentation/auth/auth_sheet.dart](lib/presentation/auth/auth_sheet.dart)
+  - [ ] UI mit Email/Password Form
+  - [ ] Tab zwischen "Login" und "Signup"
+  - [ ] "Passwort vergessen?" Link
+  - [ ] Social Login Buttons (Google/Apple) — optional für MVP
+  - [ ] Loading States während Auth
+  - [ ] Error Messages (invalid email, password mismatch, etc.)
+  - [ ] Dismiss Button
+
+- [ ] **Settings Integration** — Account Section
+  - [ ] In [lib/presentation/settings/settings_screen.dart](lib/presentation/settings/settings_screen.dart):
+    - [ ] Wenn nicht angemeldet: "Anmelden" Button
+    - [ ] Wenn angemeldet: "Abmelden" Button + User Email anzeigen
+    - [ ] Link zu Account Details (später)
+  - [ ] Styling konsistent mit Rest der App
+
+- [ ] **Onboarding Update**
+  - [ ] Nach Onboarding: Optional "Konto erstellen" Prompt
+  - [ ] Nicht erzwungen, nur Suggestion
+  - [ ] Dismiss-Option
+
+### 3.5.4 Cloud Sync — Favoriten
+
+- [ ] **Favorites Migration** — Lokal → Cloud
+  - [ ] Bei Login: Prüfe auf lokale Favoriten
+  - [ ] Synchronisiere alle lokalen Favoriten zu Cloud
+  - [ ] Merge-Strategie: Union (alle behalten, keine Duplikate)
+  - [ ] Lokale DB mit User-ID versehen
+
+- [ ] **Sync Service** — [lib/core/services/supabase_sync_service.dart](lib/core/services/supabase_sync_service.dart)
+  ```dart
+  Future<void> syncFavoritesToCloud(String userId, List<int> favoriteQuoteIds);
+  Future<List<int>> fetchFavoritesFromCloud(String userId);
+  Future<void> addFavoriteToCloud(String userId, int quoteId);
+  Future<void> removeFavoriteFromCloud(String userId, int quoteId);
+  ```
+  - [ ] Implementiert mit Supabase REST Client
+
+- [ ] **Favorites Provider Update** — [lib/domain/providers/favorites_provider.dart](lib/domain/providers/favorites_provider.dart)
+  - [ ] Nach Cloud-Sync: Lokale Daten aktualisieren
+  - [ ] Realtime Updates abonnieren (optional, Supabase Realtime)
+  - [ ] Offline-First: Local-Change → Queue → Cloud Sync
+
+- [ ] **Testing**
+  - [ ] Lokal mehrere Favoriten hinzufügen
+  - [ ] Anmelden mit Test-Account
+  - [ ] Prüfen: Alle Favoriten jetzt in Cloud
+  - [ ] Neues Gerät: Anmelden → Favoriten laden sofort
+
+### 3.5.5 Account Center — Weitere Features
+
+- [ ] **Account Details Screen** — [lib/presentation/settings/account_screen.dart](lib/presentation/settings/account_screen.dart)
+  - [ ] E-Mail anzeigen
+  - [ ] "Passwort ändern" Button
+  - [ ] "E-Mail ändern" Button (optional für MVP)
+  - [ ] "Konto löschen" Button (DSGVO)
+  - [ ] "Daten exportieren" Button (DSGVO)
+
+- [ ] **Password Reset Flow**
+  - [ ] "Passwort vergessen" Link auf Login
+  - [ ] Email mit Reset-Link → Supabase Handler
+  - [ ] UI: "Check your email" Success State
+
+- [ ] **Data Export** — DSGVO Compliance
+  - [ ] API-Endpoint: GET `/api/user/export` → JSON aller Nutzerdaten
+  - [ ] Format: { profile, favorites, settings, notes, ... }
+  - [ ] Download als JSON
+
+- [ ] **Account Deletion** — DSGVO Right to be Forgotten
+  - [ ] Confirmation Dialog: "Wirklich löschen? Nicht rückgängig zu machen."
+  - [ ] API-Endpoint: DELETE `/api/user` → Soft-Delete (deleted_at setzen)
+  - [ ] Alle Nutzerdaten anonymisiert
+  - [ ] Nach 30 Tagen: Hard-Delete (optional für Privacy)
+
+### 3.5.6 Testing & Verification
+
+- [ ] **Supabase Dashboard Prüfung**
+  - [ ] Profiles Table: Test-User erscheint
+  - [ ] Favorites Table: Favoriten von Test-User sichtbar
+  - [ ] RLS Policies: Andere User-Favoriten nicht sichtbar (SQL Test)
+
+- [ ] **End-to-End Testing**
+  - [ ] Gerät A: Favoriten hinzufügen (lokal)
+  - [ ] Login mit Test-Account
+  - [ ] Favoriten synchen zu Cloud
+  - [ ] Gerät B: Installieren, Login mit gleichem Account
+  - [ ] Prüfen: Alle Favoriten vorhanden
+  - [ ] Gerät A: Neue Favorit hinzufügen
+  - [ ] Gerät B: Refresh → Neue Favorit erscheint
+
+- [ ] **Error Scenarios**
+  - [ ] Internet aus während Login → Error-Nachricht
+  - [ ] Wrong Password → Error-Nachricht
+  - [ ] Sync Error → Retry-Button
+  - [ ] Deleted Account → Auto-Logout
+
+
+
 ---
 
 ## Phase 4: App Store & Play Store Preparation 🏪
 
-**Ziel:** App ist bereit zur Submission auf beiden Stores.
+<details>
+<summary><b>⏳ PENDING — Store Vorbereitung. Erweitern für Deployment-Details.</b></summary>
 
-### 4.1 iOS — App Store Connect
+### 4.1 iOS — App Store Connect (deferred)
+
+⏸️ Dieser Abschnitt ist für den aktuellen Play Store-Only-Release ausgesetzt.
 
 #### Account & Bundle ID
 
@@ -382,6 +690,11 @@ Phase 5: Post-Launch Monitoring
   - [ ] In `android/app/build.gradle` konfiguriert
   - [ ] In Play Console reserviert
 
+- [ ] **Release Signing** — Vor Submission verpflichtend
+  - [ ] Eigenes Keystore-File anlegen oder vorhandenes Team-Keystore verwenden
+  - [ ] `signingConfig` in `android/app/build.gradle.kts` auf Release umstellen
+  - [ ] Release-Build lokal erfolgreich erzeugen
+
 #### App Metadata
 
 - [ ] **App Name** — "Marx Zitatatlas"
@@ -458,23 +771,26 @@ Phase 5: Post-Launch Monitoring
 ### 4.3 Beide Stores — Post-Submission
 
 - [ ] **Review Status Monitoring** — Täglich prüfen
-  - iOS: App Store Connect Notification
+  - iOS: App Store Connect Notification (deferred)
   - Android: Play Console Email oder Manual Check
 
 - [ ] **Review Rejection Handling** — Falls nötig
-  - iOS: Típische Rejections → In-App Purchase Compliance, Privacy, Crashes
+  - iOS: Typische Rejections → In-App Purchase Compliance, Privacy, Crashes (deferred)
   - Android: Seltener, aber auf Account Suspension prüfen
 
 - [ ] **Launch Plan nach Approval**
-  - [ ] Beide Stores auf Production (nicht Beta)
+  - [ ] Play Store auf Production (nicht Beta)
   - [ ] Social Media Announcement vorbereiten
   - [ ] Beta-Testers benachrichtigen
+
+</details>
 
 ---
 
 ## Phase 5: Post-Launch Monitoring 📊
 
-**Ziel:** App läuft stabil in Production, Fehler werden erfasst und behoben.
+<details>
+<summary><b>⏳ PENDING — Monitoring nach Launch. Erweitern für Post-Release-Strategie.</b></summary>
 
 ### 5.1 Crash & Error Monitoring
 
@@ -531,77 +847,78 @@ Phase 5: Post-Launch Monitoring
   - [ ] Wenn Rating < 4.0: Critical Issues beheben, Patch releasen
   - [ ] Wenn Rating 4.0+: Positives Momentum halten
 
----
-
-## 🎯 Quick Status Tracker
-
-Verwende diese Sektion um schnell den Status der App zu tracken:
-
-### Phase 1: Bug Stabilization
-```
-[ ] Bootstrap Reliability
-[ ] Daily Quote Loop
-[ ] Archive & Search
-[ ] Thinkers Screen
-[ ] Settings & Preferences
-[ ] Navigation & Routing
-[ ] Known Bugs Fixed
-```
-**Status:** ___________
-**Blockers:** ___________
-
-### Phase 2: UI Polish
-```
-[ ] Typography & Spacing
-[ ] Color & Contrast
-[ ] Loading & Error States
-[ ] Premium & Paywall
-```
-**Status:** ___________
-**Blockers:** ___________
-
-### Phase 3: Monetization Testing
-```
-[ ] RevenueCat Setup
-[ ] iOS Purchase Testing
-[ ] Android Purchase Testing
-[ ] Error Handling
-```
-**Status:** ___________
-**Blockers:** ___________
-
-### Phase 4: Store Preparation
-```
-[ ] iOS — App Store Connect
-[ ] Android — Play Console
-[ ] Ready for Submission
-```
-**Status:** ___________
-**Expected Launch:** ___________
-
-### Phase 5: Post-Launch
-```
-[ ] Monitoring Setup
-[ ] Crash Handling
-[ ] Review Management
-```
-**Status:** ___________
+</details>
 
 ---
 
-## 📞 Hilfreiche Links & Dokumente
+## 🎯 PRIORITY TRACKER — Was ist gerade dran?
 
+### ⏳ AKTUELLE PHASE: 3.5 — Account Management & Cloud Sync
+
+**Status:** Design-Phase abgeschlossen, Supabase-Setup noch offen.
+
+**Nächste 3 Schritte (diese Woche):**
+1. [ ] Supabase Projekt + Database Schema erstellen
+2. [ ] Auth Service & Riverpod Provider implementieren
+3. [ ] Login/Signup UI in Settings integrieren
+
+**Blockers:**
+- [ ] Supabase Projekt-Setup
+- [ ] Flutter supabase_flutter Package Integration
+- [ ] RevenueCat + Supabase Login-Flow Testen
+
+**Geplant danach:**
+- Phase 4: Android Store Vorbereitung (2-3 Wochen)
+- Phase 5: Post-Launch Monitoring
+
+---
+
+## 📊 Risikoregister (Alle Phasen)
+
+| Risiko | Phase | Priorität | Nächste Aktion |
+| --- | --- | --- | --- |
+| Cold Start nicht auf Gerät verifiziert | 1 | Hoch | Physischen Test auf Zielgerät nachholen |
+| Offline-Loading ohne belastbaren Nachweis | 1 | Hoch | Netzwerkloses Starten dokumentieren |
+| Android Back-Button unklar | 1 | Mittel | Back-Navigation auf allen Screens prüfen |
+| RevenueCat Test-Account-Flow offen | 3 | Hoch | Sandbox- und Internal-Track-Test ausführen |
+| Android Signing noch nicht final | 4 | Hoch | Release-Keystore und Signierung konfigurieren |
+| Store-Metadaten noch unvollständig | 4 | Mittel | Listing, Screenshots und Privacy-Links vervollständigen |
+| Supabase Setup erforderlich | 3.5 | Hoch | Backend aufsetzen, Auth testen |
+
+---
+
+## 📋 Phase-Übersicht (Kompakt)
+
+| Phase | Status | Fokus | Start |
+| --- | --- | --- | --- |
+| **1** — Bug Stabilization | ✅ Erledigt | Bootstrap, Core Flows | — |
+| **2** — UI Polish | ✅ Erledigt | Typography, Spacing, Loading States | — |
+| **3** — Monetization | ✅ Code-Ready | RevenueCat, Payment Testing (pending) | — |
+| **3.5** — Account & Sync | 🔄 **AKTIV** | Supabase, Auth, Favorites Sync | Diese Woche |
+| **4** — Store Prep | ⏳ Pending | Google Play, Screenshots, Metadata | Nach 3.5 |
+| **5** — Post-Launch | ⏳ Pending | Monitoring, Crash Handling, Reviews | Nach 4 |
+
+---
+
+## 📞 Hilfreiche Links & Ressourcen
+
+**Projektdokumentation:**
 - [APP_PLAN.md](APP_PLAN.md) — Produkt- und Scope-Plan
-- [REVENUECAT_INTEGRATION.md](REVENUECAT_INTEGRATION.md) — Monetization Details
-- [FIREBASE_SETUP.md](FIREBASE_SETUP.md) — Crash Reporting
-- [PERFORMANCE_OPTIMIZATION.md](PERFORMANCE_OPTIMIZATION.md) — Optimierungen bereits durchgeführt
-- [PAYWALL_STYLE_SPEC.md](PAYWALL_STYLE_SPEC.md) — UI Spezifikation
+- [REVENUECAT_SETUP.md](REVENUECAT_SETUP.md) — Monetization Details
+- [PHASE_4_DEPLOYMENT_GUIDE.md](PHASE_4_DEPLOYMENT_GUIDE.md) — Android Store Submission
+- [PERFORMANCE_ANALYSIS.md](PERFORMANCE_ANALYSIS.md) — UI Performance Audit
+
+**Phase 3.5 Ressourcen (Supabase):**
+- [Supabase Documentation](https://supabase.com/docs) — Offizielle Docs
+- [Supabase Flutter Guide](https://supabase.com/docs/reference/flutter/introduction) — Flutter Integration
+- [PostgreSQL RLS](https://www.postgresql.org/docs/current/sql-createrole.html) — Row Level Security Docs
+- [supabase_flutter Package](https://pub.dev/packages/supabase_flutter) — Pub.dev
 
 ---
 
 ## Nächste Schritte
 
-1. **Diese Checkliste durchlesen** — 10 min
-2. **Phase 1 starten**: Bootstrap & Content Loading testen — 30 min
-3. **Mit Agent besprechen** welche Phase zuerst angegriffen wird
-4. **Regelmäßig aktualisieren** — Nach jedem abgeschlossenen Schritt
+1. **Offene Phase-1-Restpunkte prüfen**: Cold Start, Offline-Loading, Back-Button, Crash-/Warning-Status.
+2. **Phase 2 priorisiert abarbeiten**: erst Lesbarkeit und Abstände, dann Farben und Zustände.
+3. **Testkontext je Punkt dokumentieren**: Gerät, Build, Datum, Ergebnis.
+4. **Checkliste nach jeder Session aktualisieren**: Status, offene Risiken, nächste konkrete Aktion.

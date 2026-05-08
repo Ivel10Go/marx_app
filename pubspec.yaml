@@ -1,4 +1,4 @@
-name: marx_app
+name: zitate_app
 description: "A new Flutter project."
 publish_to: 'none'
 version: 0.1.0
@@ -30,8 +30,10 @@ dependencies:
   pdf: ^3.11.0
   printing: ^5.13.0
   cached_network_image: ^3.4.0
-  purchases_flutter: ^10.0.1
-  purchases_ui_flutter: ^10.0.1
+  purchases_flutter: ^10.0.2
+  purchases_ui_flutter: ^10.0.2
+  supabase_flutter: ^2.5.0
+  flutter_dotenv: ^5.1.0
 
 dev_dependencies:
   flutter_test:
@@ -51,4 +53,5 @@ flutter_launcher_icons:
 flutter:
   uses-material-design: true
   assets:
+    - .env
     - assets/

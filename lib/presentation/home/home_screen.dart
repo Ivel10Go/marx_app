@@ -26,6 +26,7 @@ import '../../widgets/streak_badge.dart';
 import '../home/dialogs/mode_dialog.dart';
 import '../home/widgets/fact_block.dart';
 import '../home/widgets/streak_calendar.dart';
+import '../loading/app_loading_screen.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -216,7 +217,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
             children: <Widget>[
               Container(
                 color: scheme.surface,
-                padding: const EdgeInsets.fromLTRB(20, 16, 20, 10),
+                padding: EdgeInsets.fromLTRB(
+                  AppTheme.spacingLarge,
+                  AppTheme.spacingBase,
+                  AppTheme.spacingLarge,
+                  AppTheme.spacingSmall,
+                ),
                 child: LayoutBuilder(
                   builder: (BuildContext context, BoxConstraints constraints) {
                     final compact = constraints.maxWidth < 420;
@@ -305,7 +311,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
               ),
               const SizedBox.shrink(),
               Padding(
-                padding: const EdgeInsets.fromLTRB(20, 12, 20, 24),
+                padding: EdgeInsets.fromLTRB(
+                  AppTheme.spacingLarge,
+                  AppTheme.spacingSmall,
+                  AppTheme.spacingLarge,
+                  AppTheme.spacingXl,
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -375,11 +386,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                           ],
                         );
                       },
-                      loading: () => const _LoadingCard(),
-                      error: (error, _) => _EmptyStateCard(
-                        icon: Icons.error_outline_rounded,
+                      loading: () => const AppInlineLoadingState(
+                        title: 'Tagesinhalt wird geladen',
+                        subtitle:
+                            'Home, Details und Widget werden vorbereitet ...',
+                      ),
+                      error: (error, _) => AppInlineErrorState(
                         title: 'Ladevorgang fehlgeschlagen',
-                        body: '$error',
+                        message: 'Fehler: $error',
+                        onRetry: () => ref.invalidate(dailyContentProvider),
                       ),
                     ),
                     const SizedBox(height: 24),
@@ -789,7 +804,12 @@ extension on _HomeScreenState {
       builder: (BuildContext sheetContext) {
         return SafeArea(
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
+            padding: EdgeInsets.fromLTRB(
+              AppTheme.spacingLarge,
+              AppTheme.spacingBase,
+              AppTheme.spacingLarge,
+              AppTheme.spacingXl,
+            ),
             child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -904,101 +924,6 @@ extension on _HomeScreenState {
         );
       },
     );
-  }
-}
-
-class _EmptyStateCard extends StatelessWidget {
-  const _EmptyStateCard({
-    required this.icon,
-    required this.title,
-    required this.body,
-  });
-
-  final IconData icon;
-  final String title;
-  final String body;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: const BoxDecoration(
-        color: AppColors.paper,
-        border: Border(
-          left: BorderSide(color: AppColors.ink, width: 1),
-          right: BorderSide(color: AppColors.ink, width: 1),
-          bottom: BorderSide(color: AppColors.ink, width: 1),
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Icon(icon, color: AppColors.red),
-          const SizedBox(height: 12),
-          Text(title, style: Theme.of(context).textTheme.titleMedium),
-          const SizedBox(height: 6),
-          Text(body, style: Theme.of(context).textTheme.bodyMedium),
-        ],
-      ),
-    );
-  }
-}
-
-class _LoadingCard extends StatelessWidget {
-  const _LoadingCard();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        color: AppColors.paper,
-        border: Border(
-          left: BorderSide(color: AppColors.ink, width: 1),
-          right: BorderSide(color: AppColors.ink, width: 1),
-          bottom: BorderSide(color: AppColors.ink, width: 1),
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(height: 10, width: 120, color: AppColors.paperDark),
-            const SizedBox(height: 16),
-            Container(
-              height: 18,
-              width: double.infinity,
-              color: AppColors.paperDark,
-            ),
-            const SizedBox(height: 8),
-            Container(height: 18, width: 240, color: AppColors.paperDark),
-            const SizedBox(height: 12),
-            Container(width: 28, height: 2, color: AppColors.red),
-            const SizedBox(height: 14),
-            Container(height: 12, width: 140, color: AppColors.paperDark),
-            const SizedBox(height: 14),
-            Wrap(
-              spacing: 6,
-              runSpacing: 6,
-              children: const <Widget>[
-                _SkeletonChip(),
-                _SkeletonChip(),
-                _SkeletonChip(),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _SkeletonChip extends StatelessWidget {
-  const _SkeletonChip();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(width: 56, height: 20, color: AppColors.paperDark);
   }
 }
 

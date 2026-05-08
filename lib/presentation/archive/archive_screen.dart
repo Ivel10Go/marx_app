@@ -74,21 +74,14 @@ class _ArchiveScreenState extends ConsumerState<ArchiveScreen> {
                     children: <Widget>[
                       Expanded(
                         child: archiveAsync.when(
-                          data: (_) => Text(
-                            'ARCHIV',
-                            style: AppTheme.masthead,
-                          ),
-                          loading: () => Text(
-                            'ARCHIV',
-                            style: AppTheme.masthead,
-                          ),
-                          error: (_, __) => Text(
-                            'ARCHIV',
-                            style: AppTheme.masthead,
-                          ),
+                          data: (_) => Text('ARCHIV', style: AppTheme.masthead),
+                          loading: () =>
+                              Text('ARCHIV', style: AppTheme.masthead),
+                          error: (_, __) =>
+                              Text('ARCHIV', style: AppTheme.masthead),
                         ),
                       ),
-                      const SizedBox(width: 12),
+                      SizedBox(width: AppTheme.spacingMedium),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
@@ -98,26 +91,24 @@ class _ArchiveScreenState extends ConsumerState<ArchiveScreen> {
                               style: AppTheme.mastHeadSubtitle,
                             ),
                             loading: () => Text(
-                              'Wird geladen',
+                              '— Einträge',
                               style: AppTheme.mastHeadSubtitle,
                             ),
                             error: (_, __) => Text(
-                              'Nicht verfügbar',
+                              '— Einträge',
                               style: AppTheme.mastHeadSubtitle,
                             ),
                           ),
-                          const SizedBox(height: 4),
+                          SizedBox(height: AppTheme.spacingXs),
                           Container(width: 32, height: 2, color: AppColors.red),
                         ],
                       ),
                     ],
                   ),
-                  const SizedBox(height: 10),
+                  SizedBox(height: 10),
                   Text(
                     'Suche, filtere und springe zwischen Themen, Interessen und Geschichte.',
-                    style: AppTheme.bodyMedium.copyWith(
-                      height: 1.4,
-                    ),
+                    style: AppTheme.bodyMedium.copyWith(height: 1.4),
                   ),
                   const SizedBox(height: AppTheme.spacingBase),
                   Container(
@@ -250,10 +241,7 @@ class _ArchiveScreenState extends ConsumerState<ArchiveScreen> {
                         side: const BorderSide(color: AppColors.ink, width: 1),
                       ),
                       icon: const Icon(Icons.close, size: 16),
-                      label: Text(
-                        'FILTER LÖSCHEN',
-                        style: AppTheme.labelSmall,
-                      ),
+                      label: Text('FILTER LÖSCHEN', style: AppTheme.labelSmall),
                     ),
                   ],
                 ],
@@ -356,9 +344,7 @@ class _ArchiveEmptyStateCard extends StatelessWidget {
               const SizedBox(height: AppTheme.spacingSmall),
               Text(
                 title,
-                style: AppTheme.titleMedium.copyWith(
-                  color: scheme.onSurface,
-                ),
+                style: AppTheme.titleMedium.copyWith(color: scheme.onSurface),
               ),
               const SizedBox(height: AppTheme.spacingSmall),
               Text(

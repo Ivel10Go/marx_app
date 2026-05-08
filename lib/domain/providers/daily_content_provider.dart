@@ -1,7 +1,12 @@
+import 'dart:convert';
+
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../data/models/daily_content.dart';
+import '../../data/models/history_fact.dart';
 import '../../data/models/quote.dart';
+import '../../data/models/thinker_quote.dart';
 import '../services/daily_content_resolver.dart';
 import '../services/personalization_service.dart';
 import 'app_mode_provider.dart';
@@ -21,7 +26,97 @@ final dailyContentResolverProvider = Provider<DailyContentResolver>((Ref ref) {
   );
 });
 
+const String _cachedDailyContentKey = 'cached_daily_content';
+
+String _serializeDailyContent(DailyContent content) {
+  return jsonEncode(
+    content.when<String>(
+      quote: (quote) => jsonEncode(<String, Object?>{
+        'type': 'quote',
+        'value': quote.toJson(),
+      }),
+      fact: (fact) =>
+          jsonEncode(<String, Object?>{'type': 'fact', 'value': fact.toJson()}),
+      thinkerQuote: (quote) => jsonEncode(<String, Object?>{
+        'type': 'thinkerQuote',
+        'value': <String, Object?>{
+          'id': quote.id,
+          'author': quote.author,
+          'author_type': quote.authorType,
+          'text_de': quote.textDe,
+          'source': quote.source,
+          'year': quote.year,
+          'image_url': quote.imageUrl,
+        },
+      }),
+    ),
+  );
+}
+
+DailyContent? _deserializeDailyContent(String? raw) {
+  if (raw == null || raw.isEmpty) {
+    return null;
+  }
+
+  try {
+    final decoded = jsonDecode(raw);
+    if (decoded is! String) {
+      return null;
+    }
+
+    final payload = jsonDecode(decoded);
+    if (payload is! Map<String, dynamic>) {
+      return null;
+    }
+
+    final type = payload['type'] as String?;
+    final value = payload['value'];
+    if (value is! Map<String, dynamic>) {
+      return null;
+    }
+
+    switch (type) {
+      case 'quote':
+        return DailyContent.quote(quote: Quote.fromJson(value));
+      case 'fact':
+        return DailyContent.fact(fact: HistoryFact.fromJson(value));
+      case 'thinkerQuote':
+        return DailyContent.thinkerQuote(quote: ThinkerQuote.fromJson(value));
+      default:
+        return null;
+    }
+  } catch (_) {
+    return null;
+  }
+}
+
+Future<void> _cacheDailyContent(DailyContent content) async {
+  try {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(
+      _cachedDailyContentKey,
+      _serializeDailyContent(content),
+    );
+  } catch (_) {
+    // Cache is best-effort only.
+  }
+}
+
+Future<DailyContent?> _readCachedDailyContent() async {
+  try {
+    final prefs = await SharedPreferences.getInstance();
+    return _deserializeDailyContent(prefs.getString(_cachedDailyContentKey));
+  } catch (_) {
+    return null;
+  }
+}
+
 final dailyContentProvider = FutureProvider<DailyContent>((Ref ref) async {
+  final cachedContent = await _readCachedDailyContent();
+  if (cachedContent != null) {
+    return cachedContent;
+  }
+
   await ref.watch(initialSeedProvider.future);
   final appMode = ref.watch(appModeNotifierProvider);
   final profile = ref.watch(userProfileProvider);
@@ -40,9 +135,15 @@ final dailyContentProvider = FutureProvider<DailyContent>((Ref ref) async {
     );
 
     if (content != null) {
+      await _cacheDailyContent(content);
       return content;
     }
   } catch (_) {
+    final cachedContent = await _readCachedDailyContent();
+    if (cachedContent != null) {
+      return cachedContent;
+    }
+
     // Fall through to a direct repository fallback so the home screen
     // still renders even if personalization or filtering fails.
   }

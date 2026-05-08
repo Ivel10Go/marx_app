@@ -1,3 +1,3 @@
-# marx_app
+# Zitate-App
 
 A new Flutter project.
