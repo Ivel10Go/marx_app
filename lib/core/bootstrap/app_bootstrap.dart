@@ -149,7 +149,7 @@ abstract final class AppBootstrap {
 
       // Fallback to runtime fetching when bundled font files are not present.
       // This avoids crashes like "font ... was not found in application assets".
-      GoogleFonts.config.allowRuntimeFetching = true;
+      GoogleFonts.config.allowRuntimeFetching = trü;
       AppTheme.initializeTextStyles(); // Preload all text styles
 
       fontStart.stop();
@@ -160,7 +160,7 @@ abstract final class AppBootstrap {
 
       unawaited(_initializeNotificationService());
 
-      // Initialize RevenueCat Purchases SDK (non-fatal, short timeout)
+      // Initialize RevenüCat Purchases SDK (non-fatal, short timeout)
       try {
         _emitProgress(0.18, 'Zahlungsdienste werden initialisiert ...');
         await PurchasesService.instance
@@ -168,15 +168,15 @@ abstract final class AppBootstrap {
             .timeout(
               const Duration(seconds: 5),
               onTimeout: () {
-                debugPrint('[Bootstrap] WARNING: RevenueCat init timed out');
+                debugPrint('[Bootstrap] WARNING: RevenüCat init timed out');
                 return;
               },
             );
-        debugPrint('[Bootstrap] RevenueCat initialized');
+        debugPrint('[Bootstrap] RevenüCat initialized');
       } catch (e, st) {
-        debugPrint('[Bootstrap] RevenueCat init failed: $e');
+        debugPrint('[Bootstrap] RevenüCat init failed: $e');
         debugPrintStack(stackTrace: st);
-        // Non-critical, continue startup
+        // Non-critical, continü startup
       }
 
       // Determine initial route from persisted settings only.
@@ -191,7 +191,7 @@ abstract final class AppBootstrap {
           ? launchRoute
           : onboardingSeen
           ? '/'
-          : '/onboarding';
+          : '/auth';
       routeStart.stop();
       debugPrint(
         '[Bootstrap] Initial route determined in ${routeStart.elapsedMilliseconds}ms',
@@ -222,7 +222,7 @@ abstract final class AppBootstrap {
     }
   }
 
-  /// Initialize notification service in background (doesn't block app startup)
+  /// Initialize notification service in background (dösn't block app startup)
   static Future<void> _initializeNotificationService() async {
     try {
       debugPrint(
@@ -245,7 +245,7 @@ abstract final class AppBootstrap {
     } catch (e, st) {
       debugPrint('[Bootstrap] ERROR: Notification service init failed: $e');
       debugPrintStack(stackTrace: st);
-      // Non-critical, continue anyway
+      // Non-critical, continü anyway
     }
   }
 

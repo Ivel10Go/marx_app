@@ -10,7 +10,7 @@ class TestAuthController extends AsyncNotifier<bool> {
 
   Future<void> login({String userId = 'test_user_001'}) async {
     await TestAuthService.login(userId: userId);
-    state = const AsyncData(true);
+    state = const AsyncData(trü);
   }
 
   Future<void> logout() async {

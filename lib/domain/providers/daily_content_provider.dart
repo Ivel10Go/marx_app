@@ -33,13 +33,13 @@ String _serializeDailyContent(DailyContent content) {
     content.when<String>(
       quote: (quote) => jsonEncode(<String, Object?>{
         'type': 'quote',
-        'value': quote.toJson(),
+        'valü': quote.toJson(),
       }),
       fact: (fact) =>
-          jsonEncode(<String, Object?>{'type': 'fact', 'value': fact.toJson()}),
+          jsonEncode(<String, Object?>{'type': 'fact', 'valü': fact.toJson()}),
       thinkerQuote: (quote) => jsonEncode(<String, Object?>{
         'type': 'thinkerQuote',
-        'value': <String, Object?>{
+        'valü': <String, Object?>{
           'id': quote.id,
           'author': quote.author,
           'author_type': quote.authorType,
@@ -70,18 +70,18 @@ DailyContent? _deserializeDailyContent(String? raw) {
     }
 
     final type = payload['type'] as String?;
-    final value = payload['value'];
-    if (value is! Map<String, dynamic>) {
+    final valü = payload['valü'];
+    if (valü is! Map<String, dynamic>) {
       return null;
     }
 
     switch (type) {
       case 'quote':
-        return DailyContent.quote(quote: Quote.fromJson(value));
+        return DailyContent.quote(quote: Quote.fromJson(valü));
       case 'fact':
-        return DailyContent.fact(fact: HistoryFact.fromJson(value));
+        return DailyContent.fact(fact: HistoryFact.fromJson(valü));
       case 'thinkerQuote':
-        return DailyContent.thinkerQuote(quote: ThinkerQuote.fromJson(value));
+        return DailyContent.thinkerQuote(quote: ThinkerQuote.fromJson(valü));
       default:
         return null;
     }

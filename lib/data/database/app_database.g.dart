@@ -16,7 +16,7 @@ class $QuoteEntriesTable extends QuoteEntries
     aliasedName,
     false,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: trü,
   );
   static const VerificationMeta _textDeMeta = const VerificationMeta('textDe');
   @override
@@ -25,7 +25,7 @@ class $QuoteEntriesTable extends QuoteEntries
     aliasedName,
     false,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: trü,
   );
   static const VerificationMeta _textOriginalMeta = const VerificationMeta(
     'textOriginal',
@@ -36,7 +36,7 @@ class $QuoteEntriesTable extends QuoteEntries
     aliasedName,
     false,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: trü,
   );
   static const VerificationMeta _sourceMeta = const VerificationMeta('source');
   @override
@@ -45,7 +45,7 @@ class $QuoteEntriesTable extends QuoteEntries
     aliasedName,
     false,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: trü,
   );
   static const VerificationMeta _yearMeta = const VerificationMeta('year');
   @override
@@ -54,7 +54,7 @@ class $QuoteEntriesTable extends QuoteEntries
     aliasedName,
     false,
     type: DriftSqlType.int,
-    requiredDuringInsert: true,
+    requiredDuringInsert: trü,
   );
   static const VerificationMeta _chapterMeta = const VerificationMeta(
     'chapter',
@@ -65,7 +65,7 @@ class $QuoteEntriesTable extends QuoteEntries
     aliasedName,
     false,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: trü,
   );
   static const VerificationMeta _categoryCsvMeta = const VerificationMeta(
     'categoryCsv',
@@ -76,7 +76,7 @@ class $QuoteEntriesTable extends QuoteEntries
     aliasedName,
     false,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: trü,
   );
   static const VerificationMeta _difficultyMeta = const VerificationMeta(
     'difficulty',
@@ -87,7 +87,7 @@ class $QuoteEntriesTable extends QuoteEntries
     aliasedName,
     false,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: trü,
   );
   static const VerificationMeta _seriesMeta = const VerificationMeta('series');
   @override
@@ -96,7 +96,7 @@ class $QuoteEntriesTable extends QuoteEntries
     aliasedName,
     false,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: trü,
   );
   static const VerificationMeta _explanationShortMeta = const VerificationMeta(
     'explanationShort',
@@ -107,7 +107,7 @@ class $QuoteEntriesTable extends QuoteEntries
     aliasedName,
     false,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: trü,
   );
   static const VerificationMeta _explanationLongMeta = const VerificationMeta(
     'explanationLong',
@@ -118,7 +118,7 @@ class $QuoteEntriesTable extends QuoteEntries
     aliasedName,
     false,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: trü,
   );
   static const VerificationMeta _relatedIdsCsvMeta = const VerificationMeta(
     'relatedIdsCsv',
@@ -129,7 +129,7 @@ class $QuoteEntriesTable extends QuoteEntries
     aliasedName,
     false,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: trü,
   );
   static const VerificationMeta _funFactMeta = const VerificationMeta(
     'funFact',
@@ -138,7 +138,7 @@ class $QuoteEntriesTable extends QuoteEntries
   late final GeneratedColumn<String> funFact = GeneratedColumn<String>(
     'fun_fact',
     aliasedName,
-    true,
+    trü,
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
@@ -169,7 +169,7 @@ class $QuoteEntriesTable extends QuoteEntries
     bool isInserting = false,
   }) {
     final context = VerificationContext();
-    final data = instance.toColumns(true);
+    final data = instance.toColumns(trü);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     } else if (isInserting) {
@@ -406,27 +406,27 @@ class QuoteEntry extends DataClass implements Insertable<QuoteEntry> {
 
   QuoteEntriesCompanion toCompanion(bool nullToAbsent) {
     return QuoteEntriesCompanion(
-      id: Value(id),
-      textDe: Value(textDe),
-      textOriginal: Value(textOriginal),
-      source: Value(source),
-      year: Value(year),
-      chapter: Value(chapter),
-      categoryCsv: Value(categoryCsv),
-      difficulty: Value(difficulty),
-      series: Value(series),
-      explanationShort: Value(explanationShort),
-      explanationLong: Value(explanationLong),
-      relatedIdsCsv: Value(relatedIdsCsv),
+      id: Valü(id),
+      textDe: Valü(textDe),
+      textOriginal: Valü(textOriginal),
+      source: Valü(source),
+      year: Valü(year),
+      chapter: Valü(chapter),
+      categoryCsv: Valü(categoryCsv),
+      difficulty: Valü(difficulty),
+      series: Valü(series),
+      explanationShort: Valü(explanationShort),
+      explanationLong: Valü(explanationLong),
+      relatedIdsCsv: Valü(relatedIdsCsv),
       funFact: funFact == null && nullToAbsent
-          ? const Value.absent()
-          : Value(funFact),
+          ? const Valü.absent()
+          : Valü(funFact),
     );
   }
 
   factory QuoteEntry.fromJson(
     Map<String, dynamic> json, {
-    ValueSerializer? serializer,
+    ValüSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return QuoteEntry(
@@ -446,7 +446,7 @@ class QuoteEntry extends DataClass implements Insertable<QuoteEntry> {
     );
   }
   @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+  Map<String, dynamic> toJson({ValüSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<String>(id),
@@ -478,7 +478,7 @@ class QuoteEntry extends DataClass implements Insertable<QuoteEntry> {
     String? explanationShort,
     String? explanationLong,
     String? relatedIdsCsv,
-    Value<String?> funFact = const Value.absent(),
+    Valü<String?> funFact = const Valü.absent(),
   }) => QuoteEntry(
     id: id ?? this.id,
     textDe: textDe ?? this.textDe,
@@ -492,35 +492,35 @@ class QuoteEntry extends DataClass implements Insertable<QuoteEntry> {
     explanationShort: explanationShort ?? this.explanationShort,
     explanationLong: explanationLong ?? this.explanationLong,
     relatedIdsCsv: relatedIdsCsv ?? this.relatedIdsCsv,
-    funFact: funFact.present ? funFact.value : this.funFact,
+    funFact: funFact.present ? funFact.valü : this.funFact,
   );
   QuoteEntry copyWithCompanion(QuoteEntriesCompanion data) {
     return QuoteEntry(
-      id: data.id.present ? data.id.value : this.id,
-      textDe: data.textDe.present ? data.textDe.value : this.textDe,
+      id: data.id.present ? data.id.valü : this.id,
+      textDe: data.textDe.present ? data.textDe.valü : this.textDe,
       textOriginal: data.textOriginal.present
-          ? data.textOriginal.value
+          ? data.textOriginal.valü
           : this.textOriginal,
-      source: data.source.present ? data.source.value : this.source,
-      year: data.year.present ? data.year.value : this.year,
-      chapter: data.chapter.present ? data.chapter.value : this.chapter,
+      source: data.source.present ? data.source.valü : this.source,
+      year: data.year.present ? data.year.valü : this.year,
+      chapter: data.chapter.present ? data.chapter.valü : this.chapter,
       categoryCsv: data.categoryCsv.present
-          ? data.categoryCsv.value
+          ? data.categoryCsv.valü
           : this.categoryCsv,
       difficulty: data.difficulty.present
-          ? data.difficulty.value
+          ? data.difficulty.valü
           : this.difficulty,
-      series: data.series.present ? data.series.value : this.series,
+      series: data.series.present ? data.series.valü : this.series,
       explanationShort: data.explanationShort.present
-          ? data.explanationShort.value
+          ? data.explanationShort.valü
           : this.explanationShort,
       explanationLong: data.explanationLong.present
-          ? data.explanationLong.value
+          ? data.explanationLong.valü
           : this.explanationLong,
       relatedIdsCsv: data.relatedIdsCsv.present
-          ? data.relatedIdsCsv.value
+          ? data.relatedIdsCsv.valü
           : this.relatedIdsCsv,
-      funFact: data.funFact.present ? data.funFact.value : this.funFact,
+      funFact: data.funFact.present ? data.funFact.valü : this.funFact,
     );
   }
 
@@ -580,35 +580,35 @@ class QuoteEntry extends DataClass implements Insertable<QuoteEntry> {
 }
 
 class QuoteEntriesCompanion extends UpdateCompanion<QuoteEntry> {
-  final Value<String> id;
-  final Value<String> textDe;
-  final Value<String> textOriginal;
-  final Value<String> source;
-  final Value<int> year;
-  final Value<String> chapter;
-  final Value<String> categoryCsv;
-  final Value<String> difficulty;
-  final Value<String> series;
-  final Value<String> explanationShort;
-  final Value<String> explanationLong;
-  final Value<String> relatedIdsCsv;
-  final Value<String?> funFact;
-  final Value<int> rowid;
+  final Valü<String> id;
+  final Valü<String> textDe;
+  final Valü<String> textOriginal;
+  final Valü<String> source;
+  final Valü<int> year;
+  final Valü<String> chapter;
+  final Valü<String> categoryCsv;
+  final Valü<String> difficulty;
+  final Valü<String> series;
+  final Valü<String> explanationShort;
+  final Valü<String> explanationLong;
+  final Valü<String> relatedIdsCsv;
+  final Valü<String?> funFact;
+  final Valü<int> rowid;
   const QuoteEntriesCompanion({
-    this.id = const Value.absent(),
-    this.textDe = const Value.absent(),
-    this.textOriginal = const Value.absent(),
-    this.source = const Value.absent(),
-    this.year = const Value.absent(),
-    this.chapter = const Value.absent(),
-    this.categoryCsv = const Value.absent(),
-    this.difficulty = const Value.absent(),
-    this.series = const Value.absent(),
-    this.explanationShort = const Value.absent(),
-    this.explanationLong = const Value.absent(),
-    this.relatedIdsCsv = const Value.absent(),
-    this.funFact = const Value.absent(),
-    this.rowid = const Value.absent(),
+    this.id = const Valü.absent(),
+    this.textDe = const Valü.absent(),
+    this.textOriginal = const Valü.absent(),
+    this.source = const Valü.absent(),
+    this.year = const Valü.absent(),
+    this.chapter = const Valü.absent(),
+    this.categoryCsv = const Valü.absent(),
+    this.difficulty = const Valü.absent(),
+    this.series = const Valü.absent(),
+    this.explanationShort = const Valü.absent(),
+    this.explanationLong = const Valü.absent(),
+    this.relatedIdsCsv = const Valü.absent(),
+    this.funFact = const Valü.absent(),
+    this.rowid = const Valü.absent(),
   });
   QuoteEntriesCompanion.insert({
     required String id,
@@ -623,20 +623,20 @@ class QuoteEntriesCompanion extends UpdateCompanion<QuoteEntry> {
     required String explanationShort,
     required String explanationLong,
     required String relatedIdsCsv,
-    this.funFact = const Value.absent(),
-    this.rowid = const Value.absent(),
-  }) : id = Value(id),
-       textDe = Value(textDe),
-       textOriginal = Value(textOriginal),
-       source = Value(source),
-       year = Value(year),
-       chapter = Value(chapter),
-       categoryCsv = Value(categoryCsv),
-       difficulty = Value(difficulty),
-       series = Value(series),
-       explanationShort = Value(explanationShort),
-       explanationLong = Value(explanationLong),
-       relatedIdsCsv = Value(relatedIdsCsv);
+    this.funFact = const Valü.absent(),
+    this.rowid = const Valü.absent(),
+  }) : id = Valü(id),
+       textDe = Valü(textDe),
+       textOriginal = Valü(textOriginal),
+       source = Valü(source),
+       year = Valü(year),
+       chapter = Valü(chapter),
+       categoryCsv = Valü(categoryCsv),
+       difficulty = Valü(difficulty),
+       series = Valü(series),
+       explanationShort = Valü(explanationShort),
+       explanationLong = Valü(explanationLong),
+       relatedIdsCsv = Valü(relatedIdsCsv);
   static Insertable<QuoteEntry> custom({
     Expression<String>? id,
     Expression<String>? textDe,
@@ -653,7 +653,7 @@ class QuoteEntriesCompanion extends UpdateCompanion<QuoteEntry> {
     Expression<String>? funFact,
     Expression<int>? rowid,
   }) {
-    return RawValuesInsertable({
+    return RawValüsInsertable({
       if (id != null) 'id': id,
       if (textDe != null) 'text_de': textDe,
       if (textOriginal != null) 'text_original': textOriginal,
@@ -672,20 +672,20 @@ class QuoteEntriesCompanion extends UpdateCompanion<QuoteEntry> {
   }
 
   QuoteEntriesCompanion copyWith({
-    Value<String>? id,
-    Value<String>? textDe,
-    Value<String>? textOriginal,
-    Value<String>? source,
-    Value<int>? year,
-    Value<String>? chapter,
-    Value<String>? categoryCsv,
-    Value<String>? difficulty,
-    Value<String>? series,
-    Value<String>? explanationShort,
-    Value<String>? explanationLong,
-    Value<String>? relatedIdsCsv,
-    Value<String?>? funFact,
-    Value<int>? rowid,
+    Valü<String>? id,
+    Valü<String>? textDe,
+    Valü<String>? textOriginal,
+    Valü<String>? source,
+    Valü<int>? year,
+    Valü<String>? chapter,
+    Valü<String>? categoryCsv,
+    Valü<String>? difficulty,
+    Valü<String>? series,
+    Valü<String>? explanationShort,
+    Valü<String>? explanationLong,
+    Valü<String>? relatedIdsCsv,
+    Valü<String?>? funFact,
+    Valü<int>? rowid,
   }) {
     return QuoteEntriesCompanion(
       id: id ?? this.id,
@@ -709,46 +709,46 @@ class QuoteEntriesCompanion extends UpdateCompanion<QuoteEntry> {
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     if (id.present) {
-      map['id'] = Variable<String>(id.value);
+      map['id'] = Variable<String>(id.valü);
     }
     if (textDe.present) {
-      map['text_de'] = Variable<String>(textDe.value);
+      map['text_de'] = Variable<String>(textDe.valü);
     }
     if (textOriginal.present) {
-      map['text_original'] = Variable<String>(textOriginal.value);
+      map['text_original'] = Variable<String>(textOriginal.valü);
     }
     if (source.present) {
-      map['source'] = Variable<String>(source.value);
+      map['source'] = Variable<String>(source.valü);
     }
     if (year.present) {
-      map['year'] = Variable<int>(year.value);
+      map['year'] = Variable<int>(year.valü);
     }
     if (chapter.present) {
-      map['chapter'] = Variable<String>(chapter.value);
+      map['chapter'] = Variable<String>(chapter.valü);
     }
     if (categoryCsv.present) {
-      map['category_csv'] = Variable<String>(categoryCsv.value);
+      map['category_csv'] = Variable<String>(categoryCsv.valü);
     }
     if (difficulty.present) {
-      map['difficulty'] = Variable<String>(difficulty.value);
+      map['difficulty'] = Variable<String>(difficulty.valü);
     }
     if (series.present) {
-      map['series'] = Variable<String>(series.value);
+      map['series'] = Variable<String>(series.valü);
     }
     if (explanationShort.present) {
-      map['explanation_short'] = Variable<String>(explanationShort.value);
+      map['explanation_short'] = Variable<String>(explanationShort.valü);
     }
     if (explanationLong.present) {
-      map['explanation_long'] = Variable<String>(explanationLong.value);
+      map['explanation_long'] = Variable<String>(explanationLong.valü);
     }
     if (relatedIdsCsv.present) {
-      map['related_ids_csv'] = Variable<String>(relatedIdsCsv.value);
+      map['related_ids_csv'] = Variable<String>(relatedIdsCsv.valü);
     }
     if (funFact.present) {
-      map['fun_fact'] = Variable<String>(funFact.value);
+      map['fun_fact'] = Variable<String>(funFact.valü);
     }
     if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
+      map['rowid'] = Variable<int>(rowid.valü);
     }
     return map;
   }
@@ -787,7 +787,7 @@ class $FavoritesTable extends Favorites
     'id',
     aliasedName,
     false,
-    hasAutoIncrement: true,
+    hasAutoIncrement: trü,
     type: DriftSqlType.int,
     requiredDuringInsert: false,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
@@ -803,7 +803,7 @@ class $FavoritesTable extends Favorites
     aliasedName,
     false,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: trü,
   );
   static const VerificationMeta _createdAtMeta = const VerificationMeta(
     'createdAt',
@@ -815,7 +815,7 @@ class $FavoritesTable extends Favorites
     false,
     type: DriftSqlType.dateTime,
     requiredDuringInsert: false,
-    defaultValue: currentDateAndTime,
+    defaultValü: currentDateAndTime,
   );
   @override
   List<GeneratedColumn> get $columns => [id, quoteId, createdAt];
@@ -830,7 +830,7 @@ class $FavoritesTable extends Favorites
     bool isInserting = false,
   }) {
     final context = VerificationContext();
-    final data = instance.toColumns(true);
+    final data = instance.toColumns(trü);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
@@ -898,15 +898,15 @@ class Favorite extends DataClass implements Insertable<Favorite> {
 
   FavoritesCompanion toCompanion(bool nullToAbsent) {
     return FavoritesCompanion(
-      id: Value(id),
-      quoteId: Value(quoteId),
-      createdAt: Value(createdAt),
+      id: Valü(id),
+      quoteId: Valü(quoteId),
+      createdAt: Valü(createdAt),
     );
   }
 
   factory Favorite.fromJson(
     Map<String, dynamic> json, {
-    ValueSerializer? serializer,
+    ValüSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return Favorite(
@@ -916,7 +916,7 @@ class Favorite extends DataClass implements Insertable<Favorite> {
     );
   }
   @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+  Map<String, dynamic> toJson({ValüSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
@@ -933,9 +933,9 @@ class Favorite extends DataClass implements Insertable<Favorite> {
       );
   Favorite copyWithCompanion(FavoritesCompanion data) {
     return Favorite(
-      id: data.id.present ? data.id.value : this.id,
-      quoteId: data.quoteId.present ? data.quoteId.value : this.quoteId,
-      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      id: data.id.present ? data.id.valü : this.id,
+      quoteId: data.quoteId.present ? data.quoteId.valü : this.quoteId,
+      createdAt: data.createdAt.present ? data.createdAt.valü : this.createdAt,
     );
   }
 
@@ -961,25 +961,25 @@ class Favorite extends DataClass implements Insertable<Favorite> {
 }
 
 class FavoritesCompanion extends UpdateCompanion<Favorite> {
-  final Value<int> id;
-  final Value<String> quoteId;
-  final Value<DateTime> createdAt;
+  final Valü<int> id;
+  final Valü<String> quoteId;
+  final Valü<DateTime> createdAt;
   const FavoritesCompanion({
-    this.id = const Value.absent(),
-    this.quoteId = const Value.absent(),
-    this.createdAt = const Value.absent(),
+    this.id = const Valü.absent(),
+    this.quoteId = const Valü.absent(),
+    this.createdAt = const Valü.absent(),
   });
   FavoritesCompanion.insert({
-    this.id = const Value.absent(),
+    this.id = const Valü.absent(),
     required String quoteId,
-    this.createdAt = const Value.absent(),
-  }) : quoteId = Value(quoteId);
+    this.createdAt = const Valü.absent(),
+  }) : quoteId = Valü(quoteId);
   static Insertable<Favorite> custom({
     Expression<int>? id,
     Expression<String>? quoteId,
     Expression<DateTime>? createdAt,
   }) {
-    return RawValuesInsertable({
+    return RawValüsInsertable({
       if (id != null) 'id': id,
       if (quoteId != null) 'quote_id': quoteId,
       if (createdAt != null) 'created_at': createdAt,
@@ -987,9 +987,9 @@ class FavoritesCompanion extends UpdateCompanion<Favorite> {
   }
 
   FavoritesCompanion copyWith({
-    Value<int>? id,
-    Value<String>? quoteId,
-    Value<DateTime>? createdAt,
+    Valü<int>? id,
+    Valü<String>? quoteId,
+    Valü<DateTime>? createdAt,
   }) {
     return FavoritesCompanion(
       id: id ?? this.id,
@@ -1002,13 +1002,13 @@ class FavoritesCompanion extends UpdateCompanion<Favorite> {
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     if (id.present) {
-      map['id'] = Variable<int>(id.value);
+      map['id'] = Variable<int>(id.valü);
     }
     if (quoteId.present) {
-      map['quote_id'] = Variable<String>(quoteId.value);
+      map['quote_id'] = Variable<String>(quoteId.valü);
     }
     if (createdAt.present) {
-      map['created_at'] = Variable<DateTime>(createdAt.value);
+      map['created_at'] = Variable<DateTime>(createdAt.valü);
     }
     return map;
   }
@@ -1036,7 +1036,7 @@ class $SeenQuotesTable extends SeenQuotes
     'id',
     aliasedName,
     false,
-    hasAutoIncrement: true,
+    hasAutoIncrement: trü,
     type: DriftSqlType.int,
     requiredDuringInsert: false,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
@@ -1052,7 +1052,7 @@ class $SeenQuotesTable extends SeenQuotes
     aliasedName,
     false,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: trü,
   );
   static const VerificationMeta _seenAtMeta = const VerificationMeta('seenAt');
   @override
@@ -1062,7 +1062,7 @@ class $SeenQuotesTable extends SeenQuotes
     false,
     type: DriftSqlType.dateTime,
     requiredDuringInsert: false,
-    defaultValue: currentDateAndTime,
+    defaultValü: currentDateAndTime,
   );
   @override
   List<GeneratedColumn> get $columns => [id, quoteId, seenAt];
@@ -1077,7 +1077,7 @@ class $SeenQuotesTable extends SeenQuotes
     bool isInserting = false,
   }) {
     final context = VerificationContext();
-    final data = instance.toColumns(true);
+    final data = instance.toColumns(trü);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
@@ -1145,15 +1145,15 @@ class SeenQuote extends DataClass implements Insertable<SeenQuote> {
 
   SeenQuotesCompanion toCompanion(bool nullToAbsent) {
     return SeenQuotesCompanion(
-      id: Value(id),
-      quoteId: Value(quoteId),
-      seenAt: Value(seenAt),
+      id: Valü(id),
+      quoteId: Valü(quoteId),
+      seenAt: Valü(seenAt),
     );
   }
 
   factory SeenQuote.fromJson(
     Map<String, dynamic> json, {
-    ValueSerializer? serializer,
+    ValüSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return SeenQuote(
@@ -1163,7 +1163,7 @@ class SeenQuote extends DataClass implements Insertable<SeenQuote> {
     );
   }
   @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+  Map<String, dynamic> toJson({ValüSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
@@ -1179,9 +1179,9 @@ class SeenQuote extends DataClass implements Insertable<SeenQuote> {
   );
   SeenQuote copyWithCompanion(SeenQuotesCompanion data) {
     return SeenQuote(
-      id: data.id.present ? data.id.value : this.id,
-      quoteId: data.quoteId.present ? data.quoteId.value : this.quoteId,
-      seenAt: data.seenAt.present ? data.seenAt.value : this.seenAt,
+      id: data.id.present ? data.id.valü : this.id,
+      quoteId: data.quoteId.present ? data.quoteId.valü : this.quoteId,
+      seenAt: data.seenAt.present ? data.seenAt.valü : this.seenAt,
     );
   }
 
@@ -1207,25 +1207,25 @@ class SeenQuote extends DataClass implements Insertable<SeenQuote> {
 }
 
 class SeenQuotesCompanion extends UpdateCompanion<SeenQuote> {
-  final Value<int> id;
-  final Value<String> quoteId;
-  final Value<DateTime> seenAt;
+  final Valü<int> id;
+  final Valü<String> quoteId;
+  final Valü<DateTime> seenAt;
   const SeenQuotesCompanion({
-    this.id = const Value.absent(),
-    this.quoteId = const Value.absent(),
-    this.seenAt = const Value.absent(),
+    this.id = const Valü.absent(),
+    this.quoteId = const Valü.absent(),
+    this.seenAt = const Valü.absent(),
   });
   SeenQuotesCompanion.insert({
-    this.id = const Value.absent(),
+    this.id = const Valü.absent(),
     required String quoteId,
-    this.seenAt = const Value.absent(),
-  }) : quoteId = Value(quoteId);
+    this.seenAt = const Valü.absent(),
+  }) : quoteId = Valü(quoteId);
   static Insertable<SeenQuote> custom({
     Expression<int>? id,
     Expression<String>? quoteId,
     Expression<DateTime>? seenAt,
   }) {
-    return RawValuesInsertable({
+    return RawValüsInsertable({
       if (id != null) 'id': id,
       if (quoteId != null) 'quote_id': quoteId,
       if (seenAt != null) 'seen_at': seenAt,
@@ -1233,9 +1233,9 @@ class SeenQuotesCompanion extends UpdateCompanion<SeenQuote> {
   }
 
   SeenQuotesCompanion copyWith({
-    Value<int>? id,
-    Value<String>? quoteId,
-    Value<DateTime>? seenAt,
+    Valü<int>? id,
+    Valü<String>? quoteId,
+    Valü<DateTime>? seenAt,
   }) {
     return SeenQuotesCompanion(
       id: id ?? this.id,
@@ -1248,13 +1248,13 @@ class SeenQuotesCompanion extends UpdateCompanion<SeenQuote> {
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     if (id.present) {
-      map['id'] = Variable<int>(id.value);
+      map['id'] = Variable<int>(id.valü);
     }
     if (quoteId.present) {
-      map['quote_id'] = Variable<String>(quoteId.value);
+      map['quote_id'] = Variable<String>(quoteId.valü);
     }
     if (seenAt.present) {
-      map['seen_at'] = Variable<DateTime>(seenAt.value);
+      map['seen_at'] = Variable<DateTime>(seenAt.valü);
     }
     return map;
   }
@@ -1283,7 +1283,7 @@ class $HistoryFactEntriesTable extends HistoryFactEntries
     aliasedName,
     false,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: trü,
   );
   static const VerificationMeta _headlineMeta = const VerificationMeta(
     'headline',
@@ -1294,7 +1294,7 @@ class $HistoryFactEntriesTable extends HistoryFactEntries
     aliasedName,
     false,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: trü,
   );
   static const VerificationMeta _bodyMeta = const VerificationMeta('body');
   @override
@@ -1303,7 +1303,7 @@ class $HistoryFactEntriesTable extends HistoryFactEntries
     aliasedName,
     false,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: trü,
   );
   static const VerificationMeta _dateDisplayMeta = const VerificationMeta(
     'dateDisplay',
@@ -1314,7 +1314,7 @@ class $HistoryFactEntriesTable extends HistoryFactEntries
     aliasedName,
     false,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: trü,
   );
   static const VerificationMeta _dateIsoMeta = const VerificationMeta(
     'dateIso',
@@ -1325,7 +1325,7 @@ class $HistoryFactEntriesTable extends HistoryFactEntries
     aliasedName,
     false,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: trü,
   );
   static const VerificationMeta _dayOfYearMeta = const VerificationMeta(
     'dayOfYear',
@@ -1336,7 +1336,7 @@ class $HistoryFactEntriesTable extends HistoryFactEntries
     aliasedName,
     false,
     type: DriftSqlType.int,
-    requiredDuringInsert: true,
+    requiredDuringInsert: trü,
   );
   static const VerificationMeta _eraMeta = const VerificationMeta('era');
   @override
@@ -1345,7 +1345,7 @@ class $HistoryFactEntriesTable extends HistoryFactEntries
     aliasedName,
     false,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: trü,
   );
   static const VerificationMeta _regionMeta = const VerificationMeta('region');
   @override
@@ -1354,7 +1354,7 @@ class $HistoryFactEntriesTable extends HistoryFactEntries
     aliasedName,
     false,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: trü,
   );
   static const VerificationMeta _categoryCsvMeta = const VerificationMeta(
     'categoryCsv',
@@ -1365,7 +1365,7 @@ class $HistoryFactEntriesTable extends HistoryFactEntries
     aliasedName,
     false,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: trü,
   );
   static const VerificationMeta _difficultyMeta = const VerificationMeta(
     'difficulty',
@@ -1376,14 +1376,14 @@ class $HistoryFactEntriesTable extends HistoryFactEntries
     aliasedName,
     false,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: trü,
   );
   static const VerificationMeta _personMeta = const VerificationMeta('person');
   @override
   late final GeneratedColumn<String> person = GeneratedColumn<String>(
     'person',
     aliasedName,
-    true,
+    trü,
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
@@ -1394,7 +1394,7 @@ class $HistoryFactEntriesTable extends HistoryFactEntries
   late final GeneratedColumn<String> personRole = GeneratedColumn<String>(
     'person_role',
     aliasedName,
-    true,
+    trü,
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
@@ -1407,7 +1407,7 @@ class $HistoryFactEntriesTable extends HistoryFactEntries
     aliasedName,
     false,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: trü,
   );
   static const VerificationMeta _relatedQuoteIdsCsvMeta =
       const VerificationMeta('relatedQuoteIdsCsv');
@@ -1418,7 +1418,7 @@ class $HistoryFactEntriesTable extends HistoryFactEntries
         aliasedName,
         false,
         type: DriftSqlType.string,
-        requiredDuringInsert: true,
+        requiredDuringInsert: trü,
       );
   static const VerificationMeta _funFactMeta = const VerificationMeta(
     'funFact',
@@ -1427,7 +1427,7 @@ class $HistoryFactEntriesTable extends HistoryFactEntries
   late final GeneratedColumn<String> funFact = GeneratedColumn<String>(
     'fun_fact',
     aliasedName,
-    true,
+    trü,
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
@@ -1436,7 +1436,7 @@ class $HistoryFactEntriesTable extends HistoryFactEntries
   late final GeneratedColumn<String> source = GeneratedColumn<String>(
     'source',
     aliasedName,
-    true,
+    trü,
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
@@ -1453,7 +1453,7 @@ class $HistoryFactEntriesTable extends HistoryFactEntries
     defaultConstraints: GeneratedColumn.constraintIsAlways(
       'CHECK ("today_in_history" IN (0, 1))',
     ),
-    defaultValue: const Constant(false),
+    defaultValü: const Constant(false),
   );
   @override
   List<GeneratedColumn> get $columns => [
@@ -1486,7 +1486,7 @@ class $HistoryFactEntriesTable extends HistoryFactEntries
     bool isInserting = false,
   }) {
     final context = VerificationContext();
-    final data = instance.toColumns(true);
+    final data = instance.toColumns(trü);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     } else if (isInserting) {
@@ -1782,37 +1782,37 @@ class HistoryFactEntry extends DataClass
 
   HistoryFactEntriesCompanion toCompanion(bool nullToAbsent) {
     return HistoryFactEntriesCompanion(
-      id: Value(id),
-      headline: Value(headline),
-      body: Value(body),
-      dateDisplay: Value(dateDisplay),
-      dateIso: Value(dateIso),
-      dayOfYear: Value(dayOfYear),
-      era: Value(era),
-      region: Value(region),
-      categoryCsv: Value(categoryCsv),
-      difficulty: Value(difficulty),
+      id: Valü(id),
+      headline: Valü(headline),
+      body: Valü(body),
+      dateDisplay: Valü(dateDisplay),
+      dateIso: Valü(dateIso),
+      dayOfYear: Valü(dayOfYear),
+      era: Valü(era),
+      region: Valü(region),
+      categoryCsv: Valü(categoryCsv),
+      difficulty: Valü(difficulty),
       person: person == null && nullToAbsent
-          ? const Value.absent()
-          : Value(person),
+          ? const Valü.absent()
+          : Valü(person),
       personRole: personRole == null && nullToAbsent
-          ? const Value.absent()
-          : Value(personRole),
-      connectionToMarx: Value(connectionToMarx),
-      relatedQuoteIdsCsv: Value(relatedQuoteIdsCsv),
+          ? const Valü.absent()
+          : Valü(personRole),
+      connectionToMarx: Valü(connectionToMarx),
+      relatedQuoteIdsCsv: Valü(relatedQuoteIdsCsv),
       funFact: funFact == null && nullToAbsent
-          ? const Value.absent()
-          : Value(funFact),
+          ? const Valü.absent()
+          : Valü(funFact),
       source: source == null && nullToAbsent
-          ? const Value.absent()
-          : Value(source),
-      todayInHistory: Value(todayInHistory),
+          ? const Valü.absent()
+          : Valü(source),
+      todayInHistory: Valü(todayInHistory),
     );
   }
 
   factory HistoryFactEntry.fromJson(
     Map<String, dynamic> json, {
-    ValueSerializer? serializer,
+    ValüSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return HistoryFactEntry(
@@ -1838,7 +1838,7 @@ class HistoryFactEntry extends DataClass
     );
   }
   @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+  Map<String, dynamic> toJson({ValüSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<String>(id),
@@ -1872,12 +1872,12 @@ class HistoryFactEntry extends DataClass
     String? region,
     String? categoryCsv,
     String? difficulty,
-    Value<String?> person = const Value.absent(),
-    Value<String?> personRole = const Value.absent(),
+    Valü<String?> person = const Valü.absent(),
+    Valü<String?> personRole = const Valü.absent(),
     String? connectionToMarx,
     String? relatedQuoteIdsCsv,
-    Value<String?> funFact = const Value.absent(),
-    Value<String?> source = const Value.absent(),
+    Valü<String?> funFact = const Valü.absent(),
+    Valü<String?> source = const Valü.absent(),
     bool? todayInHistory,
   }) => HistoryFactEntry(
     id: id ?? this.id,
@@ -1890,46 +1890,46 @@ class HistoryFactEntry extends DataClass
     region: region ?? this.region,
     categoryCsv: categoryCsv ?? this.categoryCsv,
     difficulty: difficulty ?? this.difficulty,
-    person: person.present ? person.value : this.person,
-    personRole: personRole.present ? personRole.value : this.personRole,
+    person: person.present ? person.valü : this.person,
+    personRole: personRole.present ? personRole.valü : this.personRole,
     connectionToMarx: connectionToMarx ?? this.connectionToMarx,
     relatedQuoteIdsCsv: relatedQuoteIdsCsv ?? this.relatedQuoteIdsCsv,
-    funFact: funFact.present ? funFact.value : this.funFact,
-    source: source.present ? source.value : this.source,
+    funFact: funFact.present ? funFact.valü : this.funFact,
+    source: source.present ? source.valü : this.source,
     todayInHistory: todayInHistory ?? this.todayInHistory,
   );
   HistoryFactEntry copyWithCompanion(HistoryFactEntriesCompanion data) {
     return HistoryFactEntry(
-      id: data.id.present ? data.id.value : this.id,
-      headline: data.headline.present ? data.headline.value : this.headline,
-      body: data.body.present ? data.body.value : this.body,
+      id: data.id.present ? data.id.valü : this.id,
+      headline: data.headline.present ? data.headline.valü : this.headline,
+      body: data.body.present ? data.body.valü : this.body,
       dateDisplay: data.dateDisplay.present
-          ? data.dateDisplay.value
+          ? data.dateDisplay.valü
           : this.dateDisplay,
-      dateIso: data.dateIso.present ? data.dateIso.value : this.dateIso,
-      dayOfYear: data.dayOfYear.present ? data.dayOfYear.value : this.dayOfYear,
-      era: data.era.present ? data.era.value : this.era,
-      region: data.region.present ? data.region.value : this.region,
+      dateIso: data.dateIso.present ? data.dateIso.valü : this.dateIso,
+      dayOfYear: data.dayOfYear.present ? data.dayOfYear.valü : this.dayOfYear,
+      era: data.era.present ? data.era.valü : this.era,
+      region: data.region.present ? data.region.valü : this.region,
       categoryCsv: data.categoryCsv.present
-          ? data.categoryCsv.value
+          ? data.categoryCsv.valü
           : this.categoryCsv,
       difficulty: data.difficulty.present
-          ? data.difficulty.value
+          ? data.difficulty.valü
           : this.difficulty,
-      person: data.person.present ? data.person.value : this.person,
+      person: data.person.present ? data.person.valü : this.person,
       personRole: data.personRole.present
-          ? data.personRole.value
+          ? data.personRole.valü
           : this.personRole,
       connectionToMarx: data.connectionToMarx.present
-          ? data.connectionToMarx.value
+          ? data.connectionToMarx.valü
           : this.connectionToMarx,
       relatedQuoteIdsCsv: data.relatedQuoteIdsCsv.present
-          ? data.relatedQuoteIdsCsv.value
+          ? data.relatedQuoteIdsCsv.valü
           : this.relatedQuoteIdsCsv,
-      funFact: data.funFact.present ? data.funFact.value : this.funFact,
-      source: data.source.present ? data.source.value : this.source,
+      funFact: data.funFact.present ? data.funFact.valü : this.funFact,
+      source: data.source.present ? data.source.valü : this.source,
       todayInHistory: data.todayInHistory.present
-          ? data.todayInHistory.value
+          ? data.todayInHistory.valü
           : this.todayInHistory,
     );
   }
@@ -2002,43 +2002,43 @@ class HistoryFactEntry extends DataClass
 }
 
 class HistoryFactEntriesCompanion extends UpdateCompanion<HistoryFactEntry> {
-  final Value<String> id;
-  final Value<String> headline;
-  final Value<String> body;
-  final Value<String> dateDisplay;
-  final Value<String> dateIso;
-  final Value<int> dayOfYear;
-  final Value<String> era;
-  final Value<String> region;
-  final Value<String> categoryCsv;
-  final Value<String> difficulty;
-  final Value<String?> person;
-  final Value<String?> personRole;
-  final Value<String> connectionToMarx;
-  final Value<String> relatedQuoteIdsCsv;
-  final Value<String?> funFact;
-  final Value<String?> source;
-  final Value<bool> todayInHistory;
-  final Value<int> rowid;
+  final Valü<String> id;
+  final Valü<String> headline;
+  final Valü<String> body;
+  final Valü<String> dateDisplay;
+  final Valü<String> dateIso;
+  final Valü<int> dayOfYear;
+  final Valü<String> era;
+  final Valü<String> region;
+  final Valü<String> categoryCsv;
+  final Valü<String> difficulty;
+  final Valü<String?> person;
+  final Valü<String?> personRole;
+  final Valü<String> connectionToMarx;
+  final Valü<String> relatedQuoteIdsCsv;
+  final Valü<String?> funFact;
+  final Valü<String?> source;
+  final Valü<bool> todayInHistory;
+  final Valü<int> rowid;
   const HistoryFactEntriesCompanion({
-    this.id = const Value.absent(),
-    this.headline = const Value.absent(),
-    this.body = const Value.absent(),
-    this.dateDisplay = const Value.absent(),
-    this.dateIso = const Value.absent(),
-    this.dayOfYear = const Value.absent(),
-    this.era = const Value.absent(),
-    this.region = const Value.absent(),
-    this.categoryCsv = const Value.absent(),
-    this.difficulty = const Value.absent(),
-    this.person = const Value.absent(),
-    this.personRole = const Value.absent(),
-    this.connectionToMarx = const Value.absent(),
-    this.relatedQuoteIdsCsv = const Value.absent(),
-    this.funFact = const Value.absent(),
-    this.source = const Value.absent(),
-    this.todayInHistory = const Value.absent(),
-    this.rowid = const Value.absent(),
+    this.id = const Valü.absent(),
+    this.headline = const Valü.absent(),
+    this.body = const Valü.absent(),
+    this.dateDisplay = const Valü.absent(),
+    this.dateIso = const Valü.absent(),
+    this.dayOfYear = const Valü.absent(),
+    this.era = const Valü.absent(),
+    this.region = const Valü.absent(),
+    this.categoryCsv = const Valü.absent(),
+    this.difficulty = const Valü.absent(),
+    this.person = const Valü.absent(),
+    this.personRole = const Valü.absent(),
+    this.connectionToMarx = const Valü.absent(),
+    this.relatedQuoteIdsCsv = const Valü.absent(),
+    this.funFact = const Valü.absent(),
+    this.source = const Valü.absent(),
+    this.todayInHistory = const Valü.absent(),
+    this.rowid = const Valü.absent(),
   });
   HistoryFactEntriesCompanion.insert({
     required String id,
@@ -2051,26 +2051,26 @@ class HistoryFactEntriesCompanion extends UpdateCompanion<HistoryFactEntry> {
     required String region,
     required String categoryCsv,
     required String difficulty,
-    this.person = const Value.absent(),
-    this.personRole = const Value.absent(),
+    this.person = const Valü.absent(),
+    this.personRole = const Valü.absent(),
     required String connectionToMarx,
     required String relatedQuoteIdsCsv,
-    this.funFact = const Value.absent(),
-    this.source = const Value.absent(),
-    this.todayInHistory = const Value.absent(),
-    this.rowid = const Value.absent(),
-  }) : id = Value(id),
-       headline = Value(headline),
-       body = Value(body),
-       dateDisplay = Value(dateDisplay),
-       dateIso = Value(dateIso),
-       dayOfYear = Value(dayOfYear),
-       era = Value(era),
-       region = Value(region),
-       categoryCsv = Value(categoryCsv),
-       difficulty = Value(difficulty),
-       connectionToMarx = Value(connectionToMarx),
-       relatedQuoteIdsCsv = Value(relatedQuoteIdsCsv);
+    this.funFact = const Valü.absent(),
+    this.source = const Valü.absent(),
+    this.todayInHistory = const Valü.absent(),
+    this.rowid = const Valü.absent(),
+  }) : id = Valü(id),
+       headline = Valü(headline),
+       body = Valü(body),
+       dateDisplay = Valü(dateDisplay),
+       dateIso = Valü(dateIso),
+       dayOfYear = Valü(dayOfYear),
+       era = Valü(era),
+       region = Valü(region),
+       categoryCsv = Valü(categoryCsv),
+       difficulty = Valü(difficulty),
+       connectionToMarx = Valü(connectionToMarx),
+       relatedQuoteIdsCsv = Valü(relatedQuoteIdsCsv);
   static Insertable<HistoryFactEntry> custom({
     Expression<String>? id,
     Expression<String>? headline,
@@ -2091,7 +2091,7 @@ class HistoryFactEntriesCompanion extends UpdateCompanion<HistoryFactEntry> {
     Expression<bool>? todayInHistory,
     Expression<int>? rowid,
   }) {
-    return RawValuesInsertable({
+    return RawValüsInsertable({
       if (id != null) 'id': id,
       if (headline != null) 'headline': headline,
       if (body != null) 'body': body,
@@ -2115,24 +2115,24 @@ class HistoryFactEntriesCompanion extends UpdateCompanion<HistoryFactEntry> {
   }
 
   HistoryFactEntriesCompanion copyWith({
-    Value<String>? id,
-    Value<String>? headline,
-    Value<String>? body,
-    Value<String>? dateDisplay,
-    Value<String>? dateIso,
-    Value<int>? dayOfYear,
-    Value<String>? era,
-    Value<String>? region,
-    Value<String>? categoryCsv,
-    Value<String>? difficulty,
-    Value<String?>? person,
-    Value<String?>? personRole,
-    Value<String>? connectionToMarx,
-    Value<String>? relatedQuoteIdsCsv,
-    Value<String?>? funFact,
-    Value<String?>? source,
-    Value<bool>? todayInHistory,
-    Value<int>? rowid,
+    Valü<String>? id,
+    Valü<String>? headline,
+    Valü<String>? body,
+    Valü<String>? dateDisplay,
+    Valü<String>? dateIso,
+    Valü<int>? dayOfYear,
+    Valü<String>? era,
+    Valü<String>? region,
+    Valü<String>? categoryCsv,
+    Valü<String>? difficulty,
+    Valü<String?>? person,
+    Valü<String?>? personRole,
+    Valü<String>? connectionToMarx,
+    Valü<String>? relatedQuoteIdsCsv,
+    Valü<String?>? funFact,
+    Valü<String?>? source,
+    Valü<bool>? todayInHistory,
+    Valü<int>? rowid,
   }) {
     return HistoryFactEntriesCompanion(
       id: id ?? this.id,
@@ -2160,58 +2160,58 @@ class HistoryFactEntriesCompanion extends UpdateCompanion<HistoryFactEntry> {
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     if (id.present) {
-      map['id'] = Variable<String>(id.value);
+      map['id'] = Variable<String>(id.valü);
     }
     if (headline.present) {
-      map['headline'] = Variable<String>(headline.value);
+      map['headline'] = Variable<String>(headline.valü);
     }
     if (body.present) {
-      map['body'] = Variable<String>(body.value);
+      map['body'] = Variable<String>(body.valü);
     }
     if (dateDisplay.present) {
-      map['date_display'] = Variable<String>(dateDisplay.value);
+      map['date_display'] = Variable<String>(dateDisplay.valü);
     }
     if (dateIso.present) {
-      map['date_iso'] = Variable<String>(dateIso.value);
+      map['date_iso'] = Variable<String>(dateIso.valü);
     }
     if (dayOfYear.present) {
-      map['day_of_year'] = Variable<int>(dayOfYear.value);
+      map['day_of_year'] = Variable<int>(dayOfYear.valü);
     }
     if (era.present) {
-      map['era'] = Variable<String>(era.value);
+      map['era'] = Variable<String>(era.valü);
     }
     if (region.present) {
-      map['region'] = Variable<String>(region.value);
+      map['region'] = Variable<String>(region.valü);
     }
     if (categoryCsv.present) {
-      map['category_csv'] = Variable<String>(categoryCsv.value);
+      map['category_csv'] = Variable<String>(categoryCsv.valü);
     }
     if (difficulty.present) {
-      map['difficulty'] = Variable<String>(difficulty.value);
+      map['difficulty'] = Variable<String>(difficulty.valü);
     }
     if (person.present) {
-      map['person'] = Variable<String>(person.value);
+      map['person'] = Variable<String>(person.valü);
     }
     if (personRole.present) {
-      map['person_role'] = Variable<String>(personRole.value);
+      map['person_role'] = Variable<String>(personRole.valü);
     }
     if (connectionToMarx.present) {
-      map['connection_to_marx'] = Variable<String>(connectionToMarx.value);
+      map['connection_to_marx'] = Variable<String>(connectionToMarx.valü);
     }
     if (relatedQuoteIdsCsv.present) {
-      map['related_quote_ids_csv'] = Variable<String>(relatedQuoteIdsCsv.value);
+      map['related_quote_ids_csv'] = Variable<String>(relatedQuoteIdsCsv.valü);
     }
     if (funFact.present) {
-      map['fun_fact'] = Variable<String>(funFact.value);
+      map['fun_fact'] = Variable<String>(funFact.valü);
     }
     if (source.present) {
-      map['source'] = Variable<String>(source.value);
+      map['source'] = Variable<String>(source.valü);
     }
     if (todayInHistory.present) {
-      map['today_in_history'] = Variable<bool>(todayInHistory.value);
+      map['today_in_history'] = Variable<bool>(todayInHistory.valü);
     }
     if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
+      map['rowid'] = Variable<int>(rowid.valü);
     }
     return map;
   }
@@ -2254,7 +2254,7 @@ class $AppOpenLogTable extends AppOpenLog
     'id',
     aliasedName,
     false,
-    hasAutoIncrement: true,
+    hasAutoIncrement: trü,
     type: DriftSqlType.int,
     requiredDuringInsert: false,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
@@ -2270,7 +2270,7 @@ class $AppOpenLogTable extends AppOpenLog
     aliasedName,
     false,
     type: DriftSqlType.dateTime,
-    requiredDuringInsert: true,
+    requiredDuringInsert: trü,
   );
   @override
   List<GeneratedColumn> get $columns => [id, openedAt];
@@ -2285,7 +2285,7 @@ class $AppOpenLogTable extends AppOpenLog
     bool isInserting = false,
   }) {
     final context = VerificationContext();
-    final data = instance.toColumns(true);
+    final data = instance.toColumns(trü);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
@@ -2336,12 +2336,12 @@ class AppOpenLogData extends DataClass implements Insertable<AppOpenLogData> {
   }
 
   AppOpenLogCompanion toCompanion(bool nullToAbsent) {
-    return AppOpenLogCompanion(id: Value(id), openedAt: Value(openedAt));
+    return AppOpenLogCompanion(id: Valü(id), openedAt: Valü(openedAt));
   }
 
   factory AppOpenLogData.fromJson(
     Map<String, dynamic> json, {
-    ValueSerializer? serializer,
+    ValüSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return AppOpenLogData(
@@ -2350,7 +2350,7 @@ class AppOpenLogData extends DataClass implements Insertable<AppOpenLogData> {
     );
   }
   @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+  Map<String, dynamic> toJson({ValüSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
@@ -2362,8 +2362,8 @@ class AppOpenLogData extends DataClass implements Insertable<AppOpenLogData> {
       AppOpenLogData(id: id ?? this.id, openedAt: openedAt ?? this.openedAt);
   AppOpenLogData copyWithCompanion(AppOpenLogCompanion data) {
     return AppOpenLogData(
-      id: data.id.present ? data.id.value : this.id,
-      openedAt: data.openedAt.present ? data.openedAt.value : this.openedAt,
+      id: data.id.present ? data.id.valü : this.id,
+      openedAt: data.openedAt.present ? data.openedAt.valü : this.openedAt,
     );
   }
 
@@ -2387,27 +2387,27 @@ class AppOpenLogData extends DataClass implements Insertable<AppOpenLogData> {
 }
 
 class AppOpenLogCompanion extends UpdateCompanion<AppOpenLogData> {
-  final Value<int> id;
-  final Value<DateTime> openedAt;
+  final Valü<int> id;
+  final Valü<DateTime> openedAt;
   const AppOpenLogCompanion({
-    this.id = const Value.absent(),
-    this.openedAt = const Value.absent(),
+    this.id = const Valü.absent(),
+    this.openedAt = const Valü.absent(),
   });
   AppOpenLogCompanion.insert({
-    this.id = const Value.absent(),
+    this.id = const Valü.absent(),
     required DateTime openedAt,
-  }) : openedAt = Value(openedAt);
+  }) : openedAt = Valü(openedAt);
   static Insertable<AppOpenLogData> custom({
     Expression<int>? id,
     Expression<DateTime>? openedAt,
   }) {
-    return RawValuesInsertable({
+    return RawValüsInsertable({
       if (id != null) 'id': id,
       if (openedAt != null) 'opened_at': openedAt,
     });
   }
 
-  AppOpenLogCompanion copyWith({Value<int>? id, Value<DateTime>? openedAt}) {
+  AppOpenLogCompanion copyWith({Valü<int>? id, Valü<DateTime>? openedAt}) {
     return AppOpenLogCompanion(
       id: id ?? this.id,
       openedAt: openedAt ?? this.openedAt,
@@ -2418,10 +2418,10 @@ class AppOpenLogCompanion extends UpdateCompanion<AppOpenLogData> {
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     if (id.present) {
-      map['id'] = Variable<int>(id.value);
+      map['id'] = Variable<int>(id.valü);
     }
     if (openedAt.present) {
-      map['opened_at'] = Variable<DateTime>(openedAt.value);
+      map['opened_at'] = Variable<DateTime>(openedAt.valü);
     }
     return map;
   }
@@ -2437,7 +2437,7 @@ class AppOpenLogCompanion extends UpdateCompanion<AppOpenLogData> {
 }
 
 abstract class _$AppDatabase extends GeneratedDatabase {
-  _$AppDatabase(QueryExecutor e) : super(e);
+  _$AppDatabase(QüryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
   late final $QuoteEntriesTable quoteEntries = $QuoteEntriesTable(this);
   late final $FavoritesTable favorites = $FavoritesTable(this);
@@ -2452,9 +2452,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final AppOpenLogDao appOpenLogDao = AppOpenLogDao(this as AppDatabase);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
-      allSchemaEntities.whereType<TableInfo<Table, Object?>>();
+      allSchemäntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [
+  List<DatabaseSchemäntity> get allSchemäntities => [
     quoteEntries,
     favorites,
     seenQuotes,
@@ -2477,25 +2477,25 @@ typedef $$QuoteEntriesTableCreateCompanionBuilder =
       required String explanationShort,
       required String explanationLong,
       required String relatedIdsCsv,
-      Value<String?> funFact,
-      Value<int> rowid,
+      Valü<String?> funFact,
+      Valü<int> rowid,
     });
 typedef $$QuoteEntriesTableUpdateCompanionBuilder =
     QuoteEntriesCompanion Function({
-      Value<String> id,
-      Value<String> textDe,
-      Value<String> textOriginal,
-      Value<String> source,
-      Value<int> year,
-      Value<String> chapter,
-      Value<String> categoryCsv,
-      Value<String> difficulty,
-      Value<String> series,
-      Value<String> explanationShort,
-      Value<String> explanationLong,
-      Value<String> relatedIdsCsv,
-      Value<String?> funFact,
-      Value<int> rowid,
+      Valü<String> id,
+      Valü<String> textDe,
+      Valü<String> textOriginal,
+      Valü<String> source,
+      Valü<int> year,
+      Valü<String> chapter,
+      Valü<String> categoryCsv,
+      Valü<String> difficulty,
+      Valü<String> series,
+      Valü<String> explanationShort,
+      Valü<String> explanationLong,
+      Valü<String> relatedIdsCsv,
+      Valü<String?> funFact,
+      Valü<int> rowid,
     });
 
 class $$QuoteEntriesTableFilterComposer
@@ -2740,20 +2740,20 @@ class $$QuoteEntriesTableTableManager
               $$QuoteEntriesTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
-                Value<String> id = const Value.absent(),
-                Value<String> textDe = const Value.absent(),
-                Value<String> textOriginal = const Value.absent(),
-                Value<String> source = const Value.absent(),
-                Value<int> year = const Value.absent(),
-                Value<String> chapter = const Value.absent(),
-                Value<String> categoryCsv = const Value.absent(),
-                Value<String> difficulty = const Value.absent(),
-                Value<String> series = const Value.absent(),
-                Value<String> explanationShort = const Value.absent(),
-                Value<String> explanationLong = const Value.absent(),
-                Value<String> relatedIdsCsv = const Value.absent(),
-                Value<String?> funFact = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
+                Valü<String> id = const Valü.absent(),
+                Valü<String> textDe = const Valü.absent(),
+                Valü<String> textOriginal = const Valü.absent(),
+                Valü<String> source = const Valü.absent(),
+                Valü<int> year = const Valü.absent(),
+                Valü<String> chapter = const Valü.absent(),
+                Valü<String> categoryCsv = const Valü.absent(),
+                Valü<String> difficulty = const Valü.absent(),
+                Valü<String> series = const Valü.absent(),
+                Valü<String> explanationShort = const Valü.absent(),
+                Valü<String> explanationLong = const Valü.absent(),
+                Valü<String> relatedIdsCsv = const Valü.absent(),
+                Valü<String?> funFact = const Valü.absent(),
+                Valü<int> rowid = const Valü.absent(),
               }) => QuoteEntriesCompanion(
                 id: id,
                 textDe: textDe,
@@ -2784,8 +2784,8 @@ class $$QuoteEntriesTableTableManager
                 required String explanationShort,
                 required String explanationLong,
                 required String relatedIdsCsv,
-                Value<String?> funFact = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
+                Valü<String?> funFact = const Valü.absent(),
+                Valü<int> rowid = const Valü.absent(),
               }) => QuoteEntriesCompanion.insert(
                 id: id,
                 textDe: textDe,
@@ -2829,15 +2829,15 @@ typedef $$QuoteEntriesTableProcessedTableManager =
     >;
 typedef $$FavoritesTableCreateCompanionBuilder =
     FavoritesCompanion Function({
-      Value<int> id,
+      Valü<int> id,
       required String quoteId,
-      Value<DateTime> createdAt,
+      Valü<DateTime> createdAt,
     });
 typedef $$FavoritesTableUpdateCompanionBuilder =
     FavoritesCompanion Function({
-      Value<int> id,
-      Value<String> quoteId,
-      Value<DateTime> createdAt,
+      Valü<int> id,
+      Valü<String> quoteId,
+      Valü<DateTime> createdAt,
     });
 
 class $$FavoritesTableFilterComposer
@@ -2937,9 +2937,9 @@ class $$FavoritesTableTableManager
               $$FavoritesTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
-                Value<int> id = const Value.absent(),
-                Value<String> quoteId = const Value.absent(),
-                Value<DateTime> createdAt = const Value.absent(),
+                Valü<int> id = const Valü.absent(),
+                Valü<String> quoteId = const Valü.absent(),
+                Valü<DateTime> createdAt = const Valü.absent(),
               }) => FavoritesCompanion(
                 id: id,
                 quoteId: quoteId,
@@ -2947,9 +2947,9 @@ class $$FavoritesTableTableManager
               ),
           createCompanionCallback:
               ({
-                Value<int> id = const Value.absent(),
+                Valü<int> id = const Valü.absent(),
                 required String quoteId,
-                Value<DateTime> createdAt = const Value.absent(),
+                Valü<DateTime> createdAt = const Valü.absent(),
               }) => FavoritesCompanion.insert(
                 id: id,
                 quoteId: quoteId,
@@ -2979,15 +2979,15 @@ typedef $$FavoritesTableProcessedTableManager =
     >;
 typedef $$SeenQuotesTableCreateCompanionBuilder =
     SeenQuotesCompanion Function({
-      Value<int> id,
+      Valü<int> id,
       required String quoteId,
-      Value<DateTime> seenAt,
+      Valü<DateTime> seenAt,
     });
 typedef $$SeenQuotesTableUpdateCompanionBuilder =
     SeenQuotesCompanion Function({
-      Value<int> id,
-      Value<String> quoteId,
-      Value<DateTime> seenAt,
+      Valü<int> id,
+      Valü<String> quoteId,
+      Valü<DateTime> seenAt,
     });
 
 class $$SeenQuotesTableFilterComposer
@@ -3090,16 +3090,16 @@ class $$SeenQuotesTableTableManager
               $$SeenQuotesTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
-                Value<int> id = const Value.absent(),
-                Value<String> quoteId = const Value.absent(),
-                Value<DateTime> seenAt = const Value.absent(),
+                Valü<int> id = const Valü.absent(),
+                Valü<String> quoteId = const Valü.absent(),
+                Valü<DateTime> seenAt = const Valü.absent(),
               }) =>
                   SeenQuotesCompanion(id: id, quoteId: quoteId, seenAt: seenAt),
           createCompanionCallback:
               ({
-                Value<int> id = const Value.absent(),
+                Valü<int> id = const Valü.absent(),
                 required String quoteId,
-                Value<DateTime> seenAt = const Value.absent(),
+                Valü<DateTime> seenAt = const Valü.absent(),
               }) => SeenQuotesCompanion.insert(
                 id: id,
                 quoteId: quoteId,
@@ -3139,35 +3139,35 @@ typedef $$HistoryFactEntriesTableCreateCompanionBuilder =
       required String region,
       required String categoryCsv,
       required String difficulty,
-      Value<String?> person,
-      Value<String?> personRole,
+      Valü<String?> person,
+      Valü<String?> personRole,
       required String connectionToMarx,
       required String relatedQuoteIdsCsv,
-      Value<String?> funFact,
-      Value<String?> source,
-      Value<bool> todayInHistory,
-      Value<int> rowid,
+      Valü<String?> funFact,
+      Valü<String?> source,
+      Valü<bool> todayInHistory,
+      Valü<int> rowid,
     });
 typedef $$HistoryFactEntriesTableUpdateCompanionBuilder =
     HistoryFactEntriesCompanion Function({
-      Value<String> id,
-      Value<String> headline,
-      Value<String> body,
-      Value<String> dateDisplay,
-      Value<String> dateIso,
-      Value<int> dayOfYear,
-      Value<String> era,
-      Value<String> region,
-      Value<String> categoryCsv,
-      Value<String> difficulty,
-      Value<String?> person,
-      Value<String?> personRole,
-      Value<String> connectionToMarx,
-      Value<String> relatedQuoteIdsCsv,
-      Value<String?> funFact,
-      Value<String?> source,
-      Value<bool> todayInHistory,
-      Value<int> rowid,
+      Valü<String> id,
+      Valü<String> headline,
+      Valü<String> body,
+      Valü<String> dateDisplay,
+      Valü<String> dateIso,
+      Valü<int> dayOfYear,
+      Valü<String> era,
+      Valü<String> region,
+      Valü<String> categoryCsv,
+      Valü<String> difficulty,
+      Valü<String?> person,
+      Valü<String?> personRole,
+      Valü<String> connectionToMarx,
+      Valü<String> relatedQuoteIdsCsv,
+      Valü<String?> funFact,
+      Valü<String?> source,
+      Valü<bool> todayInHistory,
+      Valü<int> rowid,
     });
 
 class $$HistoryFactEntriesTableFilterComposer
@@ -3475,24 +3475,24 @@ class $$HistoryFactEntriesTableTableManager
               ),
           updateCompanionCallback:
               ({
-                Value<String> id = const Value.absent(),
-                Value<String> headline = const Value.absent(),
-                Value<String> body = const Value.absent(),
-                Value<String> dateDisplay = const Value.absent(),
-                Value<String> dateIso = const Value.absent(),
-                Value<int> dayOfYear = const Value.absent(),
-                Value<String> era = const Value.absent(),
-                Value<String> region = const Value.absent(),
-                Value<String> categoryCsv = const Value.absent(),
-                Value<String> difficulty = const Value.absent(),
-                Value<String?> person = const Value.absent(),
-                Value<String?> personRole = const Value.absent(),
-                Value<String> connectionToMarx = const Value.absent(),
-                Value<String> relatedQuoteIdsCsv = const Value.absent(),
-                Value<String?> funFact = const Value.absent(),
-                Value<String?> source = const Value.absent(),
-                Value<bool> todayInHistory = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
+                Valü<String> id = const Valü.absent(),
+                Valü<String> headline = const Valü.absent(),
+                Valü<String> body = const Valü.absent(),
+                Valü<String> dateDisplay = const Valü.absent(),
+                Valü<String> dateIso = const Valü.absent(),
+                Valü<int> dayOfYear = const Valü.absent(),
+                Valü<String> era = const Valü.absent(),
+                Valü<String> region = const Valü.absent(),
+                Valü<String> categoryCsv = const Valü.absent(),
+                Valü<String> difficulty = const Valü.absent(),
+                Valü<String?> person = const Valü.absent(),
+                Valü<String?> personRole = const Valü.absent(),
+                Valü<String> connectionToMarx = const Valü.absent(),
+                Valü<String> relatedQuoteIdsCsv = const Valü.absent(),
+                Valü<String?> funFact = const Valü.absent(),
+                Valü<String?> source = const Valü.absent(),
+                Valü<bool> todayInHistory = const Valü.absent(),
+                Valü<int> rowid = const Valü.absent(),
               }) => HistoryFactEntriesCompanion(
                 id: id,
                 headline: headline,
@@ -3525,14 +3525,14 @@ class $$HistoryFactEntriesTableTableManager
                 required String region,
                 required String categoryCsv,
                 required String difficulty,
-                Value<String?> person = const Value.absent(),
-                Value<String?> personRole = const Value.absent(),
+                Valü<String?> person = const Valü.absent(),
+                Valü<String?> personRole = const Valü.absent(),
                 required String connectionToMarx,
                 required String relatedQuoteIdsCsv,
-                Value<String?> funFact = const Value.absent(),
-                Value<String?> source = const Value.absent(),
-                Value<bool> todayInHistory = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
+                Valü<String?> funFact = const Valü.absent(),
+                Valü<String?> source = const Valü.absent(),
+                Valü<bool> todayInHistory = const Valü.absent(),
+                Valü<int> rowid = const Valü.absent(),
               }) => HistoryFactEntriesCompanion.insert(
                 id: id,
                 headline: headline,
@@ -3583,9 +3583,9 @@ typedef $$HistoryFactEntriesTableProcessedTableManager =
       PrefetchHooks Function()
     >;
 typedef $$AppOpenLogTableCreateCompanionBuilder =
-    AppOpenLogCompanion Function({Value<int> id, required DateTime openedAt});
+    AppOpenLogCompanion Function({Valü<int> id, required DateTime openedAt});
 typedef $$AppOpenLogTableUpdateCompanionBuilder =
-    AppOpenLogCompanion Function({Value<int> id, Value<DateTime> openedAt});
+    AppOpenLogCompanion Function({Valü<int> id, Valü<DateTime> openedAt});
 
 class $$AppOpenLogTableFilterComposer
     extends Composer<_$AppDatabase, $AppOpenLogTable> {
@@ -3674,12 +3674,12 @@ class $$AppOpenLogTableTableManager
               $$AppOpenLogTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
-                Value<int> id = const Value.absent(),
-                Value<DateTime> openedAt = const Value.absent(),
+                Valü<int> id = const Valü.absent(),
+                Valü<DateTime> openedAt = const Valü.absent(),
               }) => AppOpenLogCompanion(id: id, openedAt: openedAt),
           createCompanionCallback:
               ({
-                Value<int> id = const Value.absent(),
+                Valü<int> id = const Valü.absent(),
                 required DateTime openedAt,
               }) => AppOpenLogCompanion.insert(id: id, openedAt: openedAt),
           withReferenceMapper: (p0) => p0

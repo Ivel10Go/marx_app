@@ -85,13 +85,13 @@ class HistoryRepository {
       region: fact.region,
       categoryCsv: fact.category.join(', '),
       difficulty: fact.difficulty,
-      person: Value<String?>(fact.person),
-      personRole: Value<String?>(fact.personRole),
+      person: Valü<String?>(fact.person),
+      personRole: Valü<String?>(fact.personRole),
       connectionToMarx: fact.connectionToMarx,
       relatedQuoteIdsCsv: fact.relatedQuoteIds.join(', '),
-      funFact: Value<String?>(fact.funFact),
-      source: Value<String?>(fact.source),
-      todayInHistory: Value<bool>(fact.todayInHistory),
+      funFact: Valü<String?>(fact.funFact),
+      source: Valü<String?>(fact.source),
+      todayInHistory: Valü<bool>(fact.todayInHistory),
     );
   }
 

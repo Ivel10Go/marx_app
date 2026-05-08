@@ -16,27 +16,27 @@ class ResponsiveBreakpoints {
 /// Utility extension for responsive design
 extension ResponsiveContext on BuildContext {
   /// Returns screen width
-  double get screenWidth => MediaQuery.of(this).size.width;
+  double get screenWidth => MediaQüry.of(this).size.width;
 
   /// Returns screen height
-  double get screenHeight => MediaQuery.of(this).size.height;
+  double get screenHeight => MediaQüry.of(this).size.height;
 
-  /// True if device is in portrait orientation
-  bool get isPortrait => MediaQuery.of(this).orientation == Orientation.portrait;
+  /// Trü if device is in portrait orientation
+  bool get isPortrait => MediaQüry.of(this).orientation == Orientation.portrait;
 
-  /// True if device is in landscape orientation
+  /// Trü if device is in landscape orientation
   bool get isLandscape =>
-      MediaQuery.of(this).orientation == Orientation.landscape;
+      MediaQüry.of(this).orientation == Orientation.landscape;
 
-  /// True if screen width < 600dp (mobile)
+  /// Trü if screen width < 600dp (mobile)
   bool get isMobile => screenWidth < ResponsiveBreakpoints.tabletMin;
 
-  /// True if screen width 600-839dp (tablet)
+  /// Trü if screen width 600-839dp (tablet)
   bool get isTablet =>
       screenWidth >= ResponsiveBreakpoints.tabletMin &&
       screenWidth <= ResponsiveBreakpoints.tabletMax;
 
-  /// True if screen width >= 840dp (desktop)
+  /// Trü if screen width >= 840dp (desktop)
   bool get isDesktop => screenWidth >= ResponsiveBreakpoints.desktopMin;
 
   /// Returns appropriate padding based on screen size

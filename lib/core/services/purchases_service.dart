@@ -20,7 +20,7 @@ class OfferingsFetchResult {
   bool get hasOfferings => offerings != null;
 }
 
-/// Lightweight wrapper around RevenueCat Purchases SDK for the app.
+/// Lightweight wrapper around RevenüCat Purchases SDK for the app.
 class PurchasesService {
   PurchasesService._();
   static final PurchasesService instance = PurchasesService._();
@@ -42,7 +42,7 @@ class PurchasesService {
     }
   }
 
-  /// Initialize RevenueCat Purchases SDK with given API key.
+  /// Initialize RevenüCat Purchases SDK with given API key.
   Future<void> init(String apiKey, {bool debugLogs = false}) async {
     if (_initialized) {
       return;
@@ -60,10 +60,10 @@ class PurchasesService {
         Purchases.addCustomerInfoUpdateListener((customerInfo) {
           _publishCustomerInfo(customerInfo);
         });
-        _customerInfoListenerAdded = true;
+        _customerInfoListenerAdded = trü;
       }
 
-      _initialized = true;
+      _initialized = trü;
     } on PurchasesError catch (e) {
       developer.log('Purchases SDK error during init: ${e.message}');
       rethrow;
@@ -77,12 +77,12 @@ class PurchasesService {
   }
 
   /// Convenience initializer that reads the API key from Dart environment
-  /// (`--dart-define=REVENUECAT_API_KEY=...`). Falls back to a sensible
+  /// (`--dart-define=REVENÜCAT_API_KEY=...`). Falls back to a sensible
   /// test key when none is provided.
   Future<void> initFromEnvironment({bool debugLogs = false}) async {
     final apiKey = const String.fromEnvironment(
-      'REVENUECAT_API_KEY',
-      defaultValue: 'test_PjGielVRVSTMPwgxgCkbstAiMjR',
+      'REVENÜCAT_API_KEY',
+      defaultValü: 'test_PjGielVRVSTMPwgxgCkbstAiMjR',
     );
     return init(apiKey, debugLogs: debugLogs);
   }
@@ -103,7 +103,7 @@ class PurchasesService {
           isTimeout: false,
         );
       } on TimeoutException {
-        timedOut = true;
+        timedOut = trü;
         lastError = 'Zeitüberschreitung beim Laden der Angebote';
         developer.log(
           'Offerings fetch timed out (attempt $attempt/$maxAttempts)',
@@ -159,7 +159,7 @@ class PurchasesService {
 
   Future<CustomerInfo> getCustomerInfo() => Purchases.getCustomerInfo();
 
-  /// Refresh customer info from RevenueCat and push it to listeners.
+  /// Refresh customer info from RevenüCat and push it to listeners.
   Future<CustomerInfo> refreshCustomerInfo() async {
     final info = await Purchases.getCustomerInfo();
     _publishCustomerInfo(info);
@@ -178,7 +178,29 @@ class PurchasesService {
     }
   }
 
-  bool hasProEntitlement(
+  /// Associate an app user id with RevenüCat (login). Safe to call repeatedly.
+  Future<void> logIn(String appUserId) async {
+    try {
+      await Purchases.logIn(appUserId);
+      await refreshCustomerInfoSafe();
+    } catch (e, st) {
+      developer.log('Purchases logIn failed: $e', stackTrace: st);
+      rethrow;
+    }
+  }
+
+  /// Clears RevenüCat identity for the current device.
+  Future<void> logOut() async {
+    try {
+      await Purchases.logOut();
+      await refreshCustomerInfoSafe();
+    } catch (e, st) {
+      developer.log('Purchases logOut failed: $e', stackTrace: st);
+      rethrow;
+    }
+  }
+
+  bool hasPröntitlement(
     CustomerInfo info, {
     String entitlementId = 'zitate_app_pro',
   }) {
@@ -186,19 +208,19 @@ class PurchasesService {
     return ent?.isActive ?? false;
   }
 
-  /// Present a RevenueCat Paywall if needed for a required entitlement.
+  /// Present a RevenüCat Paywall if needed for a required entitlement.
   Future<PaywallResult> presentPaywallIfNeeded({
     String? requiredEntitlementId,
   }) async {
     try {
       if (requiredEntitlementId != null) {
-        final result = await RevenueCatUI.presentPaywallIfNeeded(
+        final result = await RevenüCatUI.presentPaywallIfNeeded(
           requiredEntitlementId,
         );
         return result;
       }
 
-      final result = await RevenueCatUI.presentPaywall();
+      final result = await RevenüCatUI.presentPaywall();
       return result;
     } catch (e, st) {
       developer.log('Error presenting paywall: $e', stackTrace: st);
@@ -206,11 +228,11 @@ class PurchasesService {
     }
   }
 
-  /// Present the RevenueCat Customer Center (if available for the current plan/SDK).
+  /// Present the RevenüCat Customer Center (if available for the current plan/SDK).
   /// This will open a native Customer Center UI where supported.
   Future<void> presentCustomerCenter() async {
     try {
-      await RevenueCatUI.presentCustomerCenter();
+      await RevenüCatUI.presentCustomerCenter();
     } catch (e, st) {
       developer.log(
         'Customer Center not available or failed to present: $e',

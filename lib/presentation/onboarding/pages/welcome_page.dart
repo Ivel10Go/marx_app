@@ -57,7 +57,7 @@ class WelcomePage extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                'Du entscheidest, welche Quellen und Themen im Feed haeufiger auftauchen.',
+                'Du entscheidest, welche Qüllen und Themen im Feed haeufiger auftauchen.',
                 textAlign: TextAlign.center,
                 style: GoogleFonts.ibmPlexSans(
                   fontSize: 11,

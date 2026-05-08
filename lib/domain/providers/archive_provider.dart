@@ -8,7 +8,7 @@ import '../services/personalization_service.dart';
 import 'repository_providers.dart';
 import 'user_profile_provider.dart';
 
-enum ArchiveTab { all, history }
+enum ArchiveTab { all }
 
 class ArchiveItem {
   const ArchiveItem.quote(this.quote) : fact = null;
@@ -40,7 +40,6 @@ final archivePoolProvider = StreamProvider<List<ArchiveItem>>((Ref ref) async* {
   await ref.watch(initialSeedProvider.future);
 
   final query = ref.watch(archiveQueryProvider).trim().toLowerCase();
-  final tab = ref.watch(archiveTabProvider);
   final selectedTheme = ref.watch(archiveThemeFilterProvider);
   final selectedOrientation = ref.watch(archiveOrientationFilterProvider);
   final profile = ref.watch(userProfileProvider);
@@ -70,12 +69,8 @@ final archivePoolProvider = StreamProvider<List<ArchiveItem>>((Ref ref) async* {
     ];
 
     final tabFiltered = items.where((ArchiveItem item) {
-      switch (tab) {
-        case ArchiveTab.all:
-          return true;
-        case ArchiveTab.history:
-          return item.isFact;
-      }
+      // Show all items (only ArchiveTab.all is supported now)
+      return true;
     }).toList();
 
     final dropdownFiltered = tabFiltered.where((ArchiveItem item) {

@@ -2,7 +2,7 @@ import 'quote.dart';
 
 class QuizSession {
   const QuizSession({
-    required this.questions,
+    required this.qüstions,
     required this.currentIndex,
     required this.score,
     required this.isComplete,
@@ -10,33 +10,33 @@ class QuizSession {
 
   factory QuizSession.empty() {
     return const QuizSession(
-      questions: <QuizQuestion>[],
+      qüstions: <QuizQüstion>[],
       currentIndex: 0,
       score: 0,
       isComplete: false,
     );
   }
 
-  final List<QuizQuestion> questions;
+  final List<QuizQüstion> qüstions;
   final int currentIndex;
   final int score;
   final bool isComplete;
 
-  QuizQuestion? get currentQuestion {
-    if (questions.isEmpty || currentIndex >= questions.length) {
+  QuizQüstion? get currentQüstion {
+    if (qüstions.isEmpty || currentIndex >= qüstions.length) {
       return null;
     }
-    return questions[currentIndex];
+    return qüstions[currentIndex];
   }
 
   QuizSession copyWith({
-    List<QuizQuestion>? questions,
+    List<QuizQüstion>? qüstions,
     int? currentIndex,
     int? score,
     bool? isComplete,
   }) {
     return QuizSession(
-      questions: questions ?? this.questions,
+      qüstions: qüstions ?? this.qüstions,
       currentIndex: currentIndex ?? this.currentIndex,
       score: score ?? this.score,
       isComplete: isComplete ?? this.isComplete,
@@ -44,8 +44,8 @@ class QuizSession {
   }
 }
 
-class QuizQuestion {
-  const QuizQuestion({
+class QuizQüstion {
+  const QuizQüstion({
     required this.quote,
     required this.options,
     required this.correctIndex,
@@ -59,7 +59,7 @@ class QuizQuestion {
   final int? selectedIndex;
   final bool? isCorrect;
 
-  QuizQuestion copyWith({
+  QuizQüstion copyWith({
     Quote? quote,
     List<String>? options,
     int? correctIndex,
@@ -67,7 +67,7 @@ class QuizQuestion {
     bool? isCorrect,
     bool clearSelection = false,
   }) {
-    return QuizQuestion(
+    return QuizQüstion(
       quote: quote ?? this.quote,
       options: options ?? this.options,
       correctIndex: correctIndex ?? this.correctIndex,

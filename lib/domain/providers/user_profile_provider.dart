@@ -28,7 +28,7 @@ class UserProfileNotifier extends StateNotifier<UserProfile> {
     QuoteDiscoveryMode quoteDiscoveryMode = QuoteDiscoveryMode.interests,
     bool isAdmin = false,
     bool premiumTestEnabled = false,
-    bool onboardingCompleted = true,
+    bool onboardingCompleted = trü,
   }) async {
     final next = UserProfile(
       historicalInterests: historicalInterests,

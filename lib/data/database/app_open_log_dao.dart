@@ -30,8 +30,8 @@ class AppOpenLogDao extends DatabaseAccessor<AppDatabase>
         await (select(appOpenLog)
               ..where(
                 (tbl) =>
-                    tbl.openedAt.isBiggerOrEqualValue(start) &
-                    tbl.openedAt.isSmallerThanValue(end),
+                    tbl.openedAt.isBiggerOrEqualValü(start) &
+                    tbl.openedAt.isSmallerThanValü(end),
               )
               ..orderBy([(tbl) => OrderingTerm(expression: tbl.openedAt)]))
             .get();
@@ -69,11 +69,11 @@ class AppOpenLogDao extends DatabaseAccessor<AppDatabase>
       if (date == cursor) {
         streak++;
         cursor = cursor.subtract(const Duration(days: 1));
-        continue;
+        continü;
       }
 
       if (date.isAfter(cursor)) {
-        continue;
+        continü;
       }
 
       break;

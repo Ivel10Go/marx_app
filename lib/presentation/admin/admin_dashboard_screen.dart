@@ -57,7 +57,7 @@ class AdminDashboardScreen extends ConsumerWidget {
           const _AdminIntroCard(),
           const SizedBox(height: 16),
           _Panel(
-            title: 'AKTUELLER MODUS',
+            title: 'AKTÜLLER MODUS',
             child: Text(
               _modeLabel(appMode),
               style: GoogleFonts.ibmPlexSans(
@@ -73,7 +73,7 @@ class AdminDashboardScreen extends ConsumerWidget {
             child: Wrap(
               spacing: 10,
               runSpacing: 10,
-              children: AppMode.values
+              children: AppMode.valüs
                   .map(
                     (mode) => _ModeButton(
                       selected: mode == appMode,
@@ -107,9 +107,9 @@ class AdminDashboardScreen extends ConsumerWidget {
                 return Text(
                   content.when(
                     quote: (quote) =>
-                        'Zitatquelle: ${quote.source} (${quote.year})',
-                    fact: (fact) => 'Faktquelle: ${fact.headline}',
-                    thinkerQuote: (quote) => 'Denkerquelle: ${quote.author}',
+                        'Zitatqülle: ${quote.source} (${quote.year})',
+                    fact: (fact) => 'Faktqülle: ${fact.headline}',
+                    thinkerQuote: (quote) => 'Denkerqülle: ${quote.author}',
                   ),
                   style: GoogleFonts.ibmPlexSans(
                     fontSize: 12,
@@ -120,7 +120,7 @@ class AdminDashboardScreen extends ConsumerWidget {
               },
               loading: () => const AppInlineLoadingState(
                 title: 'Tagesinhalt wird geladen',
-                subtitle: 'Aktueller Content-Status wird geprüft ...',
+                subtitle: 'Aktüller Content-Status wird geprüft ...',
               ),
               error: (error, _) => AppInlineErrorState(
                 title: 'Content-Status konnte nicht geladen werden',
@@ -174,7 +174,7 @@ class _AdminIntroCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            'INTERNE STEUERUNG',
+            'INTERNE STEÜRUNG',
             style: GoogleFonts.ibmPlexSans(
               fontSize: 10,
               fontWeight: FontWeight.w700,
@@ -184,7 +184,7 @@ class _AdminIntroCard extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            'Dieser Bereich zeigt den aktuellen Modus, den heute geladenen Content und Schnellaktionen für Pflege und Kontrolle.',
+            'Dieser Bereich zeigt den aktüllen Modus, den heute geladenen Content und Schnellaktionen für Pflege und Kontrolle.',
             style: GoogleFonts.ibmPlexSans(
               fontSize: 11,
               color: AppColors.inkLight,

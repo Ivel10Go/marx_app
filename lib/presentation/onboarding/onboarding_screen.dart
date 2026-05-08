@@ -26,7 +26,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   final Set<String> _selectedInterests = <String>{};
   PoliticalLeaning _leaning = PoliticalLeaning.neutral;
 
-  static const _pageCount = 4;
+  static const _pageCount = 5;
 
   @override
   void dispose() {
@@ -35,7 +35,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   }
 
   Future<void> _next() async {
-    if (_index == 2 && _selectedInterests.isEmpty) {
+    if (_index == 3 && _selectedInterests.isEmpty) {
       setState(() {});
       return;
     }
@@ -137,6 +137,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
               },
               children: <Widget>[
                 const WelcomePage(),
+                _AuthOnboardingPage(onSkip: _next),
                 NotificationPermissionPage(
                   onAllow: () => NotificationService.instance.initialize(),
                   onSkip: _next,
@@ -204,10 +205,12 @@ String _stepHeadline(int index) {
     case 0:
       return 'START';
     case 1:
-      return 'ERINNERUNG';
+      return 'ANMELDEN';
     case 2:
-      return 'INTERESSEN';
+      return 'ERINNERUNG';
     case 3:
+      return 'INTERESSEN';
+    case 4:
       return 'ORIENTIERUNG';
   }
   return 'ONBOARDING';
@@ -218,13 +221,125 @@ String _stepHint(int index) {
     case 0:
       return 'Kurzer Überblick über deinen täglichen Ablauf in der App.';
     case 1:
-      return 'Aktiviere optional die tägliche Erinnerung zur Ausgabe.';
+      return 'Erstelle einen Account um deine Favoriten zu speichern.';
     case 2:
-      return 'Markiere Themen, damit dein Feed relevanter startet.';
+      return 'Aktiviere optional die tägliche Erinnerung zur Ausgabe.';
     case 3:
+      return 'Markiere Themen, damit dein Feed relevanter startet.';
+    case 4:
       return 'Optionaler politischer Fokus für feinere Einordnung.';
   }
   return 'Richte deine tägliche Ausgabe in wenigen Schritten ein.';
+}
+
+class _AuthOnboardingPage extends StatefulWidget {
+  const _AuthOnboardingPage({required this.onSkip});
+
+  final VoidCallback onSkip;
+
+  @override
+  State<_AuthOnboardingPage> createState() => _AuthOnboardingPageState();
+}
+
+class _AuthOnboardingPageState extends State<_AuthOnboardingPage> {
+  final _formKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  bool _isSignUp = false;
+  bool _loading = false;
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(24),
+      child: Column(
+        children: [
+          Expanded(
+            child: Center(
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TextFormField(
+                      controller: _emailController,
+                      decoration: const InputDecoration(labelText: 'E-Mail'),
+                      keyboardType: TextInputType.emailAddress,
+                      validator: (v) => v != null && v.contains('@')
+                          ? null
+                          : 'Ungültige E-Mail',
+                    ),
+                    const SizedBox(height: 12),
+                    TextFormField(
+                      controller: _passwordController,
+                      decoration: const InputDecoration(labelText: 'Passwort'),
+                      obscureText: true,
+                      validator: (v) => (v != null && v.length >= 6)
+                          ? null
+                          : 'Mind. 6 Zeichen',
+                    ),
+                    const SizedBox(height: 20),
+                    TextButton(
+                      onPressed: _loading
+                          ? null
+                          : () => setState(() => _isSignUp = !_isSignUp),
+                      child: Text(
+                        _isSignUp
+                            ? 'Bereits Konto? Anmelden'
+                            : 'Noch kein Konto? Registrieren',
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: OutlinedButton(
+                  onPressed: _loading ? null : widget.onSkip,
+                  child: const Text('ÜBERSPRINGEN'),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: _loading ? null : _submit,
+                  child: Text(_isSignUp ? 'REGISTRIEREN' : 'ANMELDEN'),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _submit() async {
+    if (!_formKey.currentState!.validate()) return;
+    setState(() => _loading = true);
+    try {
+      // Placeholder - would need proper auth flow integration
+      // For beta, we allow skipping
+      if (mounted) widget.onSkip();
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Fehler: ${e.toString()}')));
+      }
+    } finally {
+      if (mounted) setState(() => _loading = false);
+    }
+  }
 }
 
 class _OnboardingStepCard extends StatelessWidget {

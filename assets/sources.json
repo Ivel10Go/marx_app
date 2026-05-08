@@ -1,13 +1,13 @@
 [
   {
     "group_id": "kapital",
-    "title": "Das Kapital. Kritik der politischen Oekonomie",
+    "title": "Das Kapital. Kritik der politischen Ökonomie",
     "author": "Karl Marx",
     "publication_year": 1867,
     "primary_source": true,
     "public_domain": true,
     "reference": "MEW Band 23",
-    "notes": "Quellenbasis fuer quote-series \"kapital\"."
+    "notes": "Qüllenbasis für quote-series \"kapital\"."
   },
   {
     "group_id": "manifest",
@@ -17,17 +17,17 @@
     "primary_source": true,
     "public_domain": true,
     "reference": "MEW Band 4",
-    "notes": "Quellenbasis fuer quote-series \"manifest\"."
+    "notes": "Qüllenbasis für quote-series \"manifest\"."
   },
   {
-    "group_id": "antiduehring",
-    "title": "Herrn Eugen Duehrings Umwaelzung der Wissenschaft (Anti-Duehring)",
+    "group_id": "antidühring",
+    "title": "Herrn Eugen Dührings Umwälzung der Wissenschaft (Anti-Dühring)",
     "author": "Friedrich Engels",
     "publication_year": 1878,
     "primary_source": true,
     "public_domain": true,
     "reference": "MEW Band 20",
-    "notes": "Quellenbasis fuer quote-series \"antiduehring\"."
+    "notes": "Qüllenbasis für quote-series \"antidühring\"."
   },
   {
     "group_id": "feuerbach",
@@ -37,7 +37,7 @@
     "primary_source": true,
     "public_domain": true,
     "reference": "MEW Band 21",
-    "notes": "Quellenbasis fuer quote-series \"feuerbach\"."
+    "notes": "Qüllenbasis für quote-series \"feuerbach\"."
   },
   {
     "group_id": "brumaire",
@@ -47,7 +47,7 @@
     "primary_source": true,
     "public_domain": true,
     "reference": "MEW Band 8",
-    "notes": "Quellenbasis fuer quote-series \"brumaire\"."
+    "notes": "Qüllenbasis für quote-series \"brumaire\"."
   },
   {
     "group_id": "misc",
@@ -57,7 +57,7 @@
     "primary_source": true,
     "public_domain": true,
     "reference": "MEW Sammelstellen",
-    "notes": "Sammelgruppe fuer manuell kuratierte Einzelstellen."
+    "notes": "Sammelgruppe für manüll kuratierte Einzelstellen."
   },
   {
     "group_id": "nietzsche",
@@ -97,7 +97,7 @@
     "primary_source": true,
     "public_domain": true,
     "reference": "Wittgenstein Nachlass",
-    "notes": "Philosophische Aphorismen, zentral fuer analytische Philosophie."
+    "notes": "Philosophische Aphorismen, zentral für analytische Philosophie."
   },
   {
     "group_id": "schelling",

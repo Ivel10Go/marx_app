@@ -144,7 +144,7 @@ class _StreakCalendarState extends ConsumerState<StreakCalendar> {
     const names = <String>[
       'Januar',
       'Februar',
-      'Maerz',
+      'März',
       'April',
       'Mai',
       'Juni',

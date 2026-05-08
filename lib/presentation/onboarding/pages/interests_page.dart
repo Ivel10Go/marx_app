@@ -19,14 +19,7 @@ class InterestsPage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(24),
       child: Container(
-        decoration: BoxDecoration(
-          color: scheme.surface,
-          border: Border(
-            left: BorderSide(color: scheme.outline, width: 1),
-            right: BorderSide(color: scheme.outline, width: 1),
-            bottom: BorderSide(color: scheme.outline, width: 1),
-          ),
-        ),
+        color: scheme.surface,
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(

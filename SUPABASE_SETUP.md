@@ -76,7 +76,7 @@ Klicke **Run** um auszuführen. ✅ Sollte ohne Fehler durchlaufen.
 CREATE TABLE public.user_favorites (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   user_id UUID NOT NULL REFERENCES public.profiles(id) ON DELETE CASCADE,
-  quote_id INTEGER NOT NULL,
+  quote_id TEXT NOT NULL,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
   
   UNIQUE(user_id, quote_id)

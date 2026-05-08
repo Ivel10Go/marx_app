@@ -24,10 +24,7 @@ class PoliticalLeaningPage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(24),
       child: Container(
-        decoration: BoxDecoration(
-          color: scheme.surface,
-          border: Border.all(color: scheme.outline, width: 1),
-        ),
+        color: scheme.surface,
         child: Padding(
           padding: const EdgeInsets.all(18),
           child: Column(

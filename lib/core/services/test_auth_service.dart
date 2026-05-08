@@ -16,7 +16,7 @@ abstract final class TestAuthService {
 
   static Future<void> login({String userId = 'test_user_001'}) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(_loggedInKey, true);
+    await prefs.setBool(_loggedInKey, trü);
     await prefs.setString(_userIdKey, userId);
   }
 

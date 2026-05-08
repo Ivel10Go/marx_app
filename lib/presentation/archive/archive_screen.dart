@@ -28,7 +28,6 @@ class _ArchiveScreenState extends ConsumerState<ArchiveScreen> {
     final ref = this.ref;
     final archiveAsync = ref.watch(archiveProvider);
     final scheme = Theme.of(context).colorScheme;
-    final selectedTab = ref.watch(archiveTabProvider);
     final selectedTheme = ref.watch(archiveThemeFilterProvider);
     final selectedOrientation = ref.watch(archiveOrientationFilterProvider);
     final query = ref.watch(archiveQueryProvider);
@@ -122,16 +121,8 @@ class _ArchiveScreenState extends ConsumerState<ArchiveScreen> {
                         Expanded(
                           child: _ArchiveTabButton(
                             label: 'ALLE',
-                            active: selectedTab == ArchiveTab.all,
+                            active: true,
                             onTap: () => setTab(ArchiveTab.all),
-                          ),
-                        ),
-                        const SizedBox(width: AppTheme.spacingSmall),
-                        Expanded(
-                          child: _ArchiveTabButton(
-                            label: 'GESCHICHTE',
-                            active: selectedTab == ArchiveTab.history,
-                            onTap: () => setTab(ArchiveTab.history),
                           ),
                         ),
                       ],

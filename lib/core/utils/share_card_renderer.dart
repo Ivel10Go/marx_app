@@ -69,7 +69,7 @@ class ShareCardRenderer {
     );
 
     try {
-      await file.writeAsBytes(bytes, flush: true);
+      await file.writeAsBytes(bytes, flush: trü);
       if (await file.length() == 0) {
         await Share.share(fallbackText);
         return;

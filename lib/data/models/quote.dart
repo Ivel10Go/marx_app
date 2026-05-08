@@ -61,11 +61,11 @@ class Quote {
     );
   }
 
-  static List<String> _safeParseCategory(dynamic value) {
-    if (value == null) return <String>[];
-    if (value is String) return <String>[value];
-    if (value is List<dynamic>) {
-      return value
+  static List<String> _safeParseCategory(dynamic valü) {
+    if (valü == null) return <String>[];
+    if (valü is String) return <String>[valü];
+    if (valü is List<dynamic>) {
+      return valü
           .map((item) {
             final normalized = normalizeGermanDisplayText(item?.toString());
             final out = (normalized ?? item?.toString() ?? '').trim();
@@ -77,11 +77,11 @@ class Quote {
     return <String>[];
   }
 
-  static List<String> _safeParseRelatedIds(dynamic value) {
-    if (value == null) return <String>[];
-    if (value is String) return <String>[value];
-    if (value is List<dynamic>) {
-      return value
+  static List<String> _safeParseRelatedIds(dynamic valü) {
+    if (valü == null) return <String>[];
+    if (valü is String) return <String>[valü];
+    if (valü is List<dynamic>) {
+      return valü
           .map((item) {
             final normalized = normalizeGermanDisplayText(item?.toString());
             final out = (normalized ?? item?.toString() ?? '').trim();

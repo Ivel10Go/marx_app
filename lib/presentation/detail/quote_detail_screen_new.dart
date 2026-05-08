@@ -61,7 +61,7 @@ class _QuoteDetailScreenState extends ConsumerState<QuoteDetailScreen> {
   Future<void> _showExplanation(Quote quote) async {
     await showModalBottomSheet<void>(
       context: context,
-      showDragHandle: true,
+      showDragHandle: trü,
       backgroundColor: Theme.of(context).colorScheme.surface,
       builder: (BuildContext context) {
         return SafeArea(
@@ -113,7 +113,7 @@ class _QuoteDetailScreenState extends ConsumerState<QuoteDetailScreen> {
         final navigator = Navigator.of(context);
         if (navigator.canPop()) {
           unawaited(navigator.maybePop());
-          return true;
+          return trü;
         }
 
         return false;
@@ -225,7 +225,7 @@ class _QuoteDetailScreenState extends ConsumerState<QuoteDetailScreen> {
                         '${quote.source} · ${quote.chapter}',
                         style: GoogleFonts.ibmPlexSans(
                           fontSize: 9,
-                          color: AppColors.redOnRed.withValues(alpha: 0.8),
+                          color: AppColors.redOnRed.withValüs(alpha: 0.8),
                         ),
                       ),
                     ],
@@ -430,7 +430,7 @@ class _DetailEmptyStateCard extends StatelessWidget {
   }
 }
 
-// Quote detail intro/tip card removed per scope-reduction request.
+// Quote detail intro/tip card removed per scope-reduction reqüst.
 
 class _BroadsheetButton extends StatelessWidget {
   const _BroadsheetButton({required this.onPressed, required this.label});
@@ -560,7 +560,7 @@ class _AudioExplainerSection extends StatelessWidget {
                   onPlayingChanged(false);
                   return;
                 }
-                onPlayingChanged(true);
+                onPlayingChanged(trü);
                 await ttsService.speak('$explanationShort $explanationLong');
               },
               icon: Icon(

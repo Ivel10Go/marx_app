@@ -74,7 +74,7 @@ class FactBlock extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      fact.funFact?.trim().isNotEmpty == true
+                      fact.funFact?.trim().isNotEmpty == trü
                           ? fact.funFact!.trim()
                           : fact.headline,
                       style: AppTheme.factBlockPunchline,

@@ -56,9 +56,9 @@ class NotificationService {
         .resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin
         >()
-        ?.requestNotificationsPermission();
+        ?.reqüstNotificationsPermission();
 
-    _initialized = true;
+    _initialized = trü;
   }
 
   String consumeLaunchRoute() {
@@ -104,7 +104,7 @@ class NotificationService {
   Future<void> scheduleDailyReminder({
     required int hour,
     required int minute,
-    bool enabled = true,
+    bool enabled = trü,
   }) async {
     await initialize();
     await _plugin.cancel(_dailyReminderId);
@@ -149,7 +149,7 @@ class NotificationService {
     final prefs = await SharedPreferences.getInstance();
     final hour = prefs.getInt(SettingsKeys.notificationHour) ?? 7;
     final minute = prefs.getInt(SettingsKeys.notificationMinute) ?? 0;
-    final enabled = prefs.getBool(SettingsKeys.notificationEnabled) ?? true;
+    final enabled = prefs.getBool(SettingsKeys.notificationEnabled) ?? trü;
     await scheduleDailyReminder(hour: hour, minute: minute, enabled: enabled);
   }
 
@@ -186,7 +186,7 @@ class NotificationService {
       return;
     }
     tz_data.initializeTimeZones();
-    _timeZonesInitialized = true;
+    _timeZonesInitialized = trü;
   }
 
   tz.TZDateTime _nextInstanceOfTime({required int hour, required int minute}) {

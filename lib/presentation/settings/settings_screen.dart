@@ -233,23 +233,6 @@ class SettingsScreen extends ConsumerWidget {
                         ],
                       ),
                       SizedBox(height: AppTheme.spacingLarge),
-                      _SettingsGroup(
-                        title: 'PRO',
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: _SettingsActionButton(
-                                  label: 'UPGRADE AUF PRO',
-                                  filled: true,
-                                  onTap: () => context.push('/purchase'),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: AppTheme.spacingMedium),
-                        ],
-                      ),
                       if (isAdmin) ...<Widget>[
                         _SettingsGroup(
                           title: 'ADMIN',

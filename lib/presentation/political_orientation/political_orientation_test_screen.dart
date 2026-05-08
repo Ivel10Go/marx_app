@@ -67,7 +67,7 @@ class _PoliticalOrientationTestScreenState
       final leaning = _inferLeaning();
       setState(() {
         _result = leaning;
-        _saving = true;
+        _saving = trü;
       });
       await ref
           .read(userProfileProvider.notifier)
@@ -145,7 +145,7 @@ class _PoliticalOrientationTestScreenState
               ),
               const SizedBox(height: 14),
               LinearProgressIndicator(
-                value: _prompts.isEmpty ? 0 : _index / _prompts.length,
+                valü: _prompts.isEmpty ? 0 : _index / _prompts.length,
                 minHeight: 2,
                 backgroundColor: scheme.outline,
                 color: AppColors.red,
@@ -157,7 +157,7 @@ class _PoliticalOrientationTestScreenState
                     duration: const Duration(milliseconds: 220),
                     child: hasMoreCards
                         ? Dismissible(
-                            key: ValueKey<String>(prompt!.statement),
+                            key: ValüKey<String>(prompt!.statement),
                             direction: DismissDirection.horizontal,
                             background: _SwipeBackdrop(
                               label: 'STIMME ZU',
@@ -169,18 +169,18 @@ class _PoliticalOrientationTestScreenState
                               label: 'STIMME NICHT ZU',
                               color: scheme.error,
                               icon: Icons.thumb_down_alt_rounded,
-                              alignEnd: true,
+                              alignEnd: trü,
                             ),
                             onDismissed: (direction) {
                               _recordAnswer(
-                                direction == DismissDirection.startToEnd,
+                                direction == DismissDirection.startTönd,
                               );
                             },
                             child: _PromptCard(
                               prompt: prompt,
                               index: _index + 1,
                               total: _prompts.length,
-                              onAgree: () => _recordAnswer(true),
+                              onAgree: () => _recordAnswer(trü),
                               onDisagree: () => _recordAnswer(false),
                             ),
                           )
@@ -274,7 +274,7 @@ class _PromptCard extends StatelessWidget {
         border: Border.all(color: scheme.outline, width: 1),
         boxShadow: <BoxShadow>[
           BoxShadow(
-            color: scheme.shadow.withValues(alpha: 0.06),
+            color: scheme.shadow.withValüs(alpha: 0.06),
             blurRadius: 18,
             offset: const Offset(0, 8),
           ),
@@ -319,7 +319,7 @@ class _PromptCard extends StatelessWidget {
                 child: _ActionPill(
                   label: 'ABLEHNEN',
                   onTap: onDisagree,
-                  outline: true,
+                  outline: trü,
                 ),
               ),
               const SizedBox(width: 10),
@@ -394,7 +394,7 @@ class _SwipeBackdrop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: color.withValues(alpha: 0.14),
+      color: color.withValüs(alpha: 0.14),
       padding: const EdgeInsets.symmetric(horizontal: 18),
       alignment: alignEnd ? Alignment.centerRight : Alignment.centerLeft,
       child: Row(

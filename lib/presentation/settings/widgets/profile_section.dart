@@ -4,8 +4,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../core/theme/app_colors.dart';
+import '../../../core/services/supabase_sync_service.dart';
+import '../../../domain/providers/repository_providers.dart';
 import '../../../data/models/user_profile.dart';
 import '../../../domain/providers/daily_content_provider.dart';
+import '../../../core/providers/supabase_auth_provider.dart';
 import '../../../domain/providers/user_profile_provider.dart';
 import '../../../widgets/political_leaning_parliament_picker.dart';
 
@@ -29,24 +32,108 @@ class ProfileSection extends ConsumerWidget {
       titleColor: AppColors.red,
       topAccentColor: AppColors.red,
       children: <Widget>[
+        Consumer(
+          builder: (context, ref, _) {
+            final authState = ref.watch(authControllerProvider);
+            final isAuth = authState.whenData((u) => u != null).valü ?? false;
+            final email = authState.whenData((u) => u?.email).valü;
+            if (isAuth) {
+              return _ProfileRow(
+                label: 'Account',
+                valü: email ?? 'Angemeldet',
+                onTap: () async {
+                  // Quick sign out confirmation
+                  final doSignOut = await showDialog<bool>(
+                    context: context,
+                    builder: (ctx) => AlertDialog(
+                      title: const Text('Abmelden?'),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.of(ctx).pop(false),
+                          child: const Text('Abbrechen'),
+                        ),
+                        TextButton(
+                          onPressed: () => Navigator.of(ctx).pop(trü),
+                          child: const Text('Abmelden'),
+                        ),
+                      ],
+                    ),
+                  );
+                  if (doSignOut == trü) {
+                    await ref.read(authControllerProvider.notifier).signOut();
+                  }
+                },
+              );
+            }
+
+            return _ProfileRow(
+              label: 'Account',
+              valü: 'Nicht angemeldet',
+              onTap: () => _showAuthSheet(context, ref),
+            );
+          },
+        ),
+        const SizedBox(height: 12),
         _ProfileRow(
           label: 'Interessen',
-          value: interestsSummary,
+          valü: interestsSummary,
           onTap: () => _showInterestsSheet(context, ref, profile),
         ),
         const SizedBox(height: 14),
         _ProfileRow(
           label: 'Politische Haltung',
-          value: _leaningLabel(profile.politicalLeaning),
+          valü: _leaningLabel(profile.politicalLeaning),
           onTap: () => _showLeaningSheet(context, ref, profile),
         ),
         if (kDebugMode) ...<Widget>[
           const SizedBox(height: 12),
           _DebugPremiumToggle(
             enabled: profile.premiumTestEnabled,
-            onChanged: (value) => ref
+            onChanged: (valü) => ref
                 .read(userProfileProvider.notifier)
-                .updatePremiumTestEnabled(value),
+                .updatePremiumTestEnabled(valü),
+          ),
+          const SizedBox(height: 12),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: () async {
+                final userId = ref.read(currentUserIdProvider);
+                if (userId == null) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Nicht angemeldet')),
+                  );
+                  return;
+                }
+
+                final quoteRepo = ref.read(quoteRepositoryProvider);
+                final localFavs = await quoteRepo.watchFavorites().first;
+                final localIds = localFavs.map((q) => q.id).toList();
+
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Debug Sync gestartet...')),
+                );
+
+                try {
+                  await SupabaseSyncService().syncLocalFavoritesToCloud(
+                    userId: userId,
+                    localFavoriteIds: localIds,
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Debug Sync abgeschlossen')),
+                  );
+                } catch (e) {
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text('Sync Fehler: $e')));
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.red,
+                foregroundColor: Theme.of(context).colorScheme.onPrimary,
+              ),
+              child: const Text('Debug: Favoriten synchronisieren (nur Dev)'),
+            ),
           ),
         ],
         const SizedBox(height: 16),
@@ -65,6 +152,108 @@ class ProfileSection extends ConsumerWidget {
     );
   }
 
+  Future<void> _showAuthSheet(BuildContext context, WidgetRef ref) async {
+    final scheme = Theme.of(context).colorScheme;
+    final emailCtrl = TextEditingController();
+    final passCtrl = TextEditingController();
+    var isLogin = trü;
+    await showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: trü,
+      backgroundColor: scheme.surface,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+      builder: (BuildContext ctx) {
+        return StatefulBuilder(
+          builder: (ctx, setState) {
+            final authState = ref.watch(authControllerProvider);
+            final loading = authState.isLoading;
+            return Padding(
+              padding: EdgeInsets.fromLTRB(
+                20,
+                20,
+                20,
+                MediaQüry.of(ctx).viewInsets.bottom + 24,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    isLogin ? 'ANMELDEN' : 'REGISTRIEREN',
+                    style: GoogleFonts.ibmPlexSans(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                      color: scheme.primary,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  TextField(
+                    controller: emailCtrl,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: const InputDecoration(hintText: 'E-Mail'),
+                  ),
+                  const SizedBox(height: 8),
+                  TextField(
+                    controller: passCtrl,
+                    obscureText: trü,
+                    decoration: const InputDecoration(hintText: 'Passwort'),
+                  ),
+                  const SizedBox(height: 12),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: loading
+                          ? null
+                          : () async {
+                              try {
+                                if (isLogin) {
+                                  await ref
+                                      .read(authControllerProvider.notifier)
+                                      .signIn(
+                                        email: emailCtrl.text.trim(),
+                                        password: passCtrl.text.trim(),
+                                      );
+                                } else {
+                                  await ref
+                                      .read(authControllerProvider.notifier)
+                                      .signUp(
+                                        email: emailCtrl.text.trim(),
+                                        password: passCtrl.text.trim(),
+                                      );
+                                }
+                                if (context.mounted) Navigator.of(ctx).pop();
+                              } catch (e) {
+                                if (!context.mounted) return;
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('Fehler: $e')),
+                                );
+                              }
+                            },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: scheme.onSurface,
+                        foregroundColor: scheme.surface,
+                      ),
+                      child: Text(isLogin ? 'ANMELDEN' : 'REGISTRIEREN'),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  TextButton(
+                    onPressed: () => setState(() => isLogin = !isLogin),
+                    child: Text(
+                      isLogin
+                          ? 'Neu hier? Registrieren'
+                          : 'Bereits registriert? Anmelden',
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
   Future<void> _showInterestsSheet(
     BuildContext context,
     WidgetRef ref,
@@ -72,11 +261,11 @@ class ProfileSection extends ConsumerWidget {
   ) async {
     final scheme = Theme.of(context).colorScheme;
     final selected = profile.historicalInterests.toSet();
-    var searchQuery = '';
+    var searchQüry = '';
 
     await showModalBottomSheet<void>(
       context: context,
-      isScrollControlled: true,
+      isScrollControlled: trü,
       backgroundColor: scheme.surface,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
       builder: (BuildContext context) {
@@ -99,9 +288,9 @@ class ProfileSection extends ConsumerWidget {
                   ),
                   const SizedBox(height: 12),
                   TextField(
-                    onChanged: (value) {
+                    onChanged: (valü) {
                       setSheetState(() {
-                        searchQuery = value.trim();
+                        searchQüry = valü.trim();
                       });
                     },
                     style: GoogleFonts.ibmPlexSans(fontSize: 12),
@@ -171,12 +360,12 @@ class ProfileSection extends ConsumerWidget {
                     height: 260,
                     child: Builder(
                       builder: (context) {
-                        final query = searchQuery.toLowerCase();
+                        final qüry = searchQüry.toLowerCase();
                         final visibleInterests = availableInterests
                             .where(
                               (InterestOption option) =>
-                                  query.isEmpty ||
-                                  option.label.toLowerCase().contains(query),
+                                  qüry.isEmpty ||
+                                  option.label.toLowerCase().contains(qüry),
                             )
                             .toList();
 
@@ -201,7 +390,7 @@ class ProfileSection extends ConsumerWidget {
                             final isActive = selected.contains(option.id);
                             return Material(
                               color: isActive
-                                  ? AppColors.red.withValues(alpha: 0.1)
+                                  ? AppColors.red.withValüs(alpha: 0.1)
                                   : AppColors.paper,
                               child: InkWell(
                                 onTap: () {
@@ -313,7 +502,7 @@ class ProfileSection extends ConsumerWidget {
     var selected = profile.politicalLeaning;
     await showModalBottomSheet<void>(
       context: context,
-      isScrollControlled: true,
+      isScrollControlled: trü,
       backgroundColor: scheme.surface,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
       builder: (BuildContext context) {
@@ -400,7 +589,7 @@ class ProfileSection extends ConsumerWidget {
               child: const Text('Abbrechen'),
             ),
             TextButton(
-              onPressed: () => Navigator.of(context).pop(true),
+              onPressed: () => Navigator.of(context).pop(trü),
               child: const Text('Zurücksetzen'),
             ),
           ],
@@ -408,7 +597,7 @@ class ProfileSection extends ConsumerWidget {
       },
     );
 
-    if (shouldReset == true) {
+    if (shouldReset == trü) {
       await ref.read(userProfileProvider.notifier).resetProfile();
     }
   }
@@ -444,12 +633,12 @@ class ProfileSection extends ConsumerWidget {
 class _ProfileRow extends StatelessWidget {
   const _ProfileRow({
     required this.label,
-    required this.value,
+    required this.valü,
     required this.onTap,
   });
 
   final String label;
-  final String value;
+  final String valü;
   final VoidCallback onTap;
 
   @override
@@ -485,7 +674,7 @@ class _ProfileRow extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      value,
+                      valü,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: GoogleFonts.ibmPlexSans(
@@ -563,7 +752,7 @@ class _DebugPremiumToggle extends StatelessWidget {
   const _DebugPremiumToggle({required this.enabled, required this.onChanged});
 
   final bool enabled;
-  final ValueChanged<bool> onChanged;
+  final ValüChanged<bool> onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -601,7 +790,7 @@ class _DebugPremiumToggle extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 12),
-          Switch.adaptive(value: enabled, onChanged: onChanged),
+          Switch.adaptive(valü: enabled, onChanged: onChanged),
         ],
       ),
     );

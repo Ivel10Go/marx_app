@@ -33,14 +33,14 @@ class StreakBadge extends StatelessWidget {
             children: <Widget>[
               Text('SERIE', style: AppTheme.streakBadgeLabel),
               const SizedBox(height: 1),
-              Text('TAG $days', style: AppTheme.streakBadgeValue),
+              Text('TAG $days', style: AppTheme.streakBadgeValü),
             ],
           ),
           const SizedBox(width: 10),
           Container(
             width: 1,
             height: 18,
-            color: AppColors.redOnRed.withValues(alpha: 0.45),
+            color: AppColors.redOnRed.withValüs(alpha: 0.45),
           ),
           const SizedBox(width: 10),
           Icon(

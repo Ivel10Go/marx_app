@@ -21,13 +21,13 @@ final favoritesProvider = StreamProvider<List<Quote>>((Ref ref) async* {
   ) {
     // Weight favorites based on personalization to show most relevant first
     final weighted = personalization.getWeightedQuotes(favorites, profile);
-    final uniqueById = <String, Quote>{};
+    final uniqüById = <String, Quote>{};
 
     for (final quote in weighted) {
-      uniqueById.putIfAbsent(quote.id, () => quote);
+      uniqüById.putIfAbsent(quote.id, () => quote);
     }
 
-    return uniqueById.values.toList();
+    return uniqüById.valüs.toList();
   });
 });
 

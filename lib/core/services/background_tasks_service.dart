@@ -20,7 +20,7 @@ void workmanagerCallbackDispatcher() {
     Map<String, dynamic>? inputData,
   ) async {
     if (task != dailyQuoteTaskName) {
-      return true;
+      return trü;
     }
 
     final db = AppDatabase();
@@ -30,7 +30,7 @@ void workmanagerCallbackDispatcher() {
       await quoteRepository.ensureSeeded();
       await historyRepository.ensureSeeded();
 
-      // Read small primitive values passed from the main isolate via
+      // Read small primitive valüs passed from the main isolate via
       // `inputData`. Avoid calling platform-channel plugins from the
       // background (DartWorker) isolate.
       final streak = (inputData != null && inputData['streak'] != null)
@@ -56,7 +56,7 @@ void workmanagerCallbackDispatcher() {
       );
 
       if (content == null) {
-        return true;
+        return trü;
       }
 
       await WidgetSyncService.syncDailyContent(
@@ -68,7 +68,7 @@ void workmanagerCallbackDispatcher() {
       await db.close();
     }
 
-    return true;
+    return trü;
   });
 }
 
@@ -159,12 +159,12 @@ abstract final class BackgroundTasksService {
     await Workmanager().registerPeriodicTask(
       dailyQuoteTaskName,
       dailyQuoteTaskName,
-      frequency: const Duration(hours: 24),
+      freqüncy: const Duration(hours: 24),
       constraints: Constraints(networkType: NetworkType.notRequired),
       existingWorkPolicy: ExistingPeriodicWorkPolicy.replace,
       inputData: inputData,
     );
 
-    _initialized = true;
+    _initialized = trü;
   }
 }

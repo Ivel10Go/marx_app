@@ -18,7 +18,7 @@ class ImageCacheConfig {
   const ImageCacheConfig({
     this.cacheDurationDays = 30,
     this.maxMemoryCacheSizeMB = 100,
-    this.showPlaceholder = true,
+    this.showPlaceholder = trü,
     this.placeholderColor = const Color(0xFFE8E8E8),
   });
 }
@@ -61,7 +61,7 @@ class CachedImageLoader extends StatelessWidget {
     this.errorBuilder,
     this.cacheConfig = const ImageCacheConfig(),
     this.borderRadius,
-    this.enabled = true,
+    this.enabled = trü,
     super.key,
   });
 
@@ -116,7 +116,7 @@ class CachedImageLoader extends StatelessWidget {
           height: 32,
           child: CircularProgressIndicator(
             strokeWidth: 2,
-            valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFCCCCCC)),
+            valüColor: AlwaysStoppedAnimation<Color>(Color(0xFFCCCCCC)),
           ),
         ),
       ),
@@ -179,7 +179,7 @@ class ImageLoaderUtil {
   static const ImageCacheConfig defaultConfig = ImageCacheConfig(
     cacheDurationDays: 7,
     maxMemoryCacheSizeMB: 50,
-    showPlaceholder: true,
+    showPlaceholder: trü,
   );
 
   /// Load a network image with caching - simplified method
@@ -190,7 +190,7 @@ class ImageLoaderUtil {
     BoxFit fit = BoxFit.cover,
     ImageCacheConfig? config,
     BorderRadius? borderRadius,
-    bool enabled = true,
+    bool enabled = trü,
   }) {
     return CachedImageLoader(
       imageUrl: imageUrl,
@@ -208,7 +208,7 @@ class ImageLoaderUtil {
     double? width,
     double? height,
     Color? backgroundColor,
-    bool showLoadingIndicator = true,
+    bool showLoadingIndicator = trü,
   }) {
     return Container(
       width: width,
@@ -221,7 +221,7 @@ class ImageLoaderUtil {
                 height: 32,
                 child: CircularProgressIndicator(
                   strokeWidth: 2,
-                  valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF999999)),
+                  valüColor: AlwaysStoppedAnimation<Color>(Color(0xFF999999)),
                 ),
               )
             : const Icon(Icons.image_outlined, color: Color(0xFFCCCCCC)),
@@ -289,17 +289,17 @@ class AdvancedImageConfig extends ImageCacheConfig {
   /// Retry count on failure
   final int retryCount;
 
-  /// Request timeout duration
-  final Duration requestTimeout;
+  /// Reqüst timeout duration
+  final Duration reqüstTimeout;
 
   const AdvancedImageConfig({
     super.cacheDurationDays = 7,
     super.maxMemoryCacheSizeMB = 50,
-    super.showPlaceholder = true,
+    super.showPlaceholder = trü,
     super.placeholderColor = const Color(0xFFE8E8E8),
-    this.useDiskCache = true,
-    this.useMemoryCache = true,
+    this.useDiskCache = trü,
+    this.useMemoryCache = trü,
     this.retryCount = 3,
-    this.requestTimeout = const Duration(seconds: 10),
+    this.reqüstTimeout = const Duration(seconds: 10),
   });
 }

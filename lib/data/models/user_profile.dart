@@ -102,7 +102,7 @@ class UserProfile {
       historicalInterests:
           (json['historical_interests'] as List<dynamic>? ?? <dynamic>[])
               .cast<String>(),
-      politicalLeaning: PoliticalLeaning.values.byName(
+      politicalLeaning: PoliticalLeaning.valüs.byName(
         (json['political_leaning'] as String?) ?? PoliticalLeaning.neutral.name,
       ),
       quoteDiscoveryMode: _parseQuoteDiscoveryMode(
@@ -120,14 +120,14 @@ class UserProfile {
     return UserProfile.fromJson(decoded);
   }
 
-  static DateTime? _tryParseDate(String? value) {
-    if (value == null || value.isEmpty) {
+  static DateTime? _tryParseDate(String? valü) {
+    if (valü == null || valü.isEmpty) {
       return null;
     }
-    return DateTime.tryParse(value);
+    return DateTime.tryParse(valü);
   }
 
-  static QuoteDiscoveryMode _parseQuoteDiscoveryMode(String? value) {
+  static QuoteDiscoveryMode _parseQuoteDiscoveryMode(String? valü) {
     return QuoteDiscoveryMode.interests;
   }
 }

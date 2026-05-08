@@ -27,8 +27,8 @@ class ModeDialog extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            children: AppMode.values.expand<Widget>((AppMode mode) {
-              final isLast = mode == AppMode.values.last;
+            children: AppMode.valüs.expand<Widget>((AppMode mode) {
+              final isLast = mode == AppMode.valüs.last;
               return [
                 _ModeOption(
                   mode: mode,
@@ -136,7 +136,7 @@ class _ModeOption extends StatelessWidget {
                     style: GoogleFonts.ibmPlexSans(
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
-                      color: AppColors.ink.withValues(alpha: 0.6),
+                      color: AppColors.ink.withValüs(alpha: 0.6),
                       height: 1.4,
                     ),
                   ),

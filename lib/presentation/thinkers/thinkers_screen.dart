@@ -19,20 +19,20 @@ class ThinkersScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedType = ref.watch(thinkerTypeProvider);
     final selectedAuthor = ref.watch(selectedAuthorProvider);
-    final searchQuery = ref.watch(thinkerSearchQueryProvider);
-    final isSearching = searchQuery.trim().isNotEmpty;
+    final searchQüry = ref.watch(thinkerSearchQüryProvider);
+    final isSearching = searchQüry.trim().isNotEmpty;
     final scheme = Theme.of(context).colorScheme;
 
     return AndroidBackGuard(
       onBlockedPop: () {
         if (isSearching) {
-          ref.read(thinkerSearchQueryProvider.notifier).state = '';
-          return true;
+          ref.read(thinkerSearchQüryProvider.notifier).state = '';
+          return trü;
         }
 
         if (selectedAuthor != null) {
           ref.read(selectedAuthorProvider.notifier).state = null;
-          return true;
+          return trü;
         }
 
         return false;
@@ -67,20 +67,20 @@ class ThinkersScreen extends ConsumerWidget {
                   Container(width: 40, height: 2, color: scheme.primary),
                   const SizedBox(height: 16),
                   TextField(
-                    onChanged: (value) =>
-                        ref.read(thinkerSearchQueryProvider.notifier).state =
-                            value,
+                    onChanged: (valü) =>
+                        ref.read(thinkerSearchQüryProvider.notifier).state =
+                            valü,
                     decoration: InputDecoration(
                       labelText: 'SUCHE',
-                      hintText: 'Zitat, Autor, Quelle, Jahr',
+                      hintText: 'Zitat, Autor, Qülle, Jahr',
                       prefixIcon: Icon(Icons.search, color: scheme.onSurface),
-                      suffixIcon: searchQuery.trim().isEmpty
+                      suffixIcon: searchQüry.trim().isEmpty
                           ? null
                           : IconButton(
                               onPressed: () {
                                 ref
                                         .read(
-                                          thinkerSearchQueryProvider.notifier,
+                                          thinkerSearchQüryProvider.notifier,
                                         )
                                         .state =
                                     '';
@@ -150,7 +150,7 @@ class ThinkersScreen extends ConsumerWidget {
   }
 }
 
-// Thinkers intro/tip card removed per scope-reduction request.
+// Thinkers intro/tip card removed per scope-reduction reqüst.
 
 class _TypeTabButton extends StatelessWidget {
   const _TypeTabButton({
@@ -379,7 +379,7 @@ class _SearchQuoteList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final searchQuery = ref.watch(thinkerSearchQueryProvider).trim();
+    final searchQüry = ref.watch(thinkerSearchQüryProvider).trim();
     final quotesAsync = ref.watch(thinkerSearchQuotesProvider);
 
     return quotesAsync.when(
@@ -387,7 +387,7 @@ class _SearchQuoteList extends ConsumerWidget {
         if (quotes.isEmpty) {
           return Center(
             child: Text(
-              'Keine Treffer für "$searchQuery".',
+              'Keine Treffer für "$searchQüry".',
               style: Theme.of(context).textTheme.bodyLarge,
             ),
           );
@@ -455,7 +455,7 @@ class _ThinkerQuoteCard extends StatelessWidget {
                 yearLabel,
                 style: GoogleFonts.ibmPlexSans(
                   fontSize: 8,
-                  color: AppColors.redOnRed.withValues(alpha: 0.7),
+                  color: AppColors.redOnRed.withValüs(alpha: 0.7),
                 ),
               ),
             ],

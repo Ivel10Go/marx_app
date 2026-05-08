@@ -407,7 +407,7 @@ Nutze diese Vorlage für jeden abgeschlossenen Hauptpunkt oder jeden wichtigen T
   CREATE TABLE user_favorites (
     id UUID PRIMARY KEY,
     user_id UUID NOT NULL REFERENCES profiles(id),
-    quote_id INTEGER NOT NULL,
+    quote_id TEXT NOT NULL,
     created_at TIMESTAMP,
     UNIQUE(user_id, quote_id)
   );
@@ -521,10 +521,10 @@ Nutze diese Vorlage für jeden abgeschlossenen Hauptpunkt oder jeden wichtigen T
 
 - [ ] **Sync Service** — [lib/core/services/supabase_sync_service.dart](lib/core/services/supabase_sync_service.dart)
   ```dart
-  Future<void> syncFavoritesToCloud(String userId, List<int> favoriteQuoteIds);
-  Future<List<int>> fetchFavoritesFromCloud(String userId);
-  Future<void> addFavoriteToCloud(String userId, int quoteId);
-  Future<void> removeFavoriteFromCloud(String userId, int quoteId);
+  Future<void> syncFavoritesToCloud(String userId, List<String> favoriteQuoteIds);
+  Future<List<String>> fetchFavoritesFromCloud(String userId);
+  Future<void> addFavoriteToCloud(String userId, String quoteId);
+  Future<void> removeFavoriteFromCloud(String userId, String quoteId);
   ```
   - [ ] Implementiert mit Supabase REST Client
 

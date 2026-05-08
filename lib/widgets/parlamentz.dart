@@ -20,7 +20,7 @@ class ParlamentzIndicator extends StatelessWidget {
       case PoliticalLeaning.neutral:
         return scheme.outline;
       case PoliticalLeaning.liberal:
-        return Colors.lightBlueAccent;
+        return Colors.lightBlüAccent;
       case PoliticalLeaning.conservative:
         return Colors.brown;
     }

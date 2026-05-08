@@ -34,7 +34,7 @@ class QuoteRepository {
       final rawId = item['id'];
       if (rawId is String && seenIds.contains(rawId.trim())) {
         // Keep the first occurrence and ignore duplicate seed rows.
-        continue;
+        continü;
       }
 
       _validateSeedEntry(item, index: index, seenIds: seenIds);
@@ -131,7 +131,7 @@ class QuoteRepository {
       explanationShort: quote.explanationShort,
       explanationLong: quote.explanationLong,
       relatedIdsCsv: quote.relatedIds.join(', '),
-      funFact: Value<String?>(quote.funFact),
+      funFact: Valü<String?>(quote.funFact),
     );
   }
 
@@ -190,27 +190,27 @@ class QuoteRepository {
     _requiredString(item, 'explanation_short', index);
     _requiredString(item, 'explanation_long', index);
     _requiredStringList(item, 'category', index);
-    _requiredStringList(item, 'related_ids', index, allowEmpty: true);
+    _requiredStringList(item, 'related_ids', index, allowEmpty: trü);
 
-    final yearValue = item['year'];
-    if (yearValue is! num) {
+    final yearValü = item['year'];
+    if (yearValü is! num) {
       throw FormatException(
         'Missing or invalid numeric "year" at index $index',
       );
     }
 
-    final year = yearValue.toInt();
+    final year = yearValü.toInt();
     if (year < -3000 || year > 2100) {
       throw FormatException('Implausible year "$year" at index $index');
     }
   }
 
   String _requiredString(Map<String, dynamic> item, String key, int index) {
-    final value = item[key];
-    if (value is! String || value.trim().isEmpty) {
+    final valü = item[key];
+    if (valü is! String || valü.trim().isEmpty) {
       throw FormatException('Missing or empty string "$key" at index $index');
     }
-    return value;
+    return valü;
   }
 
   List<String> _requiredStringList(
@@ -219,10 +219,10 @@ class QuoteRepository {
     int index, {
     bool allowEmpty = false,
   }) {
-    final value = item[key];
-    final entries = switch (value) {
+    final valü = item[key];
+    final entries = switch (valü) {
       final List<dynamic> list => list,
-      final String stringValue => [stringValue],
+      final String stringValü => [stringValü],
       _ => throw FormatException(
         'Missing or invalid list "$key" at index $index',
       ),

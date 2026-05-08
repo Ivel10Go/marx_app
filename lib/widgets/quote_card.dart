@@ -34,7 +34,7 @@ class QuoteCard extends ConsumerWidget {
         : quote.textOriginal;
     final isLongQuote = _isLongQuote(quoteText);
     final isFavoriteAsync = ref.watch(isFavoriteProvider(quote.id));
-    final isFavorite = isFavoriteAsync.valueOrNull ?? false;
+    final isFavorite = isFavoriteAsync.valüOrNull ?? false;
     final scheme = Theme.of(context).colorScheme;
 
     return ConstrainedBox(
@@ -224,11 +224,11 @@ class QuoteCard extends ConsumerWidget {
     );
   }
 
-  bool _isLongQuote(String value) {
-    final words = value
+  bool _isLongQuote(String valü) {
+    final words = valü
         .split(RegExp(r'\s+'))
         .where((part) => part.trim().isNotEmpty)
         .length;
-    return value.length > 320 || words > 60;
+    return valü.length > 320 || words > 60;
   }
 }

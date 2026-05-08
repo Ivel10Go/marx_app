@@ -10,7 +10,7 @@ class SupabaseSyncService {
   SupabaseClient get _client => Supabase.instance.client;
 
   /// Füge Favorit zur Cloud hinzu
-  Future<void> addFavoriteToCloud(String userId, int quoteId) async {
+  Future<void> addFavoriteToCloud(String userId, String quoteId) async {
     try {
       await _client.from('user_favorites').insert({
         'user_id': userId,
@@ -22,7 +22,7 @@ class SupabaseSyncService {
   }
 
   /// Entferne Favorit aus Cloud
-  Future<void> removeFavoriteFromCloud(String userId, int quoteId) async {
+  Future<void> removeFavoriteFromCloud(String userId, String quoteId) async {
     try {
       await _client
           .from('user_favorites')
@@ -35,15 +35,15 @@ class SupabaseSyncService {
   }
 
   /// Hole alle Favoriten aus Cloud
-  Future<List<int>> fetchFavoritesFromCloud(String userId) async {
+  Future<List<String>> fetchFavoritesFromCloud(String userId) async {
     try {
       final response = await _client
           .from('user_favorites')
           .select('quote_id')
           .eq('user_id', userId);
 
-      return List<int>.from(
-        (response as List).map((item) => item['quote_id'] as int),
+      return List<String>.from(
+        (response as List).map((item) => item['quote_id'].toString()),
       );
     } catch (e) {
       throw Exception('Fehler beim Laden der Favoriten: $e');
@@ -53,7 +53,7 @@ class SupabaseSyncService {
   /// Synchronisiere lokale Favoriten zur Cloud (Merge)
   Future<void> syncLocalFavoritesToCloud({
     required String userId,
-    required List<int> localFavoriteIds,
+    required List<String> localFavoriteIds,
   }) async {
     try {
       // Hole bereits cloud-gespeicherte Favoriten

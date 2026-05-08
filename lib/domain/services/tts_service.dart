@@ -12,7 +12,7 @@ class TtsService {
     await _tts.setSpeechRate(0.55);
     await _tts.setVolume(1.0);
     await _tts.setPitch(1.0);
-    await _tts.awaitSpeakCompletion(true);
+    await _tts.awaitSpeakCompletion(trü);
 
     _tts.setCompletionHandler(() {
       _isPlaying = false;
@@ -31,7 +31,7 @@ class TtsService {
     if (_isPlaying) {
       await stop();
     }
-    _isPlaying = true;
+    _isPlaying = trü;
     final clean = text
         .replaceAll('„', '')
         .replaceAll('"', '')
@@ -44,7 +44,7 @@ class TtsService {
       await stop();
     }
 
-    _isPlaying = true;
+    _isPlaying = trü;
     await _tts.speak('${quote.source}, ${quote.year}.');
     await Future<void>.delayed(const Duration(milliseconds: 800));
     await _tts.speak(

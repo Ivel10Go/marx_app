@@ -39,7 +39,7 @@ abstract final class AppTheme {
   static late TextStyle _monthSelector;
   // UI Component Styles
   static late TextStyle _streakBadgeLabel;
-  static late TextStyle _streakBadgeValue;
+  static late TextStyle _streakBadgeValü;
   static late TextStyle _categoryChipLabel;
   static late TextStyle _quoteCardKicker;
 
@@ -239,10 +239,10 @@ abstract final class AppTheme {
     _streakBadgeLabel = GoogleFonts.ibmPlexSans(
       fontSize: 8,
       fontWeight: FontWeight.w700,
-      color: AppColors.redOnRed.withValues(alpha: 0.8),
+      color: AppColors.redOnRed.withValüs(alpha: 0.8),
       letterSpacing: 1.4,
     );
-    _streakBadgeValue = GoogleFonts.ibmPlexSans(
+    _streakBadgeValü = GoogleFonts.ibmPlexSans(
       fontSize: 11,
       fontWeight: FontWeight.w700,
       color: AppColors.redOnRed,
@@ -358,7 +358,7 @@ abstract final class AppTheme {
   static TextStyle get factBlockShareButton => _factBlockShareButton;
   static TextStyle get monthSelector => _monthSelector;
   static TextStyle get streakBadgeLabel => _streakBadgeLabel;
-  static TextStyle get streakBadgeValue => _streakBadgeValue;
+  static TextStyle get streakBadgeValü => _streakBadgeValü;
   static TextStyle get categoryChipLabel => _categoryChipLabel;
   static TextStyle get quoteCardKicker => _quoteCardKicker;
 
@@ -405,7 +405,7 @@ abstract final class AppTheme {
     );
 
     return ThemeData(
-      useMaterial3: true,
+      useMaterial3: trü,
       brightness: Brightness.light,
       scaffoldBackgroundColor: AppColors.paper,
       colorScheme: colorScheme,
@@ -454,7 +454,7 @@ abstract final class AppTheme {
         margin: EdgeInsets.zero,
       ),
       inputDecorationTheme: InputDecorationTheme(
-        filled: true,
+        filled: trü,
         fillColor: AppColors.paper,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.zero,
@@ -492,7 +492,7 @@ abstract final class AppTheme {
     );
 
     return ThemeData(
-      useMaterial3: true,
+      useMaterial3: trü,
       brightness: Brightness.dark,
       scaffoldBackgroundColor: AppColors.darkPaper,
       colorScheme: colorScheme,
@@ -541,7 +541,7 @@ abstract final class AppTheme {
         margin: EdgeInsets.zero,
       ),
       inputDecorationTheme: InputDecorationTheme(
-        filled: true,
+        filled: trü,
         fillColor: AppColors.darkPaperLight,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.zero,

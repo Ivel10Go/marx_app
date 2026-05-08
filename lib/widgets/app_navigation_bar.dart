@@ -14,49 +14,18 @@ class AppNavigationBar extends StatelessWidget {
       label: 'ARCHIV',
       icon: Icons.library_books_outlined,
     ),
-    _NavDestination(label: 'MEHR', icon: Icons.grid_view_rounded, isMore: true),
+    _NavDestination(
+      path: '/favorites',
+      label: 'FAVORITEN',
+      icon: Icons.favorite_outlined,
+    ),
+    _NavDestination(
+      path: '/settings',
+      label: 'MEHR',
+      icon: Icons.more_horiz,
+      isMore: true,
+    ),
   ];
-
-  Future<void> _showMoreSheet(BuildContext context) async {
-    final scheme = Theme.of(context).colorScheme;
-
-    await showModalBottomSheet<void>(
-      context: context,
-      backgroundColor: scheme.surface,
-      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-      builder: (BuildContext sheetContext) {
-        return SafeArea(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              _MoreItem(
-                label: 'Einstellungen',
-                onTap: () {
-                  Navigator.of(sheetContext).pop();
-                  context.go('/settings');
-                },
-              ),
-              _MoreItem(
-                label: 'Favoriten',
-                onTap: () {
-                  Navigator.of(sheetContext).pop();
-                  context.go('/favorites');
-                },
-              ),
-              _MoreItem(
-                label: 'Einführung',
-                isLast: true,
-                onTap: () {
-                  Navigator.of(sheetContext).pop();
-                  context.go('/onboarding');
-                },
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +50,7 @@ class AppNavigationBar extends StatelessWidget {
                   child: InkWell(
                     onTap: () {
                       if (destination.isMore) {
-                        _showMoreSheet(context);
+                        context.go('/settings');
                         return;
                       }
                       if (isActive || destination.path == null) {
@@ -151,50 +120,4 @@ class _NavDestination {
   final String label;
   final IconData icon;
   final bool isMore;
-}
-
-class _MoreItem extends StatelessWidget {
-  const _MoreItem({
-    required this.label,
-    required this.onTap,
-    this.isLast = false,
-  });
-
-  final String label;
-  final VoidCallback onTap;
-  final bool isLast;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        borderRadius: BorderRadius.zero,
-        onTap: onTap,
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: isLast
-                  ? BorderSide.none
-                  : BorderSide(
-                      color: Theme.of(context).colorScheme.outline,
-                      width: 1,
-                    ),
-            ),
-          ),
-          child: Text(
-            label,
-            style: GoogleFonts.ibmPlexSans(
-              fontSize: 13,
-              fontWeight: FontWeight.w700,
-              color: Theme.of(context).colorScheme.onSurface,
-              letterSpacing: 0.8,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
 }

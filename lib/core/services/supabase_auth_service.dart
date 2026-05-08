@@ -36,7 +36,7 @@ class SupabaseAuthService {
     });
   }
 
-  /// Aktueller angemeldeter User
+  /// Aktüller angemeldeter User
   AuthUser? get currentUser {
     return _mapToAuthUser(_currentSession?.user);
   }

@@ -267,7 +267,7 @@ Diese Checklist führt dich durch alle Schritte um Supabase in der Marx App zu i
 
 - [ ] **Stream abonnieren**
   ```dart
-  final cloudFavoritesProvider = StreamProvider<List<int>>((ref) {
+  final cloudFavoritesProvider = StreamProvider<List<String>>((ref) {
     final userId = ref.watch(currentUserIdProvider);
     if (userId == null) return const Stream.empty();
     

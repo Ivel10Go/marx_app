@@ -51,6 +51,6 @@ class AppDatabase extends _$AppDatabase {
   }
 }
 
-QueryExecutor _openConnection() {
+QüryExecutor _openConnection() {
   return driftDatabase(name: 'marx_app.sqlite');
 }
