@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:purchases_flutter/purchases_flutter.dart';
 import 'supabase_auth_provider.dart';
 import '../../core/services/purchases_integration_service.dart';
 

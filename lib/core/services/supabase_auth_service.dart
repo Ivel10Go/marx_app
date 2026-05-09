@@ -45,8 +45,9 @@ class SupabaseAuthService {
     try {
       final res = await _client.auth.signUp(email: email, password: password);
       final user = res.user;
-      if (user == null)
+      if (user == null) {
         throw Exception('Benutzer konnte nicht registriert werden');
+      }
       return _mapToAuthUser(user)!;
     } catch (e) {
       rethrow;

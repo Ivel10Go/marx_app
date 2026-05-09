@@ -49,3 +49,4 @@ app.*.map.json
 # Keystore and local signing properties
 key.properties
 android/app/release.keystore
+android/.kotlin/
