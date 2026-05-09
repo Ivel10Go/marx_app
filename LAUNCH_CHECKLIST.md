@@ -931,9 +931,9 @@ Kurzfristige Prioritäten (Reihenfolge):
   - Tasks: Sync‑Service implementieren, lokale Favoriten migrieren, Merge‑Strategie (Union) testen.
 - [x] **RevenueCat ↔ Login Flow testen**
   - Tasks: `Purchases.logIn(userId)`/`logOut()` testen, Entitlement Refresh mit Login/Logout prüfen.
-- [ ] **Android Keystore & Release Signing finalisieren**
+- [x] **Android Keystore & Release Signing finalisieren**
   - Tasks: Keystore prüfen/erstellen, `signingConfig` setzen, Test‑Release‑Build erzeugen.
-  - Blocker lokal: `keytool` fehlt im PATH; bis zur Einrichtung wird lokal mit Debug‑Signing gebaut.
+  - Verifiziert: Release‑Keystore lokal erstellt, `key.properties` gesetzt, `flutter build appbundle --release` erfolgreich.
 - [ ] **Play Store Metadaten & Screenshots erstellen**
   - Tasks: Short/Full Description, Screenshots (6.7" + 5.1"), Feature Graphic, Privacy URL, Support‑Email.
 - [ ] **Internal Test Track Release + Tests**
@@ -959,4 +959,4 @@ Kommunikation & Verantwortlichkeiten:
 - Tägliches kurzes Update (Slack/Issues) — Fortschritt, Blocker, nächste Aktion.
 - Blocker eskalieren: Keystore, RevenueCat oder Supabase Keys.
 
-Nächster Schritt jetzt: Pixel6 Final-QA nach [TEST_RUNBOOK_PIXEL6_FINAL_QA.md](TEST_RUNBOOK_PIXEL6_FINAL_QA.md) durchführen, danach Internal Track Upload.
+Nächster Schritt jetzt: `app-release.aab` im Internal Track hochladen, dann Pixel6 Final-QA nach [TEST_RUNBOOK_PIXEL6_FINAL_QA.md](TEST_RUNBOOK_PIXEL6_FINAL_QA.md) protokollieren.

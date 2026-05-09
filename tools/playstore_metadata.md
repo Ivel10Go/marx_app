@@ -1,14 +1,57 @@
-# Play Store metadata template
+# Play Store Metadaten (bereit fuer Internal Track)
+
+## Basisdaten
 
 - App title: Marx Zitatatlas
-- Short description (<=80 chars): Tägliche Zitate von Karl Marx — lernen & teilen.
-- Full description: (erkläre Kernfunktionen: Daily Quote, Archive, Favoriten, Premium-Abo mit Volltextsuche, Offline‑Support)
-- Feature graphic: tools/branding/feature_graphic.png
-- Screenshots: assets/screenshots/6.7.png, assets/screenshots/5.1.png
 - Category: Books & Reference
 - Content rating: 3+
-- Privacy policy URL: https://yourdomain.tld/privacy
 - Contact email: support@yourdomain.tld
+- Privacy policy URL: https://yourdomain.tld/privacy
 
-Suggested Release Notes (Deutsch):
-Initialversion: Tägliche Marx‑Zitate, Archivsuche, Favoriten, Premium‑Abo.
+## Short Description (<= 80 Zeichen)
+
+Taegliche Karl-Marx-Zitate, Archivsuche, Favoriten und Premium-Funktionen.
+
+## Full Description (DE)
+
+Marx Zitatatlas bringt dir taeglich kuratierte Zitate von Karl Marx direkt auf dein Geraet.
+
+Das bietet die App:
+- Tageszitat mit schneller Uebersicht
+- Archiv mit Suche und Filtern
+- Favoriten zum Speichern deiner wichtigsten Zitate
+- Detailseiten mit Kontext und Einordnung
+- Stabile Offline-Fallbacks fuer zentrale Inhalte
+
+Premium-Funktionen:
+- Erweiterte Nutzungserlebnisse fuer intensive Arbeit mit Zitaten
+- Zusätzliche Komfortfunktionen und vertiefte Exploration
+
+Die App ist auf einen klaren Lesefluss, schnelle Navigation und robuste Performance ausgelegt.
+
+## Screenshot-Plan (Play Listing)
+
+Pfadvorschlag:
+- assets/screenshots/play/phone67_01_home.png
+- assets/screenshots/play/phone67_02_detail.png
+- assets/screenshots/play/phone67_03_archive.png
+- assets/screenshots/play/phone67_04_paywall.png
+- assets/screenshots/play/phone51_01_home.png
+- assets/screenshots/play/phone51_02_detail.png
+- assets/screenshots/play/phone51_03_archive.png
+- assets/screenshots/play/phone51_04_paywall.png
+
+Inhalt pro Shot:
+- Home mit Tageszitat
+- Quote Detail mit Erklaerung
+- Archive mit aktiver Suche/Filter
+- Premium/Paywall mit klarer Preisdarstellung
+
+## Feature Graphic
+
+- Zielpfad: assets/screenshots/play/feature_graphic_1024x500.png
+- Format: 1024x500, klarer Titel + App-Icon + ruhiger Hintergrund
+
+## Release Notes (DE)
+
+Initialversion: Taegliche Marx-Zitate, Archivsuche, Favoriten, Premium-Funktionen und verbesserte Stabilitaet.
