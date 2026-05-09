@@ -264,12 +264,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                                 const SizedBox(width: 6),
                               ],
                               _HeaderIconAction(
-                                icon: Icons.person_outline,
-                                tooltip: 'Account',
-                                onTap: () => context.push('/account'),
-                              ),
-                              const SizedBox(width: 6),
-                              _HeaderIconAction(
                                 icon: Icons.settings_outlined,
                                 tooltip: 'Einstellungen',
                                 onTap: () => context.push('/settings'),
