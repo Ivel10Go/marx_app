@@ -939,6 +939,7 @@ Kurzfristige Prioritäten (Reihenfolge):
 - [ ] **Internal Test Track Release + Tests**
   - Tasks: AAB bauen, Internal Track hochladen, 1–2 Testgeräte validieren (Purchase, Restore, Login, Sync).
   - Status: `build/app/outputs/bundle/release/app-release.aab` lokal erzeugt.
+  - Runbook: [INTERNAL_TRACK_UPLOAD_RUNBOOK.md](INTERNAL_TRACK_UPLOAD_RUNBOOK.md)
 - [ ] **Final QA auf Zielgerät (Pixel6)**
   - Tests: Cold Start, Offline‑Loading, Navigation/Back, Purchase Flow, Sync, Restore, Theme/Fonts.
   - Runbook: [TEST_RUNBOOK_PIXEL6_FINAL_QA.md](TEST_RUNBOOK_PIXEL6_FINAL_QA.md)
