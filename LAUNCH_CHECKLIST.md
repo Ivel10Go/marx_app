@@ -923,20 +923,22 @@ Ziel: Release auf Google Play diesen Monat (Ende Mai). Priorität: Stabilität, 
 
 Kurzfristige Prioritäten (Reihenfolge):
 
-- [ ] **Supabase Projekt finalisieren** — (in progress)
+- [x] **Supabase Projekt finalisieren**
   - Tasks: Projekt anlegen, DB‑Schema deployen, RLS‑Policies aktivieren, Anon/Service Keys sichern.
-- [ ] **Auth Service & Riverpod Provider implementieren**
+- [x] **Auth Service & Riverpod Provider implementieren**
   - Tasks: `supabase_flutter` integrieren, `SupabaseAuthService` implementieren, `currentSupabaseUserProvider` bereitstellen.
-- [ ] **Favorites Cloud‑Sync & Migration**
+- [x] **Favorites Cloud‑Sync & Migration**
   - Tasks: Sync‑Service implementieren, lokale Favoriten migrieren, Merge‑Strategie (Union) testen.
-- [ ] **RevenueCat ↔ Login Flow testen**
+- [x] **RevenueCat ↔ Login Flow testen**
   - Tasks: `Purchases.logIn(userId)`/`logOut()` testen, Entitlement Refresh mit Login/Logout prüfen.
 - [ ] **Android Keystore & Release Signing finalisieren**
   - Tasks: Keystore prüfen/erstellen, `signingConfig` setzen, Test‑Release‑Build erzeugen.
+  - Blocker lokal: `keytool` fehlt im PATH; bis zur Einrichtung wird lokal mit Debug‑Signing gebaut.
 - [ ] **Play Store Metadaten & Screenshots erstellen**
   - Tasks: Short/Full Description, Screenshots (6.7" + 5.1"), Feature Graphic, Privacy URL, Support‑Email.
 - [ ] **Internal Test Track Release + Tests**
   - Tasks: AAB bauen, Internal Track hochladen, 1–2 Testgeräte validieren (Purchase, Restore, Login, Sync).
+  - Status: `build/app/outputs/bundle/release/app-release.aab` lokal erzeugt.
 - [ ] **Final QA auf Zielgerät (Pixel6)**
   - Tests: Cold Start, Offline‑Loading, Navigation/Back, Purchase Flow, Sync, Restore, Theme/Fonts.
 - [ ] **Crashlytics & Monitoring einrichten**
@@ -956,4 +958,4 @@ Kommunikation & Verantwortlichkeiten:
 - Tägliches kurzes Update (Slack/Issues) — Fortschritt, Blocker, nächste Aktion.
 - Blocker eskalieren: Keystore, RevenueCat oder Supabase Keys.
 
-Nächster Schritt jetzt: Supabase‑Projekt deployen und DB‑Schema heute abschließen.
+Nächster Schritt jetzt: `app-release.aab` in den Internal Test Track hochladen und End‑to‑End Tests auf Testgeräten durchführen.
