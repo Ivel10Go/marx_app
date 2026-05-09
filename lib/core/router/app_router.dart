@@ -4,11 +4,11 @@ import 'package:go_router/go_router.dart';
 
 import '../../presentation/admin/admin_dashboard_screen.dart';
 import '../../presentation/detail/quote_detail_screen_new.dart';
-import '../../presentation/archive/archive_screen.dart';
 import '../../presentation/favorites/favorites_screen.dart';
 import '../../presentation/home/home_screen.dart';
 import '../../presentation/onboarding/onboarding_screen.dart';
 import '../../presentation/auth/auth_screen.dart';
+import '../../presentation/account/account_screen.dart';
 import '../../presentation/settings/settings_screen.dart';
 import '../../domain/providers/admin_access_provider.dart';
 
@@ -48,11 +48,6 @@ final appRouterProvider = Provider<GoRouter>((Ref ref) {
         },
       ),
       GoRoute(
-        path: '/archive',
-        name: 'archive',
-        builder: (context, state) => const ArchiveScreen(),
-      ),
-      GoRoute(
         path: '/favorites',
         name: 'favorites',
         builder: (context, state) => const FavoritesScreen(),
@@ -83,6 +78,11 @@ final appRouterProvider = Provider<GoRouter>((Ref ref) {
         path: '/auth',
         name: 'auth',
         builder: (context, state) => const AuthScreen(),
+      ),
+      GoRoute(
+        path: '/account',
+        name: 'account',
+        builder: (context, state) => const AccountScreen(),
       ),
       // Purchase and premium features routes removed for beta launch
     ],

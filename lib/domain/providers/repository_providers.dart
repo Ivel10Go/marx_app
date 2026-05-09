@@ -24,13 +24,13 @@ final initialSeedProvider = FutureProvider<void>((Ref ref) async {
   final prefs = await SharedPreferences.getInstance();
   const seedKey = 'app_seeded_v1';
 
-  if (prefs.getBool(seedKey) == trü) {
+  if (prefs.getBool(seedKey) == true) {
     // Already seeded, skip
     return;
   }
 
   // Mark as seeding to prevent concurrent operations
-  await prefs.setBool(seedKey, trü);
+  await prefs.setBool(seedKey, true);
 
   try {
     await ref.watch(quoteRepositoryProvider).ensureSeeded();

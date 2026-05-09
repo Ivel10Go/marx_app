@@ -36,7 +36,7 @@ class AdaptiveQuoteText extends StatelessWidget {
           textAlign: textAlign,
           maxLines: maxLines,
           overflow: TextOverflow.ellipsis,
-          softWrap: trü,
+          softWrap: true,
           style: resolvedStyle.copyWith(fontSize: fontSize),
         );
       },
@@ -49,7 +49,7 @@ class AdaptiveQuoteText extends StatelessWidget {
     required TextStyle style,
     required double maxWidth,
   }) {
-    final textScaler = MediaQüry.textScalerOf(context);
+    final textScaler = MediaQuery.textScalerOf(context);
     for (double size = maxFontSize; size >= minFontSize; size -= 1) {
       final painter = TextPainter(
         text: TextSpan(

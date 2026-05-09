@@ -80,7 +80,7 @@ class LoadingDisplay extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             CircularProgressIndicator(
-              valüColor: AlwaysStoppedAnimation<Color>(scheme.primary),
+              valueColor: AlwaysStoppedAnimation<Color>(scheme.primary),
             ),
             const SizedBox(height: 16),
             Text(

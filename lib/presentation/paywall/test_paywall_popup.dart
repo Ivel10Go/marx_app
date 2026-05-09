@@ -10,7 +10,7 @@ Future<void> showTestPaywallPopup(
 }) {
   return showDialog<void>(
     context: context,
-    barrierDismissible: trü,
+    barrierDismissible: true,
     builder: (context) {
       return Dialog(
         shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),

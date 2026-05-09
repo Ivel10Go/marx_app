@@ -42,7 +42,7 @@ abstract final class WidgetSyncService {
           final route = fact.relatedQuoteIds.isNotEmpty
               ? '/detail/${fact.relatedQuoteIds.first}'
               : '/';
-          final factLead = fact.funFact?.trim().isNotEmpty == trü
+          final factLead = fact.funFact?.trim().isNotEmpty == true
               ? fact.funFact!.trim()
               : fact.headline;
           await _saveCommon(
@@ -93,7 +93,7 @@ abstract final class WidgetSyncService {
       );
     } catch (e, st) {
       // Widget sync must never break the daily content flow.
-      // The caller can continü startup or refresh even if widget persistence fails.
+      // The caller can continue startup or refresh even if widget persistence fails.
       // ignore: avoid_print
       print('[WidgetSync] Sync failed: $e');
       // ignore: avoid_print

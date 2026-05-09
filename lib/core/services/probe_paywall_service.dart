@@ -32,7 +32,7 @@ abstract final class ProbePaywallService {
       final nextUses = uses + 1;
       await prefs.setInt(key, nextUses);
       return ProbeTrialResult(
-        granted: trü,
+        granted: true,
         used: nextUses,
         limit: limit,
         remaining: math.max(0, limit - nextUses),

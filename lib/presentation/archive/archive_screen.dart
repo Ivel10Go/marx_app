@@ -8,7 +8,7 @@ import '../../domain/providers/archive_provider.dart';
 import '../../widgets/app_decorated_scaffold.dart';
 import '../../widgets/android_back_guard.dart';
 import '../../widgets/app_navigation_bar.dart';
-import '../../widgets/quote_card.dart';
+import '../../widgets/compact_quote_card.dart';
 import '../home/widgets/fact_block.dart';
 import '../loading/app_loading_screen.dart';
 import 'widgets/archive_filter_chips.dart';
@@ -110,24 +110,7 @@ class _ArchiveScreenState extends ConsumerState<ArchiveScreen> {
                     style: AppTheme.bodyMedium.copyWith(height: 1.4),
                   ),
                   const SizedBox(height: AppTheme.spacingBase),
-                  Container(
-                    padding: const EdgeInsets.all(AppTheme.spacingSmall),
-                    decoration: BoxDecoration(
-                      color: scheme.surface,
-                      border: Border.all(color: scheme.outline, width: 1),
-                    ),
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: _ArchiveTabButton(
-                            label: 'ALLE',
-                            active: true,
-                            onTap: () => setTab(ArchiveTab.all),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+
                   const SizedBox(height: AppTheme.spacingMedium),
                   TextField(
                     decoration: InputDecoration(
@@ -263,7 +246,7 @@ class _ArchiveScreenState extends ConsumerState<ArchiveScreen> {
                           bottom: AppTheme.spacingMedium,
                         ),
                         child: item.isQuote
-                            ? QuoteCard(
+                            ? CompactQuoteCard(
                                 quote: item.quote!,
                                 onTap: () => context.push(
                                   '/detail/${Uri.encodeComponent(item.quote!.id)}',

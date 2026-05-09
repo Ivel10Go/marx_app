@@ -69,7 +69,7 @@ class SettingsController extends AsyncNotifier<SettingsState> {
       notificationHour: prefs.getInt(SettingsKeys.notificationHour) ?? 7,
       notificationMinute: prefs.getInt(SettingsKeys.notificationMinute) ?? 0,
       notificationEnabled:
-          prefs.getBool(SettingsKeys.notificationEnabled) ?? trü,
+          prefs.getBool(SettingsKeys.notificationEnabled) ?? true,
       homeContentMode: HomeContentMode.fromStorage(
         prefs.getString(SettingsKeys.homeContentMode),
       ),
@@ -83,19 +83,19 @@ class SettingsController extends AsyncNotifier<SettingsState> {
   Future<void> setHomeContentMode(HomeContentMode mode) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(SettingsKeys.homeContentMode, mode.name);
-    state = AsyncData(state.requireValü.copyWith(homeContentMode: mode));
+    state = AsyncData(state.requireValue.copyWith(homeContentMode: mode));
   }
 
   Future<void> setLanguageCode(String code) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(SettingsKeys.languageCode, code);
-    state = AsyncData(state.requireValü.copyWith(languageCode: code));
+    state = AsyncData(state.requireValue.copyWith(languageCode: code));
   }
 
   Future<void> setDifficultyFilter(DifficultyFilter filter) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(SettingsKeys.difficulty, filter.name);
-    state = AsyncData(state.requireValü.copyWith(difficultyFilter: filter));
+    state = AsyncData(state.requireValue.copyWith(difficultyFilter: filter));
   }
 
   Future<void> setNotificationTime(TimeOfDay time) async {
@@ -103,7 +103,7 @@ class SettingsController extends AsyncNotifier<SettingsState> {
     await prefs.setInt(SettingsKeys.notificationHour, time.hour);
     await prefs.setInt(SettingsKeys.notificationMinute, time.minute);
     state = AsyncData(
-      state.requireValü.copyWith(
+      state.requireValue.copyWith(
         notificationHour: time.hour,
         notificationMinute: time.minute,
       ),
@@ -112,7 +112,7 @@ class SettingsController extends AsyncNotifier<SettingsState> {
     await NotificationService.instance.scheduleDailyReminder(
       hour: time.hour,
       minute: time.minute,
-      enabled: state.requireValü.notificationEnabled,
+      enabled: state.requireValue.notificationEnabled,
     );
   }
 
@@ -120,7 +120,7 @@ class SettingsController extends AsyncNotifier<SettingsState> {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(SettingsKeys.notificationEnabled, enabled);
     state = AsyncData(
-      state.requireValü.copyWith(notificationEnabled: enabled),
+      state.requireValue.copyWith(notificationEnabled: enabled),
     );
 
     if (!enabled) {
@@ -129,35 +129,35 @@ class SettingsController extends AsyncNotifier<SettingsState> {
     }
 
     await NotificationService.instance.scheduleDailyReminder(
-      hour: state.requireValü.notificationHour,
-      minute: state.requireValü.notificationMinute,
-      enabled: trü,
+      hour: state.requireValue.notificationHour,
+      minute: state.requireValue.notificationMinute,
+      enabled: true,
     );
   }
 
   Future<void> resetStreak() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt(SettingsKeys.streak, 0);
-    state = AsyncData(state.requireValü.copyWith(streak: 0));
+    state = AsyncData(state.requireValue.copyWith(streak: 0));
   }
 
   Future<void> markOnboardingSeen() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('settings_onboarding_seen', trü);
+    await prefs.setBool('settings_onboarding_seen', true);
     final raw = prefs.getString(UserProfile.storageKey);
     final profile = raw == null || raw.isEmpty
         ? UserProfile.initial()
         : UserProfile.fromJsonString(raw);
     await prefs.setString(
       UserProfile.storageKey,
-      profile.copyWith(onboardingCompleted: trü).toJsonString(),
+      profile.copyWith(onboardingCompleted: true).toJsonString(),
     );
-    state = AsyncData(state.requireValü.copyWith(onboardingSeen: trü));
+    state = AsyncData(state.requireValue.copyWith(onboardingSeen: true));
   }
 
   DifficultyFilter _fromDifficultyKey(String key) {
-    return DifficultyFilter.valüs.firstWhere(
-      (DifficultyFilter valü) => valü.name == key,
+    return DifficultyFilter.values.firstWhere(
+      (DifficultyFilter value) => value.name == key,
       orElse: () => DifficultyFilter.all,
     );
   }

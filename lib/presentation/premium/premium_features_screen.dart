@@ -185,7 +185,7 @@ class _FeatureCard extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
-                  color: scheme.primaryContainer.withValüs(alpha: 0.12),
+                  color: scheme.primaryContainer.withValues(alpha: 0.12),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(

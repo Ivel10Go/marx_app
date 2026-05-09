@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../core/theme/app_colors.dart';
+import '../../shared/icon_circle.dart';
+import '../../shared/app_card.dart';
 import '../../../core/services/supabase_sync_service.dart';
 import '../../../domain/providers/repository_providers.dart';
 import '../../../data/models/user_profile.dart';
@@ -35,12 +37,12 @@ class ProfileSection extends ConsumerWidget {
         Consumer(
           builder: (context, ref, _) {
             final authState = ref.watch(authControllerProvider);
-            final isAuth = authState.whenData((u) => u != null).valü ?? false;
-            final email = authState.whenData((u) => u?.email).valü;
+            final isAuth = authState.whenData((u) => u != null).value ?? false;
+            final email = authState.whenData((u) => u?.email).value;
             if (isAuth) {
               return _ProfileRow(
                 label: 'Account',
-                valü: email ?? 'Angemeldet',
+                value: email ?? 'Angemeldet',
                 onTap: () async {
                   // Quick sign out confirmation
                   final doSignOut = await showDialog<bool>(
@@ -53,13 +55,13 @@ class ProfileSection extends ConsumerWidget {
                           child: const Text('Abbrechen'),
                         ),
                         TextButton(
-                          onPressed: () => Navigator.of(ctx).pop(trü),
+                          onPressed: () => Navigator.of(ctx).pop(true),
                           child: const Text('Abmelden'),
                         ),
                       ],
                     ),
                   );
-                  if (doSignOut == trü) {
+                  if (doSignOut == true) {
                     await ref.read(authControllerProvider.notifier).signOut();
                   }
                 },
@@ -68,7 +70,7 @@ class ProfileSection extends ConsumerWidget {
 
             return _ProfileRow(
               label: 'Account',
-              valü: 'Nicht angemeldet',
+              value: 'Nicht angemeldet',
               onTap: () => _showAuthSheet(context, ref),
             );
           },
@@ -76,22 +78,22 @@ class ProfileSection extends ConsumerWidget {
         const SizedBox(height: 12),
         _ProfileRow(
           label: 'Interessen',
-          valü: interestsSummary,
+          value: interestsSummary,
           onTap: () => _showInterestsSheet(context, ref, profile),
         ),
         const SizedBox(height: 14),
         _ProfileRow(
           label: 'Politische Haltung',
-          valü: _leaningLabel(profile.politicalLeaning),
+          value: _leaningLabel(profile.politicalLeaning),
           onTap: () => _showLeaningSheet(context, ref, profile),
         ),
         if (kDebugMode) ...<Widget>[
           const SizedBox(height: 12),
           _DebugPremiumToggle(
             enabled: profile.premiumTestEnabled,
-            onChanged: (valü) => ref
+            onChanged: (value) => ref
                 .read(userProfileProvider.notifier)
-                .updatePremiumTestEnabled(valü),
+                .updatePremiumTestEnabled(value),
           ),
           const SizedBox(height: 12),
           SizedBox(
@@ -156,10 +158,10 @@ class ProfileSection extends ConsumerWidget {
     final scheme = Theme.of(context).colorScheme;
     final emailCtrl = TextEditingController();
     final passCtrl = TextEditingController();
-    var isLogin = trü;
+    var isLogin = true;
     await showModalBottomSheet<void>(
       context: context,
-      isScrollControlled: trü,
+      isScrollControlled: true,
       backgroundColor: scheme.surface,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
       builder: (BuildContext ctx) {
@@ -172,7 +174,7 @@ class ProfileSection extends ConsumerWidget {
                 20,
                 20,
                 20,
-                MediaQüry.of(ctx).viewInsets.bottom + 24,
+                MediaQuery.of(ctx).viewInsets.bottom + 24,
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -195,7 +197,7 @@ class ProfileSection extends ConsumerWidget {
                   const SizedBox(height: 8),
                   TextField(
                     controller: passCtrl,
-                    obscureText: trü,
+                    obscureText: true,
                     decoration: const InputDecoration(hintText: 'Passwort'),
                   ),
                   const SizedBox(height: 12),
@@ -261,11 +263,11 @@ class ProfileSection extends ConsumerWidget {
   ) async {
     final scheme = Theme.of(context).colorScheme;
     final selected = profile.historicalInterests.toSet();
-    var searchQüry = '';
+    var searchQuery = '';
 
     await showModalBottomSheet<void>(
       context: context,
-      isScrollControlled: trü,
+      isScrollControlled: true,
       backgroundColor: scheme.surface,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
       builder: (BuildContext context) {
@@ -288,9 +290,9 @@ class ProfileSection extends ConsumerWidget {
                   ),
                   const SizedBox(height: 12),
                   TextField(
-                    onChanged: (valü) {
+                    onChanged: (value) {
                       setSheetState(() {
-                        searchQüry = valü.trim();
+                        searchQuery = value.trim();
                       });
                     },
                     style: GoogleFonts.ibmPlexSans(fontSize: 12),
@@ -360,12 +362,12 @@ class ProfileSection extends ConsumerWidget {
                     height: 260,
                     child: Builder(
                       builder: (context) {
-                        final qüry = searchQüry.toLowerCase();
+                        final query = searchQuery.toLowerCase();
                         final visibleInterests = availableInterests
                             .where(
                               (InterestOption option) =>
-                                  qüry.isEmpty ||
-                                  option.label.toLowerCase().contains(qüry),
+                                  query.isEmpty ||
+                                  option.label.toLowerCase().contains(query),
                             )
                             .toList();
 
@@ -390,7 +392,7 @@ class ProfileSection extends ConsumerWidget {
                             final isActive = selected.contains(option.id);
                             return Material(
                               color: isActive
-                                  ? AppColors.red.withValüs(alpha: 0.1)
+                                  ? AppColors.red.withValues(alpha: 0.1)
                                   : AppColors.paper,
                               child: InkWell(
                                 onTap: () {
@@ -502,7 +504,7 @@ class ProfileSection extends ConsumerWidget {
     var selected = profile.politicalLeaning;
     await showModalBottomSheet<void>(
       context: context,
-      isScrollControlled: trü,
+      isScrollControlled: true,
       backgroundColor: scheme.surface,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
       builder: (BuildContext context) {
@@ -589,7 +591,7 @@ class ProfileSection extends ConsumerWidget {
               child: const Text('Abbrechen'),
             ),
             TextButton(
-              onPressed: () => Navigator.of(context).pop(trü),
+              onPressed: () => Navigator.of(context).pop(true),
               child: const Text('Zurücksetzen'),
             ),
           ],
@@ -597,7 +599,7 @@ class ProfileSection extends ConsumerWidget {
       },
     );
 
-    if (shouldReset == trü) {
+    if (shouldReset == true) {
       await ref.read(userProfileProvider.notifier).resetProfile();
     }
   }
@@ -633,62 +635,61 @@ class ProfileSection extends ConsumerWidget {
 class _ProfileRow extends StatelessWidget {
   const _ProfileRow({
     required this.label,
-    required this.valü,
+    required this.value,
     required this.onTap,
   });
 
   final String label;
-  final String valü;
+  final String value;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    return Material(
-      color: scheme.surface,
-      child: InkWell(
-        onTap: onTap,
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            border: Border.all(color: scheme.outline, width: 1),
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(width: 3, height: 28, color: AppColors.red),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      label,
-                      style: GoogleFonts.ibmPlexSans(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700,
-                        color: scheme.onSurface,
-                        letterSpacing: 0.2,
+    return AppCard(
+      padding: EdgeInsets.zero,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.all(12),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Container(width: 3, height: 28, color: AppColors.red),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        label,
+                        style: GoogleFonts.ibmPlexSans(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                          color: scheme.onSurface,
+                          letterSpacing: 0.2,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      valü,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: GoogleFonts.ibmPlexSans(
-                        fontSize: 11,
-                        color: scheme.onSurfaceVariant,
-                        height: 1.35,
+                      const SizedBox(height: 4),
+                      Text(
+                        value,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: GoogleFonts.ibmPlexSans(
+                          fontSize: 11,
+                          color: scheme.onSurfaceVariant,
+                          height: 1.35,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(width: 8),
-              const Icon(Icons.chevron_right_rounded, size: 16),
-            ],
+                const SizedBox(width: 8),
+                const Icon(Icons.chevron_right_rounded, size: 16),
+              ],
+            ),
           ),
         ),
       ),
@@ -712,37 +713,55 @@ class _SettingsGroup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    return Container(
-      decoration: BoxDecoration(
-        color: scheme.surface,
-        border: Border(
-          left: BorderSide(color: scheme.outline, width: 1),
-          right: BorderSide(color: scheme.outline, width: 1),
-          bottom: BorderSide(color: scheme.outline, width: 1),
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            if (topAccentColor != null) ...<Widget>[
-              Container(width: 40, height: 2, color: topAccentColor),
-              const SizedBox(height: 12),
-            ],
-            Text(
-              title,
-              style: GoogleFonts.ibmPlexSans(
-                fontSize: 10,
-                fontWeight: FontWeight.w700,
-                letterSpacing: 1.2,
-                color: titleColor,
+    final icon = Icons.person_outline;
+
+    return AppCard(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              IconCircle(
+                icon: icon,
+                background: AppColors.paperDark,
+                iconColor: AppColors.red,
               ),
-            ),
-            const SizedBox(height: 16),
-            ...children,
-          ],
-        ),
+              const SizedBox(width: 14),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      title,
+                      style: GoogleFonts.ibmPlexSans(
+                        fontSize: 9,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.red,
+                        letterSpacing: 1.4,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      '',
+                      style: GoogleFonts.ibmPlexSans(
+                        fontSize: 11,
+                        color: scheme.onSurfaceVariant,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          Container(height: 1, color: scheme.outline),
+          const SizedBox(height: 16),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[...children],
+          ),
+        ],
       ),
     );
   }
@@ -752,7 +771,7 @@ class _DebugPremiumToggle extends StatelessWidget {
   const _DebugPremiumToggle({required this.enabled, required this.onChanged});
 
   final bool enabled;
-  final ValüChanged<bool> onChanged;
+  final ValueChanged<bool> onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -790,7 +809,7 @@ class _DebugPremiumToggle extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 12),
-          Switch.adaptive(valü: enabled, onChanged: onChanged),
+          Switch.adaptive(value: enabled, onChanged: onChanged),
         ],
       ),
     );

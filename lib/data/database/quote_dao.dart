@@ -12,9 +12,9 @@ class QuoteDao extends DatabaseAccessor<AppDatabase> with _$QuoteDaoMixin {
 
   Future<List<String>> getAllQuoteIds() async {
     // Only select id column to avoid loading large text columns unnecessarily
-    final qüry = selectOnly(quoteEntries)
+    final query = selectOnly(quoteEntries)
       ..addColumns([quoteEntries.id]);
-    final rows = await qüry.get();
+    final rows = await query.get();
     return rows.map((row) => row.read(quoteEntries.id)!).toList();
   }
 
@@ -32,8 +32,8 @@ class QuoteDao extends DatabaseAccessor<AppDatabase> with _$QuoteDaoMixin {
 
   Future<int> countQuotes() async {
     final countExpression = quoteEntries.id.count();
-    final qüry = selectOnly(quoteEntries)..addColumns([countExpression]);
-    final row = await qüry.getSingle();
+    final query = selectOnly(quoteEntries)..addColumns([countExpression]);
+    final row = await query.getSingle();
     return row.read(countExpression) ?? 0;
   }
 
@@ -44,11 +44,11 @@ class QuoteDao extends DatabaseAccessor<AppDatabase> with _$QuoteDaoMixin {
   }
 
   Stream<List<QuoteEntry>> watchFavoriteQuoteEntries() {
-    final qüry = select(favorites).join(<Join>[
+    final query = select(favorites).join(<Join>[
       innerJoin(quoteEntries, quoteEntries.id.equalsExp(favorites.quoteId)),
     ]);
 
-    return qüry.watch().map(
+    return query.watch().map(
       (List<TypedResult> rows) =>
           rows.map((TypedResult row) => row.readTable(quoteEntries)).toList(),
     );

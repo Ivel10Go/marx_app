@@ -47,7 +47,7 @@ class _PurchasePageState extends ConsumerState<PurchasePage> {
       return;
     }
     setState(() {
-      _loading = trü;
+      _loading = true;
       _errorMessage = null;
     });
 
@@ -66,10 +66,10 @@ class _PurchasePageState extends ConsumerState<PurchasePage> {
         if (off == null) {
           _errorMessage = result.isTimeout
               ? 'Angebote konnten nicht rechtzeitig geladen werden. Bitte erneut versuchen.'
-              : 'Angebote konnten nicht geladen werden. Bitte Verbindung und RevenüCat-Setup prüfen.';
+              : 'Angebote konnten nicht geladen werden. Bitte Verbindung und RevenueCat-Setup prüfen.';
         } else if (!hasPackages) {
           _errorMessage =
-              'Das aktülle Offering enthält keine kaufbaren Pakete. Bitte RevenüCat-Konfiguration prüfen.';
+              'Das aktülle Offering enthält keine kaufbaren Pakete. Bitte RevenueCat-Konfiguration prüfen.';
         } else {
           _errorMessage = null;
         }
@@ -95,12 +95,12 @@ class _PurchasePageState extends ConsumerState<PurchasePage> {
       return;
     }
     setState(() {
-      _purchaseBusy = trü;
+      _purchaseBusy = true;
     });
     try {
       await PurchasesService.instance.purchasePackage(pkg);
       final info = await PurchasesService.instance.refreshCustomerInfo();
-      if (PurchasesService.instance.hasPröntitlement(info)) {
+      if (PurchasesService.instance.hasProEntitlement(info)) {
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -153,12 +153,12 @@ class _PurchasePageState extends ConsumerState<PurchasePage> {
       return;
     }
     setState(() {
-      _restoreBusy = trü;
+      _restoreBusy = true;
     });
     try {
       await PurchasesService.instance.restorePurchases();
       final info = await PurchasesService.instance.refreshCustomerInfo();
-      if (PurchasesService.instance.hasPröntitlement(info)) {
+      if (PurchasesService.instance.hasProEntitlement(info)) {
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -208,7 +208,7 @@ class _PurchasePageState extends ConsumerState<PurchasePage> {
       return;
     }
     setState(() {
-      _customerCenterBusy = trü;
+      _customerCenterBusy = true;
     });
     try {
       await PurchasesService.instance.presentCustomerCenter();
@@ -268,7 +268,7 @@ class _PurchasePageState extends ConsumerState<PurchasePage> {
                       border: Border.all(color: scheme.outline, width: 1),
                     ),
                     child: Text(
-                      'Audit-Check: Käufe wiederherstellen, Customer Center öffnen und Angebote laden müssen auch dann funktionieren, wenn RevenüCat zeitweise nicht antwortet.',
+                      'Audit-Check: Käufe wiederherstellen, Customer Center öffnen und Angebote laden müssen auch dann funktionieren, wenn RevenueCat zeitweise nicht antwortet.',
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ),
@@ -450,7 +450,7 @@ class _PurchasePageState extends ConsumerState<PurchasePage> {
     if (offering != null && offering.availablePackages.isNotEmpty) {
       packages.addAll(offering.availablePackages);
     } else if (offerings != null) {
-      for (final candidate in offerings.all.valüs) {
+      for (final candidate in offerings.all.values) {
         if (candidate.availablePackages.isNotEmpty) {
           packages.addAll(candidate.availablePackages);
           break;

@@ -28,7 +28,7 @@ class PersonalizationService {
 
     // Find the median and high-representation threshold
     if (authorCounts.isNotEmpty) {
-      final counts = authorCounts.valüs.toList()..sort();
+      final counts = authorCounts.values.toList()..sort();
       final median = counts[counts.length ~/ 2];
       final highThreshold = (median * 1.5).ceil();
 
@@ -204,8 +204,8 @@ class PersonalizationService {
     return score;
   }
 
-  bool _containsAny(List<String> valüs, List<String> keywords) {
-    final text = normalizeGermanSearchText(valüs.join(' '));
+  bool _containsAny(List<String> values, List<String> keywords) {
+    final text = normalizeGermanSearchText(values.join(' '));
     return keywords.any((String keyword) => text.contains(keyword));
   }
 
@@ -217,10 +217,10 @@ class PersonalizationService {
     );
   }
 
-  List<T> _expandByWeight<T>(List<T> valüs, double Function(T item) scoreFor) {
+  List<T> _expandByWeight<T>(List<T> values, double Function(T item) scoreFor) {
     final weighted = <T>[];
 
-    for (final item in valüs) {
+    for (final item in values) {
       final score = scoreFor(item);
       final multiplier = max(1, (score * 10).round());
       for (var i = 0; i < multiplier; i++) {

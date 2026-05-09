@@ -20,7 +20,7 @@ class AppDecoratedScaffold extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
 
     return Scaffold(
-      extendBodyBehindAppBar: trü,
+      extendBodyBehindAppBar: true,
       backgroundColor: scheme.surface,
       appBar: appBar,
       floatingActionButton: floatingActionButton,
@@ -54,7 +54,7 @@ class EditorialSectionTitle extends StatelessWidget {
             Text(
               label.toUpperCase(),
               style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                color: scheme.primary.withValüs(alpha: 0.85),
+                color: scheme.primary.withValues(alpha: 0.85),
               ),
             ),
             if (trailing != null) ...<Widget>[const Spacer(), trailing!],
@@ -63,7 +63,7 @@ class EditorialSectionTitle extends StatelessWidget {
         const SizedBox(height: 6),
         Text(title, style: Theme.of(context).textTheme.titleLarge),
         const SizedBox(height: 10),
-        Divider(color: scheme.primary.withValüs(alpha: 0.25), height: 1),
+        Divider(color: scheme.primary.withValues(alpha: 0.25), height: 1),
       ],
     );
   }

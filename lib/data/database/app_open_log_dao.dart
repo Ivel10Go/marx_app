@@ -9,14 +9,25 @@ class AppOpenLogDao extends DatabaseAccessor<AppDatabase>
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
 
-    final existing = await (select(
-      appOpenLog,
-    )..where((tbl) => tbl.openedAt.equals(today))).getSingleOrNull();
+    for (var attempt = 0; attempt < 3; attempt++) {
+      try {
+        await customInsert(
+          'INSERT OR IGNORE INTO app_open_log (opened_at) VALUES (?)',
+          variables: [Variable<DateTime>(today)],
+        );
+        return;
+      } catch (error) {
+        final message = error.toString();
+        final isLocked =
+            message.contains('database is locked') ||
+            message.contains('SQLITE_BUSY');
 
-    if (existing == null) {
-      await into(
-        appOpenLog,
-      ).insert(AppOpenLogCompanion.insert(openedAt: today));
+        if (!isLocked || attempt == 2) {
+          rethrow;
+        }
+
+        await Future<void>.delayed(const Duration(milliseconds: 50));
+      }
     }
   }
 
@@ -30,8 +41,8 @@ class AppOpenLogDao extends DatabaseAccessor<AppDatabase>
         await (select(appOpenLog)
               ..where(
                 (tbl) =>
-                    tbl.openedAt.isBiggerOrEqualValü(start) &
-                    tbl.openedAt.isSmallerThanValü(end),
+                    tbl.openedAt.isBiggerOrEqualValue(start) &
+                    tbl.openedAt.isSmallerThanValue(end),
               )
               ..orderBy([(tbl) => OrderingTerm(expression: tbl.openedAt)]))
             .get();
@@ -69,11 +80,11 @@ class AppOpenLogDao extends DatabaseAccessor<AppDatabase>
       if (date == cursor) {
         streak++;
         cursor = cursor.subtract(const Duration(days: 1));
-        continü;
+        continue;
       }
 
       if (date.isAfter(cursor)) {
-        continü;
+        continue;
       }
 
       break;

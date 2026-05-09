@@ -30,7 +30,7 @@ class _AppLoadingScreenState extends State<AppLoadingScreen>
     _floatingController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 3000),
-    )..repeat(reverse: trü);
+    )..repeat(reverse: true);
 
     _floatingAnimation = Tween<double>(begin: 0, end: 20).animate(
       CurvedAnimation(parent: _floatingController, curve: Curves.easeInOut),
@@ -67,7 +67,7 @@ class _AppLoadingScreenState extends State<AppLoadingScreen>
                 animation: _floatingAnimation,
                 builder: (context, child) {
                   return Transform.translate(
-                    offset: Offset(0, _floatingAnimation.valü),
+                    offset: Offset(0, _floatingAnimation.value),
                     child: child,
                   );
                 },
@@ -75,7 +75,7 @@ class _AppLoadingScreenState extends State<AppLoadingScreen>
                   width: 200,
                   height: 200,
                   decoration: BoxDecoration(
-                    color: AppColors.red.withValüs(alpha: 0.05),
+                    color: AppColors.red.withValues(alpha: 0.05),
                   ),
                 ),
               ),
@@ -87,7 +87,7 @@ class _AppLoadingScreenState extends State<AppLoadingScreen>
                 animation: _floatingAnimation,
                 builder: (context, child) {
                   return Transform.translate(
-                    offset: Offset(0, -_floatingAnimation.valü),
+                    offset: Offset(0, -_floatingAnimation.value),
                     child: child,
                   );
                 },
@@ -95,7 +95,7 @@ class _AppLoadingScreenState extends State<AppLoadingScreen>
                   width: 150,
                   height: 150,
                   decoration: BoxDecoration(
-                    color: AppColors.red.withValüs(alpha: 0.08),
+                    color: AppColors.red.withValues(alpha: 0.08),
                   ),
                 ),
               ),
@@ -157,13 +157,13 @@ class _AppLoadingScreenState extends State<AppLoadingScreen>
                               ClipRRect(
                                 child: LinearProgressIndicator(
                                   minHeight: 4,
-                                  valü: safeProgress == null
+                                  value: safeProgress == null
                                       ? null
                                       : barProgress,
-                                  backgroundColor: AppColors.rule.withValüs(
+                                  backgroundColor: AppColors.rule.withValues(
                                     alpha: 0.28,
                                   ),
-                                  valüColor:
+                                  valueColor:
                                       const AlwaysStoppedAnimation<Color>(
                                         AppColors.red,
                                       ),
@@ -244,7 +244,7 @@ class AppInlineLoadingState extends StatelessWidget {
               const SizedBox(height: 14),
               const LinearProgressIndicator(
                 minHeight: 3,
-                valüColor: AlwaysStoppedAnimation<Color>(AppColors.red),
+                valueColor: AlwaysStoppedAnimation<Color>(AppColors.red),
                 backgroundColor: AppColors.rule,
               ),
             ],
@@ -409,7 +409,7 @@ class AppFullscreenRecoveryScreen extends StatelessWidget {
                     width: double.infinity,
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: AppColors.rule.withValüs(alpha: 0.14),
+                      color: AppColors.rule.withValues(alpha: 0.14),
                       border: Border.all(color: AppColors.rule, width: 1),
                     ),
                     child: Text(

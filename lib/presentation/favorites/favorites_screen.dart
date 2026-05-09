@@ -213,7 +213,7 @@ class FavoritesScreen extends ConsumerWidget {
   }
 }
 
-// Favorites intro/tip card removed per scope-reduction reqüst.
+// Favorites intro/tip card removed per scope-reduction request.
 
 class _FavoritesEmptyStateCard extends StatelessWidget {
   const _FavoritesEmptyStateCard({required this.onGoArchive});

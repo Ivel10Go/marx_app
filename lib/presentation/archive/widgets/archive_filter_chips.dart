@@ -33,7 +33,7 @@ class ArchiveFilterChips extends ConsumerWidget {
         border: Border.all(color: AppColors.ink, width: 1),
         boxShadow: <BoxShadow>[
           BoxShadow(
-            color: AppColors.ink.withValüs(alpha: 0.05),
+            color: AppColors.ink.withValues(alpha: 0.05),
             blurRadius: 12,
             offset: const Offset(0, 6),
           ),
@@ -88,7 +88,7 @@ class ArchiveFilterChips extends ConsumerWidget {
               if (hasSelection)
                 _MiniPill(
                   label: 'Aktiv',
-                  valü: [
+                  value: [
                     if (selectedTheme != null) selectedTheme,
                     if (selectedOrientation != null) selectedOrientation,
                   ].join(' · '),
@@ -103,21 +103,21 @@ class ArchiveFilterChips extends ConsumerWidget {
               final themeField = _DropdownField(
                 label: 'THEMA / INTERESSE',
                 hint: 'Alle Themen',
-                valü: selectedTheme,
+                value: selectedTheme,
                 options: themeOptions,
-                onChanged: (String? valü) {
-                  ref.read(archiveThemeFilterProvider.notifier).state = valü;
+                onChanged: (String? value) {
+                  ref.read(archiveThemeFilterProvider.notifier).state = value;
                 },
                 scheme: scheme,
               );
               final orientationField = _DropdownField(
                 label: 'POLITISCHE ORIENTIERUNG',
                 hint: 'Alle Orientierungen',
-                valü: selectedOrientation,
+                value: selectedOrientation,
                 options: orientationOptions,
-                onChanged: (String? valü) {
+                onChanged: (String? value) {
                   ref.read(archiveOrientationFilterProvider.notifier).state =
-                      valü;
+                      value;
                 },
                 scheme: scheme,
               );
@@ -178,7 +178,7 @@ class _DropdownField extends StatelessWidget {
   const _DropdownField({
     required this.label,
     required this.hint,
-    required this.valü,
+    required this.value,
     required this.options,
     required this.onChanged,
     required this.scheme,
@@ -186,14 +186,14 @@ class _DropdownField extends StatelessWidget {
 
   final String label;
   final String hint;
-  final String? valü;
+  final String? value;
   final List<String> options;
-  final ValüChanged<String?> onChanged;
+  final ValueChanged<String?> onChanged;
   final ColorScheme scheme;
 
   @override
   Widget build(BuildContext context) {
-    final hasValü = valü != null && valü!.trim().isNotEmpty;
+    final hasValue = value != null && value!.trim().isNotEmpty;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -209,27 +209,27 @@ class _DropdownField extends StatelessWidget {
         ),
         const SizedBox(height: 6),
         PopupMenuButton<String?>(
-          initialValü: valü,
+          initialValue: value,
           offset: const Offset(0, 10),
           color: AppColors.paper,
           elevation: 8,
-          shadowColor: AppColors.ink.withValüs(alpha: 0.14),
+          shadowColor: AppColors.ink.withValues(alpha: 0.14),
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.zero,
             side: BorderSide(color: AppColors.ink, width: 1),
           ),
           onSelected: onChanged,
           itemBuilder: (BuildContext context) {
-            return <PopupMenüntry<String?>>[
+            return <PopupMenuEntry<String?>>[
               PopupMenuItem<String?>(
-                valü: null,
-                child: _MenuRow(label: 'Alle', isSelected: !hasValü),
+                value: null,
+                child: _MenuRow(label: 'Alle', isSelected: !hasValue),
               ),
               const PopupMenuDivider(height: 1),
               ...options.map(
                 (String option) => PopupMenuItem<String?>(
-                  valü: option,
-                  child: _MenuRow(label: option, isSelected: option == valü),
+                  value: option,
+                  child: _MenuRow(label: option, isSelected: option == value),
                 ),
               ),
             ];
@@ -238,20 +238,20 @@ class _DropdownField extends StatelessWidget {
             height: 46,
             padding: const EdgeInsets.symmetric(horizontal: 12),
             decoration: BoxDecoration(
-              color: hasValü ? AppColors.ink : AppColors.paper,
+              color: hasValue ? AppColors.ink : AppColors.paper,
               border: Border.all(color: AppColors.ink, width: 1),
             ),
             child: Row(
               children: <Widget>[
                 Expanded(
                   child: Text(
-                    hasValü ? valü! : hint,
+                    hasValue ? value! : hint,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.ibmPlexSans(
                       fontSize: 11,
                       fontWeight: FontWeight.w600,
-                      color: hasValü ? AppColors.paper : AppColors.inkMuted,
+                      color: hasValue ? AppColors.paper : AppColors.inkMuted,
                     ),
                   ),
                 ),
@@ -259,7 +259,7 @@ class _DropdownField extends StatelessWidget {
                 Icon(
                   Icons.keyboard_arrow_down_rounded,
                   size: 20,
-                  color: hasValü ? AppColors.paper : AppColors.ink,
+                  color: hasValue ? AppColors.paper : AppColors.ink,
                 ),
               ],
             ),
@@ -332,10 +332,10 @@ class _ClearButton extends StatelessWidget {
 }
 
 class _MiniPill extends StatelessWidget {
-  const _MiniPill({required this.label, required this.valü});
+  const _MiniPill({required this.label, required this.value});
 
   final String label;
-  final String valü;
+  final String value;
 
   @override
   Widget build(BuildContext context) {
@@ -353,13 +353,13 @@ class _MiniPill extends StatelessWidget {
             style: GoogleFonts.ibmPlexSans(
               fontSize: 8,
               fontWeight: FontWeight.w700,
-              color: AppColors.paper.withValüs(alpha: 0.7),
+              color: AppColors.paper.withValues(alpha: 0.7),
               letterSpacing: 1.0,
             ),
           ),
           const SizedBox(height: 2),
           Text(
-            valü,
+            value,
             style: GoogleFonts.ibmPlexSans(
               fontSize: 9,
               fontWeight: FontWeight.w600,

@@ -31,8 +31,8 @@ class HistoryFactDao extends DatabaseAccessor<AppDatabase>
 
   Future<int> countHistoryFacts() async {
     final countExpression = historyFactEntries.id.count();
-    final qüry = selectOnly(historyFactEntries)..addColumns([countExpression]);
-    final row = await qüry.getSingle();
+    final query = selectOnly(historyFactEntries)..addColumns([countExpression]);
+    final row = await query.getSingle();
     return row.read(countExpression) ?? 0;
   }
 

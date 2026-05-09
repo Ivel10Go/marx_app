@@ -1,0 +1,846 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+import '../../core/theme/app_colors.dart';
+import '../../core/theme/app_theme.dart';
+import '../../core/providers/supabase_auth_provider.dart';
+import '../../core/services/supabase_sync_service.dart';
+import '../../data/models/user_profile.dart';
+import '../../domain/providers/repository_providers.dart';
+import '../../domain/providers/daily_content_provider.dart';
+import '../../domain/providers/user_profile_provider.dart';
+import '../../widgets/app_decorated_scaffold.dart';
+import '../../widgets/android_back_guard.dart';
+import '../../widgets/app_navigation_bar.dart';
+import '../../widgets/political_leaning_parliament_picker.dart';
+
+class AccountScreen extends ConsumerWidget {
+  const AccountScreen({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final scheme = Theme.of(context).colorScheme;
+    final authState = ref.watch(authControllerProvider);
+    final profile = ref.watch(userProfileProvider);
+    final isAuth = authState.whenData((u) => u != null).value ?? false;
+    final email = authState.whenData((u) => u?.email).value;
+
+    final interests = availableInterests
+        .where(
+          (InterestOption option) =>
+              profile.historicalInterests.contains(option.id),
+        )
+        .map((InterestOption option) => option.label)
+        .toList();
+    final interestsSummary = _formatInterestsSummary(interests);
+
+    return AndroidBackGuard(
+      child: AppDecoratedScaffold(
+        appBar: null,
+        bottomNavigationBar: const AppNavigationBar(selectedIndex: -1),
+        child: CustomScrollView(
+          slivers: <Widget>[
+            // Header
+            SliverAppBar(
+              backgroundColor: scheme.surface,
+              elevation: 0,
+              pinned: true,
+              leadingWidth: 40,
+              leading: Padding(
+                padding: const EdgeInsets.only(left: 8),
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: () => context.pop(),
+                    child: Icon(Icons.arrow_back, color: scheme.onSurface),
+                  ),
+                ),
+              ),
+              flexibleSpace: FlexibleSpaceBar(
+                titlePadding: const EdgeInsets.only(left: 56, bottom: 16),
+                title: Text(
+                  'ACCOUNT',
+                  style: GoogleFonts.playfairDisplay(
+                    fontSize: 22,
+                    fontWeight: FontWeight.w700,
+                    color: scheme.onSurface,
+                  ),
+                ),
+              ),
+            ),
+            // Content
+            SliverPadding(
+              padding: EdgeInsets.fromLTRB(
+                AppTheme.spacingLarge,
+                AppTheme.spacingLarge,
+                AppTheme.spacingLarge,
+                AppTheme.spacingXl,
+              ),
+              sliver: SliverList(
+                delegate: SliverChildListDelegate.fixed([
+                  // Authentication Card
+                  _AuthCard(
+                    isAuth: isAuth,
+                    email: email,
+                    context: context,
+                    ref: ref,
+                  ),
+                  SizedBox(height: AppTheme.spacingXl),
+                  // Personalization Card
+                  _PersonalizationCard(
+                    context: context,
+                    ref: ref,
+                    profile: profile,
+                    interestsSummary: interestsSummary,
+                  ),
+                  if (kDebugMode) ...[
+                    SizedBox(height: AppTheme.spacingXl),
+                    _DebugCard(context: context, ref: ref),
+                  ],
+                ]),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _AuthCard extends StatelessWidget {
+  const _AuthCard({
+    required this.isAuth,
+    required this.email,
+    required this.context,
+    required this.ref,
+  });
+
+  final bool isAuth;
+  final String? email;
+  final BuildContext context;
+  final WidgetRef ref;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
+    return Container(
+      decoration: BoxDecoration(
+        color: isAuth ? AppColors.paperDark : scheme.surface,
+        border: Border.all(color: scheme.outline, width: 1),
+        borderRadius: BorderRadius.circular(2),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: isAuth ? AppColors.red : scheme.outline,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    isAuth ? Icons.verified_user : Icons.person_outline,
+                    color: isAuth ? Colors.white : scheme.onSurface,
+                    size: 20,
+                  ),
+                ),
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        'AUTHENTIFIZIERUNG',
+                        style: GoogleFonts.ibmPlexSans(
+                          fontSize: 9,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.red,
+                          letterSpacing: 1.4,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        isAuth ? 'Angemeldet' : 'Nicht angemeldet',
+                        style: GoogleFonts.ibmPlexSans(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: scheme.onSurface,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Container(height: 1, color: scheme.outline),
+            const SizedBox(height: 16),
+            if (isAuth) ...[
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: scheme.surface,
+                  border: Border.all(color: scheme.outline),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      'E-Mail',
+                      style: GoogleFonts.ibmPlexSans(
+                        fontSize: 9,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.inkLight,
+                        letterSpacing: 0.8,
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    SelectableText(
+                      email ?? 'Unbekannt',
+                      style: GoogleFonts.ibmPlexSans(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w600,
+                        color: scheme.onSurface,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 12),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton.icon(
+                  onPressed: () async {
+                    final confirmed = await showDialog<bool>(
+                      context: context,
+                      builder: (ctx) => AlertDialog(
+                        title: const Text('Abmelden?'),
+                        content: const Text(
+                          'Deine lokalen Favoriten werden beibehalten.',
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(ctx, false),
+                            child: const Text('Abbrechen'),
+                          ),
+                          TextButton(
+                            onPressed: () => Navigator.pop(ctx, true),
+                            child: const Text('Abmelden'),
+                          ),
+                        ],
+                      ),
+                    );
+                    if (confirmed == true) {
+                      await ref.read(authControllerProvider.notifier).signOut();
+                      if (context.mounted) {
+                        context.pop();
+                      }
+                    }
+                  },
+                  icon: const Icon(Icons.logout),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.red,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                  ),
+                  label: const Text('ABMELDEN'),
+                ),
+              ),
+            ] else ...[
+              Text(
+                'Erstelle einen Account um deine Favoriten zu synchronisieren und auf allen Geräten verfügbar zu haben.',
+                style: GoogleFonts.ibmPlexSans(
+                  fontSize: 11,
+                  color: scheme.onSurfaceVariant,
+                  height: 1.6,
+                ),
+              ),
+              const SizedBox(height: 14),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton.icon(
+                  onPressed: () => _showAuthDialog(context, ref),
+                  icon: const Icon(Icons.login),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: scheme.onSurface,
+                    foregroundColor: scheme.surface,
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                  ),
+                  label: const Text('ANMELDEN / REGISTRIEREN'),
+                ),
+              ),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _PersonalizationCard extends StatelessWidget {
+  const _PersonalizationCard({
+    required this.context,
+    required this.ref,
+    required this.profile,
+    required this.interestsSummary,
+  });
+
+  final BuildContext context;
+  final WidgetRef ref;
+  final UserProfile profile;
+  final String interestsSummary;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
+    return Container(
+      decoration: BoxDecoration(
+        color: scheme.surface,
+        border: Border.all(color: scheme.outline, width: 1),
+        borderRadius: BorderRadius.circular(2),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: AppColors.paperDark,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(Icons.tune, color: AppColors.red, size: 20),
+                ),
+                const SizedBox(width: 14),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      'PERSONALISIERUNG',
+                      style: GoogleFonts.ibmPlexSans(
+                        fontSize: 9,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.red,
+                        letterSpacing: 1.4,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      'Passe deinen Tagesinhalt an',
+                      style: GoogleFonts.ibmPlexSans(
+                        fontSize: 11,
+                        color: scheme.onSurfaceVariant,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Container(height: 1, color: scheme.outline),
+            const SizedBox(height: 16),
+            _PersonalizationRow(
+              icon: Icons.interests_outlined,
+              label: 'Interessen',
+              value: interestsSummary,
+              onTap: () => _showInterestsSheet(context, ref, profile),
+            ),
+            const SizedBox(height: 14),
+            _PersonalizationRow(
+              icon: Icons.public_outlined,
+              label: 'Politische Haltung',
+              value: _leaningLabel(profile.politicalLeaning),
+              onTap: () => _showLeaningSheet(context, ref, profile),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _PersonalizationRow extends StatelessWidget {
+  const _PersonalizationRow({
+    required this.icon,
+    required this.label,
+    required this.value,
+    required this.onTap,
+  });
+
+  final IconData icon;
+  final String label;
+  final String value;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: AppColors.paperDark,
+          border: Border.all(color: scheme.outline),
+        ),
+        child: Row(
+          children: <Widget>[
+            Icon(icon, size: 18, color: AppColors.red),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    label,
+                    style: GoogleFonts.ibmPlexSans(
+                      fontSize: 10,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.inkLight,
+                    ),
+                  ),
+                  const SizedBox(height: 3),
+                  Text(
+                    value,
+                    style: GoogleFonts.ibmPlexSans(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: scheme.onSurface,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 12),
+            Icon(Icons.chevron_right, size: 18, color: scheme.outline),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _DebugCard extends StatelessWidget {
+  const _DebugCard({required this.context, required this.ref});
+
+  final BuildContext context;
+  final WidgetRef ref;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.grey[900],
+        border: Border.all(color: Colors.grey[700]!, width: 1),
+        borderRadius: BorderRadius.circular(2),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              'DEBUG TOOLS',
+              style: GoogleFonts.ibmPlexSans(
+                fontSize: 9,
+                fontWeight: FontWeight.w700,
+                color: Colors.amber,
+                letterSpacing: 1.4,
+              ),
+            ),
+            const SizedBox(height: 14),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () async {
+                  final userId = ref.read(currentUserIdProvider);
+                  if (userId == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Nicht angemeldet')),
+                    );
+                    return;
+                  }
+
+                  final quoteRepo = ref.read(quoteRepositoryProvider);
+                  final localFavs = await quoteRepo.watchFavorites().first;
+                  final localIds = localFavs.map((q) => q.id).toList();
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Sync gestartet...')),
+                  );
+
+                  try {
+                    await SupabaseSyncService().syncLocalFavoritesToCloud(
+                      userId: userId,
+                      localFavoriteIds: localIds,
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Sync erfolgreich')),
+                    );
+                  } catch (e) {
+                    ScaffoldMessenger.of(
+                      context,
+                    ).showSnackBar(SnackBar(content: Text('Fehler: $e')));
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.amber,
+                  foregroundColor: Colors.black,
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                ),
+                child: const Text('Sync Favoriten'),
+              ),
+            ),
+            const SizedBox(height: 10),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () async {
+                  await ref.read(userProfileProvider.notifier).resetProfile();
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Profil zurückgesetzt')),
+                    );
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red[700],
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                ),
+                child: const Text('Profil zurücksetzen'),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+String _formatInterestsSummary(List<String> interests) {
+  if (interests.isEmpty) {
+    return 'Keine ausgewählt';
+  }
+  if (interests.length == 1) {
+    return interests[0];
+  }
+  return '${interests.length} Interessen';
+}
+
+String _leaningLabel(PoliticalLeaning leaning) {
+  switch (leaning) {
+    case PoliticalLeaning.left:
+      return 'Links';
+    case PoliticalLeaning.centerLeft:
+      return 'Zentrum-Links';
+    case PoliticalLeaning.neutral:
+      return 'Neutral';
+    case PoliticalLeaning.liberal:
+      return 'Liberal';
+    case PoliticalLeaning.conservative:
+      return 'Konservativ';
+  }
+}
+
+Future<void> _showAuthDialog(BuildContext context, WidgetRef ref) async {
+  final emailCtrl = TextEditingController();
+  final passCtrl = TextEditingController();
+  var isLogin = true;
+
+  await showDialog<void>(
+    context: context,
+    builder: (dialogContext) {
+      return AlertDialog(
+        title: const Text('Anmelden / Registrieren'),
+        content: StatefulBuilder(
+          builder: (ctx, setState) {
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                TextField(
+                  controller: emailCtrl,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: const InputDecoration(labelText: 'E-Mail'),
+                ),
+                const SizedBox(height: 12),
+                TextField(
+                  controller: passCtrl,
+                  obscureText: true,
+                  decoration: const InputDecoration(labelText: 'Passwort'),
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    TextButton(
+                      onPressed: () => setState(() => isLogin = !isLogin),
+                      child: Text(isLogin ? 'Registrieren' : 'Anmelden'),
+                    ),
+                  ],
+                ),
+              ],
+            );
+          },
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext),
+            child: const Text('Abbrechen'),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              try {
+                if (isLogin) {
+                  await ref
+                      .read(authControllerProvider.notifier)
+                      .signIn(
+                        email: emailCtrl.text.trim(),
+                        password: passCtrl.text.trim(),
+                      );
+                } else {
+                  await ref
+                      .read(authControllerProvider.notifier)
+                      .signUp(
+                        email: emailCtrl.text.trim(),
+                        password: passCtrl.text.trim(),
+                      );
+                }
+                if (context.mounted) {
+                  Navigator.pop(dialogContext);
+                }
+              } catch (e) {
+                if (context.mounted) {
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text('Fehler: $e')));
+                }
+              }
+            },
+            child: Text(isLogin ? 'Anmelden' : 'Registrieren'),
+          ),
+        ],
+      );
+    },
+  );
+
+  emailCtrl.dispose();
+  passCtrl.dispose();
+}
+
+Future<void> _showInterestsSheet(
+  BuildContext context,
+  WidgetRef ref,
+  UserProfile profile,
+) async {
+  final scheme = Theme.of(context).colorScheme;
+  final selected = profile.historicalInterests.toSet();
+  var searchQuery = '';
+
+  await showModalBottomSheet<void>(
+    context: context,
+    isScrollControlled: true,
+    backgroundColor: scheme.surface,
+    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+    builder: (BuildContext sheetContext) {
+      return StatefulBuilder(
+        builder: (sheetContext, setSheetState) {
+          return Padding(
+            padding: const EdgeInsets.fromLTRB(20, 20, 20, 24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  'INTERESSEN BEARBEITEN',
+                  style: GoogleFonts.ibmPlexSans(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 1.2,
+                    color: scheme.primary,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                TextField(
+                  onChanged: (value) {
+                    setSheetState(() {
+                      searchQuery = value.trim();
+                    });
+                  },
+                  style: GoogleFonts.ibmPlexSans(fontSize: 12),
+                  decoration: InputDecoration(
+                    hintText: 'Interesse suchen …',
+                    prefixIcon: const Icon(Icons.search, size: 18),
+                    border: const OutlineInputBorder(
+                      borderRadius: BorderRadius.zero,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                SizedBox(
+                  height: 300,
+                  child: Builder(
+                    builder: (context) {
+                      final query = searchQuery.toLowerCase();
+                      final visibleInterests = availableInterests
+                          .where(
+                            (option) =>
+                                query.isEmpty ||
+                                option.label.toLowerCase().contains(query),
+                          )
+                          .toList();
+
+                      if (visibleInterests.isEmpty) {
+                        return Center(
+                          child: Text(
+                            'Keine Treffer.',
+                            style: GoogleFonts.ibmPlexSans(
+                              fontSize: 11,
+                              color: scheme.onSurfaceVariant,
+                            ),
+                          ),
+                        );
+                      }
+
+                      return ListView.separated(
+                        itemCount: visibleInterests.length,
+                        separatorBuilder: (_, __) => const SizedBox(height: 8),
+                        itemBuilder: (context, index) {
+                          final option = visibleInterests[index];
+                          final isActive = selected.contains(option.id);
+                          return GestureDetector(
+                            onTap: () {
+                              setSheetState(() {
+                                if (isActive) {
+                                  selected.remove(option.id);
+                                } else {
+                                  selected.add(option.id);
+                                }
+                              });
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 10,
+                              ),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: isActive
+                                      ? AppColors.red
+                                      : AppColors.rule,
+                                  width: 1,
+                                ),
+                              ),
+                              child: Row(
+                                children: <Widget>[
+                                  Text(option.icon),
+                                  const SizedBox(width: 10),
+                                  Expanded(
+                                    child: Text(
+                                      option.label,
+                                      style: GoogleFonts.ibmPlexSans(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                        color: scheme.onSurface,
+                                      ),
+                                    ),
+                                  ),
+                                  Icon(
+                                    isActive
+                                        ? Icons.check_box_rounded
+                                        : Icons.circle_outlined,
+                                    size: 18,
+                                    color: isActive
+                                        ? AppColors.red
+                                        : AppColors.inkMuted,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ),
+                const SizedBox(height: 12),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: selected.isEmpty
+                        ? null
+                        : () async {
+                            await ref
+                                .read(userProfileProvider.notifier)
+                                .updateInterests(selected.toList());
+                            ref.invalidate(dailyContentProvider);
+                            if (sheetContext.mounted) {
+                              Navigator.of(sheetContext).pop();
+                            }
+                          },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: scheme.onSurface,
+                      foregroundColor: scheme.surface,
+                    ),
+                    child: const Text('SPEICHERN'),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      );
+    },
+  );
+}
+
+Future<void> _showLeaningSheet(
+  BuildContext context,
+  WidgetRef ref,
+  UserProfile profile,
+) async {
+  await showModalBottomSheet<void>(
+    context: context,
+    isScrollControlled: true,
+    backgroundColor: Theme.of(context).colorScheme.surface,
+    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+    builder: (BuildContext sheetContext) {
+      return Padding(
+        padding: EdgeInsets.fromLTRB(
+          20,
+          20,
+          20,
+          MediaQuery.of(sheetContext).viewInsets.bottom + 20,
+        ),
+        child: PoliticalLeaningParliamentPicker(
+          selected: profile.politicalLeaning,
+          onSelect: (PoliticalLeaning value) async {
+            await ref
+                .read(userProfileProvider.notifier)
+                .updatePoliticalLeaning(value);
+            if (sheetContext.mounted) {
+              Navigator.of(sheetContext).pop();
+            }
+          },
+        ),
+      );
+    },
+  );
+}

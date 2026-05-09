@@ -54,9 +54,9 @@ class ModeSelector extends ConsumerWidget {
   ) {
     final options = <Widget>[];
 
-    for (int i = 0; i < AppMode.valüs.length; i++) {
-      final appMode = AppMode.valüs[i];
-      final isLast = i == AppMode.valüs.length - 1;
+    for (int i = 0; i < AppMode.values.length; i++) {
+      final appMode = AppMode.values[i];
+      final isLast = i == AppMode.values.length - 1;
 
       options.add(
         _ModeOptionTile(

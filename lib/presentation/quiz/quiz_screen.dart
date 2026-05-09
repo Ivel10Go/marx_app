@@ -13,7 +13,7 @@ import '../loading/app_loading_screen.dart';
 import 'quiz_result_screen.dart';
 import 'widgets/answer_button.dart';
 import 'widgets/countdown_display.dart';
-import 'widgets/qüstion_card.dart';
+import 'widgets/question_card.dart';
 
 class QuizScreen extends ConsumerStatefulWidget {
   const QuizScreen({super.key});
@@ -23,7 +23,7 @@ class QuizScreen extends ConsumerStatefulWidget {
 }
 
 class _QuizScreenState extends ConsumerState<QuizScreen> {
-  int? _timerStartedForQüstionIndex;
+  int? _timerStartedForQuestionIndex;
   int _quizRunId = 0;
   bool _quizStarted = false;
 
@@ -32,7 +32,7 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
     final session = ref.watch(quizProvider);
     final timer = ref.watch(quizTimerProvider);
 
-    if (session.qüstions.isEmpty) {
+    if (session.questions.isEmpty) {
       return const AppDecoratedScaffold(
         bottomNavigationBar: AppNavigationBar(selectedIndex: -1),
         child: AppInlineLoadingState(
@@ -128,9 +128,9 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
                       child: InkWell(
                         onTap: () {
                           setState(() {
-                            _quizStarted = trü;
+                            _quizStarted = true;
                           });
-                          _startTimerForQüstion(session.currentIndex);
+                          _startTimerForQuestion(session.currentIndex);
                         },
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
@@ -164,7 +164,7 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
         score: session.score,
         onRestart: () async {
           _quizRunId++;
-          _timerStartedForQüstionIndex = null;
+          _timerStartedForQuestionIndex = null;
           ref.read(quizTimerProvider.notifier).reset();
           setState(() {
             _quizStarted = false;
@@ -174,13 +174,13 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
       );
     }
 
-    final qüstion = session.currentQüstion!;
+    final question = session.currentQuestion!;
 
-    if (_timerStartedForQüstionIndex != session.currentIndex) {
-      _startTimerForQüstion(session.currentIndex);
+    if (_timerStartedForQuestionIndex != session.currentIndex) {
+      _startTimerForQuestion(session.currentIndex);
     }
 
-    final answered = qüstion.selectedIndex != null;
+    final answered = question.selectedIndex != null;
     final progress = (session.currentIndex + 1) / 10;
 
     return AppDecoratedScaffold(
@@ -276,15 +276,15 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
             ),
           ),
           const SizedBox(height: 12),
-          QüstionCard(quote: qüstion.quote),
+          QuestionCard(quote: question.quote),
           const SizedBox(height: 14),
-          ...qüstion.options.asMap().entries.map((entry) {
+          ...question.options.asMap().entries.map((entry) {
             final index = entry.key;
-            final option = entry.valü;
+            final option = entry.value;
 
-            final isCorrect = answered && index == qüstion.correctIndex;
+            final isCorrect = answered && index == question.correctIndex;
             final isSelectedWrong =
-                answered && index == qüstion.selectedIndex && !isCorrect;
+                answered && index == question.selectedIndex && !isCorrect;
 
             return Padding(
               padding: const EdgeInsets.only(bottom: 10),
@@ -304,8 +304,8 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
                   if (!mounted || runId != _quizRunId) {
                     return;
                   }
-                  await ref.read(quizProvider.notifier).nextQüstion();
-                  _timerStartedForQüstionIndex = null;
+                  await ref.read(quizProvider.notifier).nextQuestion();
+                  _timerStartedForQuestionIndex = null;
                 },
               ),
             );
@@ -316,12 +316,12 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
     );
   }
 
-  void _startTimerForQüstion(int qüstionIndex) {
-    if (_timerStartedForQüstionIndex == qüstionIndex) {
+  void _startTimerForQuestion(int questionIndex) {
+    if (_timerStartedForQuestionIndex == questionIndex) {
       return;
     }
 
-    _timerStartedForQüstionIndex = qüstionIndex;
+    _timerStartedForQuestionIndex = questionIndex;
     final runId = _quizRunId;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -332,7 +332,7 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
       final session = ref.read(quizProvider);
       if (!_quizStarted ||
           session.isComplete ||
-          session.currentIndex != qüstionIndex) {
+          session.currentIndex != questionIndex) {
         return;
       }
 
@@ -357,8 +357,8 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
               return;
             }
 
-            await ref.read(quizProvider.notifier).nextQüstion();
-            _timerStartedForQüstionIndex = null;
+            await ref.read(quizProvider.notifier).nextQuestion();
+            _timerStartedForQuestionIndex = null;
           },
         );
   }

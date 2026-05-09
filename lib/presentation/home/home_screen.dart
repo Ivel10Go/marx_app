@@ -27,6 +27,8 @@ import '../home/dialogs/mode_dialog.dart';
 import '../home/widgets/fact_block.dart';
 import '../home/widgets/streak_calendar.dart';
 import '../loading/app_loading_screen.dart';
+import '../shared/icon_circle.dart';
+import '../shared/app_card.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -40,8 +42,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
   late final AnimationController _controller;
   late final Animation<Offset> _slide;
   late final Animation<double> _fade;
-  ProviderSubscription<AsyncValü<DailyContent>>? _dailyContentSubscription;
-  ProviderSubscription<AsyncValü<int>>? _streakSubscription;
+  ProviderSubscription<AsyncValue<DailyContent>>? _dailyContentSubscription;
+  ProviderSubscription<AsyncValue<int>>? _streakSubscription;
   ProviderSubscription<AppMode>? _appModeSubscription;
   bool _calendarExpanded = false;
   String? _lastWidgetSyncSignature;
@@ -63,11 +65,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
 
     _fade = CurvedAnimation(parent: _controller, curve: Curves.easeOut);
 
-    _dailyContentSubscription = ref.listenManual<AsyncValü<DailyContent>>(
+    _dailyContentSubscription = ref.listenManual<AsyncValue<DailyContent>>(
       dailyContentProvider,
       (_, __) => _syncHomeWidgetIfReady(),
     );
-    _streakSubscription = ref.listenManual<AsyncValü<int>>(
+    _streakSubscription = ref.listenManual<AsyncValue<int>>(
       currentStreakProvider,
       (_, __) => _syncHomeWidgetIfReady(),
     );
@@ -135,12 +137,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
 
   void _syncHomeWidgetIfReady() {
     if (_widgetSyncInFlight) {
-      _widgetSyncNeedsRetry = trü;
+      _widgetSyncNeedsRetry = true;
       return;
     }
 
-    final dailyContent = ref.read(dailyContentProvider).valüOrNull;
-    final streak = ref.read(currentStreakProvider).valüOrNull;
+    final dailyContent = ref.read(dailyContentProvider).valueOrNull;
+    final streak = ref.read(currentStreakProvider).valueOrNull;
     if (dailyContent == null || streak == null) {
       return;
     }
@@ -153,7 +155,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
       return;
     }
 
-    _widgetSyncInFlight = trü;
+    _widgetSyncInFlight = true;
     unawaited(
       _performWidgetSync(
         content: dailyContent,
@@ -193,12 +195,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
     final dailyContent = ref.watch(dailyContentProvider);
     final isPro = ref.watch(isProProvider);
     final premiumQuotesAsync = isPro
         ? ref.watch(premiumDailyQuotesProvider)
-        : const AsyncValü<List<Quote>>.data(<Quote>[]);
+        : const AsyncValue<List<Quote>>.data(<Quote>[]);
     final streakAsync = ref.watch(currentStreakProvider);
     final appMode = ref.watch(appModeNotifierProvider);
     final isAdmin = ref.watch(adminAccessProvider);
@@ -215,8 +216,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
               parent: BouncingScrollPhysics(),
             ),
             children: <Widget>[
-              Container(
-                color: scheme.surface,
+              AppCard(
                 padding: EdgeInsets.fromLTRB(
                   AppTheme.spacingLarge,
                   AppTheme.spacingBase,
@@ -432,7 +432,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
   }
 }
 
-// Home hero/tip card removed per scope-reduction reqüst.
+// Home hero/tip card removed per scope-reduction request.
 
 class _ThinkerQuoteCard extends StatelessWidget {
   const _ThinkerQuoteCard({required this.quote});
@@ -441,75 +441,65 @@ class _ThinkerQuoteCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        color: AppColors.paper,
-        border: Border(
-          left: BorderSide(color: AppColors.ink, width: 1),
-          right: BorderSide(color: AppColors.ink, width: 1),
-          bottom: BorderSide(color: AppColors.ink, width: 1),
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Row(
-              children: <Widget>[
-                Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: AppColors.paperDark,
-                    border: Border.all(color: AppColors.rule, width: 1),
-                    shape: BoxShape.circle,
-                  ),
-                  child: Icon(
-                    Icons.person_outline,
-                    color: AppColors.red,
-                    size: 20,
-                  ),
+    return AppCard(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: AppColors.rule, width: 1),
                 ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        quote.author.toUpperCase(),
-                        style: GoogleFonts.ibmPlexSans(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.ink,
-                          letterSpacing: 1.0,
-                        ),
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        '${quote.source} · ${quote.year}',
-                        style: GoogleFonts.ibmPlexSans(
-                          fontSize: 10,
-                          color: AppColors.inkLight,
-                        ),
-                      ),
-                    ],
-                  ),
+                child: IconCircle(
+                  icon: Icons.person_outline,
+                  background: AppColors.paperDark,
+                  iconColor: AppColors.red,
+                  size: 40,
                 ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            AdaptiveQuoteText(
-              text: quote.textDe,
-              minFontSize: 22,
-              maxFontSize: 30,
-              maxLines: 7,
-              style: Theme.of(context).textTheme.displayMedium,
-            ),
-            const SizedBox(height: 12),
-            Container(width: 28, height: 2, color: AppColors.red),
-          ],
-        ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      quote.author.toUpperCase(),
+                      style: GoogleFonts.ibmPlexSans(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.ink,
+                        letterSpacing: 1.0,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      '${quote.source} · ${quote.year}',
+                      style: GoogleFonts.ibmPlexSans(
+                        fontSize: 10,
+                        color: AppColors.inkLight,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          AdaptiveQuoteText(
+            text: quote.textDe,
+            minFontSize: 22,
+            maxFontSize: 30,
+            maxLines: 7,
+            style: Theme.of(context).textTheme.displayMedium,
+          ),
+          const SizedBox(height: 12),
+          Container(width: 28, height: 2, color: AppColors.red),
+        ],
       ),
     );
   }
@@ -519,7 +509,7 @@ class _MainQuoteScroller extends StatefulWidget {
   const _MainQuoteScroller({required this.quotes, required this.onQuoteTap});
 
   final List<Quote> quotes;
-  final ValüChanged<Quote> onQuoteTap;
+  final ValueChanged<Quote> onQuoteTap;
 
   @override
   State<_MainQuoteScroller> createState() => _MainQuoteScrollerState();
@@ -528,7 +518,7 @@ class _MainQuoteScroller extends StatefulWidget {
 class _MainQuoteScrollerState extends State<_MainQuoteScroller> {
   late final PageController _pageController;
   int _currentPage = 0;
-  bool _showSwipeHint = trü;
+  bool _showSwipeHint = true;
 
   @override
   void initState() {
@@ -555,7 +545,7 @@ class _MainQuoteScrollerState extends State<_MainQuoteScroller> {
 
   @override
   Widget build(BuildContext context) {
-    final media = MediaQüry.sizeOf(context);
+    final media = MediaQuery.sizeOf(context);
     final pageHeight = (media.height * 0.74).clamp(440.0, 620.0);
 
     return Column(
@@ -571,9 +561,9 @@ class _MainQuoteScrollerState extends State<_MainQuoteScroller> {
                 tween: Tween<double>(begin: 0, end: 1),
                 duration: const Duration(milliseconds: 1200),
                 curve: Curves.easeOutCubic,
-                builder: (BuildContext context, double valü, Widget? child) {
+                builder: (BuildContext context, double value, Widget? child) {
                   return Transform.translate(
-                    offset: Offset(valü * 8, 0),
+                    offset: Offset(value * 8, 0),
                     child: child,
                   );
                 },
@@ -734,12 +724,19 @@ class _HeaderIconAction extends StatelessWidget {
         child: InkWell(
           onTap: onTap,
           child: Container(
-            width: 40,
-            height: 40,
+            width: 44,
+            height: 44,
             decoration: BoxDecoration(
               border: Border.all(color: scheme.outline, width: 1),
             ),
-            child: Icon(icon, color: scheme.onSurface, size: 20),
+            child: Center(
+              child: IconCircle(
+                icon: icon,
+                background: Colors.transparent,
+                iconColor: scheme.onSurface,
+                size: 36,
+              ),
+            ),
           ),
         ),
       ),
@@ -798,7 +795,7 @@ extension on _HomeScreenState {
   Future<void> _showQuoteInsightSheet(BuildContext context, Quote quote) async {
     await showModalBottomSheet<void>(
       context: context,
-      isScrollControlled: trü,
+      isScrollControlled: true,
       backgroundColor: AppColors.paper,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
       builder: (BuildContext sheetContext) {
@@ -943,6 +940,6 @@ String _mastheadSubtitle() {
     'November',
     'Dezember',
   ];
-  final issüNumber = now.difference(DateTime(2000, 1, 1)).inDays;
-  return '${now.day}. ${monthNames[now.month - 1]} ${now.year} · Ausgabe $issüNumber';
+  final issueNumber = now.difference(DateTime(2000, 1, 1)).inDays;
+  return '${now.day}. ${monthNames[now.month - 1]} ${now.year} · Ausgabe $issueNumber';
 }

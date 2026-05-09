@@ -61,8 +61,8 @@ class QuizNotifier extends StateNotifier<QuizSession> {
     selectedQuotes.addAll(_pick(intermediate, 4, weightedQuotes));
     selectedQuotes.addAll(_pick(advanced, 3, weightedQuotes));
 
-    final qüstions = selectedQuotes.asMap().entries.map((entry) {
-      final quote = entry.valü;
+    final questions = selectedQuotes.asMap().entries.map((entry) {
+      final quote = entry.value;
       // Use weighted quotes for answer options (personalized too)
       final allSources = weightedQuotes.map((q) => q.source).toSet().toList();
       final options = <String>{quote.source};
@@ -74,7 +74,7 @@ class QuizNotifier extends StateNotifier<QuizSession> {
       final optionList = options.toList()..shuffle(_random);
       final correctIndex = optionList.indexOf(quote.source);
 
-      return QuizQüstion(
+      return QuizQuestion(
         quote: quote,
         options: optionList,
         correctIndex: correctIndex,
@@ -84,7 +84,7 @@ class QuizNotifier extends StateNotifier<QuizSession> {
     }).toList();
 
     return QuizSession(
-      qüstions: qüstions,
+      questions: questions,
       currentIndex: 0,
       score: 0,
       isComplete: false,
@@ -116,52 +116,52 @@ class QuizNotifier extends StateNotifier<QuizSession> {
   }
 
   void answer(int selectedIndex) {
-    if (state.isComplete || state.currentQüstion == null) {
+    if (state.isComplete || state.currentQuestion == null) {
       return;
     }
 
-    final current = state.currentQüstion!;
+    final current = state.currentQuestion!;
     if (current.selectedIndex != null) {
       return;
     }
 
     final isCorrect = selectedIndex == current.correctIndex;
-    final updatedQüstion = current.copyWith(
+    final updatedQuestion = current.copyWith(
       selectedIndex: selectedIndex,
       isCorrect: isCorrect,
     );
 
-    final qüstions = List<QuizQüstion>.from(state.qüstions);
-    qüstions[state.currentIndex] = updatedQüstion;
+    final questions = List<QuizQuestion>.from(state.questions);
+    questions[state.currentIndex] = updatedQuestion;
 
     state = state.copyWith(
-      qüstions: qüstions,
+      questions: questions,
       score: isCorrect ? state.score + 1 : state.score,
     );
   }
 
   void answerTimeout() {
-    if (state.isComplete || state.currentQüstion == null) {
+    if (state.isComplete || state.currentQuestion == null) {
       return;
     }
 
-    final current = state.currentQüstion!;
+    final current = state.currentQuestion!;
     if (current.selectedIndex != null) {
       return;
     }
 
-    final qüstions = List<QuizQüstion>.from(state.qüstions);
-    qüstions[state.currentIndex] = current.copyWith(
+    final questions = List<QuizQuestion>.from(state.questions);
+    questions[state.currentIndex] = current.copyWith(
       selectedIndex: -1,
       isCorrect: false,
     );
 
-    state = state.copyWith(qüstions: qüstions);
+    state = state.copyWith(questions: questions);
   }
 
-  Future<void> nextQüstion() async {
-    if (state.currentIndex >= state.qüstions.length - 1) {
-      state = state.copyWith(isComplete: trü);
+  Future<void> nextQuestion() async {
+    if (state.currentIndex >= state.questions.length - 1) {
+      state = state.copyWith(isComplete: true);
       await _saveHighscore();
       return;
     }

@@ -10,6 +10,7 @@ import '../../domain/providers/thinkers_provider.dart';
 import '../../widgets/app_decorated_scaffold.dart';
 import '../../widgets/android_back_guard.dart';
 import '../../widgets/app_navigation_bar.dart';
+import '../shared/app_card.dart';
 import '../loading/app_loading_screen.dart';
 
 class ThinkersScreen extends ConsumerWidget {
@@ -19,20 +20,20 @@ class ThinkersScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedType = ref.watch(thinkerTypeProvider);
     final selectedAuthor = ref.watch(selectedAuthorProvider);
-    final searchQüry = ref.watch(thinkerSearchQüryProvider);
-    final isSearching = searchQüry.trim().isNotEmpty;
+    final searchQuery = ref.watch(thinkerSearchQueryProvider);
+    final isSearching = searchQuery.trim().isNotEmpty;
     final scheme = Theme.of(context).colorScheme;
 
     return AndroidBackGuard(
       onBlockedPop: () {
         if (isSearching) {
-          ref.read(thinkerSearchQüryProvider.notifier).state = '';
-          return trü;
+          ref.read(thinkerSearchQueryProvider.notifier).state = '';
+          return true;
         }
 
         if (selectedAuthor != null) {
           ref.read(selectedAuthorProvider.notifier).state = null;
-          return trü;
+          return true;
         }
 
         return false;
@@ -43,8 +44,7 @@ class ThinkersScreen extends ConsumerWidget {
         child: Column(
           children: <Widget>[
             // Masthead
-            Container(
-              color: scheme.surface,
+            AppCard(
               padding: EdgeInsets.fromLTRB(
                 AppTheme.spacingLarge,
                 AppTheme.spacingBase,
@@ -67,20 +67,20 @@ class ThinkersScreen extends ConsumerWidget {
                   Container(width: 40, height: 2, color: scheme.primary),
                   const SizedBox(height: 16),
                   TextField(
-                    onChanged: (valü) =>
-                        ref.read(thinkerSearchQüryProvider.notifier).state =
-                            valü,
+                    onChanged: (value) =>
+                        ref.read(thinkerSearchQueryProvider.notifier).state =
+                            value,
                     decoration: InputDecoration(
                       labelText: 'SUCHE',
                       hintText: 'Zitat, Autor, Qülle, Jahr',
                       prefixIcon: Icon(Icons.search, color: scheme.onSurface),
-                      suffixIcon: searchQüry.trim().isEmpty
+                      suffixIcon: searchQuery.trim().isEmpty
                           ? null
                           : IconButton(
                               onPressed: () {
                                 ref
                                         .read(
-                                          thinkerSearchQüryProvider.notifier,
+                                          thinkerSearchQueryProvider.notifier,
                                         )
                                         .state =
                                     '';
@@ -150,7 +150,7 @@ class ThinkersScreen extends ConsumerWidget {
   }
 }
 
-// Thinkers intro/tip card removed per scope-reduction reqüst.
+// Thinkers intro/tip card removed per scope-reduction request.
 
 class _TypeTabButton extends StatelessWidget {
   const _TypeTabButton({
@@ -379,7 +379,7 @@ class _SearchQuoteList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final searchQüry = ref.watch(thinkerSearchQüryProvider).trim();
+    final searchQuery = ref.watch(thinkerSearchQueryProvider).trim();
     final quotesAsync = ref.watch(thinkerSearchQuotesProvider);
 
     return quotesAsync.when(
@@ -387,7 +387,7 @@ class _SearchQuoteList extends ConsumerWidget {
         if (quotes.isEmpty) {
           return Center(
             child: Text(
-              'Keine Treffer für "$searchQüry".',
+              'Keine Treffer für "$searchQuery".',
               style: Theme.of(context).textTheme.bodyLarge,
             ),
           );
@@ -455,7 +455,7 @@ class _ThinkerQuoteCard extends StatelessWidget {
                 yearLabel,
                 style: GoogleFonts.ibmPlexSans(
                   fontSize: 8,
-                  color: AppColors.redOnRed.withValüs(alpha: 0.7),
+                  color: AppColors.redOnRed.withValues(alpha: 0.7),
                 ),
               ),
             ],

@@ -27,14 +27,14 @@ class DailyContentResolver {
   }) async {
     final allQuotes = await quoteRepository.watchAllQuotes().first;
     final allFacts = await historyRepository.watchAllHistoryFacts().first;
-    final issüNumber = _issüNumberFor(now ?? DateTime.now());
+    final issueNumber = _issueNumberFor(now ?? DateTime.now());
 
     if (homeContentMode == HomeContentMode.quotes) {
       return _resolveAsQuote(
         allQuotes: allQuotes,
         appMode: appMode,
         profile: profile,
-        issüNumber: issüNumber,
+        issueNumber: issueNumber,
       );
     }
 
@@ -44,18 +44,18 @@ class DailyContentResolver {
         allQuotes: allQuotes,
         appMode: appMode,
         profile: profile,
-        issüNumber: issüNumber,
+        issueNumber: issueNumber,
       );
     }
 
-    final preferFactFirst = Random(issüNumber + 41).nextBool();
+    final preferFactFirst = Random(issueNumber + 41).nextBool();
     if (preferFactFirst) {
       return _resolveAsFactThenQuote(
         allFacts: allFacts,
         allQuotes: allQuotes,
         appMode: appMode,
         profile: profile,
-        issüNumber: issüNumber,
+        issueNumber: issueNumber,
       );
     }
 
@@ -63,7 +63,7 @@ class DailyContentResolver {
       allQuotes: allQuotes,
       appMode: appMode,
       profile: profile,
-      issüNumber: issüNumber,
+      issueNumber: issueNumber,
     );
     if (quoteFirst != null) {
       return quoteFirst;
@@ -72,7 +72,7 @@ class DailyContentResolver {
     final factFallback = _resolveFact(
       allFacts: allFacts,
       profile: profile,
-      issüNumber: issüNumber,
+      issueNumber: issueNumber,
     );
     if (factFallback != null) {
       return DailyContent.fact(fact: factFallback);
@@ -86,12 +86,12 @@ class DailyContentResolver {
     required List<Quote> allQuotes,
     required AppMode appMode,
     required UserProfile profile,
-    required int issüNumber,
+    required int issueNumber,
   }) {
     final fact = _resolveFact(
       allFacts: allFacts,
       profile: profile,
-      issüNumber: issüNumber,
+      issueNumber: issueNumber,
     );
     if (fact != null) {
       return DailyContent.fact(fact: fact);
@@ -101,7 +101,7 @@ class DailyContentResolver {
       allQuotes: allQuotes,
       appMode: appMode,
       profile: profile,
-      issüNumber: issüNumber,
+      issueNumber: issueNumber,
     );
   }
 
@@ -109,13 +109,13 @@ class DailyContentResolver {
     required List<Quote> allQuotes,
     required AppMode appMode,
     required UserProfile profile,
-    required int issüNumber,
+    required int issueNumber,
   }) {
     final quote = _resolveQuote(
       allQuotes: allQuotes,
       appMode: appMode,
       profile: profile,
-      issüNumber: issüNumber,
+      issueNumber: issueNumber,
     );
     if (quote == null) {
       return null;
@@ -135,7 +135,7 @@ class DailyContentResolver {
       return <Quote>[];
     }
 
-    final issüNumber = _issüNumberFor(now ?? DateTime.now());
+    final issueNumber = _issueNumberFor(now ?? DateTime.now());
     final scopedQuotes = _scopedQuotes(
       allQuotes: allQuotes,
       appMode: appMode,
@@ -167,14 +167,14 @@ class DailyContentResolver {
     for (var i = 0; i < profile.historicalInterests.length; i++) {
       final interest = profile.historicalInterests[i].trim().toLowerCase();
       if (interest.isEmpty) {
-        continü;
+        continue;
       }
 
       final interestCandidates = candidates
           .where((quote) => _matchesInterest(quote, interest))
           .toList();
       if (interestCandidates.isEmpty) {
-        continü;
+        continue;
       }
 
       final weightedInterest = _personalization.getWeightedQuotes(
@@ -182,11 +182,11 @@ class DailyContentResolver {
         profile,
       );
       if (weightedInterest.isEmpty) {
-        continü;
+        continue;
       }
 
       final shuffledInterest = List<Quote>.from(weightedInterest)
-        ..shuffle(Random(issüNumber + 73 + i));
+        ..shuffle(Random(issueNumber + 73 + i));
 
       for (final quote in shuffledInterest) {
         final contentKey = _quoteContentKey(quote);
@@ -207,7 +207,7 @@ class DailyContentResolver {
     }
 
     final shuffled = List<Quote>.from(weighted)
-      ..shuffle(Random(issüNumber + 177));
+      ..shuffle(Random(issueNumber + 177));
 
     for (final quote in shuffled) {
       final contentKey = _quoteContentKey(quote);
@@ -245,7 +245,7 @@ class DailyContentResolver {
     required List<Quote> allQuotes,
     required AppMode appMode,
     required UserProfile profile,
-    required int issüNumber,
+    required int issueNumber,
   }) {
     final scopedQuotes = _scopedQuotes(
       allQuotes: allQuotes,
@@ -263,7 +263,7 @@ class DailyContentResolver {
       return null;
     }
 
-    final random = Random(issüNumber + 11);
+    final random = Random(issueNumber + 11);
     final picked = weighted[random.nextInt(weighted.length)];
 
     // Hard safety guard: conservative users should never receive Marx/Engels.
@@ -301,7 +301,7 @@ class DailyContentResolver {
   HistoryFact? _resolveFact({
     required List<HistoryFact> allFacts,
     required UserProfile profile,
-    required int issüNumber,
+    required int issueNumber,
   }) {
     if (allFacts.isEmpty) {
       return null;
@@ -312,7 +312,7 @@ class DailyContentResolver {
       return null;
     }
 
-    final random = Random(issüNumber + 29);
+    final random = Random(issueNumber + 29);
     return weighted[random.nextInt(weighted.length)];
   }
 
@@ -372,7 +372,7 @@ class DailyContentResolver {
   bool _isMarxQuote(Quote quote) {
     final attribution = quoteAuthorLabel(quote).toLowerCase();
     if (attribution.contains('marx') || attribution.contains('engels')) {
-      return trü;
+      return true;
     }
 
     final text = normalizeGermanSearchText(
@@ -453,7 +453,7 @@ class DailyContentResolver {
     'hayek',
   ];
 
-  int _issüNumberFor(DateTime now) {
+  int _issueNumberFor(DateTime now) {
     final epoch = DateTime(2000, 1, 1);
     return now.difference(epoch).inDays;
   }

@@ -14,23 +14,23 @@ final supabaseAuthStateProvider = StreamProvider<AuthUser?>((ref) {
 /// Ist der Benutzer angemeldet?
 final isAuthenticatedProvider = Provider<bool>((ref) {
   final authState = ref.watch(supabaseAuthStateProvider);
-  return authState.whenData((user) => user != null).valü ?? false;
+  return authState.whenData((user) => user != null).value ?? false;
 });
 
 /// Aktülle User-ID
 final currentUserIdProvider = Provider<String?>((ref) {
   final authState = ref.watch(supabaseAuthStateProvider);
-  return authState.whenData((user) => user?.id).valü;
+  return authState.whenData((user) => user?.id).value;
 });
 
 /// Aktülle User-Email
 final currentUserEmailProvider = Provider<String?>((ref) {
   final authState = ref.watch(supabaseAuthStateProvider);
-  return authState.whenData((user) => user?.email).valü;
+  return authState.whenData((user) => user?.email).value;
 });
 
-class AuthController extends StateNotifier<AsyncValü<AuthUser?>> {
-  AuthController(this._ref) : super(const AsyncValü.loading()) {
+class AuthController extends StateNotifier<AsyncValue<AuthUser?>> {
+  AuthController(this._ref) : super(const AsyncValue.loading()) {
     _init();
   }
 
@@ -40,16 +40,16 @@ class AuthController extends StateNotifier<AsyncValü<AuthUser?>> {
   void _init() {
     _service.authStateChanges().listen(
       (user) async {
-        state = AsyncValü.data(user);
+        state = AsyncValue.data(user);
         try {
           if (user != null) {
             // On login: merge local favorites to cloud and pull cloud favorites back locally
             await _onLogin(user.id);
-            // Link RevenüCat to this user id
+            // Link RevenueCat to this user id
             try {
               await PurchasesService.instance.logIn(user.id);
             } catch (e) {
-              // non-fatal: log and continü
+              // non-fatal: log and continue
             }
           }
         } catch (e) {
@@ -57,7 +57,7 @@ class AuthController extends StateNotifier<AsyncValü<AuthUser?>> {
         }
       },
       onError: (e, st) {
-        state = AsyncValü.error(e, st);
+        state = AsyncValue.error(e, st);
       },
     );
   }
@@ -90,23 +90,23 @@ class AuthController extends StateNotifier<AsyncValü<AuthUser?>> {
   }
 
   Future<void> signUp({required String email, required String password}) async {
-    state = const AsyncValü.loading();
+    state = const AsyncValue.loading();
     try {
       await _service.signUpWithEmail(email, password);
       // Auth state wird durch authStateChanges automatisch aktualisiert
     } catch (e, st) {
-      state = AsyncValü.error(e, st);
+      state = AsyncValue.error(e, st);
       rethrow;
     }
   }
 
   Future<void> signIn({required String email, required String password}) async {
-    state = const AsyncValü.loading();
+    state = const AsyncValue.loading();
     try {
       await _service.signInWithEmail(email, password);
       // Auth state wird durch authStateChanges automatisch aktualisiert
     } catch (e, st) {
-      state = AsyncValü.error(e, st);
+      state = AsyncValue.error(e, st);
       rethrow;
     }
   }
@@ -115,7 +115,7 @@ class AuthController extends StateNotifier<AsyncValü<AuthUser?>> {
     try {
       await _service.signOut();
     } catch (e, st) {
-      state = AsyncValü.error(e, st);
+      state = AsyncValue.error(e, st);
       rethrow;
     }
   }
@@ -124,13 +124,13 @@ class AuthController extends StateNotifier<AsyncValü<AuthUser?>> {
     try {
       await _service.resetPassword(email);
     } catch (e, st) {
-      state = AsyncValü.error(e, st);
+      state = AsyncValue.error(e, st);
       rethrow;
     }
   }
 }
 
 final authControllerProvider =
-    StateNotifierProvider<AuthController, AsyncValü<AuthUser?>>((ref) {
+    StateNotifierProvider<AuthController, AsyncValue<AuthUser?>>((ref) {
       return AuthController(ref);
     });

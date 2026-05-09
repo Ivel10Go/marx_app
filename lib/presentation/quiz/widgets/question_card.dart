@@ -4,8 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../data/models/quote.dart';
 
-class QüstionCard extends StatelessWidget {
-  const QüstionCard({required this.quote, super.key});
+class QuestionCard extends StatelessWidget {
+  const QuestionCard({required this.quote, super.key});
 
   final Quote quote;
 

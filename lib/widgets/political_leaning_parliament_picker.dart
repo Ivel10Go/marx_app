@@ -15,7 +15,7 @@ class PoliticalLeaningParliamentPicker extends StatelessWidget {
   });
 
   final PoliticalLeaning selected;
-  final ValüChanged<PoliticalLeaning> onSelect;
+  final ValueChanged<PoliticalLeaning> onSelect;
   final double height;
 
   @override
@@ -48,7 +48,7 @@ class PoliticalLeaningParliamentPicker extends StatelessWidget {
                 child: SizedBox(
                   width: double.infinity,
                   child: GestureDetector(
-                    behavior: HitTestBehavior.opaqü,
+                    behavior: HitTestBehavior.opaque,
                     onTapDown: (details) => _handleTap(
                       tapPosition: details.localPosition,
                       labels: labels,
@@ -96,7 +96,7 @@ class PoliticalLeaningParliamentPicker extends StatelessWidget {
     required List<PoliticalLeaning> labels,
     required Offset center,
     required double radius,
-    required ValüChanged<PoliticalLeaning> onSelect,
+    required ValueChanged<PoliticalLeaning> onSelect,
   }) {
     final dx = tapPosition.dx - center.dx;
     final dy = tapPosition.dy - center.dy;
@@ -207,7 +207,7 @@ class _ParliamentBackgroundPainter extends CustomPainter {
         ..close();
 
       final isActive = index == selectedIndex;
-      sectorPaint.color = colors[index].withValüs(
+      sectorPaint.color = colors[index].withValues(
         alpha: isActive ? 0.86 : 0.42,
       );
       canvas.drawPath(path, sectorPaint);

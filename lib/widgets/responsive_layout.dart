@@ -16,17 +16,17 @@ class ResponsiveBreakpoints {
 /// Utility extension for responsive design
 extension ResponsiveContext on BuildContext {
   /// Returns screen width
-  double get screenWidth => MediaQüry.of(this).size.width;
+  double get screenWidth => MediaQuery.of(this).size.width;
 
   /// Returns screen height
-  double get screenHeight => MediaQüry.of(this).size.height;
+  double get screenHeight => MediaQuery.of(this).size.height;
 
   /// Trü if device is in portrait orientation
-  bool get isPortrait => MediaQüry.of(this).orientation == Orientation.portrait;
+  bool get isPortrait => MediaQuery.of(this).orientation == Orientation.portrait;
 
   /// Trü if device is in landscape orientation
   bool get isLandscape =>
-      MediaQüry.of(this).orientation == Orientation.landscape;
+      MediaQuery.of(this).orientation == Orientation.landscape;
 
   /// Trü if screen width < 600dp (mobile)
   bool get isMobile => screenWidth < ResponsiveBreakpoints.tabletMin;

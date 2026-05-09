@@ -27,19 +27,20 @@ final dailyContentResolverProvider = Provider<DailyContentResolver>((Ref ref) {
 });
 
 const String _cachedDailyContentKey = 'cached_daily_content';
+const String _cachedDailyContentDateKey = 'cached_daily_content_date';
 
 String _serializeDailyContent(DailyContent content) {
   return jsonEncode(
     content.when<String>(
       quote: (quote) => jsonEncode(<String, Object?>{
         'type': 'quote',
-        'valü': quote.toJson(),
+        'value': quote.toJson(),
       }),
       fact: (fact) =>
-          jsonEncode(<String, Object?>{'type': 'fact', 'valü': fact.toJson()}),
+          jsonEncode(<String, Object?>{'type': 'fact', 'value': fact.toJson()}),
       thinkerQuote: (quote) => jsonEncode(<String, Object?>{
         'type': 'thinkerQuote',
-        'valü': <String, Object?>{
+        'value': <String, Object?>{
           'id': quote.id,
           'author': quote.author,
           'author_type': quote.authorType,
@@ -70,18 +71,18 @@ DailyContent? _deserializeDailyContent(String? raw) {
     }
 
     final type = payload['type'] as String?;
-    final valü = payload['valü'];
-    if (valü is! Map<String, dynamic>) {
+    final value = payload['value'];
+    if (value is! Map<String, dynamic>) {
       return null;
     }
 
     switch (type) {
       case 'quote':
-        return DailyContent.quote(quote: Quote.fromJson(valü));
+        return DailyContent.quote(quote: Quote.fromJson(value));
       case 'fact':
-        return DailyContent.fact(fact: HistoryFact.fromJson(valü));
+        return DailyContent.fact(fact: HistoryFact.fromJson(value));
       case 'thinkerQuote':
-        return DailyContent.thinkerQuote(quote: ThinkerQuote.fromJson(valü));
+        return DailyContent.thinkerQuote(quote: ThinkerQuote.fromJson(value));
       default:
         return null;
     }
@@ -93,10 +94,15 @@ DailyContent? _deserializeDailyContent(String? raw) {
 Future<void> _cacheDailyContent(DailyContent content) async {
   try {
     final prefs = await SharedPreferences.getInstance();
+    final today = DateTime.now();
+    final dateKey =
+        '${today.year}-${today.month.toString().padLeft(2, '0')}-${today.day.toString().padLeft(2, '0')}';
+
     await prefs.setString(
       _cachedDailyContentKey,
       _serializeDailyContent(content),
     );
+    await prefs.setString(_cachedDailyContentDateKey, dateKey);
   } catch (_) {
     // Cache is best-effort only.
   }
@@ -105,7 +111,16 @@ Future<void> _cacheDailyContent(DailyContent content) async {
 Future<DailyContent?> _readCachedDailyContent() async {
   try {
     final prefs = await SharedPreferences.getInstance();
-    return _deserializeDailyContent(prefs.getString(_cachedDailyContentKey));
+    final today = DateTime.now();
+    final dateKey =
+        '${today.year}-${today.month.toString().padLeft(2, '0')}-${today.day.toString().padLeft(2, '0')}';
+    final cachedDate = prefs.getString(_cachedDailyContentDateKey);
+
+    // Only return cached content if it's from today
+    if (cachedDate == dateKey) {
+      return _deserializeDailyContent(prefs.getString(_cachedDailyContentKey));
+    }
+    return null;
   } catch (_) {
     return null;
   }

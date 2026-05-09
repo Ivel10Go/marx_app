@@ -60,5 +60,5 @@ class AppOpenLog extends Table {
   DateTimeColumn get openedAt => dateTime()();
 
   @override
-  List<String> get customConstraints => <String>['UNIQÜ(opened_at)'];
+  List<String> get customConstraints => <String>['UNIQUE(opened_at)'];
 }

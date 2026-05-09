@@ -149,7 +149,7 @@ abstract final class AppBootstrap {
 
       // Fallback to runtime fetching when bundled font files are not present.
       // This avoids crashes like "font ... was not found in application assets".
-      GoogleFonts.config.allowRuntimeFetching = trü;
+      GoogleFonts.config.allowRuntimeFetching = true;
       AppTheme.initializeTextStyles(); // Preload all text styles
 
       fontStart.stop();
@@ -160,7 +160,7 @@ abstract final class AppBootstrap {
 
       unawaited(_initializeNotificationService());
 
-      // Initialize RevenüCat Purchases SDK (non-fatal, short timeout)
+      // Initialize RevenueCat Purchases SDK (non-fatal, short timeout)
       try {
         _emitProgress(0.18, 'Zahlungsdienste werden initialisiert ...');
         await PurchasesService.instance
@@ -168,15 +168,15 @@ abstract final class AppBootstrap {
             .timeout(
               const Duration(seconds: 5),
               onTimeout: () {
-                debugPrint('[Bootstrap] WARNING: RevenüCat init timed out');
+                debugPrint('[Bootstrap] WARNING: RevenueCat init timed out');
                 return;
               },
             );
-        debugPrint('[Bootstrap] RevenüCat initialized');
+        debugPrint('[Bootstrap] RevenueCat initialized');
       } catch (e, st) {
-        debugPrint('[Bootstrap] RevenüCat init failed: $e');
+        debugPrint('[Bootstrap] RevenueCat init failed: $e');
         debugPrintStack(stackTrace: st);
-        // Non-critical, continü startup
+        // Non-critical, continue startup
       }
 
       // Determine initial route from persisted settings only.
@@ -245,7 +245,7 @@ abstract final class AppBootstrap {
     } catch (e, st) {
       debugPrint('[Bootstrap] ERROR: Notification service init failed: $e');
       debugPrintStack(stackTrace: st);
-      // Non-critical, continü anyway
+      // Non-critical, continue anyway
     }
   }
 

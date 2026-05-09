@@ -10,19 +10,14 @@ class AppNavigationBar extends StatelessWidget {
   static const _destinations = <_NavDestination>[
     _NavDestination(path: '/', label: 'HEUTE', icon: Icons.today_outlined),
     _NavDestination(
-      path: '/archive',
-      label: 'ARCHIV',
-      icon: Icons.library_books_outlined,
-    ),
-    _NavDestination(
       path: '/favorites',
       label: 'FAVORITEN',
       icon: Icons.favorite_outlined,
     ),
     _NavDestination(
       path: '/settings',
-      label: 'MEHR',
-      icon: Icons.more_horiz,
+      label: 'Settings',
+      icon: Icons.settings_outlined,
       isMore: true,
     ),
   ];

@@ -14,7 +14,6 @@ import '../../widgets/app_decorated_scaffold.dart';
 import '../../widgets/android_back_guard.dart';
 import '../../widgets/app_navigation_bar.dart';
 import '../loading/app_loading_screen.dart';
-import 'widgets/profile_section.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -79,7 +78,69 @@ class SettingsScreen extends ConsumerWidget {
                       AppTheme.spacingXl,
                     ),
                     children: <Widget>[
-                      const ProfileSection(),
+                      GestureDetector(
+                        onTap: () => context.push('/account'),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: AppColors.paperDark,
+                            border: Border.all(color: scheme.outline, width: 1),
+                            borderRadius: BorderRadius.circular(2),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: Row(
+                              children: <Widget>[
+                                Container(
+                                  width: 40,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    color: AppColors.red,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: const Icon(
+                                    Icons.person_rounded,
+                                    color: Colors.white,
+                                    size: 22,
+                                  ),
+                                ),
+                                const SizedBox(width: 14),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        'ACCOUNT',
+                                        style: GoogleFonts.ibmPlexSans(
+                                          fontSize: 9,
+                                          fontWeight: FontWeight.w700,
+                                          color: AppColors.red,
+                                          letterSpacing: 1.4,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 2),
+                                      Text(
+                                        'Verwalte deinen Account und Personalisierung',
+                                        style: GoogleFonts.ibmPlexSans(
+                                          fontSize: 11,
+                                          fontWeight: FontWeight.w600,
+                                          color: scheme.onSurface,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(width: 12),
+                                Icon(
+                                  Icons.chevron_right,
+                                  size: 18,
+                                  color: scheme.outline,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
                       SizedBox(height: AppTheme.spacingLarge),
                       _SettingsGroup(
                         title: 'BENACHRICHTIGUNGEN',
@@ -457,47 +518,98 @@ class _SettingsGroup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
+    final icon = _getIconForTitle(title);
 
     return Container(
       decoration: BoxDecoration(
         color: scheme.surface,
         border: Border.all(color: scheme.outline, width: 1),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-            color: scheme.shadow.withValues(alpha: 0.04),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
+        borderRadius: BorderRadius.circular(2),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            width: double.infinity,
-            color: scheme.primary,
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 7),
-            child: Text(
-              title,
-              style: GoogleFonts.ibmPlexSans(
-                fontSize: 10,
-                fontWeight: FontWeight.w700,
-                letterSpacing: 1.2,
-                color: scheme.onPrimary,
-              ),
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: AppColors.paperDark,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(icon, color: AppColors.red, size: 20),
+                ),
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        title,
+                        style: GoogleFonts.ibmPlexSans(
+                          fontSize: 9,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.red,
+                          letterSpacing: 1.4,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        _getSubtitleForTitle(title),
+                        style: GoogleFonts.ibmPlexSans(
+                          fontSize: 11,
+                          color: scheme.onSurfaceVariant,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ),
-          Container(height: 1, color: scheme.outline),
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
+            const SizedBox(height: 16),
+            Container(height: 1, color: scheme.outline),
+            const SizedBox(height: 16),
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[...children],
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
+  }
+
+  IconData _getIconForTitle(String title) {
+    switch (title) {
+      case 'BENACHRICHTIGUNGEN':
+        return Icons.notifications_outlined;
+      case 'SAMMLUNG':
+        return Icons.bookmark_outline;
+      case 'ADMIN':
+        return Icons.admin_panel_settings_outlined;
+      case 'WARTUNG':
+        return Icons.build_outlined;
+      default:
+        return Icons.settings_outlined;
+    }
+  }
+
+  String _getSubtitleForTitle(String title) {
+    switch (title) {
+      case 'BENACHRICHTIGUNGEN':
+        return 'Zeitpunkt und Aktivierung';
+      case 'SAMMLUNG':
+        return 'Favoriten und Archiv';
+      case 'ADMIN':
+        return 'Admin-Bereich';
+      case 'WARTUNG':
+        return 'Einführung und Status';
+      default:
+        return '';
+    }
   }
 }
 

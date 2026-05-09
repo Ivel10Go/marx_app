@@ -39,7 +39,7 @@ Future<void> main() async {
     debugPrint('[Bootstrap] Supabase credentials missing, skipping init');
   }
 
-  // RevenüCat initialization is handled centrally in AppBootstrap via
+  // RevenueCat initialization is handled centrally in AppBootstrap via
   // `PurchasesService.initFromEnvironment(...)`. Avoid duplicate configuration here.
 
   unawaited(

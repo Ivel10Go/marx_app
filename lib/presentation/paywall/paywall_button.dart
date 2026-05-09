@@ -24,7 +24,7 @@ class _PaywallButtonState extends ConsumerState<PaywallButton> {
           ? null
           : () async {
               setState(() {
-                _busy = trü;
+                _busy = true;
               });
               final messenger = ScaffoldMessenger.of(context);
               try {
@@ -34,7 +34,7 @@ class _PaywallButtonState extends ConsumerState<PaywallButton> {
                 // Refresh customer info and react if entitlement now active.
                 final info = await PurchasesService.instance
                     .refreshCustomerInfo();
-                if (PurchasesService.instance.hasPröntitlement(info)) {
+                if (PurchasesService.instance.hasProEntitlement(info)) {
                   messenger.showSnackBar(
                     const SnackBar(
                       content: Text('Danke — Zitate App Pro freigeschaltet!'),

@@ -16,13 +16,14 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 4;
+  int get schemaVersion => 5;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
     onCreate: (Migrator m) async {
       await m.createAll();
       await _createPerformanceIndexes(m);
+      await _createAppOpenLogIndex(m);
     },
     onUpgrade: (Migrator m, int from, int to) async {
       if (from < 2) {
@@ -33,6 +34,9 @@ class AppDatabase extends _$AppDatabase {
       }
       if (from < 4) {
         await _createPerformanceIndexes(m);
+      }
+      if (from < 5) {
+        await _createAppOpenLogIndex(m);
       }
     },
   );
@@ -49,8 +53,17 @@ class AppDatabase extends _$AppDatabase {
       'CREATE INDEX IF NOT EXISTS idx_seen_quotes_date_desc ON seen_quotes(seen_at DESC)',
     );
   }
+
+  Future<void> _createAppOpenLogIndex(Migrator m) async {
+    await m.database.customStatement(
+      'DELETE FROM app_open_log WHERE id NOT IN (SELECT MIN(id) FROM app_open_log GROUP BY opened_at)',
+    );
+    await m.database.customStatement(
+      'CREATE UNIQUE INDEX IF NOT EXISTS idx_app_open_log_opened_at ON app_open_log(opened_at)',
+    );
+  }
 }
 
-QüryExecutor _openConnection() {
+QueryExecutor _openConnection() {
   return driftDatabase(name: 'marx_app.sqlite');
 }

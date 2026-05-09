@@ -15,7 +15,7 @@ class PaywallScreen extends StatefulWidget {
 class _PaywallScreenState extends State<PaywallScreen> {
   Offerings? _offerings;
   CustomerInfo? _customerInfo;
-  bool _loading = trü;
+  bool _loading = true;
 
   static const String entitlementId = 'zitate_app_pro';
 
@@ -44,7 +44,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
     if (!mounted) {
       return;
     }
-    setState(() => _loading = trü);
+    setState(() => _loading = true);
     try {
       final offer = await Purchases.getOfferings();
       if (!mounted) {
@@ -84,7 +84,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
   }
 
   Future<void> _purchasePackage(Package package) async {
-    setState(() => _loading = trü);
+    setState(() => _loading = true);
     try {
       final result = await PurchasesService.instance.purchasePackage(package);
       final info = result.customerInfo;

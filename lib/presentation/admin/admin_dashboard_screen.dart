@@ -73,7 +73,7 @@ class AdminDashboardScreen extends ConsumerWidget {
             child: Wrap(
               spacing: 10,
               runSpacing: 10,
-              children: AppMode.valüs
+              children: AppMode.values
                   .map(
                     (mode) => _ModeButton(
                       selected: mode == appMode,

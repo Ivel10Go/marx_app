@@ -121,10 +121,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-            child: _OnboardingStepCard(
-              title: _stepHeadline(_index),
-              body: _stepHint(_index),
-            ),
+            child: SizedBox(height: 10),
           ),
           Expanded(
             child: PageView(
@@ -177,7 +174,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 if (_index > 0)
                   Expanded(
                     child: _OutlineActionButton(
-                      label: 'ZURUECK',
+                      label: 'ZURÜCK',
                       onTap: () => _pageController.previousPage(
                         duration: const Duration(milliseconds: 250),
                         curve: Curves.easeOut,
@@ -198,38 +195,6 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       ),
     );
   }
-}
-
-String _stepHeadline(int index) {
-  switch (index) {
-    case 0:
-      return 'START';
-    case 1:
-      return 'ANMELDEN';
-    case 2:
-      return 'ERINNERUNG';
-    case 3:
-      return 'INTERESSEN';
-    case 4:
-      return 'ORIENTIERUNG';
-  }
-  return 'ONBOARDING';
-}
-
-String _stepHint(int index) {
-  switch (index) {
-    case 0:
-      return 'Kurzer Überblick über deinen täglichen Ablauf in der App.';
-    case 1:
-      return 'Erstelle einen Account um deine Favoriten zu speichern.';
-    case 2:
-      return 'Aktiviere optional die tägliche Erinnerung zur Ausgabe.';
-    case 3:
-      return 'Markiere Themen, damit dein Feed relevanter startet.';
-    case 4:
-      return 'Optionaler politischer Fokus für feinere Einordnung.';
-  }
-  return 'Richte deine tägliche Ausgabe in wenigen Schritten ein.';
 }
 
 class _AuthOnboardingPage extends StatefulWidget {
@@ -339,50 +304,6 @@ class _AuthOnboardingPageState extends State<_AuthOnboardingPage> {
     } finally {
       if (mounted) setState(() => _loading = false);
     }
-  }
-}
-
-class _OnboardingStepCard extends StatelessWidget {
-  const _OnboardingStepCard({required this.title, required this.body});
-
-  final String title;
-  final String body;
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: scheme.surface,
-        border: Border.all(color: scheme.outline, width: 1),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            title,
-            style: GoogleFonts.ibmPlexSans(
-              fontSize: 10,
-              fontWeight: FontWeight.w700,
-              color: AppColors.red,
-              letterSpacing: 1.2,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            body,
-            style: GoogleFonts.ibmPlexSans(
-              fontSize: 11,
-              color: scheme.onSurfaceVariant,
-              height: 1.45,
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }
 
