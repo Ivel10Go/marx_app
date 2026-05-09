@@ -47,6 +47,12 @@ Inhalt pro Shot:
 - Archive mit aktiver Suche/Filter
 - Premium/Paywall mit klarer Preisdarstellung
 
+Automatischer Capture-Start (adb):
+
+```powershell
+pwsh tools/capture_play_screenshots.ps1
+```
+
 ## Feature Graphic
 
 - Zielpfad: assets/screenshots/play/feature_graphic_1024x500.png
