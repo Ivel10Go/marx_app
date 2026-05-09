@@ -946,6 +946,8 @@ Kurzfristige Prioritäten (Reihenfolge):
   - Automatischer Teil zuletzt gelaufen: `qa_reports/pixel6_final_qa_20260509_182332.md`
 - [ ] **Crashlytics & Monitoring einrichten**
   - Tasks: Crashlytics initialisieren, Alerts konfigurieren, erste Baseline‑Logs prüfen.
+  - Status: `firebase_core` + `firebase_crashlytics` integriert, Startup-Hooks in `main.dart` aktiv (Release-only, fail-safe ohne Firebase-Config).
+  - Offen: `flutterfire configure` ausführen und produktive Firebase-Projektwerte hinterlegen.
 - [ ] **Production Rollout & Monitoring**
   - Tasks: Staged Rollout (10–25%), enges Monitoring 24–48h, Bugfix‑Patch‑Plan bereitstellen.
 
