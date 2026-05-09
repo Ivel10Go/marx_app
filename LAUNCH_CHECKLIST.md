@@ -38,7 +38,7 @@ Phase 5: Post-Launch Monitoring (⏳ PENDING)
 **Phase 3.5: Account Management & Cloud Sync**
 - [ ] **Supabase Setup** — Backend & Auth konfigurieren
 - [x] **Auth Provider** — Riverpod Integration
-- [x] **Favorites Sync (ohne Notizen)** — Cloud Persistierung
+- [x] **Favorites Sync (ohne Notizen)** — Cloud-Persistenz
 - [x] **Account Center UI** — Settings Erweiterung
 - [ ] **DSGVO Compliance** — Data Export/Deletion
 
