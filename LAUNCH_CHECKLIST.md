@@ -684,6 +684,7 @@ Nutze diese Vorlage für jeden abgeschlossenen Hauptpunkt oder jeden wichtigen T
 - [ ] **Google Play Developer Account**
   - [ ] Account aktiviert
   - [ ] $25 Gebühr bezahlt (einmalig)
+  - NOTE: Developer Account creation is postponed — perform this as the final pre-release step.
 
 - [ ] **Package Name** — Eindeutig und reserviert
   - [ ] Package: `com.marxapp.zitatatlas` (Beispiel, anpassen)
@@ -916,9 +917,43 @@ Nutze diese Vorlage für jeden abgeschlossenen Hauptpunkt oder jeden wichtigen T
 
 ---
 
-## Nächste Schritte
+## Launch-Monat: Mai 2026 — Fokussierter Plan bis zum Release
 
-1. **Offene Phase-1-Restpunkte prüfen**: Cold Start, Offline-Loading, Back-Button, Crash-/Warning-Status.
-2. **Phase 2 priorisiert abarbeiten**: erst Lesbarkeit und Abstände, dann Farben und Zustände.
-3. **Testkontext je Punkt dokumentieren**: Gerät, Build, Datum, Ergebnis.
-4. **Checkliste nach jeder Session aktualisieren**: Status, offene Risiken, nächste konkrete Aktion.
+Ziel: Release auf Google Play diesen Monat (Ende Mai). Priorität: Stabilität, Auth & Sync, Store‑Metadaten, Release‑Signierung.
+
+Kurzfristige Prioritäten (Reihenfolge):
+
+- [ ] **Supabase Projekt finalisieren** — (in progress)
+  - Tasks: Projekt anlegen, DB‑Schema deployen, RLS‑Policies aktivieren, Anon/Service Keys sichern.
+- [ ] **Auth Service & Riverpod Provider implementieren**
+  - Tasks: `supabase_flutter` integrieren, `SupabaseAuthService` implementieren, `currentSupabaseUserProvider` bereitstellen.
+- [ ] **Favorites Cloud‑Sync & Migration**
+  - Tasks: Sync‑Service implementieren, lokale Favoriten migrieren, Merge‑Strategie (Union) testen.
+- [ ] **RevenueCat ↔ Login Flow testen**
+  - Tasks: `Purchases.logIn(userId)`/`logOut()` testen, Entitlement Refresh mit Login/Logout prüfen.
+- [ ] **Android Keystore & Release Signing finalisieren**
+  - Tasks: Keystore prüfen/erstellen, `signingConfig` setzen, Test‑Release‑Build erzeugen.
+- [ ] **Play Store Metadaten & Screenshots erstellen**
+  - Tasks: Short/Full Description, Screenshots (6.7" + 5.1"), Feature Graphic, Privacy URL, Support‑Email.
+- [ ] **Internal Test Track Release + Tests**
+  - Tasks: AAB bauen, Internal Track hochladen, 1–2 Testgeräte validieren (Purchase, Restore, Login, Sync).
+- [ ] **Final QA auf Zielgerät (Pixel6)**
+  - Tests: Cold Start, Offline‑Loading, Navigation/Back, Purchase Flow, Sync, Restore, Theme/Fonts.
+- [ ] **Crashlytics & Monitoring einrichten**
+  - Tasks: Crashlytics initialisieren, Alerts konfigurieren, erste Baseline‑Logs prüfen.
+- [ ] **Production Rollout & Monitoring**
+  - Tasks: Staged Rollout (10–25%), enges Monitoring 24–48h, Bugfix‑Patch‑Plan bereitstellen.
+
+Kurz‑Zeitplan (empfohlen):
+
+- Woche 1 (sofort): Supabase abschließen; Auth‑Service starten; Keystore prüfen.
+- Woche 2: Favorites‑Sync implementieren; RevenueCat+Login Tests.
+- Woche 3: Play Store Metadaten + Screenshots finalisieren; Internal Track Release.
+- Letzte Woche: Final QA auf Pixel6; Crashlytics aktiv; Production Rollout starten.
+
+Kommunikation & Verantwortlichkeiten:
+
+- Tägliches kurzes Update (Slack/Issues) — Fortschritt, Blocker, nächste Aktion.
+- Blocker eskalieren: Keystore, RevenueCat oder Supabase Keys.
+
+Nächster Schritt jetzt: Supabase‑Projekt deployen und DB‑Schema heute abschließen.
