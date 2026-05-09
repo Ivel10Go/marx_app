@@ -37,9 +37,9 @@ Phase 5: Post-Launch Monitoring (⏳ PENDING)
 
 **Phase 3.5: Account Management & Cloud Sync**
 - [ ] **Supabase Setup** — Backend & Auth konfigurieren
-- [ ] **Auth Provider** — Riverpod Integration
-- [ ] **Favorites & Notes Sync** — Cloud persistierung
-- [ ] **Account Center UI** — Settings Erweiterung
+- [x] **Auth Provider** — Riverpod Integration
+- [x] **Favorites Sync (ohne Notizen)** — Cloud Persistierung
+- [x] **Account Center UI** — Settings Erweiterung
 - [ ] **DSGVO Compliance** — Data Export/Deletion
 
 **Blockers vor Phase 4:**
@@ -442,12 +442,12 @@ Nutze diese Vorlage für jeden abgeschlossenen Hauptpunkt oder jeden wichtigen T
 
 ### 3.5.2 Flutter Integration — Auth Provider
 
-- [ ] **Supabase Flutter Package**
-  - [ ] `pubspec.yaml`: `supabase_flutter` + `supabase` hinzufügen
-  - [ ] `flutter pub get`
+- [x] **Supabase Flutter Package**
+  - [x] `pubspec.yaml`: `supabase_flutter` hinzugefügt
+  - [x] `flutter pub get`
   - [ ] `flutterfire configure` für API Keys (iOS/Android)
 
-- [ ] **Auth Service** — [lib/core/services/supabase_auth_service.dart](lib/core/services/supabase_auth_service.dart)
+- [x] **Auth Service** — [lib/core/services/supabase_auth_service.dart](lib/core/services/supabase_auth_service.dart)
   ```dart
   class SupabaseAuthService {
     Future<AuthUser?> signUpWithEmail(String email, String password);
@@ -457,11 +457,11 @@ Nutze diese Vorlage für jeden abgeschlossenen Hauptpunkt oder jeden wichtigen T
     Stream<AuthUser?> authStateChanges();
   }
   ```
-  - [ ] Service implementiert
-  - [ ] Error Handling (invalid email, weak password, etc.)
-  - [ ] Async Exception Mapping
+  - [x] Service implementiert
+  - [x] Error Handling (invalid email, weak password, etc.)
+  - [x] Async Exception Mapping
 
-- [ ] **Auth Provider** — [lib/domain/providers/supabase_auth_provider.dart](lib/domain/providers/supabase_auth_provider.dart)
+- [x] **Auth Provider** — [lib/core/providers/supabase_auth_provider.dart](lib/core/providers/supabase_auth_provider.dart)
   ```dart
   // Current logged-in user
   final currentSupabaseUserProvider = StreamProvider<AuthUser?>((ref) {
@@ -480,53 +480,53 @@ Nutze diese Vorlage für jeden abgeschlossenen Hauptpunkt oder jeden wichtigen T
     return user?.id;
   });
   ```
-  - [ ] Provider implementiert
-  - [ ] Riverpod Integration getestet
+  - [x] Provider implementiert
+  - [x] Riverpod Integration getestet
 
 - [ ] **RevenueCat Integration**
-  - [ ] Bei erfolgreichem Login: `Purchases.logIn(userId)` aufrufen
+  - [x] Bei erfolgreichem Login: `Purchases.logIn(userId)` aufrufen
   - [ ] Bei Logout: `Purchases.logOut()`
   - [ ] Test: Entitlements bleiben erhalten nach Login
 
 ### 3.5.3 UI — Auth Screens
 
-- [ ] **Login/Signup Modal** — [lib/presentation/auth/auth_sheet.dart](lib/presentation/auth/auth_sheet.dart)
-  - [ ] UI mit Email/Password Form
-  - [ ] Tab zwischen "Login" und "Signup"
-  - [ ] "Passwort vergessen?" Link
+- [x] **Login/Signup Screen** — [lib/presentation/auth/auth_screen.dart](lib/presentation/auth/auth_screen.dart)
+  - [x] UI mit Email/Password Form
+  - [x] Tab zwischen "Login" und "Signup"
+  - [x] "Passwort vergessen?" Link
   - [ ] Social Login Buttons (Google/Apple) — optional für MVP
-  - [ ] Loading States während Auth
-  - [ ] Error Messages (invalid email, password mismatch, etc.)
-  - [ ] Dismiss Button
+  - [x] Loading States während Auth
+  - [x] Error Messages (invalid email, password mismatch, etc.)
+  - [x] Dismiss Button
 
-- [ ] **Settings Integration** — Account Section
+- [x] **Settings Integration** — Account Section
   - [ ] In [lib/presentation/settings/settings_screen.dart](lib/presentation/settings/settings_screen.dart):
-    - [ ] Wenn nicht angemeldet: "Anmelden" Button
-    - [ ] Wenn angemeldet: "Abmelden" Button + User Email anzeigen
+    - [x] Wenn nicht angemeldet: "Anmelden" Button
+    - [x] Wenn angemeldet: "Abmelden" Button + User Email anzeigen
     - [ ] Link zu Account Details (später)
-  - [ ] Styling konsistent mit Rest der App
+  - [x] Styling konsistent mit Rest der App
 
-- [ ] **Onboarding Update**
-  - [ ] Nach Onboarding: Optional "Konto erstellen" Prompt
-  - [ ] Nicht erzwungen, nur Suggestion
-  - [ ] Dismiss-Option
+- [x] **Onboarding Update**
+  - [x] Nach Onboarding: Optional "Konto erstellen" Prompt
+  - [x] Nicht erzwungen, nur Suggestion
+  - [x] Dismiss-Option
 
 ### 3.5.4 Cloud Sync — Favoriten
 
 - [ ] **Favorites Migration** — Lokal → Cloud
-  - [ ] Bei Login: Prüfe auf lokale Favoriten
-  - [ ] Synchronisiere alle lokalen Favoriten zu Cloud
-  - [ ] Merge-Strategie: Union (alle behalten, keine Duplikate)
+  - [x] Bei Login: Prüfe auf lokale Favoriten
+  - [x] Synchronisiere alle lokalen Favoriten zu Cloud
+  - [x] Merge-Strategie: Union (alle behalten, keine Duplikate)
   - [ ] Lokale DB mit User-ID versehen
 
-- [ ] **Sync Service** — [lib/core/services/supabase_sync_service.dart](lib/core/services/supabase_sync_service.dart)
+- [x] **Sync Service** — [lib/core/services/supabase_sync_service.dart](lib/core/services/supabase_sync_service.dart)
   ```dart
   Future<void> syncFavoritesToCloud(String userId, List<String> favoriteQuoteIds);
   Future<List<String>> fetchFavoritesFromCloud(String userId);
   Future<void> addFavoriteToCloud(String userId, String quoteId);
   Future<void> removeFavoriteFromCloud(String userId, String quoteId);
   ```
-  - [ ] Implementiert mit Supabase REST Client
+  - [x] Implementiert mit Supabase REST Client
 
 - [ ] **Favorites Provider Update** — [lib/domain/providers/favorites_provider.dart](lib/domain/providers/favorites_provider.dart)
   - [ ] Nach Cloud-Sync: Lokale Daten aktualisieren
@@ -541,17 +541,17 @@ Nutze diese Vorlage für jeden abgeschlossenen Hauptpunkt oder jeden wichtigen T
 
 ### 3.5.5 Account Center — Weitere Features
 
-- [ ] **Account Details Screen** — [lib/presentation/settings/account_screen.dart](lib/presentation/settings/account_screen.dart)
-  - [ ] E-Mail anzeigen
+- [ ] **Account Details Screen** — [lib/presentation/account/account_screen.dart](lib/presentation/account/account_screen.dart)
+  - [x] E-Mail anzeigen
   - [ ] "Passwort ändern" Button
   - [ ] "E-Mail ändern" Button (optional für MVP)
   - [ ] "Konto löschen" Button (DSGVO)
   - [ ] "Daten exportieren" Button (DSGVO)
 
-- [ ] **Password Reset Flow**
-  - [ ] "Passwort vergessen" Link auf Login
-  - [ ] Email mit Reset-Link → Supabase Handler
-  - [ ] UI: "Check your email" Success State
+- [x] **Password Reset Flow**
+  - [x] "Passwort vergessen" Link auf Login
+  - [x] Email mit Reset-Link → Supabase Handler
+  - [x] UI: "Check your email" Success State
 
 - [ ] **Data Export** — DSGVO Compliance
   - [ ] API-Endpoint: GET `/api/user/export` → JSON aller Nutzerdaten
@@ -855,17 +855,17 @@ Nutze diese Vorlage für jeden abgeschlossenen Hauptpunkt oder jeden wichtigen T
 
 ### ⏳ AKTUELLE PHASE: 3.5 — Account Management & Cloud Sync
 
-**Status:** Design-Phase abgeschlossen, Supabase-Setup noch offen.
+**Status:** Core-Implementierung für Auth + Cloud-Sync ist im Code integriert, operative Supabase-Dashboard-Validierung steht noch aus.
 
 **Nächste 3 Schritte (diese Woche):**
-1. [ ] Supabase Projekt + Database Schema erstellen
-2. [ ] Auth Service & Riverpod Provider implementieren
-3. [ ] Login/Signup UI in Settings integrieren
+1. [ ] Supabase Projekt + Database Schema in realem Projekt verifizieren (SQL ausführen + prüfen)
+2. [ ] RevenueCat Logout-Pfad mit Supabase-Logout koppeln (`Purchases.logOut`)
+3. [ ] End-to-End Tests auf realen Geräten (Login, Sync, Restore) durchführen
 
 **Blockers:**
-- [ ] Supabase Projekt-Setup
-- [ ] Flutter supabase_flutter Package Integration
-- [ ] RevenueCat + Supabase Login-Flow Testen
+- [ ] Supabase Projekt-Setup und Dashboard-Verifikation
+- [ ] RevenueCat + Supabase Logout/Entitlement-Flow verifizieren
+- [ ] E2E-Gerätetests für Cloud-Sync
 
 **Geplant danach:**
 - Phase 4: Android Store Vorbereitung (2-3 Wochen)
