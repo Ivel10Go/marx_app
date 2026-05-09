@@ -36,7 +36,7 @@ Phase 5: Post-Launch Monitoring (⏳ PENDING)
 ## 🎯 Aktueller Fokus — PRIORITY NEXT STEPS
 
 **Phase 3.5: Account Management & Cloud Sync**
-- [ ] **Supabase Setup** — Backend & Auth konfigurieren
+- [x] **Supabase Setup** — Backend & Auth konfigurieren
 - [x] **Auth Provider** — Riverpod Integration
 - [x] **Favorites Sync (ohne Notizen)** — Cloud-Persistenz
 - [x] **Account Center UI** — Settings Erweiterung
@@ -375,12 +375,12 @@ Nutze diese Vorlage für jeden abgeschlossenen Hauptpunkt oder jeden wichtigen T
 
 ### 3.5.1 Backend Setup — Supabase
 
-- [ ] **Supabase Project erstellen**
-  - [ ] Account auf supabase.com
-  - [ ] Projekt "Marx Zitatatlas" anlegen
-  - [ ] PostgreSQL Database initialisiert
-  - [ ] Projekt-URL und Anon Key bereitgestellt
-  - [ ] Browser verfügbar: [https://app.supabase.com](https://app.supabase.com)
+- [x] **Supabase Project erstellen**
+  - [x] Account auf supabase.com
+  - [x] Projekt "Marx Zitatatlas" anlegen
+  - [x] PostgreSQL Database initialisiert
+  - [x] Projekt-URL und Anon Key bereitgestellt
+  - [x] Browser verfügbar: [https://app.supabase.com](https://app.supabase.com)
 
 - [ ] **Authentication konfigurieren**
   - [ ] Auth Providers aktivieren:
@@ -436,8 +436,8 @@ Nutze diese Vorlage für jeden abgeschlossenen Hauptpunkt oder jeden wichtigen T
     ON user_favorites FOR DELETE
     USING (auth.uid() = user_id);
   ```
-  - [ ] Schema in Supabase SQL-Editor deployed
-  - [ ] RLS Policies aktiviert
+  - [x] Schema in Supabase SQL-Editor deployed
+  - [x] RLS Policies aktiviert
   - [ ] Test-Queries ausgeführt
 
 ### 3.5.2 Flutter Integration — Auth Provider

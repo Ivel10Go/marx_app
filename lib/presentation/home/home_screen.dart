@@ -203,6 +203,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
     final streakAsync = ref.watch(currentStreakProvider);
     final appMode = ref.watch(appModeNotifierProvider);
     final isAdmin = ref.watch(adminAccessProvider);
+    final scheme = Theme.of(context).colorScheme;
 
     return AndroidBackGuard(
       child: AppDecoratedScaffold(
@@ -216,188 +217,171 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
               parent: BouncingScrollPhysics(),
             ),
             children: <Widget>[
-              AppCard(
+              // ── Editorial header ────────────────────────────────────────
+              Container(
+                color: scheme.surface,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    // Red accent bar at the very top
+                    Container(height: 3, color: AppColors.red),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(
+                        AppTheme.spacingLarge,
+                        AppTheme.spacingBase,
+                        AppTheme.spacingLarge,
+                        AppTheme.spacingBase,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          // Top row: kicker label + icon actions
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                'TAGESAUSGABE',
+                                style: GoogleFonts.ibmPlexSans(
+                                  fontSize: 9,
+                                  fontWeight: FontWeight.w700,
+                                  color: AppColors.red,
+                                  letterSpacing: 1.6,
+                                ),
+                              ),
+                              const Spacer(),
+                              if (isAdmin) ...<Widget>[
+                                _HeaderIconAction(
+                                  icon: Icons.tune_outlined,
+                                  tooltip: _modeLabel(appMode),
+                                  onTap: _showModeDialog,
+                                ),
+                                const SizedBox(width: 6),
+                                _HeaderIconAction(
+                                  icon: Icons.admin_panel_settings_outlined,
+                                  tooltip: 'Admin',
+                                  onTap: () => context.push('/admin'),
+                                ),
+                                const SizedBox(width: 6),
+                              ],
+                              _HeaderIconAction(
+                                icon: Icons.person_outline,
+                                tooltip: 'Account',
+                                onTap: () => context.push('/account'),
+                              ),
+                              const SizedBox(width: 6),
+                              _HeaderIconAction(
+                                icon: Icons.settings_outlined,
+                                tooltip: 'Einstellungen',
+                                onTap: () => context.push('/settings'),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 10),
+                          // Main title
+                          Text('ZITATATLAS', style: AppTheme.masthead),
+                          const SizedBox(height: 4),
+                          // Date + issue number
+                          Text(
+                            _mastheadSubtitle(),
+                            style: AppTheme.mastHeadSubtitle,
+                          ),
+                        ],
+                      ),
+                    ),
+                    // Bottom separator
+                    Container(height: 1, color: scheme.outline),
+                  ],
+                ),
+              ),
+
+              // ── Daily content ────────────────────────────────────────────
+              Padding(
                 padding: EdgeInsets.fromLTRB(
                   AppTheme.spacingLarge,
                   AppTheme.spacingBase,
                   AppTheme.spacingLarge,
-                  AppTheme.spacingSmall,
+                  AppTheme.spacingBase,
                 ),
-                child: LayoutBuilder(
-                  builder: (BuildContext context, BoxConstraints constraints) {
-                    final compact = constraints.maxWidth < 420;
+                child: dailyContent.when(
+                  data: (content) {
+                    return FadeTransition(
+                      opacity: _fade,
+                      child: SlideTransition(
+                        position: _slide,
+                        child: content.when(
+                          quote: (quote) {
+                            final fallbackCard = QuoteCard(
+                              quote: quote,
+                              onShare: () => ShareCardRenderer()
+                                  .shareQuote(quote, context),
+                              onTap: () =>
+                                  _showQuoteInsightSheet(context, quote),
+                              onLongPress: () =>
+                                  _showQuoteInsightSheet(context, quote),
+                            );
 
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(
-                                    'TAGESAUSGABE',
-                                    style: GoogleFonts.ibmPlexSans(
-                                      fontSize: 9,
-                                      fontWeight: FontWeight.w700,
-                                      color: AppColors.red,
-                                      letterSpacing: 1.4,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 6),
-                                  Text('ZITATATLAS', style: AppTheme.masthead),
-                                  const SizedBox(height: 4),
-                                  Text(
-                                    _mastheadSubtitle(),
-                                    style: AppTheme.mastHeadSubtitle,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(width: 8),
-                            _HeaderIconAction(
-                              icon: Icons.settings_outlined,
-                              tooltip: 'Einstellungen',
-                              onTap: () => context.push('/settings'),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 12),
-                        Container(width: 40, height: 2, color: AppColors.red),
-                        const SizedBox(height: 6),
-                        if (compact)
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: <Widget>[
-                              if (isAdmin)
-                                _BroadsheetOutlineButton(
-                                  onPressed: _showModeDialog,
-                                  label: _modeLabel(appMode),
-                                ),
-                              if (isAdmin) ...<Widget>[
-                                const SizedBox(height: 10),
-                                _BroadsheetButton(
-                                  onPressed: () => context.push('/admin'),
-                                  label: 'ADMIN',
-                                ),
-                              ],
-                            ],
-                          )
-                        else
-                          Row(
-                            children: <Widget>[
-                              if (isAdmin)
-                                Expanded(
-                                  child: _BroadsheetOutlineButton(
-                                    onPressed: _showModeDialog,
-                                    label: _modeLabel(appMode),
-                                  ),
-                                ),
-                              if (isAdmin) ...<Widget>[
-                                const SizedBox(width: 10),
-                                _BroadsheetButton(
-                                  onPressed: () => context.push('/admin'),
-                                  label: 'ADMIN',
-                                ),
-                              ],
-                            ],
+                            if (!isPro) {
+                              return fallbackCard;
+                            }
+
+                            return premiumQuotesAsync.when(
+                              data: (quotes) {
+                                final visibleQuotes = quotes.isEmpty
+                                    ? <Quote>[quote]
+                                    : quotes;
+                                return _MainQuoteScroller(
+                                  quotes: visibleQuotes,
+                                  onQuoteTap: (Quote selectedQuote) =>
+                                      _showQuoteInsightSheet(
+                                        context,
+                                        selectedQuote,
+                                      ),
+                                );
+                              },
+                              loading: () => fallbackCard,
+                              error: (_, __) => fallbackCard,
+                            );
+                          },
+                          fact: (fact) => FactBlock(
+                            fact: fact,
+                            onShareTap: () =>
+                                ShareCardRenderer().shareFact(fact, context),
+                            onRelatedQuoteTap: fact.relatedQuoteIds.isNotEmpty
+                                ? () => context.push(
+                                    '/detail/${fact.relatedQuoteIds.first}',
+                                  )
+                                : null,
                           ),
-                      ],
+                          thinkerQuote: (ThinkerQuote quote) =>
+                              _ThinkerQuoteCard(quote: quote),
+                        ),
+                      ),
                     );
                   },
+                  loading: () => const AppInlineLoadingState(
+                    title: 'Tagesinhalt wird geladen',
+                    subtitle:
+                        'Home, Details und Widget werden vorbereitet ...',
+                  ),
+                  error: (error, _) => AppInlineErrorState(
+                    title: 'Ladevorgang fehlgeschlagen',
+                    message: 'Fehler: $error',
+                    onRetry: () => ref.invalidate(dailyContentProvider),
+                  ),
                 ),
               ),
-              const SizedBox.shrink(),
+
+              // ── Streak ───────────────────────────────────────────────────
               Padding(
                 padding: EdgeInsets.fromLTRB(
                   AppTheme.spacingLarge,
-                  AppTheme.spacingSmall,
+                  0,
                   AppTheme.spacingLarge,
-                  AppTheme.spacingXl,
+                  AppTheme.spacingBase,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    dailyContent.when(
-                      data: (content) {
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            FadeTransition(
-                              opacity: _fade,
-                              child: SlideTransition(
-                                position: _slide,
-                                child: content.when(
-                                  quote: (quote) {
-                                    final fallbackCard = QuoteCard(
-                                      quote: quote,
-                                      onShare: () => ShareCardRenderer()
-                                          .shareQuote(quote, context),
-                                      onTap: () => _showQuoteInsightSheet(
-                                        context,
-                                        quote,
-                                      ),
-                                      onLongPress: () => _showQuoteInsightSheet(
-                                        context,
-                                        quote,
-                                      ),
-                                    );
-
-                                    if (!isPro) {
-                                      return fallbackCard;
-                                    }
-
-                                    return premiumQuotesAsync.when(
-                                      data: (quotes) {
-                                        final visibleQuotes = quotes.isEmpty
-                                            ? <Quote>[quote]
-                                            : quotes;
-                                        return _MainQuoteScroller(
-                                          quotes: visibleQuotes,
-                                          onQuoteTap: (Quote selectedQuote) =>
-                                              _showQuoteInsightSheet(
-                                                context,
-                                                selectedQuote,
-                                              ),
-                                        );
-                                      },
-                                      loading: () => fallbackCard,
-                                      error: (_, __) => fallbackCard,
-                                    );
-                                  },
-                                  fact: (fact) => FactBlock(
-                                    fact: fact,
-                                    onShareTap: () => ShareCardRenderer()
-                                        .shareFact(fact, context),
-                                    onRelatedQuoteTap:
-                                        fact.relatedQuoteIds.isNotEmpty
-                                        ? () => context.push(
-                                            '/detail/${fact.relatedQuoteIds.first}',
-                                          )
-                                        : null,
-                                  ),
-                                  thinkerQuote: (ThinkerQuote quote) =>
-                                      _ThinkerQuoteCard(quote: quote),
-                                ),
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                      loading: () => const AppInlineLoadingState(
-                        title: 'Tagesinhalt wird geladen',
-                        subtitle:
-                            'Home, Details und Widget werden vorbereitet ...',
-                      ),
-                      error: (error, _) => AppInlineErrorState(
-                        title: 'Ladevorgang fehlgeschlagen',
-                        message: 'Fehler: $error',
-                        onRetry: () => ref.invalidate(dailyContentProvider),
-                      ),
-                    ),
-                    const SizedBox(height: 24),
                     streakAsync.when(
                       data: (streak) => StreakBadge(
                         days: streak,
@@ -420,6 +404,52 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                               child: StreakCalendar(),
                             )
                           : const SizedBox.shrink(),
+                    ),
+                  ],
+                ),
+              ),
+
+              // ── Quick discovery row ──────────────────────────────────────
+              Padding(
+                padding: EdgeInsets.fromLTRB(
+                  AppTheme.spacingLarge,
+                  0,
+                  AppTheme.spacingLarge,
+                  AppTheme.spacingXl,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Container(height: 1, color: scheme.outline),
+                    const SizedBox(height: 14),
+                    Text(
+                      'ENTDECKEN',
+                      style: GoogleFonts.ibmPlexSans(
+                        fontSize: 9,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.inkMuted,
+                        letterSpacing: 1.4,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: _QuickActionTile(
+                            icon: Icons.favorite_border_outlined,
+                            label: 'FAVORITEN',
+                            onTap: () => context.push('/favorites'),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: _QuickActionTile(
+                            icon: Icons.person_outline,
+                            label: 'ACCOUNT',
+                            onTap: () => context.push('/account'),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -737,6 +767,52 @@ class _HeaderIconAction extends StatelessWidget {
                 size: 36,
               ),
             ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _QuickActionTile extends StatelessWidget {
+  const _QuickActionTile({
+    required this.icon,
+    required this.label,
+    required this.onTap,
+  });
+
+  final IconData icon;
+  final String label;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+          decoration: BoxDecoration(
+            border: Border.all(color: scheme.outline, width: 1),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Icon(icon, size: 15, color: scheme.onSurface),
+              const SizedBox(width: 8),
+              Text(
+                label,
+                style: GoogleFonts.ibmPlexSans(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w700,
+                  color: scheme.onSurface,
+                  letterSpacing: 1.2,
+                ),
+              ),
+            ],
           ),
         ),
       ),
