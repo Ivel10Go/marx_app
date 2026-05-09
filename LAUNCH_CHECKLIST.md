@@ -943,6 +943,7 @@ Kurzfristige Prioritäten (Reihenfolge):
 - [ ] **Final QA auf Zielgerät (Pixel6)**
   - Tests: Cold Start, Offline‑Loading, Navigation/Back, Purchase Flow, Sync, Restore, Theme/Fonts.
   - Runbook: [TEST_RUNBOOK_PIXEL6_FINAL_QA.md](TEST_RUNBOOK_PIXEL6_FINAL_QA.md)
+  - Automatischer Teil zuletzt gelaufen: `qa_reports/pixel6_final_qa_20260509_182332.md`
 - [ ] **Crashlytics & Monitoring einrichten**
   - Tasks: Crashlytics initialisieren, Alerts konfigurieren, erste Baseline‑Logs prüfen.
 - [ ] **Production Rollout & Monitoring**

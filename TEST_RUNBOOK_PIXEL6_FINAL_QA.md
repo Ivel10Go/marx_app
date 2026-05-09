@@ -15,6 +15,17 @@ Dieses Runbook dokumentiert den finalen, reproduzierbaren Pixel6-Check vor dem I
 - Testkonto fuer Google Play Billing ist verfuegbar.
 - Geraet: Pixel6 mit stabiler Internetverbindung.
 
+## Schnellstart (automatisierter Teil)
+
+```powershell
+pwsh tools/run_pixel6_final_qa.ps1
+```
+
+Erzeugt einen Report unter `qa_reports/` und verwendet vorhandene Skripte:
+- `tools/cold_start_test.ps1`
+- `tools/offline_test.ps1`
+- `tools/back_button_test.ps1`
+
 ## Testprotokoll
 
 - Datum:
