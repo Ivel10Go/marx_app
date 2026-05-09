@@ -941,6 +941,7 @@ Kurzfristige Prioritäten (Reihenfolge):
   - Status: `build/app/outputs/bundle/release/app-release.aab` lokal erzeugt.
 - [ ] **Final QA auf Zielgerät (Pixel6)**
   - Tests: Cold Start, Offline‑Loading, Navigation/Back, Purchase Flow, Sync, Restore, Theme/Fonts.
+  - Runbook: [TEST_RUNBOOK_PIXEL6_FINAL_QA.md](TEST_RUNBOOK_PIXEL6_FINAL_QA.md)
 - [ ] **Crashlytics & Monitoring einrichten**
   - Tasks: Crashlytics initialisieren, Alerts konfigurieren, erste Baseline‑Logs prüfen.
 - [ ] **Production Rollout & Monitoring**
@@ -958,4 +959,4 @@ Kommunikation & Verantwortlichkeiten:
 - Tägliches kurzes Update (Slack/Issues) — Fortschritt, Blocker, nächste Aktion.
 - Blocker eskalieren: Keystore, RevenueCat oder Supabase Keys.
 
-Nächster Schritt jetzt: `app-release.aab` in den Internal Test Track hochladen und End‑to‑End Tests auf Testgeräten durchführen.
+Nächster Schritt jetzt: Pixel6 Final-QA nach [TEST_RUNBOOK_PIXEL6_FINAL_QA.md](TEST_RUNBOOK_PIXEL6_FINAL_QA.md) durchführen, danach Internal Track Upload.
