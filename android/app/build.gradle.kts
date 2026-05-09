@@ -34,30 +34,29 @@ android {
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
+    // Load keystore properties if present (key.properties at project root).
+    val keystorePropertiesFile = rootProject.file("key.properties")
+    val keystoreProperties = Properties()
+    if (keystorePropertiesFile.exists()) {
+        keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+    }
+
+    signingConfigs {
+        create("release") {
+            val storeFilePath = keystoreProperties.getProperty("storeFile") ?: "release.keystore"
+            storeFile = file(storeFilePath)
+            storePassword = keystoreProperties.getProperty("storePassword")
+            keyAlias = keystoreProperties.getProperty("keyAlias")
+            keyPassword = keystoreProperties.getProperty("keyPassword")
+        }
+    }
 
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.getByName("release")
+            // Temporary: use debug signing when no local release keystore is provided.
+            // Replace with release signing (see tools/key.properties.example) before Play upload.
+            signingConfig = signingConfigs.getByName("debug")
         }
-    }
-}
-
-// Load keystore properties if present (key.properties at project root).
-val keystorePropertiesFile = rootProject.file("key.properties")
-val keystoreProperties = Properties()
-if (keystorePropertiesFile.exists()) {
-    keystoreProperties.load(FileInputStream(keystorePropertiesFile))
-}
-
-android.signingConfigs {
-    create("release") {
-        val storeFilePath = keystoreProperties.getProperty("storeFile") ?: "release.keystore"
-        storeFile = file(storeFilePath)
-        storePassword = keystoreProperties.getProperty("storePassword")
-        keyAlias = keystoreProperties.getProperty("keyAlias")
-        keyPassword = keystoreProperties.getProperty("keyPassword")
     }
 }
 
