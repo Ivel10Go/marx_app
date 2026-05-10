@@ -46,6 +46,10 @@ class CrashReportingService {
 
   Future<void> recordUnhandled(Object error, StackTrace stackTrace) async {
     if (!_enabled) return;
-    await FirebaseCrashlytics.instance.recordError(error, stackTrace, fatal: true);
+    await FirebaseCrashlytics.instance.recordError(
+      error,
+      stackTrace,
+      fatal: true,
+    );
   }
 }
