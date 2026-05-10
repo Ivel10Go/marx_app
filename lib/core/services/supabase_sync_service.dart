@@ -48,6 +48,15 @@ class SupabaseSyncService {
     }
   }
 
+  /// Entferne alle cloud-gespeicherten Favoriten eines Nutzers.
+  Future<void> clearFavoritesFromCloud(String userId) async {
+    try {
+      await _client.from('user_favorites').delete().eq('user_id', userId);
+    } catch (e) {
+      throw Exception('Fehler beim Löschen der Cloud-Favoriten: $e');
+    }
+  }
+
   /// Synchronisiere lokale Favoriten zur Cloud (Merge: union)
   Future<void> syncLocalFavoritesToCloud({
     required String userId,

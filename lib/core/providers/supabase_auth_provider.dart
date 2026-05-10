@@ -44,16 +44,23 @@ class AuthController extends StateNotifier<AsyncValue<AuthUser?>> {
         try {
           if (user != null) {
             // On login: merge local favorites to cloud and pull cloud favorites back locally
-            await _onLogin(user.id);
+            try {
+              await _onLogin(user.id);
+            } catch (e) {
+              // Log but don't fail - favorites sync is non-blocking
+              print('Favorites sync error: $e');
+            }
             // Link RevenueCat to this user id
             try {
               await PurchasesService.instance.logIn(user.id);
             } catch (e) {
               // non-fatal: log and continue
+              print('RevenueCat login error: $e');
             }
           }
         } catch (e) {
           // ignore sync errors here but log if needed
+          print('Auth state change error: $e');
         }
       },
       onError: (e, st) {

@@ -223,8 +223,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    // Red accent bar at the very top
-                    Container(height: 3, color: AppColors.red),
                     Padding(
                       padding: EdgeInsets.fromLTRB(
                         AppTheme.spacingLarge,
@@ -273,7 +271,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                           const SizedBox(height: 10),
                           // Main title
                           Text('ZITATATLAS', style: AppTheme.masthead),
-                          const SizedBox(height: 4),
+                          const SizedBox(height: 12),
+                          // Red accent line
+                          Container(width: 40, height: 2, color: AppColors.red),
+                          const SizedBox(height: 10),
                           // Date + issue number
                           Text(
                             _mastheadSubtitle(),
@@ -306,8 +307,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                           quote: (quote) {
                             final fallbackCard = QuoteCard(
                               quote: quote,
-                              onShare: () => ShareCardRenderer()
-                                  .shareQuote(quote, context),
+                              onShare: () => ShareCardRenderer().shareQuote(
+                                quote,
+                                context,
+                              ),
                               onTap: () =>
                                   _showQuoteInsightSheet(context, quote),
                               onLongPress: () =>
@@ -354,8 +357,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                   },
                   loading: () => const AppInlineLoadingState(
                     title: 'Tagesinhalt wird geladen',
-                    subtitle:
-                        'Home, Details und Widget werden vorbereitet ...',
+                    subtitle: 'Home, Details und Widget werden vorbereitet ...',
                   ),
                   error: (error, _) => AppInlineErrorState(
                     title: 'Ladevorgang fehlgeschlagen',

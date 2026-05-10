@@ -38,17 +38,18 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
           password: _passwordController.text,
         );
       }
-      if (mounted) {
-        context.pop();
-      }
+      // Prüfe mounted vor context.pop()
+      if (!mounted) return;
+
+      Navigator.of(context).pop();
     } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('Fehler: ${e.toString()}')));
-      }
-    } finally {
-      if (mounted) setState(() => _loading = false);
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Fehler: ${e.toString()}')));
+
+      setState(() => _loading = false);
     }
   }
 
@@ -387,6 +388,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
               onPressed: () async {
                 final email = resetEmailCtrl.text.trim();
                 if (email.isEmpty || !email.contains('@')) {
+                  if (!mounted) return;
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text('Bitte gib eine gültige E-Mail ein'),
@@ -399,22 +401,22 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                   await ref
                       .read(authControllerProvider.notifier)
                       .resetPassword(email);
-                  if (mounted) {
-                    Navigator.pop(dialogContext);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                          'Passwort-Reset-Link wurde gesendet. Bitte überprüfe dein Postfach.',
-                        ),
+
+                  if (!mounted) return;
+                  Navigator.pop(dialogContext);
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        'Passwort-Reset-Link wurde gesendet. Bitte überprüfe dein Postfach.',
                       ),
-                    );
-                  }
+                    ),
+                  );
                 } catch (e) {
-                  if (mounted) {
-                    ScaffoldMessenger.of(
-                      context,
-                    ).showSnackBar(SnackBar(content: Text('Fehler: $e')));
-                  }
+                  if (!mounted) return;
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text('Fehler: $e')));
                 }
               },
               child: const Text('Senden'),

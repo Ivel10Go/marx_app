@@ -1,11 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_theme.dart';
+import '../../core/services/account_privacy_service.dart';
 import '../../core/providers/supabase_auth_provider.dart';
 import '../../core/services/supabase_sync_service.dart';
 import '../../data/models/user_profile.dart';
@@ -96,6 +100,8 @@ class AccountScreen extends ConsumerWidget {
                     profile: profile,
                     interestsSummary: interestsSummary,
                   ),
+                  SizedBox(height: AppTheme.spacingXl),
+                  _PrivacyCard(context: context, ref: ref),
                   if (kDebugMode) ...[
                     SizedBox(height: AppTheme.spacingXl),
                     _DebugCard(context: context, ref: ref),
@@ -268,7 +274,7 @@ class _AuthCard extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton.icon(
-                  onPressed: () => _showAuthDialog(context, ref),
+                  onPressed: () => context.push('/auth'),
                   icon: const Icon(Icons.login),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: scheme.onSurface,
@@ -365,6 +371,99 @@ class _PersonalizationCard extends StatelessWidget {
               label: 'Politische Haltung',
               value: _leaningLabel(profile.politicalLeaning),
               onTap: () => _showLeaningSheet(context, ref, profile),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _PrivacyCard extends StatelessWidget {
+  const _PrivacyCard({required this.context, required this.ref});
+
+  final BuildContext context;
+  final WidgetRef ref;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
+    return Container(
+      decoration: BoxDecoration(
+        color: scheme.surface,
+        border: Border.all(color: scheme.outline, width: 1),
+        borderRadius: BorderRadius.circular(2),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: AppColors.paperDark,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.shield_outlined,
+                    color: AppColors.red,
+                    size: 20,
+                  ),
+                ),
+                const SizedBox(width: 14),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      'DATENSCHUTZ',
+                      style: GoogleFonts.ibmPlexSans(
+                        fontSize: 9,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.red,
+                        letterSpacing: 1.4,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      'Exportiere oder lösche deine lokalen Nutzerdaten.',
+                      style: GoogleFonts.ibmPlexSans(
+                        fontSize: 11,
+                        color: scheme.onSurfaceVariant,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Container(height: 1, color: scheme.outline),
+            const SizedBox(height: 16),
+            SizedBox(
+              width: double.infinity,
+              child: OutlinedButton.icon(
+                onPressed: () => _exportPersonalData(context, ref),
+                icon: const Icon(Icons.download_outlined),
+                label: const Text('DATENAUSZUG EXPORTIEREN'),
+              ),
+            ),
+            const SizedBox(height: 10),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                onPressed: () => _confirmDeletePersonalData(context, ref),
+                icon: const Icon(Icons.delete_forever_outlined),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.red,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                ),
+                label: const Text('KONTO & LOKALE DATEN LÖSCHEN'),
+              ),
             ),
           ],
         ),
@@ -470,9 +569,10 @@ class _DebugCard extends StatelessWidget {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () async {
+                  final messenger = ScaffoldMessenger.of(context);
                   final userId = ref.read(currentUserIdProvider);
                   if (userId == null) {
-                    ScaffoldMessenger.of(context).showSnackBar(
+                    messenger.showSnackBar(
                       const SnackBar(content: Text('Nicht angemeldet')),
                     );
                     return;
@@ -482,7 +582,7 @@ class _DebugCard extends StatelessWidget {
                   final localFavs = await quoteRepo.watchFavorites().first;
                   final localIds = localFavs.map((q) => q.id).toList();
 
-                  ScaffoldMessenger.of(context).showSnackBar(
+                  messenger.showSnackBar(
                     const SnackBar(content: Text('Sync gestartet...')),
                   );
 
@@ -491,13 +591,13 @@ class _DebugCard extends StatelessWidget {
                       userId: userId,
                       localFavoriteIds: localIds,
                     );
-                    ScaffoldMessenger.of(context).showSnackBar(
+                    messenger.showSnackBar(
                       const SnackBar(content: Text('Sync erfolgreich')),
                     );
                   } catch (e) {
-                    ScaffoldMessenger.of(
-                      context,
-                    ).showSnackBar(SnackBar(content: Text('Fehler: $e')));
+                    messenger.showSnackBar(
+                      SnackBar(content: Text('Fehler: $e')),
+                    );
                   }
                 },
                 style: ElevatedButton.styleFrom(
@@ -513,12 +613,11 @@ class _DebugCard extends StatelessWidget {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () async {
+                  final messenger = ScaffoldMessenger.of(context);
                   await ref.read(userProfileProvider.notifier).resetProfile();
-                  if (context.mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Profil zurückgesetzt')),
-                    );
-                  }
+                  messenger.showSnackBar(
+                    const SnackBar(content: Text('Profil zurückgesetzt')),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.red[700],
@@ -558,91 +657,6 @@ String _leaningLabel(PoliticalLeaning leaning) {
     case PoliticalLeaning.conservative:
       return 'Konservativ';
   }
-}
-
-Future<void> _showAuthDialog(BuildContext context, WidgetRef ref) async {
-  final emailCtrl = TextEditingController();
-  final passCtrl = TextEditingController();
-  var isLogin = true;
-
-  await showDialog<void>(
-    context: context,
-    builder: (dialogContext) {
-      return AlertDialog(
-        title: const Text('Anmelden / Registrieren'),
-        content: StatefulBuilder(
-          builder: (ctx, setState) {
-            return Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                TextField(
-                  controller: emailCtrl,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(labelText: 'E-Mail'),
-                ),
-                const SizedBox(height: 12),
-                TextField(
-                  controller: passCtrl,
-                  obscureText: true,
-                  decoration: const InputDecoration(labelText: 'Passwort'),
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    TextButton(
-                      onPressed: () => setState(() => isLogin = !isLogin),
-                      child: Text(isLogin ? 'Registrieren' : 'Anmelden'),
-                    ),
-                  ],
-                ),
-              ],
-            );
-          },
-        ),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext),
-            child: const Text('Abbrechen'),
-          ),
-          ElevatedButton(
-            onPressed: () async {
-              try {
-                if (isLogin) {
-                  await ref
-                      .read(authControllerProvider.notifier)
-                      .signIn(
-                        email: emailCtrl.text.trim(),
-                        password: passCtrl.text.trim(),
-                      );
-                } else {
-                  await ref
-                      .read(authControllerProvider.notifier)
-                      .signUp(
-                        email: emailCtrl.text.trim(),
-                        password: passCtrl.text.trim(),
-                      );
-                }
-                if (context.mounted) {
-                  Navigator.pop(dialogContext);
-                }
-              } catch (e) {
-                if (context.mounted) {
-                  ScaffoldMessenger.of(
-                    context,
-                  ).showSnackBar(SnackBar(content: Text('Fehler: $e')));
-                }
-              }
-            },
-            child: Text(isLogin ? 'Anmelden' : 'Registrieren'),
-          ),
-        ],
-      );
-    },
-  );
-
-  emailCtrl.dispose();
-  passCtrl.dispose();
 }
 
 Future<void> _showInterestsSheet(
@@ -843,4 +857,89 @@ Future<void> _showLeaningSheet(
       );
     },
   );
+}
+
+Future<void> _exportPersonalData(BuildContext context, WidgetRef ref) async {
+  final messenger = ScaffoldMessenger.of(context);
+  final quoteRepo = ref.read(quoteRepositoryProvider);
+  final authUser = ref.read(authControllerProvider).valueOrNull;
+  final favoriteQuotes = await quoteRepo.watchFavorites().first;
+  final favoriteIds = favoriteQuotes.map((quote) => quote.id).toList();
+
+  final exportJson = await AccountPrivacyService().buildExportJson(
+    authUser: authUser,
+    favoriteIds: favoriteIds,
+  );
+
+  final stamp = DateTime.now().toIso8601String().replaceAll(':', '-');
+  final fileName = 'marx_app_datenauszug_$stamp.json';
+
+  await Share.shareXFiles([
+    XFile.fromData(
+      utf8.encode(exportJson),
+      name: fileName,
+      mimeType: 'application/json',
+    ),
+  ], text: 'Datenauszug für Marx App');
+
+  messenger.showSnackBar(
+    const SnackBar(content: Text('Datenauszug vorbereitet.')),
+  );
+}
+
+Future<void> _confirmDeletePersonalData(
+  BuildContext context,
+  WidgetRef ref,
+) async {
+  final messenger = ScaffoldMessenger.of(context);
+  final shouldDelete = await showDialog<bool>(
+    context: context,
+    builder: (dialogContext) {
+      return AlertDialog(
+        title: const Text('Daten wirklich löschen?'),
+        content: const Text(
+          'Damit werden lokale Einstellungen, Favoriten, gelesene Inhalte und Cloud-Favoriten entfernt. Danach wirst du abgemeldet.',
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, false),
+            child: const Text('Abbrechen'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, true),
+            child: const Text('Löschen'),
+          ),
+        ],
+      );
+    },
+  );
+
+  if (shouldDelete != true) {
+    return;
+  }
+
+  final authUser = ref.read(authControllerProvider).valueOrNull;
+  final quoteRepo = ref.read(quoteRepositoryProvider);
+  final syncService = SupabaseSyncService();
+  final privacyService = AccountPrivacyService();
+
+  try {
+    if (authUser != null) {
+      await syncService.clearFavoritesFromCloud(authUser.id);
+    }
+
+    await privacyService.clearLocalUserData(quoteRepository: quoteRepo);
+
+    if (authUser != null) {
+      await ref.read(authControllerProvider.notifier).signOut();
+    }
+
+    messenger.showSnackBar(
+      const SnackBar(content: Text('Nutzerdaten wurden gelöscht.')),
+    );
+  } catch (e) {
+    messenger.showSnackBar(
+      SnackBar(content: Text('Löschen fehlgeschlagen: $e')),
+    );
+  }
 }

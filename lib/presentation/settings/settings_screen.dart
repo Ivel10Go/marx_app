@@ -66,7 +66,8 @@ class SettingsScreen extends ConsumerWidget {
                 ],
               ),
             ),
-            const SizedBox.shrink(),
+            // Bottom separator
+            Container(height: 1, color: scheme.outline),
             Expanded(
               child: settingsAsync.when(
                 data: (settings) {

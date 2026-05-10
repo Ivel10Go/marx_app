@@ -43,12 +43,20 @@ class SupabaseAuthService {
   /// Email/Passwort Registrierung
   Future<AuthUser> signUpWithEmail(String email, String password) async {
     try {
-      final res = await _client.auth.signUp(email: email, password: password);
+      final res = await _client.auth.signUp(
+        email: email,
+        password: password,
+        emailRedirectTo:
+            'https://yourdomain.tld/auth/callback', // Fallback, wird meist nicht genutzt
+      );
       final user = res.user;
       if (user == null) {
         throw Exception('Benutzer konnte nicht registriert werden');
       }
       return _mapToAuthUser(user)!;
+    } on AuthException catch (e) {
+      // Besseres Error-Handling für Auth-spezifische Fehler
+      throw Exception('Auth Error: ${e.message}');
     } catch (e) {
       rethrow;
     }
@@ -64,6 +72,8 @@ class SupabaseAuthService {
       final user = res.user;
       if (user == null) throw Exception('Anmeldung fehlgeschlagen');
       return _mapToAuthUser(user)!;
+    } on AuthException catch (e) {
+      throw Exception('Auth Error: ${e.message}');
     } catch (e) {
       rethrow;
     }

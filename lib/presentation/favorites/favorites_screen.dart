@@ -19,6 +19,7 @@ class FavoritesScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final favoritesAsync = ref.watch(favoritesProvider);
+    final scheme = Theme.of(context).colorScheme;
 
     return AndroidBackGuard(
       child: AppDecoratedScaffold(
@@ -28,7 +29,7 @@ class FavoritesScreen extends ConsumerWidget {
           children: <Widget>[
             // Masthead
             Container(
-              color: AppColors.paper,
+              color: scheme.surface,
               padding: EdgeInsets.fromLTRB(
                 AppTheme.spacingLarge,
                 AppTheme.spacingBase,
@@ -38,118 +39,90 @@ class FavoritesScreen extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  favoritesAsync.when(
-                    data: (quotes) {
-                      return Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: <Widget>[
-                          Text(
-                            'FAVORITEN',
-                            style: GoogleFonts.playfairDisplay(
-                              fontSize: 32,
-                              fontWeight: FontWeight.w700,
-                              color: AppColors.ink,
-                              letterSpacing: -0.5,
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          Padding(
-                            padding: EdgeInsets.only(
-                              bottom: AppTheme.spacingXs,
-                            ),
-                            child: Text(
-                              '${quotes.length} Einträge',
-                              style: GoogleFonts.ibmPlexSans(
-                                fontSize: 11,
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.inkMuted,
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                    loading: () => Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: <Widget>[
-                        Text(
-                          'FAVORITEN',
-                          style: GoogleFonts.playfairDisplay(
-                            fontSize: 32,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.ink,
-                            letterSpacing: -0.5,
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 4),
-                          child: Text(
-                            '— Einträge',
-                            style: GoogleFonts.ibmPlexSans(
-                              fontSize: 11,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.inkMuted,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    error: (_, __) => Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: <Widget>[
-                        Text(
-                          'FAVORITEN',
-                          style: GoogleFonts.playfairDisplay(
-                            fontSize: 32,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.ink,
-                            letterSpacing: -0.5,
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 4),
-                          child: Text(
-                            '— Einträge',
-                            style: GoogleFonts.ibmPlexSans(
-                              fontSize: 11,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.inkMuted,
-                            ),
-                          ),
-                        ),
-                      ],
+                  // Title
+                  Text(
+                    'FAVORITEN',
+                    style: GoogleFonts.playfairDisplay(
+                      fontSize: 32,
+                      fontWeight: FontWeight.w700,
+                      color: scheme.onSurface,
+                      letterSpacing: -0.5,
                     ),
                   ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton.icon(
-                      onPressed: favoritesAsync.maybeWhen(
-                        data: (quotes) => () async {
-                          final service = PdfExportService();
-                          await service.exportFavorites(
-                            quotes: quotes,
-                            facts: const [],
+                  const SizedBox(height: 12),
+                  // Red accent line
+                  Container(width: 40, height: 2, color: AppColors.red),
+                  const SizedBox(height: 10),
+                  // Description
+                  Text(
+                    'Deine gespeicherten Lieblingszitate zum Revisieren und Teilen.',
+                    style: GoogleFonts.ibmPlexSans(
+                      fontSize: 11,
+                      color: scheme.onSurfaceVariant,
+                      height: 1.5,
+                    ),
+                  ),
+                  const SizedBox(height: 14),
+                  // Count and PDF button row
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      favoritesAsync.when(
+                        data: (quotes) {
+                          return Text(
+                            '${quotes.length} Einträge',
+                            style: GoogleFonts.ibmPlexSans(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w500,
+                              color: scheme.onSurfaceVariant,
+                            ),
                           );
                         },
-                        orElse: () => null,
-                      ),
-                      icon: const Icon(Icons.picture_as_pdf_outlined, size: 18),
-                      label: Text(
-                        'PDF',
-                        style: GoogleFonts.ibmPlexSans(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
+                        loading: () => Text(
+                          '— Einträge',
+                          style: GoogleFonts.ibmPlexSans(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w500,
+                            color: scheme.onSurfaceVariant,
+                          ),
+                        ),
+                        error: (_, __) => Text(
+                          '— Einträge',
+                          style: GoogleFonts.ibmPlexSans(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w500,
+                            color: scheme.onSurfaceVariant,
+                          ),
                         ),
                       ),
-                      style: TextButton.styleFrom(
-                        foregroundColor: AppColors.red,
+                      TextButton.icon(
+                        onPressed: favoritesAsync.maybeWhen(
+                          data: (quotes) => () async {
+                            final service = PdfExportService();
+                            await service.exportFavorites(
+                              quotes: quotes,
+                              facts: const [],
+                            );
+                          },
+                          orElse: () => null,
+                        ),
+                        icon: const Icon(
+                          Icons.picture_as_pdf_outlined,
+                          size: 18,
+                        ),
+                        label: Text(
+                          'PDF',
+                          style: GoogleFonts.ibmPlexSans(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        style: TextButton.styleFrom(
+                          foregroundColor: AppColors.red,
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                  SizedBox(height: AppTheme.spacingMedium),
-                  Container(width: 40, height: 2, color: AppColors.red),
                 ],
               ),
             ),
