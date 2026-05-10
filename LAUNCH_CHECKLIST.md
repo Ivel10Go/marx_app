@@ -684,6 +684,7 @@ Nutze diese Vorlage für jeden abgeschlossenen Hauptpunkt oder jeden wichtigen T
 - [ ] **Google Play Developer Account**
   - [ ] Account aktiviert
   - [ ] $25 Gebühr bezahlt (einmalig)
+  - NOTE: Developer Account creation is postponed — perform this as the final pre-release step.
 
 - [ ] **Package Name** — Eindeutig und reserviert
   - [ ] Package: `com.marxapp.zitatatlas` (Beispiel, anpassen)
@@ -916,9 +917,50 @@ Nutze diese Vorlage für jeden abgeschlossenen Hauptpunkt oder jeden wichtigen T
 
 ---
 
-## Nächste Schritte
+## Launch-Monat: Mai 2026 — Fokussierter Plan bis zum Release
 
-1. **Offene Phase-1-Restpunkte prüfen**: Cold Start, Offline-Loading, Back-Button, Crash-/Warning-Status.
-2. **Phase 2 priorisiert abarbeiten**: erst Lesbarkeit und Abstände, dann Farben und Zustände.
-3. **Testkontext je Punkt dokumentieren**: Gerät, Build, Datum, Ergebnis.
-4. **Checkliste nach jeder Session aktualisieren**: Status, offene Risiken, nächste konkrete Aktion.
+Ziel: Release auf Google Play diesen Monat (Ende Mai). Priorität: Stabilität, Auth & Sync, Store‑Metadaten, Release‑Signierung.
+
+Kurzfristige Prioritäten (Reihenfolge):
+
+- [x] **Supabase Projekt finalisieren**
+  - Tasks: Projekt anlegen, DB‑Schema deployen, RLS‑Policies aktivieren, Anon/Service Keys sichern.
+- [x] **Auth Service & Riverpod Provider implementieren**
+  - Tasks: `supabase_flutter` integrieren, `SupabaseAuthService` implementieren, `currentSupabaseUserProvider` bereitstellen.
+- [x] **Favorites Cloud‑Sync & Migration**
+  - Tasks: Sync‑Service implementieren, lokale Favoriten migrieren, Merge‑Strategie (Union) testen.
+- [x] **RevenueCat ↔ Login Flow testen**
+  - Tasks: `Purchases.logIn(userId)`/`logOut()` testen, Entitlement Refresh mit Login/Logout prüfen.
+- [x] **Android Keystore & Release Signing finalisieren**
+  - Tasks: Keystore prüfen/erstellen, `signingConfig` setzen, Test‑Release‑Build erzeugen.
+  - Verifiziert: Release‑Keystore lokal erstellt, `key.properties` gesetzt, `flutter build appbundle --release` erfolgreich.
+- [ ] **Play Store Metadaten & Screenshots erstellen**
+  - Tasks: Short/Full Description, Screenshots (6.7" + 5.1"), Feature Graphic, Privacy URL, Support‑Email.
+- [ ] **Internal Test Track Release + Tests**
+  - Tasks: AAB bauen, Internal Track hochladen, 1–2 Testgeräte validieren (Purchase, Restore, Login, Sync).
+  - Status: `build/app/outputs/bundle/release/app-release.aab` lokal erzeugt.
+  - Runbook: [INTERNAL_TRACK_UPLOAD_RUNBOOK.md](INTERNAL_TRACK_UPLOAD_RUNBOOK.md)
+- [ ] **Final QA auf Zielgerät (Pixel6)**
+  - Tests: Cold Start, Offline‑Loading, Navigation/Back, Purchase Flow, Sync, Restore, Theme/Fonts.
+  - Runbook: [TEST_RUNBOOK_PIXEL6_FINAL_QA.md](TEST_RUNBOOK_PIXEL6_FINAL_QA.md)
+  - Automatischer Teil zuletzt gelaufen: `qa_reports/pixel6_final_qa_20260509_182332.md`
+- [ ] **Crashlytics & Monitoring einrichten**
+  - Tasks: Crashlytics initialisieren, Alerts konfigurieren, erste Baseline‑Logs prüfen.
+  - Status: `firebase_core` + `firebase_crashlytics` integriert, Startup-Hooks in `main.dart` aktiv (Release-only, fail-safe ohne Firebase-Config).
+  - Offen: `flutterfire configure` ausführen und produktive Firebase-Projektwerte hinterlegen.
+- [ ] **Production Rollout & Monitoring**
+  - Tasks: Staged Rollout (10–25%), enges Monitoring 24–48h, Bugfix‑Patch‑Plan bereitstellen.
+
+Kurz‑Zeitplan (empfohlen):
+
+- Woche 1 (sofort): Supabase abschließen; Auth‑Service starten; Keystore prüfen.
+- Woche 2: Favorites‑Sync implementieren; RevenueCat+Login Tests.
+- Woche 3: Play Store Metadaten + Screenshots finalisieren; Internal Track Release.
+- Letzte Woche: Final QA auf Pixel6; Crashlytics aktiv; Production Rollout starten.
+
+Kommunikation & Verantwortlichkeiten:
+
+- Tägliches kurzes Update (Slack/Issues) — Fortschritt, Blocker, nächste Aktion.
+- Blocker eskalieren: Keystore, RevenueCat oder Supabase Keys.
+
+Nächster Schritt jetzt: `app-release.aab` im Internal Track hochladen, dann Pixel6 Final-QA nach [TEST_RUNBOOK_PIXEL6_FINAL_QA.md](TEST_RUNBOOK_PIXEL6_FINAL_QA.md) protokollieren.
