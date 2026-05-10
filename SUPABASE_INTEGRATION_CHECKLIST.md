@@ -22,11 +22,11 @@ Diese Checklist führt dich durch alle Schritte um Supabase in der Marx App zu i
 
 **Folge:** [SUPABASE_SETUP.md](SUPABASE_SETUP.md) → Phase 1-3
 
-- [ ] **Konto erstellen & Projekt anlegen**
-  - [ ] Supabase.com Account
-  - [ ] "Marx Zitatatlas" Projekt
-  - [ ] Region gewählt (z.B. Frankfurt)
-  - [ ] Warten auf Initialisierung
+- [x] **Konto erstellen & Projekt anlegen**
+  - [x] Supabase.com Account
+  - [x] "Marx Zitatatlas" Projekt
+  - [x] Region gewählt (z.B. Frankfurt)
+  - [x] Warten auf Initialisierung
 
 - [ ] **Credentials kopieren & speichern**
   - [ ] Project URL → `SUPABASE_URL`
@@ -34,10 +34,10 @@ Diese Checklist führt dich durch alle Schritte um Supabase in der Marx App zu i
   - [ ] Service Role Key (sicher speichern)
 
 - [ ] **Database Schema deployen**
-  - [ ] Profiles Table erstellt
-  - [ ] User Favorites Table erstellt
-  - [ ] Trigger `handle_new_user()` aktiv
-  - [ ] RLS Policies aktiviert
+  - [x] Profiles Table erstellt
+  - [x] User Favorites Table erstellt
+  - [x] Trigger `handle_new_user()` aktiv
+  - [x] RLS Policies aktiviert
 
 - [ ] **Authentication konfigurieren**
   - [ ] Email Provider aktiviert

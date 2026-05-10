@@ -191,7 +191,7 @@ abstract final class AppBootstrap {
           ? launchRoute
           : onboardingSeen
           ? '/'
-          : '/auth';
+          : '/onboarding';
       routeStart.stop();
       debugPrint(
         '[Bootstrap] Initial route determined in ${routeStart.elapsedMilliseconds}ms',
