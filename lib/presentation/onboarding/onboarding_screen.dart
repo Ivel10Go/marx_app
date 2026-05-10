@@ -4,10 +4,12 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../core/providers/supabase_auth_provider.dart';
+import '../../core/services/supabase_auth_service.dart';
 import '../../core/services/notification_service.dart';
 import '../../core/theme/app_colors.dart';
 import '../../data/models/user_profile.dart';
 import '../../domain/providers/user_profile_provider.dart';
+import '../../domain/providers/daily_content_provider.dart';
 import '../../widgets/app_decorated_scaffold.dart';
 import 'pages/interests_page.dart';
 import 'pages/notification_permission_page.dart';
@@ -63,6 +65,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       }
 
       ref.invalidate(userProfileProvider);
+      // Invalidate daily content so it reloads with the new profile
+      ref.invalidate(dailyContentProvider);
       if (mounted) {
         context.go('/');
       }
@@ -212,16 +216,17 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   }
 }
 
-class _AuthOnboardingPage extends StatefulWidget {
+class _AuthOnboardingPage extends ConsumerStatefulWidget {
   const _AuthOnboardingPage({required this.onSkip});
 
   final VoidCallback onSkip;
 
   @override
-  State<_AuthOnboardingPage> createState() => _AuthOnboardingPageState();
+  ConsumerState<_AuthOnboardingPage> createState() =>
+      _AuthOnboardingPageState();
 }
 
-class _AuthOnboardingPageState extends State<_AuthOnboardingPage> {
+class _AuthOnboardingPageState extends ConsumerState<_AuthOnboardingPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -306,19 +311,33 @@ class _AuthOnboardingPageState extends State<_AuthOnboardingPage> {
   Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) return;
     setState(() => _loading = true);
-    try {
-      // Placeholder - would need proper auth flow integration
-      // For beta, we allow skipping
-      if (mounted) widget.onSkip();
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('Fehler: ${e.toString()}')));
-      }
-    } finally {
-      if (mounted) setState(() => _loading = false);
+    final authController = ref.read(authControllerProvider.notifier);
+    final success = _isSignUp
+        ? await authController.signUp(
+            email: _emailController.text.trim(),
+            password: _passwordController.text,
+          )
+        : await authController.signIn(
+            email: _emailController.text.trim(),
+            password: _passwordController.text,
+          );
+
+    if (!mounted) {
+      return;
     }
+
+    if (success) {
+      widget.onSkip();
+      return;
+    }
+
+    final authError = ref
+        .read(authControllerProvider)
+        .maybeWhen(error: (e, _) => e, orElse: () => null);
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(authErrorMessage(authError))));
+    setState(() => _loading = false);
   }
 }
 

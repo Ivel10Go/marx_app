@@ -89,3 +89,24 @@ class SupabaseAuthService {
     await _client.auth.resetPasswordForEmail(email);
   }
 }
+
+String authErrorMessage(Object? error) {
+  final raw = (error ?? '').toString().toLowerCase();
+
+  if (raw.contains('invalid login credentials')) {
+    return 'Ungueltige Anmeldedaten. Pruefe E-Mail und Passwort oder registriere dich.';
+  }
+  if (raw.contains('email not confirmed')) {
+    return 'Bitte bestaetige zuerst deine E-Mail-Adresse.';
+  }
+  if (raw.contains('user already registered')) {
+    return 'Diese E-Mail ist bereits registriert. Bitte melde dich an.';
+  }
+  if (raw.contains('network') ||
+      raw.contains('socket') ||
+      raw.contains('timeout')) {
+    return 'Netzwerkfehler. Bitte pruefe deine Verbindung und versuche es erneut.';
+  }
+
+  return 'Authentifizierung fehlgeschlagen. Bitte versuche es erneut.';
+}

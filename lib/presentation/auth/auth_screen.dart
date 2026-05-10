@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../core/providers/supabase_auth_provider.dart';
+import '../../core/services/supabase_auth_service.dart';
 import '../../core/theme/app_colors.dart';
 
 class AuthScreen extends ConsumerStatefulWidget {
@@ -26,31 +27,33 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
     if (!_formKey.currentState!.validate()) return;
     setState(() => _loading = true);
     final authController = ref.read(authControllerProvider.notifier);
-    try {
-      if (_isSignUp) {
-        await authController.signUp(
-          email: _emailController.text.trim(),
-          password: _passwordController.text,
-        );
-      } else {
-        await authController.signIn(
-          email: _emailController.text.trim(),
-          password: _passwordController.text,
-        );
-      }
-      // Prüfe mounted vor context.pop()
-      if (!mounted) return;
+    final success = _isSignUp
+        ? await authController.signUp(
+            email: _emailController.text.trim(),
+            password: _passwordController.text,
+          )
+        : await authController.signIn(
+            email: _emailController.text.trim(),
+            password: _passwordController.text,
+          );
 
-      Navigator.of(context).pop();
-    } catch (e) {
-      if (!mounted) return;
-
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Fehler: ${e.toString()}')));
-
-      setState(() => _loading = false);
+    if (!mounted) {
+      return;
     }
+
+    if (success) {
+      Navigator.of(context).pop();
+      return;
+    }
+
+    final authError = ref
+        .read(authControllerProvider)
+        .maybeWhen(error: (e, _) => e, orElse: () => null);
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(authErrorMessage(authError))));
+
+    setState(() => _loading = false);
   }
 
   @override

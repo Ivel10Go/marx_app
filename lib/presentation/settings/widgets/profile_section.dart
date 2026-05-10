@@ -11,6 +11,7 @@ import '../../../domain/providers/repository_providers.dart';
 import '../../../data/models/user_profile.dart';
 import '../../../domain/providers/daily_content_provider.dart';
 import '../../../core/providers/supabase_auth_provider.dart';
+import '../../../core/services/supabase_auth_service.dart';
 import '../../../domain/providers/user_profile_provider.dart';
 import '../../../widgets/political_leaning_parliament_picker.dart';
 
@@ -207,29 +208,38 @@ class ProfileSection extends ConsumerWidget {
                       onPressed: loading
                           ? null
                           : () async {
-                              try {
-                                if (isLogin) {
-                                  await ref
-                                      .read(authControllerProvider.notifier)
-                                      .signIn(
-                                        email: emailCtrl.text.trim(),
-                                        password: passCtrl.text.trim(),
-                                      );
-                                } else {
-                                  await ref
-                                      .read(authControllerProvider.notifier)
-                                      .signUp(
-                                        email: emailCtrl.text.trim(),
-                                        password: passCtrl.text.trim(),
-                                      );
-                                }
-                                if (context.mounted) Navigator.of(ctx).pop();
-                              } catch (e) {
-                                if (!context.mounted) return;
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text('Fehler: $e')),
-                                );
+                              final success = isLogin
+                                  ? await ref
+                                        .read(authControllerProvider.notifier)
+                                        .signIn(
+                                          email: emailCtrl.text.trim(),
+                                          password: passCtrl.text.trim(),
+                                        )
+                                  : await ref
+                                        .read(authControllerProvider.notifier)
+                                        .signUp(
+                                          email: emailCtrl.text.trim(),
+                                          password: passCtrl.text.trim(),
+                                        );
+
+                              if (!context.mounted) return;
+
+                              if (success) {
+                                Navigator.of(ctx).pop();
+                                return;
                               }
+
+                              final authError = ref
+                                  .read(authControllerProvider)
+                                  .maybeWhen(
+                                    error: (e, _) => e,
+                                    orElse: () => null,
+                                  );
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(authErrorMessage(authError)),
+                                ),
+                              );
                             },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: scheme.onSurface,

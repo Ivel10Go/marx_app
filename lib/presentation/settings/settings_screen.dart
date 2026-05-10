@@ -87,124 +87,6 @@ class SettingsScreen extends ConsumerWidget {
                         onTap: () => context.push('/account'),
                       ),
                       SizedBox(height: AppTheme.spacingLarge),
-                      _SettingsGroup(
-                        title: 'BENACHRICHTIGUNGEN',
-                        children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      'Täglich aktiv',
-                                      style: GoogleFonts.ibmPlexSans(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                        color: AppColors.ink,
-                                      ),
-                                    ),
-                                    SizedBox(height: AppTheme.spacingXs),
-                                    Text(
-                                      'Bei Aktivierung wird dein Tagesinhalt (Zitat oder Fact) jeden Tag zur gewählten Uhrzeit geplant.',
-                                      style: GoogleFonts.ibmPlexSans(
-                                        fontSize: 10,
-                                        color: AppColors.inkLight,
-                                        height: 1.4,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Switch.adaptive(
-                                value: settings.notificationEnabled,
-                                onChanged: (bool enabled) async {
-                                  try {
-                                    await ref
-                                        .read(
-                                          settingsControllerProvider.notifier,
-                                        )
-                                        .setNotificationEnabled(enabled);
-                                  } catch (e) {
-                                    if (!context.mounted) {
-                                      return;
-                                    }
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text(
-                                          'Benachrichtigung konnte nicht aktualisiert werden: $e',
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                },
-                                activeThumbColor: AppColors.red,
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 14),
-                          GestureDetector(
-                            onTap: () async {
-                              if (!settings.notificationEnabled) {
-                                return;
-                              }
-
-                              final selected = await showTimePicker(
-                                context: context,
-                                initialTime: TimeOfDay(
-                                  hour: settings.notificationHour,
-                                  minute: settings.notificationMinute,
-                                ),
-                              );
-                              if (selected != null && context.mounted) {
-                                try {
-                                  await ref
-                                      .read(settingsControllerProvider.notifier)
-                                      .setNotificationTime(selected);
-                                } catch (e) {
-                                  if (!context.mounted) {
-                                    return;
-                                  }
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                        'Benachrichtigungszeit konnte nicht gespeichert werden: $e',
-                                      ),
-                                    ),
-                                  );
-                                }
-                              }
-                            },
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  'Benachrichtigungszeit',
-                                  style: GoogleFonts.ibmPlexSans(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w600,
-                                    color: settings.notificationEnabled
-                                        ? AppColors.ink
-                                        : AppColors.inkLight,
-                                  ),
-                                ),
-                                SizedBox(height: AppTheme.spacingXs),
-                                Text(
-                                  '${settings.notificationHour.toString().padLeft(2, '0')}:${settings.notificationMinute.toString().padLeft(2, '0')}',
-                                  style: GoogleFonts.ibmPlexSans(
-                                    fontSize: 10,
-                                    color: settings.notificationEnabled
-                                        ? AppColors.inkLight
-                                        : AppColors.inkMuted,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: AppTheme.spacingLarge),
                       if (isAdmin) ...<Widget>[
                         _SettingsGroup(
                           title: 'ADMIN',
@@ -407,6 +289,7 @@ class SettingsScreen extends ConsumerWidget {
       ),
     );
   }
+
 }
 
 // Settings intro/tip card removed per scope-reduction request.

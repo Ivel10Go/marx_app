@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/providers/supabase_auth_provider.dart';
 import '../../data/models/daily_content.dart';
 import '../../data/models/history_fact.dart';
 import '../../data/models/quote.dart';
@@ -91,34 +92,37 @@ DailyContent? _deserializeDailyContent(String? raw) {
   }
 }
 
-Future<void> _cacheDailyContent(DailyContent content) async {
+Future<void> _cacheDailyContent(DailyContent content, String userId) async {
   try {
     final prefs = await SharedPreferences.getInstance();
     final today = DateTime.now();
     final dateKey =
         '${today.year}-${today.month.toString().padLeft(2, '0')}-${today.day.toString().padLeft(2, '0')}';
 
-    await prefs.setString(
-      _cachedDailyContentKey,
-      _serializeDailyContent(content),
-    );
-    await prefs.setString(_cachedDailyContentDateKey, dateKey);
+    final userContentKey = '${_cachedDailyContentKey}_${userId}_${dateKey}';
+    final userDateKey = '${_cachedDailyContentDateKey}_${userId}_${dateKey}';
+
+    await prefs.setString(userContentKey, _serializeDailyContent(content));
+    await prefs.setString(userDateKey, dateKey);
   } catch (_) {
     // Cache is best-effort only.
   }
 }
 
-Future<DailyContent?> _readCachedDailyContent() async {
+Future<DailyContent?> _readCachedDailyContent(String userId) async {
   try {
     final prefs = await SharedPreferences.getInstance();
     final today = DateTime.now();
     final dateKey =
         '${today.year}-${today.month.toString().padLeft(2, '0')}-${today.day.toString().padLeft(2, '0')}';
-    final cachedDate = prefs.getString(_cachedDailyContentDateKey);
+
+    final userContentKey = '${_cachedDailyContentKey}_${userId}_${dateKey}';
+    final userDateKey = '${_cachedDailyContentDateKey}_${userId}_${dateKey}';
+    final cachedDate = prefs.getString(userDateKey);
 
     // Only return cached content if it's from today
     if (cachedDate == dateKey) {
-      return _deserializeDailyContent(prefs.getString(_cachedDailyContentKey));
+      return _deserializeDailyContent(prefs.getString(userContentKey));
     }
     return null;
   } catch (_) {
@@ -127,7 +131,10 @@ Future<DailyContent?> _readCachedDailyContent() async {
 }
 
 final dailyContentProvider = FutureProvider<DailyContent>((Ref ref) async {
-  final cachedContent = await _readCachedDailyContent();
+  // Get current user ID for per-user caching
+  final currentUserId = ref.watch(currentUserIdProvider) ?? 'anonymous_device';
+
+  final cachedContent = await _readCachedDailyContent(currentUserId);
   if (cachedContent != null) {
     return cachedContent;
   }
@@ -150,11 +157,11 @@ final dailyContentProvider = FutureProvider<DailyContent>((Ref ref) async {
     );
 
     if (content != null) {
-      await _cacheDailyContent(content);
+      await _cacheDailyContent(content, currentUserId);
       return content;
     }
   } catch (_) {
-    final cachedContent = await _readCachedDailyContent();
+    final cachedContent = await _readCachedDailyContent(currentUserId);
     if (cachedContent != null) {
       return cachedContent;
     }

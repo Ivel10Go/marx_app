@@ -16,6 +16,7 @@ import '../../data/models/user_profile.dart';
 import '../../domain/providers/repository_providers.dart';
 import '../../domain/providers/daily_content_provider.dart';
 import '../../domain/providers/user_profile_provider.dart';
+import '../../domain/providers/settings_provider.dart';
 import '../../widgets/app_decorated_scaffold.dart';
 import '../../widgets/android_back_guard.dart';
 import '../../widgets/app_navigation_bar.dart';
@@ -128,6 +129,8 @@ class AccountScreen extends ConsumerWidget {
                     profile: profile,
                     interestsSummary: interestsSummary,
                   ),
+                  SizedBox(height: AppTheme.spacingXl),
+                  _NotificationCard(context: context, ref: ref),
                   SizedBox(height: AppTheme.spacingXl),
                   _PrivacyCard(context: context, ref: ref),
                   if (kDebugMode) ...[
@@ -486,6 +489,203 @@ class _PrivacyCard extends StatelessWidget {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _NotificationCard extends StatelessWidget {
+  const _NotificationCard({required this.context, required this.ref});
+
+  final BuildContext context;
+  final WidgetRef ref;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final settingsAsync = ref.watch(settingsControllerProvider);
+
+    return Container(
+      decoration: BoxDecoration(
+        color: scheme.surface,
+        border: Border.all(color: scheme.outline, width: 1),
+        borderRadius: BorderRadius.circular(2),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: settingsAsync.when(
+          data: (settings) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: AppColors.paperDark,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        Icons.notifications_active_outlined,
+                        color: AppColors.red,
+                        size: 20,
+                      ),
+                    ),
+                    const SizedBox(width: 14),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            'BENACHRICHTIGUNGEN',
+                            style: GoogleFonts.ibmPlexSans(
+                              fontSize: 9,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.red,
+                              letterSpacing: 1.4,
+                            ),
+                          ),
+                          const SizedBox(height: 2),
+                          Text(
+                            'Tägliche Erinnerung verwalten',
+                            style: GoogleFonts.ibmPlexSans(
+                              fontSize: 11,
+                              color: scheme.onSurfaceVariant,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                Container(height: 1, color: scheme.outline),
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Expanded(
+                      child: Text(
+                        'Tägliche Benachrichtigung',
+                        style: GoogleFonts.ibmPlexSans(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: scheme.onSurface,
+                        ),
+                      ),
+                    ),
+                    Switch.adaptive(
+                      value: settings.notificationEnabled,
+                      onChanged: (bool enabled) async {
+                        try {
+                          await ref
+                              .read(settingsControllerProvider.notifier)
+                              .setNotificationEnabled(enabled);
+                        } catch (e) {
+                          if (!context.mounted) {
+                            return;
+                          }
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                'Benachrichtigung konnte nicht aktualisiert werden: $e',
+                              ),
+                            ),
+                          );
+                        }
+                      },
+                      activeThumbColor: AppColors.red,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                GestureDetector(
+                  onTap: () async {
+                    if (!settings.notificationEnabled) {
+                      return;
+                    }
+
+                    final selected = await showTimePicker(
+                      context: context,
+                      initialTime: TimeOfDay(
+                        hour: settings.notificationHour,
+                        minute: settings.notificationMinute,
+                      ),
+                    );
+
+                    if (selected == null || !context.mounted) {
+                      return;
+                    }
+
+                    try {
+                      await ref
+                          .read(settingsControllerProvider.notifier)
+                          .setNotificationTime(selected);
+                    } catch (e) {
+                      if (!context.mounted) {
+                        return;
+                      }
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'Benachrichtigungszeit konnte nicht gespeichert werden: $e',
+                          ),
+                        ),
+                      );
+                    }
+                  },
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: AppColors.paperDark,
+                      border: Border.all(color: scheme.outline),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          'Uhrzeit',
+                          style: GoogleFonts.ibmPlexSans(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.inkLight,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          '${settings.notificationHour.toString().padLeft(2, '0')}:${settings.notificationMinute.toString().padLeft(2, '0')}',
+                          style: GoogleFonts.ibmPlexSans(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            color: settings.notificationEnabled
+                                ? scheme.onSurface
+                                : scheme.onSurfaceVariant,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
+          loading: () => const Padding(
+            padding: EdgeInsets.symmetric(vertical: 12),
+            child: Center(child: CircularProgressIndicator()),
+          ),
+          error: (Object error, StackTrace stackTrace) {
+            return Text(
+              'Benachrichtigungseinstellungen konnten nicht geladen werden.',
+              style: GoogleFonts.ibmPlexSans(
+                fontSize: 11,
+                color: scheme.onSurfaceVariant,
+              ),
+            );
+          },
         ),
       ),
     );

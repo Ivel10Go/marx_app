@@ -264,50 +264,13 @@ abstract final class AppBootstrap {
           UserProfile.storageKey: prefs.getString(UserProfile.storageKey),
         };
 
-        // Warm the database and sync the widget without blocking startup.
-        // Use compute() to avoid database locks in main thread.
-        final warmupStart = Stopwatch()..start();
-        debugPrint(
-          '[Deferred] Warming up data for widget sync (main isolate)...',
-        );
-        final dailyContentData = await _initializeDatabaseInIsolate(isolateArgs)
-            .timeout(
-              const Duration(seconds: 30),
-              onTimeout: () {
-                debugPrint('[Deferred] WARNING: Database warm-up timed out');
-                return _IsolateDailyContent(
-                  content: null,
-                  streakCount: 0,
-                  appMode: 'PUBLIC',
-                );
-              },
-            );
-        warmupStart.stop();
-        debugPrint(
-          '[Deferred] Data warm-up completed in ${warmupStart.elapsedMilliseconds}ms',
-        );
-
-        if (dailyContentData.content != null) {
-          final syncStart = Stopwatch()..start();
-          debugPrint('[Deferred] Syncing widget...');
-          await WidgetSyncService.syncDailyContent(
-            content: dailyContentData.content!,
-            streakCount: dailyContentData.streakCount,
-            modeLabel: dailyContentData.appMode,
-          );
-          syncStart.stop();
-          debugPrint(
-            '[Deferred] Widget synced in ${syncStart.elapsedMilliseconds}ms',
-          );
-        } else {
-          // No new content resolved, but still trigger a widget refresh so the
-          // widget displays whatever was previously stored rather than staying
-          // stuck on the loading placeholder.
-          debugPrint(
-            '[Deferred] No content resolved — force-refreshing widget',
-          );
-          await WidgetSyncService.forceRefresh();
-        }
+        // DB seeding and widget content resolution must run inside the
+        // ProviderScope so the shared AppDatabase instance is used.
+        // Here we only trigger a lightweight widget refresh that doesn't
+        // require DB access; full seeding/warmup is executed after the app
+        // has built and providers are available.
+        debugPrint('[Deferred] Forcing widget refresh (no DB access)');
+        await WidgetSyncService.forceRefresh();
 
         // Schedule daily reminders
         final reminderStart = Stopwatch()..start();

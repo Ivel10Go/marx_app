@@ -5,6 +5,7 @@ import '../services/supabase_sync_service.dart';
 import '../services/purchases_service.dart';
 import '../../domain/providers/repository_providers.dart';
 import '../../domain/providers/user_profile_provider.dart';
+import '../../domain/providers/daily_content_provider.dart';
 
 /// Stream des aktüllen Auth-Status
 final supabaseAuthStateProvider = StreamProvider<AuthUser?>((ref) {
@@ -42,6 +43,8 @@ class AuthController extends StateNotifier<AsyncValue<AuthUser?>> {
     _service.authStateChanges().listen(
       (user) async {
         state = AsyncValue.data(user);
+        // Invalidate daily content so it reloads with the new user's profile/cache
+        _ref.invalidate(dailyContentProvider);
         try {
           if (user != null) {
             // On login: merge local favorites to cloud and pull cloud favorites back locally
@@ -106,25 +109,27 @@ class AuthController extends StateNotifier<AsyncValue<AuthUser?>> {
     }
   }
 
-  Future<void> signUp({required String email, required String password}) async {
+  Future<bool> signUp({required String email, required String password}) async {
     state = const AsyncValue.loading();
     try {
       await _service.signUpWithEmail(email, password);
       // Auth state wird durch authStateChanges automatisch aktualisiert
+      return true;
     } catch (e, st) {
       state = AsyncValue.error(e, st);
-      rethrow;
+      return false;
     }
   }
 
-  Future<void> signIn({required String email, required String password}) async {
+  Future<bool> signIn({required String email, required String password}) async {
     state = const AsyncValue.loading();
     try {
       await _service.signInWithEmail(email, password);
       // Auth state wird durch authStateChanges automatisch aktualisiert
+      return true;
     } catch (e, st) {
       state = AsyncValue.error(e, st);
-      rethrow;
+      return false;
     }
   }
 
