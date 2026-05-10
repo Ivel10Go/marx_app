@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../core/services/supabase_sync_service.dart';
 import '../../data/models/user_profile.dart';
 
 class UserProfileNotifier extends StateNotifier<UserProfile> {
@@ -71,6 +72,61 @@ class UserProfileNotifier extends StateNotifier<UserProfile> {
   Future<void> resetProfile() async {
     final next = UserProfile.initial();
     await _persist(next);
+  }
+
+  /// Lade UserProfile aus Cloud und speichere lokal
+  /// Wird nach erfolgreichem Login aufgerufen
+  Future<void> loadProfileFromCloud(String userId) async {
+    try {
+      final syncService = SupabaseSyncService();
+      final cloudProfile = await syncService.fetchUserProfileFromCloud(userId);
+
+      if (cloudProfile != null) {
+        final historicalInterests =
+            cloudProfile['historical_interests'] as List<String>? ?? <String>[];
+        final politicalLeaning = _parsePoliticalLeaning(
+          cloudProfile['political_leaning'] as String?,
+        );
+
+        final next = state.copyWith(
+          historicalInterests: historicalInterests,
+          politicalLeaning: politicalLeaning,
+        );
+        await _persist(next);
+      }
+      // Wenn kein CloudProfile existiert, behält state den aktuellen Wert
+    } catch (e) {
+      // Log aber nicht fehlschlagen - Cloud-Sync ist nicht kritisch
+      print('Error loading profile from cloud: $e');
+    }
+  }
+
+  /// Speichere UserProfile zur Cloud
+  Future<void> syncToCloud(String userId) async {
+    try {
+      final syncService = SupabaseSyncService();
+      await syncService.syncUserProfileToCloud(
+        userId: userId,
+        historicalInterests: state.historicalInterests,
+        politicalLeaning: state.politicalLeaning.name,
+      );
+    } catch (e) {
+      // Log aber nicht fehlschlagen - Cloud-Sync ist nicht kritisch
+      print('Error syncing profile to cloud: $e');
+    }
+  }
+
+  /// Parse political leaning from string
+  static PoliticalLeaning _parsePoliticalLeaning(String? value) {
+    if (value == null) return PoliticalLeaning.neutral;
+    try {
+      return PoliticalLeaning.values.firstWhere(
+        (e) => e.name == value,
+        orElse: () => PoliticalLeaning.neutral,
+      );
+    } catch (_) {
+      return PoliticalLeaning.neutral;
+    }
   }
 
   Future<void> _persist(UserProfile next) async {

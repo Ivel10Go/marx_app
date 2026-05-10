@@ -4,6 +4,7 @@ import '../services/supabase_auth_service.dart';
 import '../services/supabase_sync_service.dart';
 import '../services/purchases_service.dart';
 import '../../domain/providers/repository_providers.dart';
+import '../../domain/providers/user_profile_provider.dart';
 
 /// Stream des aktüllen Auth-Status
 final supabaseAuthStateProvider = StreamProvider<AuthUser?>((ref) {
@@ -93,6 +94,15 @@ class AuthController extends StateNotifier<AsyncValue<AuthUser?>> {
       } catch (_) {
         // ignore per-item failures
       }
+    }
+
+    // Load UserProfile from cloud and restore locally
+    try {
+      final userProfileNotifier = _ref.read(userProfileProvider.notifier);
+      await userProfileNotifier.loadProfileFromCloud(userId);
+    } catch (e) {
+      // Non-fatal: UserProfile sync failed but user is still logged in
+      print('UserProfile cloud load error: $e');
     }
   }
 

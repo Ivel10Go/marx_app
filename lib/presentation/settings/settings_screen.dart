@@ -54,7 +54,7 @@ class SettingsScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: 12),
                   Container(width: 40, height: 2, color: AppColors.red),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Text(
                     'Steuere, was du täglich siehst und wie du lernst.',
                     style: GoogleFonts.ibmPlexSans(
@@ -79,68 +79,12 @@ class SettingsScreen extends ConsumerWidget {
                       AppTheme.spacingXl,
                     ),
                     children: <Widget>[
-                      GestureDetector(
+                      _SettingsLinkCard(
+                        title: 'ACCOUNT',
+                        subtitle:
+                            'Verwalte deinen Account und Personalisierung',
+                        icon: Icons.person_rounded,
                         onTap: () => context.push('/account'),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: AppColors.paperDark,
-                            border: Border.all(color: scheme.outline, width: 1),
-                            borderRadius: BorderRadius.circular(2),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(16),
-                            child: Row(
-                              children: <Widget>[
-                                Container(
-                                  width: 40,
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                    color: AppColors.red,
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: const Icon(
-                                    Icons.person_rounded,
-                                    color: Colors.white,
-                                    size: 22,
-                                  ),
-                                ),
-                                const SizedBox(width: 14),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(
-                                        'ACCOUNT',
-                                        style: GoogleFonts.ibmPlexSans(
-                                          fontSize: 9,
-                                          fontWeight: FontWeight.w700,
-                                          color: AppColors.red,
-                                          letterSpacing: 1.4,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 2),
-                                      Text(
-                                        'Verwalte deinen Account und Personalisierung',
-                                        style: GoogleFonts.ibmPlexSans(
-                                          fontSize: 11,
-                                          fontWeight: FontWeight.w600,
-                                          color: scheme.onSurface,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(width: 12),
-                                Icon(
-                                  Icons.chevron_right,
-                                  size: 18,
-                                  color: scheme.outline,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
                       ),
                       SizedBox(height: AppTheme.spacingLarge),
                       _SettingsGroup(
@@ -257,40 +201,6 @@ class SettingsScreen extends ConsumerWidget {
                                 ),
                               ],
                             ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: AppTheme.spacingLarge),
-                      _SettingsGroup(
-                        title: 'SAMMLUNG',
-                        children: <Widget>[
-                          Text(
-                            'Deine gespeicherten Inhalte bleiben erreichbar, ohne den Lesefluss auf anderen Seiten zu stören.',
-                            style: GoogleFonts.ibmPlexSans(
-                              fontSize: 11,
-                              color: AppColors.inkLight,
-                              height: 1.5,
-                            ),
-                          ),
-                          SizedBox(height: AppTheme.spacingMedium),
-                          Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: _SettingsActionButton(
-                                  label: 'FAVORITEN',
-                                  filled: false,
-                                  onTap: () => context.push('/favorites'),
-                                ),
-                              ),
-                              SizedBox(width: 10),
-                              Expanded(
-                                child: _SettingsActionButton(
-                                  label: 'ARCHIV',
-                                  filled: false,
-                                  onTap: () => context.push('/archive'),
-                                ),
-                              ),
-                            ],
                           ),
                         ],
                       ),
@@ -587,8 +497,6 @@ class _SettingsGroup extends StatelessWidget {
     switch (title) {
       case 'BENACHRICHTIGUNGEN':
         return Icons.notifications_outlined;
-      case 'SAMMLUNG':
-        return Icons.bookmark_outline;
       case 'ADMIN':
         return Icons.admin_panel_settings_outlined;
       case 'WARTUNG':
@@ -602,8 +510,6 @@ class _SettingsGroup extends StatelessWidget {
     switch (title) {
       case 'BENACHRICHTIGUNGEN':
         return 'Zeitpunkt und Aktivierung';
-      case 'SAMMLUNG':
-        return 'Favoriten und Archiv';
       case 'ADMIN':
         return 'Admin-Bereich';
       case 'WARTUNG':
@@ -653,6 +559,83 @@ class _SettingsActionButton extends StatelessWidget {
                 color: filled ? scheme.surface : scheme.onSurface,
                 letterSpacing: 1.0,
               ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _SettingsLinkCard extends StatelessWidget {
+  const _SettingsLinkCard({
+    required this.title,
+    required this.subtitle,
+    required this.icon,
+    required this.onTap,
+  });
+
+  final String title;
+  final String subtitle;
+  final IconData icon;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.paperDark,
+        border: Border.all(color: scheme.outline, width: 1),
+        borderRadius: BorderRadius.circular(2),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              children: <Widget>[
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: const BoxDecoration(
+                    color: AppColors.red,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(icon, color: Colors.white, size: 22),
+                ),
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        title,
+                        style: GoogleFonts.ibmPlexSans(
+                          fontSize: 9,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.red,
+                          letterSpacing: 1.4,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        subtitle,
+                        style: GoogleFonts.ibmPlexSans(
+                          fontSize: 11,
+                          fontWeight: FontWeight.w600,
+                          color: scheme.onSurface,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Icon(Icons.chevron_right, size: 18, color: scheme.outline),
+              ],
             ),
           ),
         ),

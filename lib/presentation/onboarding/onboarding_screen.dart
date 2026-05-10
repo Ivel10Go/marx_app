@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../core/providers/supabase_auth_provider.dart';
 import '../../core/services/notification_service.dart';
 import '../../core/theme/app_colors.dart';
 import '../../data/models/user_profile.dart';
@@ -47,6 +48,20 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
             historicalInterests: _selectedInterests.toList(),
             politicalLeaning: _leaning,
           );
+
+      // Sync to cloud if user is authenticated
+      final currentUserId = ref.read(currentUserIdProvider);
+      if (currentUserId != null) {
+        try {
+          await ref
+              .read(userProfileProvider.notifier)
+              .syncToCloud(currentUserId);
+        } catch (e) {
+          // Log but don't fail - sync is non-critical for onboarding completion
+          print('Onboarding profile sync to cloud error: $e');
+        }
+      }
+
       ref.invalidate(userProfileProvider);
       if (mounted) {
         context.go('/');

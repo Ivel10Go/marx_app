@@ -13,7 +13,6 @@ import '../../core/utils/share_card_renderer.dart';
 import '../../data/models/daily_content.dart';
 import '../../data/models/quote.dart';
 import '../../data/models/thinker_quote.dart';
-import '../../domain/providers/admin_access_provider.dart';
 import '../../domain/providers/daily_content_provider.dart';
 import '../../domain/providers/app_mode_provider.dart';
 import '../../domain/providers/streak_provider.dart';
@@ -22,10 +21,7 @@ import '../../widgets/android_back_guard.dart';
 import '../../widgets/app_navigation_bar.dart';
 import '../../widgets/adaptive_quote_text.dart';
 import '../../widgets/quote_card.dart';
-import '../../widgets/streak_badge.dart';
-import '../home/dialogs/mode_dialog.dart';
 import '../home/widgets/fact_block.dart';
-import '../home/widgets/streak_calendar.dart';
 import '../loading/app_loading_screen.dart';
 import '../shared/icon_circle.dart';
 import '../shared/app_card.dart';
@@ -45,7 +41,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
   ProviderSubscription<AsyncValue<DailyContent>>? _dailyContentSubscription;
   ProviderSubscription<AsyncValue<int>>? _streakSubscription;
   ProviderSubscription<AppMode>? _appModeSubscription;
-  bool _calendarExpanded = false;
   String? _lastWidgetSyncSignature;
   bool _widgetSyncInFlight = false;
   bool _widgetSyncNeedsRetry = false;
@@ -93,38 +88,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
     _appModeSubscription?.close();
     _controller.dispose();
     super.dispose();
-  }
-
-  Future<void> _setMode(AppMode mode) async {
-    await ref.read(appModeNotifierProvider.notifier).set(mode);
-    ref.invalidate(dailyContentProvider);
-    if (!mounted) {
-      return;
-    }
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Modus gewechselt: ${_modeLabel(mode)}'),
-        duration: const Duration(seconds: 2),
-      ),
-    );
-  }
-
-  String _modeLabel(AppMode mode) {
-    switch (mode) {
-      case AppMode.public:
-        return 'Für alle';
-      case AppMode.adminMarx:
-        return 'Marx-Modus';
-    }
-  }
-
-  Future<void> _showModeDialog() async {
-    await showDialog<void>(
-      context: context,
-      builder: (BuildContext dialogContext) {
-        return ModeDialog(onModeSelected: _setMode);
-      },
-    );
   }
 
   String _dailyContentSignature(DailyContent content) {
@@ -200,9 +163,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
     final premiumQuotesAsync = isPro
         ? ref.watch(premiumDailyQuotesProvider)
         : const AsyncValue<List<Quote>>.data(<Quote>[]);
-    final streakAsync = ref.watch(currentStreakProvider);
-    final appMode = ref.watch(appModeNotifierProvider);
-    final isAdmin = ref.watch(adminAccessProvider);
     final scheme = Theme.of(context).colorScheme;
 
     return AndroidBackGuard(
@@ -233,52 +193,33 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          // Top row: kicker label + icon actions
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Text(
-                                'TAGESAUSGABE',
-                                style: GoogleFonts.ibmPlexSans(
-                                  fontSize: 9,
-                                  fontWeight: FontWeight.w700,
-                                  color: AppColors.red,
-                                  letterSpacing: 1.6,
-                                ),
-                              ),
-                              const Spacer(),
-                              if (isAdmin) ...<Widget>[
-                                _HeaderIconAction(
-                                  icon: Icons.tune_outlined,
-                                  tooltip: _modeLabel(appMode),
-                                  onTap: _showModeDialog,
-                                ),
-                                const SizedBox(width: 6),
-                                _HeaderIconAction(
-                                  icon: Icons.admin_panel_settings_outlined,
-                                  tooltip: 'Admin',
-                                  onTap: () => context.push('/admin'),
-                                ),
-                                const SizedBox(width: 6),
-                              ],
-                              _HeaderIconAction(
-                                icon: Icons.settings_outlined,
-                                tooltip: 'Einstellungen',
-                                onTap: () => context.push('/settings'),
-                              ),
-                            ],
+                          Text(
+                            'HEUTE',
+                            style: GoogleFonts.playfairDisplay(
+                              fontSize: 32,
+                              fontWeight: FontWeight.w700,
+                              color: scheme.onSurface,
+                              letterSpacing: -0.5,
+                            ),
                           ),
                           const SizedBox(height: 10),
-                          // Main title
-                          Text('ZITATATLAS', style: AppTheme.masthead),
-                          const SizedBox(height: 12),
-                          // Red accent line
                           Container(width: 40, height: 2, color: AppColors.red),
                           const SizedBox(height: 10),
-                          // Date + issue number
+                          Text(
+                            'Deine tägliche Ausgabe aus Zitaten und historischen Fakten.',
+                            style: GoogleFonts.ibmPlexSans(
+                              fontSize: 11,
+                              color: scheme.onSurfaceVariant,
+                              height: 1.5,
+                            ),
+                          ),
+                          const SizedBox(height: 12),
                           Text(
                             _mastheadSubtitle(),
-                            style: AppTheme.mastHeadSubtitle,
+                            style: GoogleFonts.ibmPlexSans(
+                              fontSize: 10,
+                              color: AppColors.inkLight,
+                            ),
                           ),
                         ],
                       ),
@@ -292,10 +233,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
               // ── Daily content ────────────────────────────────────────────
               Padding(
                 padding: EdgeInsets.fromLTRB(
-                  AppTheme.spacingLarge,
                   AppTheme.spacingBase,
-                  AppTheme.spacingLarge,
                   AppTheme.spacingBase,
+                  AppTheme.spacingBase,
+                  AppTheme.spacingXl,
                 ),
                 child: dailyContent.when(
                   data: (content) {
@@ -364,90 +305,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                     message: 'Fehler: $error',
                     onRetry: () => ref.invalidate(dailyContentProvider),
                   ),
-                ),
-              ),
-
-              // ── Streak ───────────────────────────────────────────────────
-              Padding(
-                padding: EdgeInsets.fromLTRB(
-                  AppTheme.spacingLarge,
-                  0,
-                  AppTheme.spacingLarge,
-                  AppTheme.spacingBase,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    streakAsync.when(
-                      data: (streak) => StreakBadge(
-                        days: streak,
-                        expanded: _calendarExpanded,
-                        onTap: () {
-                          setState(() {
-                            _calendarExpanded = !_calendarExpanded;
-                          });
-                        },
-                      ),
-                      loading: () => const StreakBadge(days: 0),
-                      error: (_, __) => const StreakBadge(days: 0),
-                    ),
-                    AnimatedSize(
-                      duration: const Duration(milliseconds: 250),
-                      curve: Curves.easeOut,
-                      child: _calendarExpanded
-                          ? const Padding(
-                              padding: EdgeInsets.only(top: 8),
-                              child: StreakCalendar(),
-                            )
-                          : const SizedBox.shrink(),
-                    ),
-                  ],
-                ),
-              ),
-
-              // ── Quick discovery row ──────────────────────────────────────
-              Padding(
-                padding: EdgeInsets.fromLTRB(
-                  AppTheme.spacingLarge,
-                  0,
-                  AppTheme.spacingLarge,
-                  AppTheme.spacingXl,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Container(height: 1, color: scheme.outline),
-                    const SizedBox(height: 14),
-                    Text(
-                      'ENTDECKEN',
-                      style: GoogleFonts.ibmPlexSans(
-                        fontSize: 9,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.inkMuted,
-                        letterSpacing: 1.4,
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: _QuickActionTile(
-                            icon: Icons.favorite_border_outlined,
-                            label: 'FAVORITEN',
-                            onTap: () => context.push('/favorites'),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          child: _QuickActionTile(
-                            icon: Icons.person_outline,
-                            label: 'ACCOUNT',
-                            onTap: () => context.push('/account'),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
                 ),
               ),
             ],
@@ -728,94 +585,6 @@ class _BroadsheetButton extends StatelessWidget {
   }
 }
 
-class _HeaderIconAction extends StatelessWidget {
-  const _HeaderIconAction({
-    required this.icon,
-    required this.tooltip,
-    required this.onTap,
-  });
-
-  final IconData icon;
-  final String tooltip;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-
-    return Tooltip(
-      message: tooltip,
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: onTap,
-          child: Container(
-            width: 44,
-            height: 44,
-            decoration: BoxDecoration(
-              border: Border.all(color: scheme.outline, width: 1),
-            ),
-            child: Center(
-              child: IconCircle(
-                icon: icon,
-                background: Colors.transparent,
-                iconColor: scheme.onSurface,
-                size: 36,
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _QuickActionTile extends StatelessWidget {
-  const _QuickActionTile({
-    required this.icon,
-    required this.label,
-    required this.onTap,
-  });
-
-  final IconData icon;
-  final String label;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: onTap,
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
-          decoration: BoxDecoration(
-            border: Border.all(color: scheme.outline, width: 1),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Icon(icon, size: 15, color: scheme.onSurface),
-              const SizedBox(width: 8),
-              Text(
-                label,
-                style: GoogleFonts.ibmPlexSans(
-                  fontSize: 11,
-                  fontWeight: FontWeight.w700,
-                  color: scheme.onSurface,
-                  letterSpacing: 1.2,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class _BroadsheetOutlineButton extends StatelessWidget {
   const _BroadsheetOutlineButton({
     required this.onPressed,
@@ -919,9 +688,9 @@ extension on _HomeScreenState {
                   Text(
                     quote.explanationShort,
                     style: GoogleFonts.ibmPlexSans(
-                      fontSize: 12,
+                      fontSize: 14,
                       color: AppColors.ink,
-                      height: 1.6,
+                      height: 1.65,
                     ),
                   ),
                   const SizedBox(height: 14),
@@ -938,9 +707,9 @@ extension on _HomeScreenState {
                   Text(
                     quote.explanationLong,
                     style: GoogleFonts.ibmPlexSans(
-                      fontSize: 11,
+                      fontSize: 13,
                       color: AppColors.ink,
-                      height: 1.6,
+                      height: 1.65,
                     ),
                   ),
                   if (quote.funFact != null &&

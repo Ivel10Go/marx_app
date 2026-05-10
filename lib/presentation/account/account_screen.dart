@@ -47,31 +47,59 @@ class AccountScreen extends ConsumerWidget {
         bottomNavigationBar: const AppNavigationBar(selectedIndex: -1),
         child: CustomScrollView(
           slivers: <Widget>[
-            // Header
-            SliverAppBar(
-              backgroundColor: scheme.surface,
-              elevation: 0,
-              pinned: true,
-              leadingWidth: 40,
-              leading: Padding(
-                padding: const EdgeInsets.only(left: 8),
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: () => context.pop(),
-                    child: Icon(Icons.arrow_back, color: scheme.onSurface),
-                  ),
+            // Masthead (aligned with Settings/Home/Favorites)
+            SliverToBoxAdapter(
+              child: Container(
+                color: scheme.surface,
+                padding: EdgeInsets.fromLTRB(
+                  AppTheme.spacingLarge,
+                  AppTheme.spacingBase,
+                  AppTheme.spacingLarge,
+                  AppTheme.spacingBase,
                 ),
-              ),
-              flexibleSpace: FlexibleSpaceBar(
-                titlePadding: const EdgeInsets.only(left: 56, bottom: 16),
-                title: Text(
-                  'ACCOUNT',
-                  style: GoogleFonts.playfairDisplay(
-                    fontSize: 22,
-                    fontWeight: FontWeight.w700,
-                    color: scheme.onSurface,
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    // Back button
+                    Row(
+                      children: <Widget>[
+                        Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            onTap: () => context.pop(),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Icon(
+                                Icons.arrow_back,
+                                color: scheme.onSurface,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      'ACCOUNT',
+                      style: GoogleFonts.playfairDisplay(
+                        fontSize: 32,
+                        fontWeight: FontWeight.w700,
+                        color: scheme.onSurface,
+                        letterSpacing: -0.5,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Container(width: 40, height: 2, color: AppColors.red),
+                    const SizedBox(height: 10),
+                    Text(
+                      'Verwalte deinen Account und Personalisierung',
+                      style: GoogleFonts.ibmPlexSans(
+                        fontSize: 11,
+                        color: scheme.onSurfaceVariant,
+                        height: 1.5,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -135,7 +163,7 @@ class _AuthCard extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: isAuth ? AppColors.paperDark : scheme.surface,
+        color: scheme.surface,
         border: Border.all(color: scheme.outline, width: 1),
         borderRadius: BorderRadius.circular(2),
       ),
@@ -149,13 +177,13 @@ class _AuthCard extends StatelessWidget {
                 Container(
                   width: 40,
                   height: 40,
-                  decoration: BoxDecoration(
-                    color: isAuth ? AppColors.red : scheme.outline,
+                  decoration: const BoxDecoration(
+                    color: AppColors.paperDark,
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
                     isAuth ? Icons.verified_user : Icons.person_outline,
-                    color: isAuth ? Colors.white : scheme.onSurface,
+                    color: AppColors.red,
                     size: 20,
                   ),
                 ),
@@ -194,7 +222,7 @@ class _AuthCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: scheme.surface,
+                  color: AppColors.paperDark,
                   border: Border.all(color: scheme.outline),
                 ),
                 child: Column(
@@ -205,7 +233,7 @@ class _AuthCard extends StatelessWidget {
                       style: GoogleFonts.ibmPlexSans(
                         fontSize: 9,
                         fontWeight: FontWeight.w600,
-                        color: AppColors.inkLight,
+                        color: AppColors.inkMuted,
                         letterSpacing: 0.8,
                       ),
                     ),
@@ -224,8 +252,11 @@ class _AuthCard extends StatelessWidget {
               const SizedBox(height: 12),
               SizedBox(
                 width: double.infinity,
-                child: ElevatedButton.icon(
-                  onPressed: () async {
+                child: _AccountActionButton(
+                  label: 'ABMELDEN',
+                  filled: true,
+                  icon: Icons.logout,
+                  onTap: () async {
                     final confirmed = await showDialog<bool>(
                       context: context,
                       builder: (ctx) => AlertDialog(
@@ -252,13 +283,6 @@ class _AuthCard extends StatelessWidget {
                       }
                     }
                   },
-                  icon: const Icon(Icons.logout),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.red,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 12),
-                  ),
-                  label: const Text('ABMELDEN'),
                 ),
               ),
             ] else ...[
@@ -273,15 +297,11 @@ class _AuthCard extends StatelessWidget {
               const SizedBox(height: 14),
               SizedBox(
                 width: double.infinity,
-                child: ElevatedButton.icon(
-                  onPressed: () => context.push('/auth'),
-                  icon: const Icon(Icons.login),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: scheme.onSurface,
-                    foregroundColor: scheme.surface,
-                    padding: const EdgeInsets.symmetric(vertical: 12),
-                  ),
-                  label: const Text('ANMELDEN / REGISTRIEREN'),
+                child: _AccountActionButton(
+                  label: 'ANMELDEN / REGISTRIEREN',
+                  filled: false,
+                  icon: Icons.login,
+                  onTap: () => context.push('/auth'),
                 ),
               ),
             ],
@@ -536,6 +556,64 @@ class _PersonalizationRow extends StatelessWidget {
   }
 }
 
+class _AccountActionButton extends StatelessWidget {
+  const _AccountActionButton({
+    required this.label,
+    required this.onTap,
+    required this.filled,
+    required this.icon,
+  });
+
+  final String label;
+  final VoidCallback onTap;
+  final bool filled;
+  final IconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final bg = filled ? AppColors.red : Colors.transparent;
+    final border = filled ? AppColors.redDark : scheme.outline;
+
+    return Container(
+      decoration: BoxDecoration(
+        color: bg,
+        border: Border.all(color: border, width: 1),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(
+                  icon,
+                  size: 16,
+                  color: filled ? scheme.surface : scheme.onSurface,
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  label,
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.ibmPlexSans(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w700,
+                    color: filled ? scheme.surface : scheme.onSurface,
+                    letterSpacing: 1.0,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class _DebugCard extends StatelessWidget {
   const _DebugCard({required this.context, required this.ref});
 
@@ -544,10 +622,12 @@ class _DebugCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
     return Container(
       decoration: BoxDecoration(
-        color: Colors.grey[900],
-        border: Border.all(color: Colors.grey[700]!, width: 1),
+        color: scheme.surface,
+        border: Border.all(color: scheme.outline, width: 1),
         borderRadius: BorderRadius.circular(2),
       ),
       child: Padding(
@@ -560,15 +640,18 @@ class _DebugCard extends StatelessWidget {
               style: GoogleFonts.ibmPlexSans(
                 fontSize: 9,
                 fontWeight: FontWeight.w700,
-                color: Colors.amber,
+                color: AppColors.red,
                 letterSpacing: 1.4,
               ),
             ),
             const SizedBox(height: 14),
             SizedBox(
               width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () async {
+              child: _AccountActionButton(
+                label: 'SYNC FAVORITEN',
+                filled: false,
+                icon: Icons.sync,
+                onTap: () async {
                   final messenger = ScaffoldMessenger.of(context);
                   final userId = ref.read(currentUserIdProvider);
                   if (userId == null) {
@@ -600,31 +683,22 @@ class _DebugCard extends StatelessWidget {
                     );
                   }
                 },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.amber,
-                  foregroundColor: Colors.black,
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                ),
-                child: const Text('Sync Favoriten'),
               ),
             ),
             const SizedBox(height: 10),
             SizedBox(
               width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () async {
+              child: _AccountActionButton(
+                label: 'PROFIL ZURÜCKSETZEN',
+                filled: true,
+                icon: Icons.restart_alt_rounded,
+                onTap: () async {
                   final messenger = ScaffoldMessenger.of(context);
                   await ref.read(userProfileProvider.notifier).resetProfile();
                   messenger.showSnackBar(
                     const SnackBar(content: Text('Profil zurückgesetzt')),
                   );
                 },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red[700],
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                ),
-                child: const Text('Profil zurücksetzen'),
               ),
             ),
           ],

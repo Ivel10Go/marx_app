@@ -11,7 +11,13 @@ create table if not exists public.profiles (
   display_name text,
   created_at timestamptz default now(),
   updated_at timestamptz default now(),
-  deleted_at timestamptz
+  deleted_at timestamptz,
+  -- User preferences for personalization
+  historical_interests jsonb default '[]'::jsonb,
+  political_leaning text default 'neutral',
+  -- Optional: Track today's quote for consistency across devices
+  daily_quote_date text,
+  last_synced_at timestamptz default now()
 );
 
 -- Auto-create profile row when a new auth user is created.
@@ -21,8 +27,8 @@ language plpgsql
 security definer
 as $$
 begin
-  insert into public.profiles (id, email)
-  values (new.id, new.email)
+  insert into public.profiles (id, email, historical_interests, political_leaning, last_synced_at)
+  values (new.id, new.email, '[]'::jsonb, 'neutral', now())
   on conflict (id) do update
     set email = excluded.email,
         updated_at = now();

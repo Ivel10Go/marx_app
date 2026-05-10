@@ -11,6 +11,7 @@ import '../theme/app_colors.dart';
 import 'quote_attribution.dart';
 import '../../data/models/history_fact.dart';
 import '../../data/models/quote.dart';
+import '../../widgets/adaptive_quote_text.dart';
 
 class ShareCardRenderer {
   final ScreenshotController _controller = ScreenshotController();
@@ -141,107 +142,110 @@ class _ShareCanvas extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.paper,
-      child: Container(
-        width: 1080,
-        height: 1350,
-        color: AppColors.paper,
-        padding: const EdgeInsets.all(40),
-        child: Center(
-          child: Container(
-            width: 1000,
-            padding: const EdgeInsets.all(0),
-            decoration: BoxDecoration(
-              color: AppColors.paper,
-              border: Border.all(color: AppColors.ink, width: 2),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Container(
-                  color: AppColors.red,
-                  padding: const EdgeInsets.fromLTRB(20, 12, 20, 12),
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Text(
-                          kicker,
-                          style: GoogleFonts.ibmPlexSans(
-                            fontSize: 17,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.redOnRed,
-                            letterSpacing: 1.4,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Text(
-                        headerRight.toUpperCase(),
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: Material(
+        type: MaterialType.transparency,
+        child: SizedBox(
+          width: 720,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Container(
+                color: AppColors.red,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 8,
+                ),
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Text(
+                        kicker,
                         style: GoogleFonts.ibmPlexSans(
-                          fontSize: 14,
+                          fontSize: 9,
                           fontWeight: FontWeight.w700,
                           color: AppColors.redOnRed,
-                          letterSpacing: 1.2,
+                          letterSpacing: 1.8,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
-                    ],
+                    ),
+                    const SizedBox(width: 12),
+                    Text(
+                      headerRight.toUpperCase(),
+                      style: GoogleFonts.ibmPlexSans(
+                        fontSize: 8,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.redOnRed,
+                        letterSpacing: 1.2,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                decoration: const BoxDecoration(
+                  color: AppColors.paper,
+                  border: Border(
+                    left: BorderSide(color: AppColors.ink, width: 1),
+                    right: BorderSide(color: AppColors.ink, width: 1),
+                    bottom: BorderSide(color: AppColors.ink, width: 1),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(32),
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      Text(
-                        title,
+                      AdaptiveQuoteText(
+                        text: title,
+                        minFontSize: kind == _ShareCanvasKind.quote ? 22 : 20,
+                        maxFontSize: kind == _ShareCanvasKind.quote ? 34 : 30,
+                        maxLines: kind == _ShareCanvasKind.quote ? 7 : 5,
                         style: GoogleFonts.playfairDisplay(
-                          fontSize: 54,
-                          fontWeight: FontWeight.w700,
                           fontStyle: FontStyle.italic,
                           color: AppColors.ink,
                           height: 1.2,
                         ),
-                        maxLines: kind == _ShareCanvasKind.quote ? 8 : 5,
-                        overflow: TextOverflow.ellipsis,
                       ),
-                      const SizedBox(height: 20),
-                      Container(width: 112, height: 2, color: AppColors.red),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 14),
+                      Container(width: 28, height: 2, color: AppColors.red),
+                      const SizedBox(height: 10),
                       Text(
                         source,
-                        style: GoogleFonts.ibmPlexSans(
-                          fontSize: 22,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.ink.withOpacity(0.86),
+                        style: GoogleFonts.playfairDisplay(
+                          fontSize: 11,
+                          color: AppColors.ink.withValues(alpha: 0.85),
                         ),
-                        maxLines: 4,
+                        maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                       if (body != null && body!.trim().isNotEmpty) ...<Widget>[
-                        const SizedBox(height: 18),
+                        const SizedBox(height: 14),
                         Text(
                           body!,
                           style: GoogleFonts.ibmPlexSans(
-                            fontSize: 20,
-                            height: 1.45,
+                            fontSize: 11,
+                            height: 1.55,
                             color: AppColors.ink,
                           ),
-                          maxLines: 8,
+                          maxLines: 7,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ],
                       if (tagline != null &&
                           tagline!.trim().isNotEmpty) ...<Widget>[
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 14),
                         Text(
                           tagline!,
                           style: GoogleFonts.ibmPlexSans(
-                            fontSize: 14,
+                            fontSize: 9,
                             fontWeight: FontWeight.w700,
                             color: AppColors.red,
                             letterSpacing: 1.0,
@@ -250,15 +254,15 @@ class _ShareCanvas extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                       ],
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 14),
                       Align(
                         alignment: Alignment.bottomRight,
                         child: Text(
                           'ZITATATLAS',
                           style: GoogleFonts.ibmPlexSans(
-                            fontSize: 18,
+                            fontSize: 10,
                             fontWeight: FontWeight.w700,
-                            color: AppColors.ink.withOpacity(0.55),
+                            color: AppColors.ink.withValues(alpha: 0.55),
                             letterSpacing: 1.0,
                           ),
                         ),
@@ -266,8 +270,8 @@ class _ShareCanvas extends StatelessWidget {
                     ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

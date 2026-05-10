@@ -92,4 +92,57 @@ class SupabaseSyncService {
           ),
         );
   }
+
+  /// Lade UserProfile (Interessen + politische Neigung) aus Cloud
+  /// Gibt Map mit 'historical_interests' (List<String>) und 'political_leaning' (String) zurück
+  /// oder null wenn Benutzer nicht existiert
+  Future<Map<String, dynamic>?> fetchUserProfileFromCloud(String userId) async {
+    try {
+      final response = await _client
+          .from('profiles')
+          .select('historical_interests, political_leaning, daily_quote_date')
+          .eq('id', userId)
+          .single();
+
+      return {
+        'historical_interests': List<String>.from(
+          (response['historical_interests'] as List<dynamic>?) ?? [],
+        ),
+        'political_leaning':
+            response['political_leaning'] as String? ?? 'neutral',
+        'daily_quote_date': response['daily_quote_date'] as String?,
+      };
+    } on PostgrestException catch (e) {
+      if (e.code == 'PGRST116') {
+        // Keine Zeile gefunden - normales Verhalten
+        return null;
+      }
+      throw Exception('Fehler beim Laden des UserProfile: $e');
+    } catch (e) {
+      throw Exception('Fehler beim Laden des UserProfile: $e');
+    }
+  }
+
+  /// Speichere UserProfile (Interessen + politische Neigung) zur Cloud
+  Future<void> syncUserProfileToCloud({
+    required String userId,
+    required List<String> historicalInterests,
+    required String politicalLeaning,
+    String? dailyQuoteDate,
+  }) async {
+    try {
+      await _client
+          .from('profiles')
+          .update({
+            'historical_interests': historicalInterests,
+            'political_leaning': politicalLeaning,
+            'daily_quote_date': dailyQuoteDate,
+            'last_synced_at': DateTime.now().toIso8601String(),
+            'updated_at': DateTime.now().toIso8601String(),
+          })
+          .eq('id', userId);
+    } catch (e) {
+      throw Exception('Fehler beim Speichern des UserProfile: $e');
+    }
+  }
 }
