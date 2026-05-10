@@ -1,0 +1,68 @@
+--------- beginning of main
+05-09 18:23:43.564 E/gralloc5(  568): ERROR: Format allocation info not found for format: 3b
+05-09 18:23:43.564 E/gralloc5(  568): ERROR: Format allocation info not found for format: 0
+05-09 18:23:43.564 E/gralloc5(  568): Invalid base format! req_base_format = (<unrecognized format> 0x0), req_format = (<unrecognized format> 0x3b), type = 0x0
+05-09 18:23:43.564 E/gralloc5(  568): ERROR: Unrecognized and/or unsupported format (<unrecognized format> 0x3b) and usage (CPU_READ_NEVER|CPU_WRITE_NEVER|GPU_TEXTURE|GPU_RENDER_TARGET|COMPOSER_OVERLAY 0xb00)
+05-09 18:23:43.565 E/gralloc5(  568): ERROR: Format allocation info not found for format: 3b
+05-09 18:23:43.565 E/gralloc5(  568): ERROR: Format allocation info not found for format: 0
+05-09 18:23:43.565 E/gralloc5(  568): Invalid base format! req_base_format = (<unrecognized format> 0x0), req_format = (<unrecognized format> 0x3b), type = 0x0
+05-09 18:23:43.565 E/gralloc5(  568): ERROR: Unrecognized and/or unsupported format (<unrecognized format> 0x3b) and usage (CPU_READ_NEVER|CPU_WRITE_NEVER|GPU_TEXTURE|GPU_RENDER_TARGET|COMPOSER_OVERLAY 0xb00)
+05-09 18:23:44.218 E/WifiHAL (  995): wifi_reset_tx_power_scenario
+--------- beginning of system
+05-09 18:23:46.518 E/TransitionChain( 1569): Can't collect into a chain with no transition
+05-09 18:23:46.518 E/TransitionChain( 1569): Can't collect into a chain with no transition
+05-09 18:23:48.033 E/SupplicantStaIfaceHalAidlBase( 1569): Can't call getKeyMgmtCapabilities, ISupplicantStaIface is null for iface=wlan1
+05-09 18:23:48.033 E/SupplicantStaIfaceHalAidlBase( 1569): Can't call getWpaDriverCapabilities, ISupplicantStaIface is null for iface=wlan1
+05-09 18:23:48.072 E/WifiHAL (  995): open: failed to configure setup; result = -1
+05-09 18:23:48.072 E/WifiHAL (  995): wifi_twt_get_capabilities : failed in create twt_cap req, error = -1
+05-09 18:23:48.072 E/WifiHAL (  995): TwtFeatureRequest destroyed
+05-09 18:23:48.093 E/WifiStaIfaceAidlImpl( 1569): getTwtCapabilities failed with service-specific exception: android.os.ServiceSpecificException:  (code 4)
+05-09 18:23:48.093 E/SupplicantStaIfaceHalAidlBase( 1569): Can't call getUsdCapabilities, ISupplicantStaIface is null for iface=wlan1
+05-09 18:23:48.145 E/WifiHAL (  995): failed to stop RSSI monitoring = -5
+05-09 18:23:48.163 E/SupplicantStaIfaceHalAidlBase( 1569): Can't call setSuspendModeEnabled, ISupplicantStaIface is null for iface=wlan1
+05-09 18:23:48.163 E/SupplicantStaIfaceHalAidlBase( 1569): Can't call setPowerSave, ISupplicantStaIface is null for iface=wlan1
+05-09 18:23:48.165 E/SupplicantStaIfaceHalAidlBase( 1569): Can't call setBtCoexistenceMode, ISupplicantStaIface is null for iface=wlan1
+05-09 18:23:48.212 E/SupplicantStaIfaceHalAidlBase( 1569): Can't call disableCurrentNetwork, SupplicantStaNetwork for iface=wlan1 is null.
+05-09 18:23:48.212 E/SupplicantStaIfaceHalAidlBase( 1569): Can't call disconnect, ISupplicantStaIface is null for iface=wlan1
+05-09 18:23:48.255 E/SatelliteController( 2348): notifyNtnEligibility: mSatellitePhone is null
+05-09 18:23:48.343 E/WifiScanningService( 1569): wifi driver loaded received while already loaded
+05-09 18:23:48.352 E/WifiMetrics( 1569): Called WifiMetrics#logPNoScanStop() without calling WifiMetrics#logPnoScanStart() first!
+05-09 18:23:48.360 E/WifiStaIfaceAidlImpl( 1569): setScanMode failed with service-specific exception: android.os.ServiceSpecificException:  (code 4)
+05-09 18:23:48.364 E/SupplicantStaIfaceHalAidlBase( 1569): Can't call listNetworks, ISupplicantStaIface is null for iface=wlan1
+05-09 18:23:48.364 E/SupplicantStaIfaceHalAidlBase( 1569): removeAllNetworks failed, got null networks
+05-09 18:23:48.364 E/WifiClientModeImpl[1316676439:wlan1]( 1569): Failed to remove networks on exiting connect mode
+05-09 18:23:48.364 E/SupplicantStaIfaceHalAidlBase( 1569): Can't call setSuspendModeEnabled, ISupplicantStaIface is null for iface=wlan1
+05-09 18:23:48.364 E/SupplicantStaIfaceHalAidlBase( 1569): Can't call setPowerSave, ISupplicantStaIface is null for iface=wlan1
+05-09 18:23:48.364 E/SupplicantStaIfaceHalAidlBase( 1569): Can't call setBtCoexistenceMode, ISupplicantStaIface is null for iface=wlan1
+05-09 18:23:48.365 E/WifiHAL (  995): Ring name: level:0 sec:0 ring_name:fw_verbose
+05-09 18:23:48.382 E/WifiScanningService( 1569): Failed to unregister death recipient! com.android.server.wifi.scanner.WifiScanningServiceImpl$InternalListener@f229527
+05-09 18:23:48.387 E/TelephonyConfigUpdateInstallReceiver( 2348): Failed to read current content : /data/misc/telephonyconfig/valid_telephony_config.pb
+05-09 18:23:48.388 E/TelephonyConfigUpdateInstallReceiver( 2348): Failed to read current content : /data/misc/telephonyconfig/valid_telephony_config.pb
+05-09 18:23:48.388 E/SatelliteController( 2348): registerForSatelliteModemStateChanged: mSatelliteSessionController is not initialized yet
+05-09 18:23:48.388 E/SatelliteController( 2348): unregisterForModemStateChanged: mSatelliteSessionController is not initialized yet
+05-09 18:23:48.390 E/SatelliteController( 2348): registerForSatelliteModemStateChanged: mSatelliteSessionController is not initialized yet
+05-09 18:23:48.390 E/SatelliteController( 2348): unregisterForModemStateChanged: mSatelliteSessionController is not initialized yet
+05-09 18:23:48.391 E/SatelliteController( 2348): notifyNtnEligibility: mSatellitePhone is null
+05-09 18:23:48.428 E/WifiHAL (  995): Ring name: level:0 sec:0 ring_name:driver_log
+05-09 18:23:48.428 E/WifiHAL (  995): Ring name: level:0 sec:0 ring_name:roam_stats
+05-09 18:23:48.428 E/WifiHAL (  995): Ring name: level:0 sec:0 ring_name:packet_log
+05-09 18:23:48.428 E/WifiHAL (  995): Ring name: level:0 sec:0 ring_name:debug_dump1_
+05-09 18:23:48.428 E/WifiHAL (  995): Ring name: level:0 sec:0 ring_name:debug_dump2_
+05-09 18:23:48.429 E/WifiHAL (  995): Ring name: level:0 sec:0 ring_name:mem_dump
+05-09 18:23:48.429 E/WifiHAL (  995): Ring name: level:0 sec:0 ring_name:ecntrs_
+05-09 18:23:48.429 E/WifiHAL (  995): Loghandler reset, wifi_request_id = 0, handle = 0xb400006e848e4f90
+05-09 18:23:48.518 E/WifiAwareNativeApi( 1569): disable: null interface
+05-09 18:23:48.520 E/WifiAwareStateManager( 1569): onDisableResponseLocal: FAILED!? command={ when=-7d13h58m5s365ms what=1 arg1=124 obj=true target=com.android.wifi.x.com.android.internal.util.StateMachine$SmHandler async=false heapIndex=-1 }, reason=9
+05-09 18:23:48.520 E/statsd  (  909): Stats puller failed for tag: 10011 at 1320689799547335
+05-09 18:23:48.568 E/WifiService( 1569): Attempt to retrieve passpoint with invalid scanResult List
+05-09 18:23:48.592 E/NearbyMediums(19994): MEDIUM_ERROR [SYSTEM][WIFI_LAN][START_LISTENING_INCOMING_CONNECTION][ACCEPT_CONNECTION_FAILED][SOCKET_CLOSED], service-id=nearby.sharedconnectivity
+05-09 18:23:48.592 E/NearbyMediums(19994): Extra Sensitive/PII message : Socket closed
+05-09 18:23:48.606 E/statsd  (  909): Stats puller failed for tag: 10011 at 1320689799547335
+05-09 18:23:54.359 E/gralloc5(  568): ERROR: Format allocation info not found for format: 3b
+05-09 18:23:54.359 E/gralloc5(  568): ERROR: Format allocation info not found for format: 0
+05-09 18:23:54.359 E/gralloc5(  568): Invalid base format! req_base_format = (<unrecognized format> 0x0), req_format = (<unrecognized format> 0x3b), type = 0x0
+05-09 18:23:54.359 E/gralloc5(  568): ERROR: Unrecognized and/or unsupported format (<unrecognized format> 0x3b) and usage (CPU_READ_NEVER|CPU_WRITE_NEVER|GPU_TEXTURE|GPU_RENDER_TARGET|COMPOSER_OVERLAY 0xb00)
+05-09 18:23:54.360 E/gralloc5(  568): ERROR: Format allocation info not found for format: 3b
+05-09 18:23:54.360 E/gralloc5(  568): ERROR: Format allocation info not found for format: 0
+05-09 18:23:54.360 E/gralloc5(  568): Invalid base format! req_base_format = (<unrecognized format> 0x0), req_format = (<unrecognized format> 0x3b), type = 0x0
+05-09 18:23:54.360 E/gralloc5(  568): ERROR: Unrecognized and/or unsupported format (<unrecognized format> 0x3b) and usage (CPU_READ_NEVER|CPU_WRITE_NEVER|GPU_TEXTURE|GPU_RENDER_TARGET|COMPOSER_OVERLAY 0xb00)

@@ -21,9 +21,7 @@ Future<void> main() async {
   await crashReporting.initialize();
 
   // Lock app to portrait orientation only
-  await SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-  ]);
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   // Lade Umgebungsvariablen (.env file)
   await dotenv.load();

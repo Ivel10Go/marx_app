@@ -7,7 +7,7 @@ import '../../core/providers/supabase_auth_provider.dart';
 import '../../core/theme/app_colors.dart';
 
 class AuthScreen extends ConsumerStatefulWidget {
-  const AuthScreen({Key? key}) : super(key: key);
+  const AuthScreen({super.key});
 
   @override
   ConsumerState<AuthScreen> createState() => _AuthScreenState();
