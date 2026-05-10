@@ -1,62 +1,100 @@
 #!/usr/bin/env python3
 """
 Normalize German umlauts in JSON and Dart files.
-Converts ue->ü, ae->ä, oe->ö in German text.
+Uses context-aware normalization to avoid false replacements
+like "Quelle" -> "Qülle" or "aktuell" -> "aktüll".
 """
 
 import json
-import re
 from pathlib import Path
-from typing import Any, Dict
+import re
+from typing import TypeAlias
 
-def should_normalize_ue(text: str, pos: int) -> bool:
-    """Check if 'ue' at position should be normalized to 'ü'."""
-    # Don't normalize if followed by another letter (e.g., 'uel' in 'Duel')
-    if pos + 2 < len(text) and text[pos + 2].isalpha():
-        # Exception: allow in certain contexts
-        # For German: 'ue' at end of word or before punctuation is usually 'ü'
-        return not text[pos + 2:pos + 3].isalpha() or text[pos + 2:pos + 3] in [' ', '.', ',', '!', '?', '"', "'", '(', ')', ';', ':']
-    return True
+JsonLike: TypeAlias = (
+    dict[str, "JsonLike"] | list["JsonLike"] | str | int | float | bool | None
+)
+
+# Word fragments where "ue"/"ae"/"oe" are usually not umlaut substitutions.
+# We intentionally keep this list compact and conservative.
+_NO_UMLAUT_PATTERNS = (
+    "que",
+    "uel",
+    "uell",
+    "euer",
+    "neue",
+    "treue",
+)
+
+_UE_WHITELIST = (
+    "ueber",
+    "fuer",
+    "mueller",
+    "muen",
+    "muench",
+    "duess",
+    "gruen",
+    "frueh",
+)
+_AE_WHITELIST = ("aeh", "aeus", "jaeh", "maed", "zaeh", "aerz")
+_OE_WHITELIST = ("oek", "oel", "oef", "goet", "koel", "oest")
+
+
+def _replace_with_case(pair: str, replacement: str) -> str:
+    if pair[0].isupper():
+        return replacement.upper()
+    return replacement
+
+
+def _should_replace_pair(word: str, index: int, pair: str) -> bool:
+    lower = word.lower()
+    tail = lower[index:]
+
+    # Never replace after q in German/French/English "qu" words.
+    if index > 0 and lower[index - 1] == "q":
+        return False
+
+    # Avoid common non-umlaut patterns.
+    for fragment in _NO_UMLAUT_PATTERNS:
+        if tail.startswith(fragment):
+            return False
+
+    # Conservative allow-list for replacements.
+    if pair == "ue":
+        return any(tail.startswith(prefix) for prefix in _UE_WHITELIST)
+    if pair == "ae":
+        return any(tail.startswith(prefix) for prefix in _AE_WHITELIST)
+    if pair == "oe":
+        return any(tail.startswith(prefix) for prefix in _OE_WHITELIST)
+    return False
 
 def normalize_string(text: str) -> str:
-    """Normalize umlauts in a string."""
+    """Normalize umlauts in a string with conservative context checks."""
     if not isinstance(text, str):
         return text
-    
-    result = []
-    i = 0
-    while i < len(text):
-        # Check for 'ue' -> 'ü' (but not in 'queue' or similar English words)
-        if i + 1 < len(text) and text[i:i+2].lower() == 'ue':
-            # Check context - if preceded by consonant or at start, likely German
-            if i == 0 or (i > 0 and text[i-1] not in 'aeiouäöü'):
-                if i + 2 >= len(text) or text[i+2] not in 'aeiouäöü':
-                    result.append('ü' if text[i] == 'u' else 'Ü')
-                    i += 2
-                    continue
-        
-        # Check for 'ae' -> 'ä'
-        if i + 1 < len(text) and text[i:i+2].lower() == 'ae':
-            if i == 0 or (i > 0 and text[i-1] not in 'aeiouäöü'):
-                if i + 2 >= len(text) or text[i+2] not in 'aeiouäöü':
-                    result.append('ä' if text[i] == 'a' else 'Ä')
-                    i += 2
-                    continue
-        
-        # Check for 'oe' -> 'ö'
-        if i + 1 < len(text) and text[i:i+2].lower() == 'oe':
-            if i == 0 or (i > 0 and text[i-1] not in 'aeiouäöü'):
-                if i + 2 >= len(text) or text[i+2] not in 'aeiouäöü':
-                    result.append('ö' if text[i] == 'o' else 'Ö')
-                    i += 2
-                    continue
-        
-        result.append(text[i])
-        i += 1
-    
-    return ''.join(result)
 
-def normalize_dict_values(obj: Any) -> Any:
+    def normalize_word(word: str) -> str:
+        out = []
+        i = 0
+        while i < len(word):
+            if i + 1 < len(word):
+                pair = word[i:i + 2]
+                pair_lower = pair.lower()
+                if pair_lower in ("ue", "ae", "oe") and _should_replace_pair(
+                    word,
+                    i,
+                    pair_lower,
+                ):
+                    repl = {"ue": "ü", "ae": "ä", "oe": "ö"}[pair_lower]
+                    out.append(_replace_with_case(pair, repl))
+                    i += 2
+                    continue
+            out.append(word[i])
+            i += 1
+        return "".join(out)
+
+    return re.sub(r"[A-Za-zÄÖÜäöüß]+", lambda m: normalize_word(m.group(0)), text)
+
+def normalize_dict_values(obj: JsonLike) -> JsonLike:
     """Recursively normalize all string values in a dictionary or list."""
     if isinstance(obj, dict):
         return {k: normalize_dict_values(v) for k, v in obj.items()}
