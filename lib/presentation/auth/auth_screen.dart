@@ -4,10 +4,11 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../core/providers/supabase_auth_provider.dart';
+import '../../core/services/supabase_auth_service.dart';
 import '../../core/theme/app_colors.dart';
 
 class AuthScreen extends ConsumerStatefulWidget {
-  const AuthScreen({Key? key}) : super(key: key);
+  const AuthScreen({super.key});
 
   @override
   ConsumerState<AuthScreen> createState() => _AuthScreenState();
@@ -26,30 +27,33 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
     if (!_formKey.currentState!.validate()) return;
     setState(() => _loading = true);
     final authController = ref.read(authControllerProvider.notifier);
-    try {
-      if (_isSignUp) {
-        await authController.signUp(
-          email: _emailController.text.trim(),
-          password: _passwordController.text,
-        );
-      } else {
-        await authController.signIn(
-          email: _emailController.text.trim(),
-          password: _passwordController.text,
-        );
-      }
-      if (mounted) {
-        context.pop();
-      }
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('Fehler: ${e.toString()}')));
-      }
-    } finally {
-      if (mounted) setState(() => _loading = false);
+    final success = _isSignUp
+        ? await authController.signUp(
+            email: _emailController.text.trim(),
+            password: _passwordController.text,
+          )
+        : await authController.signIn(
+            email: _emailController.text.trim(),
+            password: _passwordController.text,
+          );
+
+    if (!mounted) {
+      return;
     }
+
+    if (success) {
+      Navigator.of(context).pop();
+      return;
+    }
+
+    final authError = ref
+        .read(authControllerProvider)
+        .maybeWhen(error: (e, _) => e, orElse: () => null);
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(authErrorMessage(authError))));
+
+    setState(() => _loading = false);
   }
 
   @override
@@ -387,6 +391,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
               onPressed: () async {
                 final email = resetEmailCtrl.text.trim();
                 if (email.isEmpty || !email.contains('@')) {
+                  if (!mounted) return;
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text('Bitte gib eine gültige E-Mail ein'),
@@ -399,22 +404,22 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                   await ref
                       .read(authControllerProvider.notifier)
                       .resetPassword(email);
-                  if (mounted) {
-                    Navigator.pop(dialogContext);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                          'Passwort-Reset-Link wurde gesendet. Bitte überprüfe dein Postfach.',
-                        ),
+
+                  if (!mounted) return;
+                  Navigator.pop(dialogContext);
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        'Passwort-Reset-Link wurde gesendet. Bitte überprüfe dein Postfach.',
                       ),
-                    );
-                  }
+                    ),
+                  );
                 } catch (e) {
-                  if (mounted) {
-                    ScaffoldMessenger.of(
-                      context,
-                    ).showSnackBar(SnackBar(content: Text('Fehler: $e')));
-                  }
+                  if (!mounted) return;
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text('Fehler: $e')));
                 }
               },
               child: const Text('Senden'),

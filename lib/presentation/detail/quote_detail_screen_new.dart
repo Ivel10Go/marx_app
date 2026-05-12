@@ -87,7 +87,7 @@ class _QuoteDetailScreenState extends ConsumerState<QuoteDetailScreen> {
                 SizedBox(height: AppTheme.spacingMedium),
                 Text(
                   quote.explanationShort,
-                  style: GoogleFonts.ibmPlexSans(fontSize: 12, height: 1.6),
+                  style: GoogleFonts.ibmPlexSans(fontSize: 14, height: 1.65),
                 ),
               ],
             ),

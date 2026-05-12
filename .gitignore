@@ -48,5 +48,11 @@ app.*.map.json
 /android/app/release
 # Keystore and local signing properties
 key.properties
+
+# Markdown documentation files (don't commit local docs)
+*.md
 android/app/release.keystore
 android/.kotlin/
+
+android/java_pid*.hprof
+*.hprof

@@ -3,7 +3,7 @@
     android:id="@+id/quote_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F4EFE6"
+    android:background="@drawable/widget_card_bg"
     android:orientation="vertical">
 
     <LinearLayout
@@ -18,17 +18,41 @@
             android:orientation="horizontal"
             android:gravity="center_vertical">
 
-            <TextView
-                android:id="@+id/quote_header"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="ZITATATLAS"
-                android:textColor="#1A1A1A"
-                android:textSize="10sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <TextView
+n                <TextView
+                    android:id="@+id/quote_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ZITATATLAS"
+                    android:textColor="#1A1A1A"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+n                <TextView
+                    android:id="@+id/quote_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#555555"
+                    android:textSize="11sp"
+                    android:layout_marginTop="4dp"
+                    android:text="9. Mai 2026" />
+            </LinearLayout>
+
+n            <TextView
+                android:id="@+id/widget_favorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="♥"
+                android:textColor="#C41E1E"
+                android:textSize="16sp"
+                android:layout_marginEnd="8dp" />
+
+n            <TextView
                 android:id="@+id/widget_mode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -98,7 +122,7 @@
             android:textColor="#555555"
             android:textSize="11sp" />
 
-        <TextView
+n        <TextView
             android:id="@+id/quote_source"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -110,7 +134,7 @@
             android:textSize="10sp"
             android:textStyle="bold" />
 
-        <TextView
+n        <TextView
             android:id="@+id/quote_categories"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -121,7 +145,7 @@
             android:textColor="#555555"
             android:textSize="11sp" />
 
-        <TextView
+n        <TextView
             android:id="@+id/quote_streak"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -130,6 +154,32 @@
             android:textAllCaps="true"
             android:textColor="#C41E1E"
             android:textSize="11sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+n    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@drawable/widget_bottom_band"
+        android:orientation="vertical"
+        android:gravity="center">
+
+n        <TextView
+            android:id="@+id/bottom_series_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SERIE"
+            android:textColor="#FFFFFF"
+            android:textSize="10sp"
+            android:textStyle="bold" />
+
+n        <TextView
+            android:id="@+id/bottom_tag_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TAG 4"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
             android:textStyle="bold" />
     </LinearLayout>
 </LinearLayout>

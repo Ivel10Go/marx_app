@@ -12,8 +12,7 @@ class QuoteDao extends DatabaseAccessor<AppDatabase> with _$QuoteDaoMixin {
 
   Future<List<String>> getAllQuoteIds() async {
     // Only select id column to avoid loading large text columns unnecessarily
-    final query = selectOnly(quoteEntries)
-      ..addColumns([quoteEntries.id]);
+    final query = selectOnly(quoteEntries)..addColumns([quoteEntries.id]);
     final rows = await query.get();
     return rows.map((row) => row.read(quoteEntries.id)!).toList();
   }
@@ -82,6 +81,13 @@ class QuoteDao extends DatabaseAccessor<AppDatabase> with _$QuoteDaoMixin {
       await delete(favorites).go();
       await delete(seenQuotes).go();
       await delete(quoteEntries).go();
+    });
+  }
+
+  Future<void> clearUserData() async {
+    await transaction(() async {
+      await delete(favorites).go();
+      await delete(seenQuotes).go();
     });
   }
 }

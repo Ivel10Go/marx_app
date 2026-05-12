@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../core/services/feedback_submission_service.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_theme.dart';
 import '../../data/models/daily_content.dart';
@@ -54,7 +55,7 @@ class SettingsScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: 12),
                   Container(width: 40, height: 2, color: AppColors.red),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Text(
                     'Steuere, was du täglich siehst und wie du lernst.',
                     style: GoogleFonts.ibmPlexSans(
@@ -66,7 +67,8 @@ class SettingsScreen extends ConsumerWidget {
                 ],
               ),
             ),
-            const SizedBox.shrink(),
+            // Bottom separator
+            Container(height: 1, color: scheme.outline),
             Expanded(
               child: settingsAsync.when(
                 data: (settings) {
@@ -78,220 +80,12 @@ class SettingsScreen extends ConsumerWidget {
                       AppTheme.spacingXl,
                     ),
                     children: <Widget>[
-                      GestureDetector(
+                      _SettingsLinkCard(
+                        title: 'PROFIL',
+                        subtitle:
+                            'Identität, Fortschritt und persönliche Auszeichnungen',
+                        icon: Icons.person_rounded,
                         onTap: () => context.push('/account'),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: AppColors.paperDark,
-                            border: Border.all(color: scheme.outline, width: 1),
-                            borderRadius: BorderRadius.circular(2),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(16),
-                            child: Row(
-                              children: <Widget>[
-                                Container(
-                                  width: 40,
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                    color: AppColors.red,
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: const Icon(
-                                    Icons.person_rounded,
-                                    color: Colors.white,
-                                    size: 22,
-                                  ),
-                                ),
-                                const SizedBox(width: 14),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(
-                                        'ACCOUNT',
-                                        style: GoogleFonts.ibmPlexSans(
-                                          fontSize: 9,
-                                          fontWeight: FontWeight.w700,
-                                          color: AppColors.red,
-                                          letterSpacing: 1.4,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 2),
-                                      Text(
-                                        'Verwalte deinen Account und Personalisierung',
-                                        style: GoogleFonts.ibmPlexSans(
-                                          fontSize: 11,
-                                          fontWeight: FontWeight.w600,
-                                          color: scheme.onSurface,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(width: 12),
-                                Icon(
-                                  Icons.chevron_right,
-                                  size: 18,
-                                  color: scheme.outline,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: AppTheme.spacingLarge),
-                      _SettingsGroup(
-                        title: 'BENACHRICHTIGUNGEN',
-                        children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      'Täglich aktiv',
-                                      style: GoogleFonts.ibmPlexSans(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                        color: AppColors.ink,
-                                      ),
-                                    ),
-                                    SizedBox(height: AppTheme.spacingXs),
-                                    Text(
-                                      'Bei Aktivierung wird dein Tagesinhalt (Zitat oder Fact) jeden Tag zur gewählten Uhrzeit geplant.',
-                                      style: GoogleFonts.ibmPlexSans(
-                                        fontSize: 10,
-                                        color: AppColors.inkLight,
-                                        height: 1.4,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Switch.adaptive(
-                                value: settings.notificationEnabled,
-                                onChanged: (bool enabled) async {
-                                  try {
-                                    await ref
-                                        .read(
-                                          settingsControllerProvider.notifier,
-                                        )
-                                        .setNotificationEnabled(enabled);
-                                  } catch (e) {
-                                    if (!context.mounted) {
-                                      return;
-                                    }
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text(
-                                          'Benachrichtigung konnte nicht aktualisiert werden: $e',
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                },
-                                activeThumbColor: AppColors.red,
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 14),
-                          GestureDetector(
-                            onTap: () async {
-                              if (!settings.notificationEnabled) {
-                                return;
-                              }
-
-                              final selected = await showTimePicker(
-                                context: context,
-                                initialTime: TimeOfDay(
-                                  hour: settings.notificationHour,
-                                  minute: settings.notificationMinute,
-                                ),
-                              );
-                              if (selected != null && context.mounted) {
-                                try {
-                                  await ref
-                                      .read(settingsControllerProvider.notifier)
-                                      .setNotificationTime(selected);
-                                } catch (e) {
-                                  if (!context.mounted) {
-                                    return;
-                                  }
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                        'Benachrichtigungszeit konnte nicht gespeichert werden: $e',
-                                      ),
-                                    ),
-                                  );
-                                }
-                              }
-                            },
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  'Benachrichtigungszeit',
-                                  style: GoogleFonts.ibmPlexSans(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w600,
-                                    color: settings.notificationEnabled
-                                        ? AppColors.ink
-                                        : AppColors.inkLight,
-                                  ),
-                                ),
-                                SizedBox(height: AppTheme.spacingXs),
-                                Text(
-                                  '${settings.notificationHour.toString().padLeft(2, '0')}:${settings.notificationMinute.toString().padLeft(2, '0')}',
-                                  style: GoogleFonts.ibmPlexSans(
-                                    fontSize: 10,
-                                    color: settings.notificationEnabled
-                                        ? AppColors.inkLight
-                                        : AppColors.inkMuted,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: AppTheme.spacingLarge),
-                      _SettingsGroup(
-                        title: 'SAMMLUNG',
-                        children: <Widget>[
-                          Text(
-                            'Deine gespeicherten Inhalte bleiben erreichbar, ohne den Lesefluss auf anderen Seiten zu stören.',
-                            style: GoogleFonts.ibmPlexSans(
-                              fontSize: 11,
-                              color: AppColors.inkLight,
-                              height: 1.5,
-                            ),
-                          ),
-                          SizedBox(height: AppTheme.spacingMedium),
-                          Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: _SettingsActionButton(
-                                  label: 'FAVORITEN',
-                                  filled: false,
-                                  onTap: () => context.push('/favorites'),
-                                ),
-                              ),
-                              SizedBox(width: 10),
-                              Expanded(
-                                child: _SettingsActionButton(
-                                  label: 'ARCHIV',
-                                  filled: false,
-                                  onTap: () => context.push('/archive'),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
                       ),
                       SizedBox(height: AppTheme.spacingLarge),
                       if (isAdmin) ...<Widget>[
@@ -475,6 +269,10 @@ class SettingsScreen extends ConsumerWidget {
                           ),
                         ],
                       ),
+                      const SizedBox(height: 28),
+                      _BugReportFooter(
+                        onTap: () => _showBugReportSheet(context),
+                      ),
                     ],
                   );
                 },
@@ -498,8 +296,6 @@ class SettingsScreen extends ConsumerWidget {
   }
 }
 
-// Settings intro/tip card removed per scope-reduction request.
-
 String _modeLabel(AppMode mode) {
   switch (mode) {
     case AppMode.public:
@@ -507,6 +303,17 @@ String _modeLabel(AppMode mode) {
     case AppMode.adminMarx:
       return 'Marx-Modus';
   }
+}
+
+Future<void> _showBugReportSheet(BuildContext context) {
+  return showModalBottomSheet<void>(
+    context: context,
+    isScrollControlled: true,
+    backgroundColor: Colors.transparent,
+    builder: (BuildContext sheetContext) {
+      return const _BugReportSheet();
+    },
+  );
 }
 
 class _SettingsGroup extends StatelessWidget {
@@ -586,12 +393,12 @@ class _SettingsGroup extends StatelessWidget {
     switch (title) {
       case 'BENACHRICHTIGUNGEN':
         return Icons.notifications_outlined;
-      case 'SAMMLUNG':
-        return Icons.bookmark_outline;
       case 'ADMIN':
         return Icons.admin_panel_settings_outlined;
       case 'WARTUNG':
         return Icons.build_outlined;
+      case 'BUG & FEEDBACK':
+        return Icons.bug_report_outlined;
       default:
         return Icons.settings_outlined;
     }
@@ -601,19 +408,17 @@ class _SettingsGroup extends StatelessWidget {
     switch (title) {
       case 'BENACHRICHTIGUNGEN':
         return 'Zeitpunkt und Aktivierung';
-      case 'SAMMLUNG':
-        return 'Favoriten und Archiv';
       case 'ADMIN':
         return 'Admin-Bereich';
       case 'WARTUNG':
         return 'Einführung und Status';
+      case 'BUG & FEEDBACK':
+        return 'Probleme berichten';
       default:
         return '';
     }
   }
 }
-
-// Settings hero/tip card removed per scope-reduction request.
 
 class _SettingsActionButton extends StatelessWidget {
   const _SettingsActionButton({
@@ -652,6 +457,351 @@ class _SettingsActionButton extends StatelessWidget {
                 color: filled ? scheme.surface : scheme.onSurface,
                 letterSpacing: 1.0,
               ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _SettingsLinkCard extends StatelessWidget {
+  const _SettingsLinkCard({
+    required this.title,
+    required this.subtitle,
+    required this.icon,
+    required this.onTap,
+  });
+
+  final String title;
+  final String subtitle;
+  final IconData icon;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.paperDark,
+        border: Border.all(color: scheme.outline, width: 1),
+        borderRadius: BorderRadius.circular(2),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              children: <Widget>[
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: const BoxDecoration(
+                    color: AppColors.red,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(icon, color: Colors.white, size: 22),
+                ),
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        title,
+                        style: GoogleFonts.ibmPlexSans(
+                          fontSize: 9,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.red,
+                          letterSpacing: 1.4,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        subtitle,
+                        style: GoogleFonts.ibmPlexSans(
+                          fontSize: 11,
+                          fontWeight: FontWeight.w600,
+                          color: scheme.onSurface,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Icon(Icons.chevron_right, size: 18, color: scheme.outline),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _BugReportFooter extends StatelessWidget {
+  const _BugReportFooter({required this.onTap});
+
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Text(
+            'Probleme entdeckt?',
+            style: GoogleFonts.ibmPlexSans(
+              fontSize: 10,
+              color: scheme.onSurfaceVariant,
+            ),
+          ),
+          TextButton(
+            onPressed: onTap,
+            style: TextButton.styleFrom(
+              foregroundColor: AppColors.red,
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+              textStyle: GoogleFonts.ibmPlexSans(
+                fontSize: 11,
+                fontWeight: FontWeight.w700,
+                letterSpacing: 1.0,
+              ),
+            ),
+            child: const Text('BUGS MELDEN'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _BugReportSheet extends StatefulWidget {
+  const _BugReportSheet();
+
+  @override
+  State<_BugReportSheet> createState() => _BugReportSheetState();
+}
+
+class _BugReportSheetState extends State<_BugReportSheet> {
+  final _titleController = TextEditingController();
+  final _descriptionController = TextEditingController();
+  final _contactController = TextEditingController();
+  bool _isSubmitting = false;
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _descriptionController.dispose();
+    _contactController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _submitBugReport() async {
+    if (_titleController.text.isEmpty || _descriptionController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Titel und Beschreibung sind erforderlich'),
+        ),
+      );
+      return;
+    }
+
+    setState(() => _isSubmitting = true);
+
+    try {
+      final service = FeedbackSubmissionService();
+      await service.submitBugReport(
+        title: _titleController.text,
+        description: _descriptionController.text,
+        steps: '',
+        expected: '',
+        contact: _contactController.text.isEmpty
+            ? null
+            : _contactController.text,
+        platform: Theme.of(context).platform == TargetPlatform.iOS
+            ? 'iOS'
+            : 'Android',
+        appVersion: '0.1.0',
+        appLocale: Localizations.localeOf(context).toString(),
+      );
+
+      if (mounted) {
+        _titleController.clear();
+        _descriptionController.clear();
+        _contactController.clear();
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Bug Report erfolgreich gesendet! Danke für dein Feedback.',
+            ),
+            duration: Duration(seconds: 3),
+          ),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Fehler beim Senden: $e')));
+      }
+    } finally {
+      if (mounted) {
+        setState(() => _isSubmitting = false);
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
+    return SafeArea(
+      child: Padding(
+        padding: EdgeInsets.only(
+          left: AppTheme.spacingLarge,
+          right: AppTheme.spacingLarge,
+          bottom:
+              MediaQuery.of(context).viewInsets.bottom + AppTheme.spacingLarge,
+          top: AppTheme.spacingLarge,
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            color: scheme.surface,
+            border: Border.all(color: scheme.outline, width: 1),
+            borderRadius: BorderRadius.circular(2),
+          ),
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Container(
+                      width: 40,
+                      height: 40,
+                      decoration: const BoxDecoration(
+                        color: AppColors.paperDark,
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons.bug_report_outlined,
+                        color: AppColors.red,
+                        size: 20,
+                      ),
+                    ),
+                    const SizedBox(width: 14),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            'BUG & FEEDBACK',
+                            style: GoogleFonts.ibmPlexSans(
+                              fontSize: 9,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.red,
+                              letterSpacing: 1.4,
+                            ),
+                          ),
+                          const SizedBox(height: 2),
+                          Text(
+                            'Probleme berichten',
+                            style: GoogleFonts.ibmPlexSans(
+                              fontSize: 11,
+                              color: scheme.onSurfaceVariant,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                Container(height: 1, color: scheme.outline),
+                const SizedBox(height: 16),
+                Text(
+                  'Hilf uns, die App zu verbessern. Berichte Bugs oder sende Feedback.',
+                  style: GoogleFonts.ibmPlexSans(
+                    fontSize: 11,
+                    color: AppColors.inkLight,
+                    height: 1.5,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                TextField(
+                  controller: _titleController,
+                  decoration: InputDecoration(
+                    labelText: 'Bugtitel',
+                    hintText: 'z.B. Widget lädt nicht',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(2),
+                      borderSide: BorderSide(color: scheme.outline),
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 10,
+                    ),
+                  ),
+                  style: GoogleFonts.ibmPlexSans(fontSize: 11),
+                  enabled: !_isSubmitting,
+                ),
+                const SizedBox(height: 12),
+                TextField(
+                  controller: _descriptionController,
+                  decoration: InputDecoration(
+                    labelText: 'Beschreibung',
+                    hintText: 'Beschreibe das Problem...',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(2),
+                      borderSide: BorderSide(color: scheme.outline),
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 10,
+                    ),
+                  ),
+                  style: GoogleFonts.ibmPlexSans(fontSize: 11),
+                  maxLines: 4,
+                  enabled: !_isSubmitting,
+                ),
+                const SizedBox(height: 12),
+                TextField(
+                  controller: _contactController,
+                  decoration: InputDecoration(
+                    labelText: 'Kontakt (optional)',
+                    hintText: 'deine@email.de',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(2),
+                      borderSide: BorderSide(color: scheme.outline),
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 10,
+                    ),
+                  ),
+                  style: GoogleFonts.ibmPlexSans(fontSize: 11),
+                  enabled: !_isSubmitting,
+                ),
+                const SizedBox(height: 16),
+                SizedBox(
+                  width: double.infinity,
+                  child: _SettingsActionButton(
+                    label: _isSubmitting
+                        ? 'WIRD GESENDET...'
+                        : 'BUG REPORT SENDEN',
+                    filled: true,
+                    onTap: _isSubmitting ? () {} : _submitBugReport,
+                  ),
+                ),
+              ],
             ),
           ),
         ),

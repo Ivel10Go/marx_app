@@ -10,6 +10,7 @@ import '../../presentation/onboarding/onboarding_screen.dart';
 import '../../presentation/auth/auth_screen.dart';
 import '../../presentation/account/account_screen.dart';
 import '../../presentation/settings/settings_screen.dart';
+import '../../presentation/quotes/quote_submission_screen.dart';
 import '../../domain/providers/admin_access_provider.dart';
 
 final initialRouteProvider = Provider<String>((Ref ref) => '/');
@@ -83,6 +84,16 @@ final appRouterProvider = Provider<GoRouter>((Ref ref) {
         path: '/account',
         name: 'account',
         builder: (context, state) => const AccountScreen(),
+      ),
+      GoRoute(
+        path: '/profile',
+        name: 'profile',
+        builder: (context, state) => const AccountScreen(),
+      ),
+      GoRoute(
+        path: '/submit-quote',
+        name: 'submit-quote',
+        builder: (context, state) => const QuoteSubmissionScreen(),
       ),
       // Purchase and premium features routes removed for beta launch
     ],

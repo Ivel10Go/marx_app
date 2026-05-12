@@ -9,6 +9,8 @@ import android.content.Intent
 import android.util.Log
 import android.view.View
 import android.widget.RemoteViews
+import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 
 class QuoteWidgetProvider : AppWidgetProvider() {
@@ -123,6 +125,20 @@ class QuoteWidgetProvider : AppWidgetProvider() {
           R.id.quote_author,
           if (quoteAuthor.isBlank()) View.GONE else View.VISIBLE,
         )
+
+        // Only set layout-specific views when the chosen layout includes them
+        if (layout == R.layout.quote_widget_v2 || layout == R.layout.quote_widget_large) {
+          val sdf = SimpleDateFormat("d. MMMM yyyy", Locale.GERMAN)
+          val formatted = sdf.format(Date())
+          views.setTextViewText(R.id.quote_date, formatted)
+
+          // Bottom band: show series label + tag using streak
+          views.setTextViewText(R.id.bottom_series_label, "SERIE")
+          views.setTextViewText(R.id.bottom_tag_label, "TAG $streak")
+
+          // Favorite heart only present in larger layouts
+          views.setTextViewText(R.id.widget_favorite, "♥")
+        }
 
         val openIntent = Intent(context, MainActivity::class.java)
         openIntent.putExtra(

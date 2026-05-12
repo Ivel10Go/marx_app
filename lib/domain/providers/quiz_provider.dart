@@ -187,3 +187,8 @@ class QuizNotifier extends StateNotifier<QuizSession> {
 final quizProvider = StateNotifierProvider<QuizNotifier, QuizSession>(
   (Ref ref) => QuizNotifier(ref),
 );
+
+final quizHighscoreProvider = FutureProvider<int>((Ref ref) async {
+  final prefs = await SharedPreferences.getInstance();
+  return prefs.getInt('quiz_highscore') ?? 0;
+});

@@ -11,6 +11,7 @@ import '../../../domain/providers/repository_providers.dart';
 import '../../../data/models/user_profile.dart';
 import '../../../domain/providers/daily_content_provider.dart';
 import '../../../core/providers/supabase_auth_provider.dart';
+import '../../../core/services/supabase_auth_service.dart';
 import '../../../domain/providers/user_profile_provider.dart';
 import '../../../widgets/political_leaning_parliament_picker.dart';
 
@@ -108,11 +109,12 @@ class ProfileSection extends ConsumerWidget {
                   return;
                 }
 
+                final messenger = ScaffoldMessenger.of(context);
                 final quoteRepo = ref.read(quoteRepositoryProvider);
                 final localFavs = await quoteRepo.watchFavorites().first;
                 final localIds = localFavs.map((q) => q.id).toList();
 
-                ScaffoldMessenger.of(context).showSnackBar(
+                messenger.showSnackBar(
                   const SnackBar(content: Text('Debug Sync gestartet...')),
                 );
 
@@ -121,13 +123,13 @@ class ProfileSection extends ConsumerWidget {
                     userId: userId,
                     localFavoriteIds: localIds,
                   );
-                  ScaffoldMessenger.of(context).showSnackBar(
+                  messenger.showSnackBar(
                     const SnackBar(content: Text('Debug Sync abgeschlossen')),
                   );
                 } catch (e) {
-                  ScaffoldMessenger.of(
-                    context,
-                  ).showSnackBar(SnackBar(content: Text('Sync Fehler: $e')));
+                  messenger.showSnackBar(
+                    SnackBar(content: Text('Sync Fehler: $e')),
+                  );
                 }
               },
               style: ElevatedButton.styleFrom(
@@ -169,6 +171,7 @@ class ProfileSection extends ConsumerWidget {
           builder: (ctx, setState) {
             final authState = ref.watch(authControllerProvider);
             final loading = authState.isLoading;
+            final messenger = ScaffoldMessenger.of(ctx);
             return Padding(
               padding: EdgeInsets.fromLTRB(
                 20,
@@ -207,29 +210,38 @@ class ProfileSection extends ConsumerWidget {
                       onPressed: loading
                           ? null
                           : () async {
-                              try {
-                                if (isLogin) {
-                                  await ref
-                                      .read(authControllerProvider.notifier)
-                                      .signIn(
-                                        email: emailCtrl.text.trim(),
-                                        password: passCtrl.text.trim(),
-                                      );
-                                } else {
-                                  await ref
-                                      .read(authControllerProvider.notifier)
-                                      .signUp(
-                                        email: emailCtrl.text.trim(),
-                                        password: passCtrl.text.trim(),
-                                      );
-                                }
-                                if (context.mounted) Navigator.of(ctx).pop();
-                              } catch (e) {
-                                if (!context.mounted) return;
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text('Fehler: $e')),
-                                );
+                              final success = isLogin
+                                  ? await ref
+                                        .read(authControllerProvider.notifier)
+                                        .signIn(
+                                          email: emailCtrl.text.trim(),
+                                          password: passCtrl.text.trim(),
+                                        )
+                                  : await ref
+                                        .read(authControllerProvider.notifier)
+                                        .signUp(
+                                          email: emailCtrl.text.trim(),
+                                          password: passCtrl.text.trim(),
+                                        );
+
+                              if (!ctx.mounted) return;
+
+                              if (success) {
+                                Navigator.of(ctx).pop();
+                                return;
                               }
+
+                              final authError = ref
+                                  .read(authControllerProvider)
+                                  .maybeWhen(
+                                    error: (e, _) => e,
+                                    orElse: () => null,
+                                  );
+                              messenger.showSnackBar(
+                                SnackBar(
+                                  content: Text(authErrorMessage(authError)),
+                                ),
+                              );
                             },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: scheme.onSurface,

@@ -114,6 +114,8 @@ class QuoteRepository {
   Future<void> removeFavorite(String quoteId) =>
       _db.quoteDao.removeFavorite(quoteId);
 
+  Future<void> clearUserData() => _db.quoteDao.clearUserData();
+
   Stream<bool> watchIsFavorite(String quoteId) =>
       _db.quoteDao.watchIsFavorite(quoteId);
 

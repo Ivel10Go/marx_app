@@ -8,12 +8,15 @@ import '../../data/models/thinker_quote.dart';
 abstract final class WidgetSyncService {
   static Future<void> forceRefresh() async {
     try {
+      debugPrint('[WidgetSync] forceRefresh() called');
       await HomeWidget.updateWidget(
         androidName: 'QuoteWidgetProvider',
         iOSName: 'QuoteWidget',
       );
-    } catch (e) {
-      debugPrint('[WidgetSync] Force refresh failed: $e');
+      debugPrint('[WidgetSync] forceRefresh() succeeded');
+    } catch (e, st) {
+      debugPrint('[WidgetSync] forceRefresh() failed: $e');
+      debugPrintStack(stackTrace: st);
     }
   }
 
@@ -23,8 +26,15 @@ abstract final class WidgetSyncService {
     String? modeLabel,
   }) async {
     try {
+      debugPrint(
+        '[WidgetSync.syncDailyContent] Starting sync for streak=$streakCount, mode=$modeLabel',
+      );
+
       await content.when(
         quote: (quote) async {
+          debugPrint(
+            '[WidgetSync.syncDailyContent] Processing quote: ${quote.id}',
+          );
           await _saveCommon(
             contentType: 'quote',
             header: 'ZITATATLAS',
@@ -39,6 +49,9 @@ abstract final class WidgetSyncService {
           );
         },
         fact: (fact) async {
+          debugPrint(
+            '[WidgetSync.syncDailyContent] Processing fact: ${fact.id}',
+          );
           final route = fact.relatedQuoteIds.isNotEmpty
               ? '/detail/${fact.relatedQuoteIds.first}'
               : '/';
@@ -70,6 +83,9 @@ abstract final class WidgetSyncService {
           );
         },
         thinkerQuote: (ThinkerQuote quote) async {
+          debugPrint(
+            '[WidgetSync.syncDailyContent] Processing thinker quote: ${quote.id}',
+          );
           await _saveCommon(
             contentType: 'thinker_quote',
             header: 'ARCHIV',
@@ -87,17 +103,17 @@ abstract final class WidgetSyncService {
 
       await HomeWidget.saveWidgetData<String>('streak', streakCount.toString());
 
+      debugPrint('[WidgetSync.syncDailyContent] Calling updateWidget...');
       await HomeWidget.updateWidget(
         androidName: 'QuoteWidgetProvider',
         iOSName: 'QuoteWidget',
       );
+      debugPrint('[WidgetSync.syncDailyContent] Sync completed successfully');
     } catch (e, st) {
       // Widget sync must never break the daily content flow.
       // The caller can continue startup or refresh even if widget persistence fails.
-      // ignore: avoid_print
-      print('[WidgetSync] Sync failed: $e');
-      // ignore: avoid_print
-      print(st);
+      debugPrint('[WidgetSync.syncDailyContent] SYNC FAILED: $e');
+      debugPrintStack(stackTrace: st);
     }
   }
 
@@ -125,21 +141,33 @@ abstract final class WidgetSyncService {
     required String categories,
     String? quoteId,
   }) async {
-    await HomeWidget.saveWidgetData<String>('content_type', contentType);
-    await HomeWidget.saveWidgetData<String>('widget_header', header);
-    await HomeWidget.saveWidgetData<String>('kicker', header);
-    await HomeWidget.saveWidgetData<String>('widget_mode', modeLabel);
-    await HomeWidget.saveWidgetData<String>('quote_author', author);
-    await HomeWidget.saveWidgetData<String>('launch_route', launchRoute);
-    await HomeWidget.saveWidgetData<String>('quote_text', quoteText);
-    await HomeWidget.saveWidgetData<String>('quote_source', source);
-    await HomeWidget.saveWidgetData<String>('source', source);
-    await HomeWidget.saveWidgetData<String>('quote_explanation', explanation);
-    await HomeWidget.saveWidgetData<String>('explanation', explanation);
-    await HomeWidget.saveWidgetData<String>('quote_categories', categories);
+    try {
+      debugPrint(
+        '[WidgetSync._saveCommon] Starting save: type=$contentType, header=$header',
+      );
 
-    if (quoteId != null && quoteId.isNotEmpty) {
-      await HomeWidget.saveWidgetData<String>('quote_id', quoteId);
+      await HomeWidget.saveWidgetData<String>('content_type', contentType);
+      await HomeWidget.saveWidgetData<String>('widget_header', header);
+      await HomeWidget.saveWidgetData<String>('kicker', header);
+      await HomeWidget.saveWidgetData<String>('widget_mode', modeLabel);
+      await HomeWidget.saveWidgetData<String>('quote_author', author);
+      await HomeWidget.saveWidgetData<String>('launch_route', launchRoute);
+      await HomeWidget.saveWidgetData<String>('quote_text', quoteText);
+      await HomeWidget.saveWidgetData<String>('quote_source', source);
+      await HomeWidget.saveWidgetData<String>('source', source);
+      await HomeWidget.saveWidgetData<String>('quote_explanation', explanation);
+      await HomeWidget.saveWidgetData<String>('explanation', explanation);
+      await HomeWidget.saveWidgetData<String>('quote_categories', categories);
+
+      if (quoteId != null && quoteId.isNotEmpty) {
+        await HomeWidget.saveWidgetData<String>('quote_id', quoteId);
+      }
+
+      debugPrint('[WidgetSync._saveCommon] All data saved successfully');
+    } catch (e, st) {
+      debugPrint('[WidgetSync._saveCommon] Error saving data: $e');
+      debugPrintStack(stackTrace: st);
+      rethrow;
     }
   }
 }

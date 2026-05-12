@@ -50,6 +50,9 @@ flutter_launcher_icons:
   android: true
   ios: true
   image_path: assets/branding/app_icon.png
+  adaptive_icon_background: "#EDE8DF"
+  adaptive_icon_foreground: assets/branding/app_icon.png
+  adaptive_icon_foreground_inset: 20
   remove_alpha_ios: true
 
 flutter:

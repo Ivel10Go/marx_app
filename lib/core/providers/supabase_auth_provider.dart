@@ -4,6 +4,8 @@ import '../services/supabase_auth_service.dart';
 import '../services/supabase_sync_service.dart';
 import '../services/purchases_service.dart';
 import '../../domain/providers/repository_providers.dart';
+import '../../domain/providers/user_profile_provider.dart';
+import '../../domain/providers/daily_content_provider.dart';
 
 /// Stream des aktüllen Auth-Status
 final supabaseAuthStateProvider = StreamProvider<AuthUser?>((ref) {
@@ -41,19 +43,28 @@ class AuthController extends StateNotifier<AsyncValue<AuthUser?>> {
     _service.authStateChanges().listen(
       (user) async {
         state = AsyncValue.data(user);
+        // Invalidate daily content so it reloads with the new user's profile/cache
+        _ref.invalidate(dailyContentProvider);
         try {
           if (user != null) {
             // On login: merge local favorites to cloud and pull cloud favorites back locally
-            await _onLogin(user.id);
+            try {
+              await _onLogin(user.id);
+            } catch (e) {
+              // Log but don't fail - favorites sync is non-blocking
+              print('Favorites sync error: $e');
+            }
             // Link RevenueCat to this user id
             try {
               await PurchasesService.instance.logIn(user.id);
             } catch (e) {
               // non-fatal: log and continue
+              print('RevenueCat login error: $e');
             }
           }
         } catch (e) {
           // ignore sync errors here but log if needed
+          print('Auth state change error: $e');
         }
       },
       onError: (e, st) {
@@ -87,27 +98,38 @@ class AuthController extends StateNotifier<AsyncValue<AuthUser?>> {
         // ignore per-item failures
       }
     }
+
+    // Load UserProfile from cloud and restore locally
+    try {
+      final userProfileNotifier = _ref.read(userProfileProvider.notifier);
+      await userProfileNotifier.loadProfileFromCloud(userId);
+    } catch (e) {
+      // Non-fatal: UserProfile sync failed but user is still logged in
+      print('UserProfile cloud load error: $e');
+    }
   }
 
-  Future<void> signUp({required String email, required String password}) async {
+  Future<bool> signUp({required String email, required String password}) async {
     state = const AsyncValue.loading();
     try {
       await _service.signUpWithEmail(email, password);
       // Auth state wird durch authStateChanges automatisch aktualisiert
+      return true;
     } catch (e, st) {
       state = AsyncValue.error(e, st);
-      rethrow;
+      return false;
     }
   }
 
-  Future<void> signIn({required String email, required String password}) async {
+  Future<bool> signIn({required String email, required String password}) async {
     state = const AsyncValue.loading();
     try {
       await _service.signInWithEmail(email, password);
       // Auth state wird durch authStateChanges automatisch aktualisiert
+      return true;
     } catch (e, st) {
       state = AsyncValue.error(e, st);
-      rethrow;
+      return false;
     }
   }
 

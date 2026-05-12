@@ -150,7 +150,7 @@ class PoliticalLeaningParliamentPicker extends StatelessWidget {
       case PoliticalLeaning.liberal:
         return const Color(0xFFF2D44F);
       case PoliticalLeaning.conservative:
-        return const Color(0xFF2E8CF0);
+        return AppColors.ink;
     }
   }
 
