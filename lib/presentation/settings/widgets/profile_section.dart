@@ -109,11 +109,12 @@ class ProfileSection extends ConsumerWidget {
                   return;
                 }
 
+                final messenger = ScaffoldMessenger.of(context);
                 final quoteRepo = ref.read(quoteRepositoryProvider);
                 final localFavs = await quoteRepo.watchFavorites().first;
                 final localIds = localFavs.map((q) => q.id).toList();
 
-                ScaffoldMessenger.of(context).showSnackBar(
+                messenger.showSnackBar(
                   const SnackBar(content: Text('Debug Sync gestartet...')),
                 );
 
@@ -122,13 +123,13 @@ class ProfileSection extends ConsumerWidget {
                     userId: userId,
                     localFavoriteIds: localIds,
                   );
-                  ScaffoldMessenger.of(context).showSnackBar(
+                  messenger.showSnackBar(
                     const SnackBar(content: Text('Debug Sync abgeschlossen')),
                   );
                 } catch (e) {
-                  ScaffoldMessenger.of(
-                    context,
-                  ).showSnackBar(SnackBar(content: Text('Sync Fehler: $e')));
+                  messenger.showSnackBar(
+                    SnackBar(content: Text('Sync Fehler: $e')),
+                  );
                 }
               },
               style: ElevatedButton.styleFrom(
@@ -170,6 +171,7 @@ class ProfileSection extends ConsumerWidget {
           builder: (ctx, setState) {
             final authState = ref.watch(authControllerProvider);
             final loading = authState.isLoading;
+            final messenger = ScaffoldMessenger.of(ctx);
             return Padding(
               padding: EdgeInsets.fromLTRB(
                 20,
@@ -222,7 +224,7 @@ class ProfileSection extends ConsumerWidget {
                                           password: passCtrl.text.trim(),
                                         );
 
-                              if (!context.mounted) return;
+                              if (!ctx.mounted) return;
 
                               if (success) {
                                 Navigator.of(ctx).pop();
@@ -235,7 +237,7 @@ class ProfileSection extends ConsumerWidget {
                                     error: (e, _) => e,
                                     orElse: () => null,
                                   );
-                              ScaffoldMessenger.of(context).showSnackBar(
+                              messenger.showSnackBar(
                                 SnackBar(
                                   content: Text(authErrorMessage(authError)),
                                 ),

@@ -100,11 +100,14 @@ class SupabaseSyncService {
     try {
       final response = await _client
           .from('profiles')
-          .select('historical_interests, political_leaning, daily_quote_date')
+          .select(
+            'display_name, historical_interests, political_leaning, daily_quote_date',
+          )
           .eq('id', userId)
           .single();
 
       return {
+        'display_name': response['display_name'] as String?,
         'historical_interests': List<String>.from(
           (response['historical_interests'] as List<dynamic>?) ?? [],
         ),
@@ -126,6 +129,7 @@ class SupabaseSyncService {
   /// Speichere UserProfile (Interessen + politische Neigung) zur Cloud
   Future<void> syncUserProfileToCloud({
     required String userId,
+    String? displayName,
     required List<String> historicalInterests,
     required String politicalLeaning,
     String? dailyQuoteDate,
@@ -134,6 +138,7 @@ class SupabaseSyncService {
       await _client
           .from('profiles')
           .update({
+            if (displayName != null) 'display_name': displayName,
             'historical_interests': historicalInterests,
             'political_leaning': politicalLeaning,
             'daily_quote_date': dailyQuoteDate,

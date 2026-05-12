@@ -32,6 +32,12 @@ const List<InterestOption> availableInterests = <InterestOption>[
 
 class UserProfile {
   const UserProfile({
+    required this.displayName,
+    required this.profileTitle,
+    required this.avatarIndex,
+    required this.avatarImageBase64,
+    required this.xp,
+    required this.unlockedBadges,
     required this.historicalInterests,
     required this.politicalLeaning,
     required this.quoteDiscoveryMode,
@@ -43,6 +49,12 @@ class UserProfile {
 
   static const String storageKey = 'user_profile_json';
 
+  final String displayName;
+  final String profileTitle;
+  final int avatarIndex;
+  final String? avatarImageBase64;
+  final int xp;
+  final List<String> unlockedBadges;
   final List<String> historicalInterests;
   final PoliticalLeaning politicalLeaning;
   final QuoteDiscoveryMode quoteDiscoveryMode;
@@ -53,6 +65,12 @@ class UserProfile {
 
   factory UserProfile.initial() {
     return const UserProfile(
+      displayName: '',
+      profileTitle: 'Genosse',
+      avatarIndex: 0,
+      avatarImageBase64: null,
+      xp: 0,
+      unlockedBadges: <String>[],
       historicalInterests: <String>[],
       politicalLeaning: PoliticalLeaning.neutral,
       quoteDiscoveryMode: QuoteDiscoveryMode.interests,
@@ -64,6 +82,12 @@ class UserProfile {
   }
 
   UserProfile copyWith({
+    String? displayName,
+    String? profileTitle,
+    int? avatarIndex,
+    String? avatarImageBase64,
+    int? xp,
+    List<String>? unlockedBadges,
     List<String>? historicalInterests,
     PoliticalLeaning? politicalLeaning,
     QuoteDiscoveryMode? quoteDiscoveryMode,
@@ -73,6 +97,12 @@ class UserProfile {
     DateTime? onboardingDate,
   }) {
     return UserProfile(
+      displayName: displayName ?? this.displayName,
+      profileTitle: profileTitle ?? this.profileTitle,
+      avatarIndex: avatarIndex ?? this.avatarIndex,
+      avatarImageBase64: avatarImageBase64 ?? this.avatarImageBase64,
+      xp: xp ?? this.xp,
+      unlockedBadges: unlockedBadges ?? this.unlockedBadges,
       historicalInterests: historicalInterests ?? this.historicalInterests,
       politicalLeaning: politicalLeaning ?? this.politicalLeaning,
       quoteDiscoveryMode: quoteDiscoveryMode ?? this.quoteDiscoveryMode,
@@ -85,6 +115,12 @@ class UserProfile {
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
+      'display_name': displayName,
+      'profile_title': profileTitle,
+      'avatar_index': avatarIndex,
+      'avatar_image_base64': avatarImageBase64,
+      'xp': xp,
+      'unlocked_badges': unlockedBadges,
       'historical_interests': historicalInterests,
       'political_leaning': politicalLeaning.name,
       'quote_discovery_mode': quoteDiscoveryMode.name,
@@ -99,6 +135,13 @@ class UserProfile {
 
   factory UserProfile.fromJson(Map<String, dynamic> json) {
     return UserProfile(
+      displayName: (json['display_name'] as String?) ?? '',
+      profileTitle: (json['profile_title'] as String?) ?? 'Genosse',
+      avatarIndex: _parseAvatarIndex(json['avatar_index']),
+      avatarImageBase64: json['avatar_image_base64'] as String?,
+      xp: (json['xp'] as num?)?.toInt() ?? 0,
+      unlockedBadges: (json['unlocked_badges'] as List<dynamic>? ?? <dynamic>[])
+          .cast<String>(),
       historicalInterests:
           (json['historical_interests'] as List<dynamic>? ?? <dynamic>[])
               .cast<String>(),
@@ -129,5 +172,18 @@ class UserProfile {
 
   static QuoteDiscoveryMode _parseQuoteDiscoveryMode(String? value) {
     return QuoteDiscoveryMode.interests;
+  }
+
+  static int _parseAvatarIndex(Object? value) {
+    if (value is int) {
+      return value;
+    }
+    if (value is num) {
+      return value.toInt();
+    }
+    if (value is String) {
+      return int.tryParse(value) ?? 0;
+    }
+    return 0;
   }
 }
