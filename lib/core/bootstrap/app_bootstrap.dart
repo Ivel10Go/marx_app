@@ -185,11 +185,11 @@ abstract final class AppBootstrap {
       _emitProgress(0.24, 'Startseite wird bestimmt ...');
       final settings = await SharedPreferences.getInstance();
       final profileRaw = settings.getString(UserProfile.storageKey);
-      final onboardingSeen = _resolveOnboardingSeen(profileRaw);
+      final shouldSkipOnboarding = _shouldSkipOnboarding(profileRaw);
       final launchRoute = NotificationService.instance.consumeLaunchRoute();
       final initialRoute = launchRoute != '/'
           ? launchRoute
-          : onboardingSeen
+          : shouldSkipOnboarding
           ? '/'
           : '/onboarding';
       routeStart.stop();
@@ -300,14 +300,28 @@ abstract final class AppBootstrap {
     });
   }
 
-  static bool _resolveOnboardingSeen(String? profileRaw) {
+  /// Überprüfe, ob das Onboarding übersprungen werden sollte.
+  /// Das ist der Fall wenn:
+  /// 1. onboardingCompleted ist true, ODER
+  /// 2. Der Benutzer bereits Interessen und Orientierung gespeichert hat
+  static bool _shouldSkipOnboarding(String? profileRaw) {
     if (profileRaw == null || profileRaw.isEmpty) {
       return false;
     }
 
     try {
-      return UserProfile.fromJsonString(profileRaw).onboardingCompleted;
-    } catch (_) {
+      final profile = UserProfile.fromJsonString(profileRaw);
+      // Überspringe Onboarding wenn bereits abgeschlossen
+      if (profile.onboardingCompleted) {
+        return true;
+      }
+      // Oder wenn Benutzer bereits Interessen und Orientierung hat
+      final hasInterests = profile.historicalInterests.isNotEmpty;
+      final hasOrientation =
+          profile.politicalLeaning != PoliticalLeaning.neutral;
+      return hasInterests && hasOrientation;
+    } catch (e) {
+      debugPrint('[Bootstrap] Error parsing onboarding skip condition: $e');
       return false;
     }
   }
@@ -380,12 +394,12 @@ abstract final class AppBootstrap {
     try {
       final settings = await SharedPreferences.getInstance();
       final profileRaw = settings.getString(UserProfile.storageKey);
-      final onboardingSeen = _resolveOnboardingSeen(profileRaw);
+      final shouldSkipOnboarding = _shouldSkipOnboarding(profileRaw);
       final launchRoute = NotificationService.instance.consumeLaunchRoute();
       return AppBootstrapResult(
         initialRoute: launchRoute != '/'
             ? launchRoute
-            : onboardingSeen
+            : shouldSkipOnboarding
             ? '/'
             : '/onboarding',
         dailyContent: null,
