@@ -99,8 +99,8 @@ Future<void> _cacheDailyContent(DailyContent content, String userId) async {
     final dateKey =
         '${today.year}-${today.month.toString().padLeft(2, '0')}-${today.day.toString().padLeft(2, '0')}';
 
-    final userContentKey = '${_cachedDailyContentKey}_${userId}_${dateKey}';
-    final userDateKey = '${_cachedDailyContentDateKey}_${userId}_${dateKey}';
+    final userContentKey = '${_cachedDailyContentKey}_${userId}_$dateKey';
+    final userDateKey = '${_cachedDailyContentDateKey}_${userId}_$dateKey';
 
     await prefs.setString(userContentKey, _serializeDailyContent(content));
     await prefs.setString(userDateKey, dateKey);
@@ -116,8 +116,8 @@ Future<DailyContent?> _readCachedDailyContent(String userId) async {
     final dateKey =
         '${today.year}-${today.month.toString().padLeft(2, '0')}-${today.day.toString().padLeft(2, '0')}';
 
-    final userContentKey = '${_cachedDailyContentKey}_${userId}_${dateKey}';
-    final userDateKey = '${_cachedDailyContentDateKey}_${userId}_${dateKey}';
+    final userContentKey = '${_cachedDailyContentKey}_${userId}_$dateKey';
+    final userDateKey = '${_cachedDailyContentDateKey}_${userId}_$dateKey';
     final cachedDate = prefs.getString(userDateKey);
 
     // Only return cached content if it's from today

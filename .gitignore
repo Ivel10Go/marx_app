@@ -53,3 +53,6 @@ key.properties
 *.md
 android/app/release.keystore
 android/.kotlin/
+
+android/java_pid*.hprof
+*.hprof
