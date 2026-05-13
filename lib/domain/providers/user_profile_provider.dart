@@ -144,6 +144,7 @@ class UserProfileNotifier extends StateNotifier<UserProfile> {
         displayName: state.displayName,
         historicalInterests: state.historicalInterests,
         politicalLeaning: state.politicalLeaning.name,
+        onboardingCompleted: state.onboardingCompleted,
       );
     } catch (e) {
       // Log aber nicht fehlschlagen - Cloud-Sync ist nicht kritisch

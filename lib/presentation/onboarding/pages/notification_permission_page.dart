@@ -62,7 +62,6 @@ class NotificationPermissionPage extends StatelessWidget {
                   style: GoogleFonts.ibmPlexSans(
                     fontSize: 11,
                     color: scheme.onSurfaceVariant,
-                    decoration: TextDecoration.underline,
                   ),
                 ),
               ),

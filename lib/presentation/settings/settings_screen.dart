@@ -29,7 +29,7 @@ class SettingsScreen extends ConsumerWidget {
     return AndroidBackGuard(
       child: AppDecoratedScaffold(
         appBar: null,
-        bottomNavigationBar: const AppNavigationBar(selectedIndex: -1),
+        bottomNavigationBar: const AppNavigationBar(selectedIndex: 2),
         child: Column(
           children: <Widget>[
             // Masthead
@@ -118,7 +118,7 @@ class SettingsScreen extends ConsumerWidget {
                               children: <Widget>[
                                 Expanded(
                                   child: _SettingsActionButton(
-                                    label: 'ADMIN DASHBOARD',
+                                    label: 'ADMIN-BEREICH',
                                     filled: false,
                                     onTap: () => context.push('/admin'),
                                   ),
@@ -397,7 +397,7 @@ class _SettingsGroup extends StatelessWidget {
         return Icons.admin_panel_settings_outlined;
       case 'WARTUNG':
         return Icons.build_outlined;
-      case 'BUG & FEEDBACK':
+      case 'FEHLER & RÜCKMELDUNGEN':
         return Icons.bug_report_outlined;
       default:
         return Icons.settings_outlined;
@@ -412,7 +412,7 @@ class _SettingsGroup extends StatelessWidget {
         return 'Admin-Bereich';
       case 'WARTUNG':
         return 'Einführung und Status';
-      case 'BUG & FEEDBACK':
+      case 'FEHLER & RÜCKMELDUNGEN':
         return 'Probleme berichten';
       default:
         return '';
@@ -573,7 +573,7 @@ class _BugReportFooter extends StatelessWidget {
                 letterSpacing: 1.0,
               ),
             ),
-            child: const Text('BUGS MELDEN'),
+            child: const Text('FEHLER MELDEN'),
           ),
         ],
       ),
@@ -638,7 +638,7 @@ class _BugReportSheetState extends State<_BugReportSheet> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text(
-              'Bug Report erfolgreich gesendet! Danke für dein Feedback.',
+              'Fehlerbericht erfolgreich gesendet! Danke für dein Feedback.',
             ),
             duration: Duration(seconds: 3),
           ),
@@ -703,7 +703,7 @@ class _BugReportSheetState extends State<_BugReportSheet> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            'BUG & FEEDBACK',
+                            'FEHLER & RÜCKMELDUNGEN',
                             style: GoogleFonts.ibmPlexSans(
                               fontSize: 9,
                               fontWeight: FontWeight.w700,
@@ -728,7 +728,7 @@ class _BugReportSheetState extends State<_BugReportSheet> {
                 Container(height: 1, color: scheme.outline),
                 const SizedBox(height: 16),
                 Text(
-                  'Hilf uns, die App zu verbessern. Berichte Bugs oder sende Feedback.',
+                  'Hilf uns, die App zu verbessern. Melde Fehler oder sende uns Rückmeldung.',
                   style: GoogleFonts.ibmPlexSans(
                     fontSize: 11,
                     color: AppColors.inkLight,
@@ -739,7 +739,7 @@ class _BugReportSheetState extends State<_BugReportSheet> {
                 TextField(
                   controller: _titleController,
                   decoration: InputDecoration(
-                    labelText: 'Bugtitel',
+                    labelText: 'Fehlertitel',
                     hintText: 'z.B. Widget lädt nicht',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(2),
@@ -796,7 +796,7 @@ class _BugReportSheetState extends State<_BugReportSheet> {
                   child: _SettingsActionButton(
                     label: _isSubmitting
                         ? 'WIRD GESENDET...'
-                        : 'BUG REPORT SENDEN',
+                        : 'FEHLERBERICHT SENDEN',
                     filled: true,
                     onTap: _isSubmitting ? () {} : _submitBugReport,
                   ),

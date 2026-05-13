@@ -24,7 +24,7 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-n                <TextView
+                <TextView
                     android:id="@+id/quote_header"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -33,7 +33,7 @@ n                <TextView
                     android:textSize="12sp"
                     android:textStyle="bold" />
 
-n                <TextView
+                <TextView
                     android:id="@+id/quote_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -43,7 +43,7 @@ n                <TextView
                     android:text="9. Mai 2026" />
             </LinearLayout>
 
-n            <TextView
+            <TextView
                 android:id="@+id/widget_favorite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -52,7 +52,7 @@ n            <TextView
                 android:textSize="16sp"
                 android:layout_marginEnd="8dp" />
 
-n            <TextView
+            <TextView
                 android:id="@+id/widget_mode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -122,7 +122,7 @@ n            <TextView
             android:textColor="#555555"
             android:textSize="11sp" />
 
-n        <TextView
+        <TextView
             android:id="@+id/quote_source"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -134,7 +134,7 @@ n        <TextView
             android:textSize="10sp"
             android:textStyle="bold" />
 
-n        <TextView
+        <TextView
             android:id="@+id/quote_categories"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -145,7 +145,7 @@ n        <TextView
             android:textColor="#555555"
             android:textSize="11sp" />
 
-n        <TextView
+        <TextView
             android:id="@+id/quote_streak"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -157,14 +157,14 @@ n        <TextView
             android:textStyle="bold" />
     </LinearLayout>
 
-n    <LinearLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:background="@drawable/widget_bottom_band"
         android:orientation="vertical"
         android:gravity="center">
 
-n        <TextView
+        <TextView
             android:id="@+id/bottom_series_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -173,7 +173,7 @@ n        <TextView
             android:textSize="10sp"
             android:textStyle="bold" />
 
-n        <TextView
+        <TextView
             android:id="@+id/bottom_tag_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

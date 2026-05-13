@@ -15,51 +15,53 @@ import 'presentation/loading/app_loading_screen.dart';
 import 'core/services/background_tasks_service.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  final crashReporting = CrashReportingService();
-  await crashReporting.initialize();
-
-  // Lock app to portrait orientation only
-  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-
-  // Lade Umgebungsvariablen (.env file)
-  await dotenv.load();
-
-  // Initialisiere Supabase
-  final supabaseUrl = dotenv.env['SUPABASE_URL']?.trim() ?? '';
-  final supabaseAnonKey = dotenv.env['SUPABASE_ANON_KEY']?.trim() ?? '';
-
-  if (supabaseUrl.isNotEmpty && supabaseAnonKey.isNotEmpty) {
-    try {
-      await Supabase.initialize(url: supabaseUrl, anonKey: supabaseAnonKey);
-    } catch (e) {
-      debugPrint('[Bootstrap] Supabase init failed: $e');
-      // Continü anyway - Supabase is optional for offline mode
-    }
-  } else {
-    debugPrint('[Bootstrap] Supabase credentials missing, skipping init');
-  }
-
-  // RevenueCat initialization is handled centrally in AppBootstrap via
-  // `PurchasesService.initFromEnvironment(...)`. Avoid duplicate configuration here.
-
-  unawaited(
-    BackgroundTasksService.initialize().catchError((
-      Object error,
-      StackTrace stackTrace,
-    ) {
-      debugPrint('[Bootstrap] Background task init failed: $error');
-      debugPrintStack(stackTrace: stackTrace);
-    }),
-  );
-
   runZonedGuarded(
-    () {
+    () async {
+      WidgetsFlutterBinding.ensureInitialized();
+
+      final crashReporting = CrashReportingService();
+      await crashReporting.initialize();
+
+      // Lock app to portrait orientation only
+      await SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+      ]);
+
+      // Lade Umgebungsvariablen (.env file)
+      await dotenv.load();
+
+      // Initialisiere Supabase
+      final supabaseUrl = dotenv.env['SUPABASE_URL']?.trim() ?? '';
+      final supabaseAnonKey = dotenv.env['SUPABASE_ANON_KEY']?.trim() ?? '';
+
+      if (supabaseUrl.isNotEmpty && supabaseAnonKey.isNotEmpty) {
+        try {
+          await Supabase.initialize(url: supabaseUrl, anonKey: supabaseAnonKey);
+        } catch (e) {
+          debugPrint('[Bootstrap] Supabase init failed: $e');
+          // Continü anyway - Supabase is optional for offline mode
+        }
+      } else {
+        debugPrint('[Bootstrap] Supabase credentials missing, skipping init');
+      }
+
+      // RevenueCat initialization is handled centrally in AppBootstrap via
+      // `PurchasesService.initFromEnvironment(...)`. Avoid duplicate configuration here.
+
+      unawaited(
+        BackgroundTasksService.initialize().catchError((
+          Object error,
+          StackTrace stackTrace,
+        ) {
+          debugPrint('[Bootstrap] Background task init failed: $error');
+          debugPrintStack(stackTrace: stackTrace);
+        }),
+      );
+
       runApp(const _BootstrapGateApp());
     },
     (Object error, StackTrace stackTrace) {
-      unawaited(crashReporting.recordUnhandled(error, stackTrace));
+      unawaited(CrashReportingService().recordUnhandled(error, stackTrace));
     },
   );
 }

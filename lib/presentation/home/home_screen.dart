@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../core/services/widget_sync_service.dart';
+import '../../core/services/supabase_sync_service.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/providers/purchases_provider.dart';
@@ -16,6 +17,8 @@ import '../../data/models/thinker_quote.dart';
 import '../../domain/providers/daily_content_provider.dart';
 import '../../domain/providers/app_mode_provider.dart';
 import '../../domain/providers/streak_provider.dart';
+import '../../domain/providers/supabase_auth_provider.dart';
+import '../../domain/providers/user_profile_provider.dart';
 import '../../widgets/app_decorated_scaffold.dart';
 import '../../widgets/android_back_guard.dart';
 import '../../widgets/app_navigation_bar.dart';
@@ -62,7 +65,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
 
     _dailyContentSubscription = ref.listenManual<AsyncValue<DailyContent>>(
       dailyContentProvider,
-      (_, __) => _syncHomeWidgetIfReady(),
+      (_, asyncContent) {
+        // Sync to home widget
+        _syncHomeWidgetIfReady();
+
+        // Sync daily quote date to Supabase if user is logged in
+        _syncDailyQuoteDateToSupabase(asyncContent);
+      },
     );
     _streakSubscription = ref.listenManual<AsyncValue<int>>(
       currentStreakProvider,
@@ -154,6 +163,46 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
         }
       }
     }
+  }
+
+  void _syncDailyQuoteDateToSupabase(AsyncValue<DailyContent> asyncContent) {
+    final content = asyncContent.valueOrNull;
+    if (content == null) {
+      return;
+    }
+
+    // Only sync if user is authenticated
+    final userId = ref.read(currentUserIdProvider);
+    if (userId == null) {
+      return;
+    }
+
+    // Get today's date in ISO format
+    final today = DateTime.now();
+    final todayStr =
+        '${today.year}-${today.month.toString().padLeft(2, '0')}-${today.day.toString().padLeft(2, '0')}';
+
+    unawaited(
+      Future(() async {
+        try {
+          final supabase = SupabaseSyncService();
+          final userProfile = ref.read(userProfileProvider);
+
+          // Sync the daily quote date to Supabase user profile
+          await supabase.syncUserProfileToCloud(
+            userId: userId,
+            historicalInterests: userProfile.historicalInterests,
+            politicalLeaning: userProfile.politicalLeaning.name,
+            dailyQuoteDate: todayStr,
+          );
+
+          debugPrint('[Home] Daily quote date synced to Supabase: $todayStr');
+        } catch (e, st) {
+          debugPrint('[Home] Failed to sync daily quote date: $e');
+          debugPrintStack(stackTrace: st);
+        }
+      }),
+    );
   }
 
   @override

@@ -8,7 +8,9 @@ import '../../core/services/supabase_auth_service.dart';
 import '../../core/theme/app_colors.dart';
 
 class AuthScreen extends ConsumerStatefulWidget {
-  const AuthScreen({super.key});
+  const AuthScreen({super.key, this.isSignUp = false});
+
+  final bool isSignUp;
 
   @override
   ConsumerState<AuthScreen> createState() => _AuthScreenState();
@@ -19,7 +21,6 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _passwordConfirmController = TextEditingController();
-  bool _isSignUp = false;
   bool _loading = false;
   bool _obscurePassword = true;
 
@@ -27,7 +28,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
     if (!_formKey.currentState!.validate()) return;
     setState(() => _loading = true);
     final authController = ref.read(authControllerProvider.notifier);
-    final success = _isSignUp
+    final success = widget.isSignUp
         ? await authController.signUp(
             email: _emailController.text.trim(),
             password: _passwordController.text,
@@ -42,7 +43,9 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
     }
 
     if (success) {
-      Navigator.of(context).pop();
+      if (mounted) {
+        context.go(widget.isSignUp ? '/onboarding' : '/');
+      }
       return;
     }
 
@@ -74,10 +77,12 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
       appBar: AppBar(
         backgroundColor: scheme.surface,
         elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.close),
-          onPressed: () => context.pop(),
-        ),
+        leading: context.canPop()
+            ? IconButton(
+                icon: const Icon(Icons.close),
+                onPressed: () => context.pop(),
+              )
+            : null,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -87,7 +92,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
             children: <Widget>[
               // Header
               Text(
-                _isSignUp ? 'KONTO ERSTELLEN' : 'ANMELDEN',
+                widget.isSignUp ? 'KONTO ERSTELLEN' : 'ANMELDEN',
                 style: GoogleFonts.playfairDisplay(
                   fontSize: 32,
                   fontWeight: FontWeight.w700,
@@ -99,8 +104,8 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
               Container(width: 40, height: 2, color: AppColors.red),
               const SizedBox(height: 24),
               Text(
-                _isSignUp
-                    ? 'Erstelle einen Account um deine Favoriten zu speichern und synchronisieren.'
+                widget.isSignUp
+                    ? 'Erstelle ein Konto, um deine Favoriten zu speichern und zu synchronisieren.'
                     : 'Melde dich an um deine Favoriten zu synchronisieren.',
                 style: GoogleFonts.ibmPlexSans(
                   fontSize: 11,
@@ -161,7 +166,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                       enabled: !_loading,
                       decoration: InputDecoration(
                         labelText: 'Passwort',
-                        hintText: _isSignUp
+                        hintText: widget.isSignUp
                             ? 'Mindestens 6 Zeichen'
                             : 'Dein Passwort',
                         prefixIcon: const Icon(Icons.lock_outline),
@@ -203,13 +208,14 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                         if (v.length < 6) {
                           return 'Passwort muss mindestens 6 Zeichen lang sein';
                         }
-                        if (_isSignUp && v != _passwordConfirmController.text) {
+                        if (widget.isSignUp &&
+                            v != _passwordConfirmController.text) {
                           return 'Passwörter stimmen nicht überein';
                         }
                         return null;
                       },
                     ),
-                    if (_isSignUp) ...<Widget>[
+                    if (widget.isSignUp) ...<Widget>[
                       const SizedBox(height: 16),
                       // Password Confirmation Field
                       TextFormField(
@@ -287,7 +293,9 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                                     ),
                                   )
                                 : Text(
-                                    _isSignUp ? 'REGISTRIEREN' : 'ANMELDEN',
+                                    widget.isSignUp
+                                        ? 'REGISTRIEREN'
+                                        : 'ANMELDEN',
                                     textAlign: TextAlign.center,
                                     style: GoogleFonts.ibmPlexSans(
                                       fontSize: 11,
@@ -301,50 +309,38 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                       ),
                     ),
                     const SizedBox(height: 12),
-                    // Toggle Button
-                    Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: scheme.outline),
+                    TextButton(
+                      onPressed: _loading
+                          ? null
+                          : () => context.go(
+                              widget.isSignUp ? '/login' : '/register',
+                            ),
+                      style: TextButton.styleFrom(
+                        padding: EdgeInsets.zero,
+                        minimumSize: Size.zero,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        alignment: Alignment.centerLeft,
                       ),
-                      child: Material(
-                        color: Colors.transparent,
-                        child: InkWell(
-                          onTap: _loading
-                              ? null
-                              : () => setState(() => _isSignUp = !_isSignUp),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 16,
-                            ),
-                            child: Text(
-                              _isSignUp
-                                  ? 'Bereits registriert? ANMELDEN'
-                                  : 'Noch nicht registriert? REGISTRIEREN',
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.ibmPlexSans(
-                                fontSize: 11,
-                                fontWeight: FontWeight.w700,
-                                color: scheme.onSurface,
-                                letterSpacing: 1.0,
-                              ),
-                            ),
-                          ),
+                      child: Text(
+                        widget.isSignUp
+                            ? 'Bereits registriert? Anmelden'
+                            : 'Noch kein Konto? Registrieren',
+                        style: GoogleFonts.ibmPlexSans(
+                          fontSize: 11,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.red,
                         ),
                       ),
                     ),
-                    if (!_isSignUp) ...<Widget>[
-                      const SizedBox(height: 12),
-                      // Password Reset Link
+                    if (!widget.isSignUp) ...<Widget>[
                       TextButton(
                         onPressed: _loading ? null : _showResetPasswordDialog,
                         child: Text(
                           'Passwort vergessen?',
                           style: GoogleFonts.ibmPlexSans(
-                            fontSize: 10,
+                            fontSize: 11,
                             fontWeight: FontWeight.w600,
                             color: AppColors.red,
-                            decoration: TextDecoration.underline,
                           ),
                         ),
                       ),

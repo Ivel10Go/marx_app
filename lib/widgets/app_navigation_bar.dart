@@ -16,7 +16,7 @@ class AppNavigationBar extends StatelessWidget {
     ),
     _NavDestination(
       path: '/settings',
-      label: 'Settings',
+      label: 'EINSTELLUNGEN',
       icon: Icons.settings_outlined,
       isMore: true,
     ),

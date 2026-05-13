@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../data/database/app_database.dart';
 import '../../data/models/daily_content.dart';
@@ -185,13 +186,20 @@ abstract final class AppBootstrap {
       _emitProgress(0.24, 'Startseite wird bestimmt ...');
       final settings = await SharedPreferences.getInstance();
       final profileRaw = settings.getString(UserProfile.storageKey);
-      final onboardingSeen = _resolveOnboardingSeen(profileRaw);
+
+      // Check if user is authenticated
+      final isAuthenticated =
+          Supabase.instance.client.auth.currentSession != null;
+      debugPrint('[Bootstrap] User authenticated: $isAuthenticated');
+
       final launchRoute = NotificationService.instance.consumeLaunchRoute();
       final initialRoute = launchRoute != '/'
           ? launchRoute
-          : onboardingSeen
-          ? '/'
-          : '/onboarding';
+          : !isAuthenticated
+          ? '/register' // Not authenticated → direkt Registrierung zeigen
+          : _shouldSkipOnboarding(profileRaw)
+          ? '/' // Authenticated + onboarding done → home
+          : '/onboarding'; // Authenticated but onboarding pending
       routeStart.stop();
       debugPrint(
         '[Bootstrap] Initial route determined in ${routeStart.elapsedMilliseconds}ms',
@@ -300,14 +308,28 @@ abstract final class AppBootstrap {
     });
   }
 
-  static bool _resolveOnboardingSeen(String? profileRaw) {
+  /// Überprüfe, ob das Onboarding übersprungen werden sollte.
+  /// Das ist der Fall wenn:
+  /// 1. onboardingCompleted ist true, ODER
+  /// 2. Der Benutzer bereits Interessen und Orientierung gespeichert hat
+  static bool _shouldSkipOnboarding(String? profileRaw) {
     if (profileRaw == null || profileRaw.isEmpty) {
       return false;
     }
 
     try {
-      return UserProfile.fromJsonString(profileRaw).onboardingCompleted;
-    } catch (_) {
+      final profile = UserProfile.fromJsonString(profileRaw);
+      // Überspringe Onboarding wenn bereits abgeschlossen
+      if (profile.onboardingCompleted) {
+        return true;
+      }
+      // Oder wenn Benutzer bereits Interessen und Orientierung hat
+      final hasInterests = profile.historicalInterests.isNotEmpty;
+      final hasOrientation =
+          profile.politicalLeaning != PoliticalLeaning.neutral;
+      return hasInterests && hasOrientation;
+    } catch (e) {
+      debugPrint('[Bootstrap] Error parsing onboarding skip condition: $e');
       return false;
     }
   }
@@ -380,14 +402,21 @@ abstract final class AppBootstrap {
     try {
       final settings = await SharedPreferences.getInstance();
       final profileRaw = settings.getString(UserProfile.storageKey);
-      final onboardingSeen = _resolveOnboardingSeen(profileRaw);
+
+      // Check if user is authenticated
+      final isAuthenticated =
+          Supabase.instance.client.auth.currentSession != null;
+      debugPrint('[Bootstrap] Fallback: User authenticated: $isAuthenticated');
+
       final launchRoute = NotificationService.instance.consumeLaunchRoute();
       return AppBootstrapResult(
         initialRoute: launchRoute != '/'
             ? launchRoute
-            : onboardingSeen
-            ? '/'
-            : '/onboarding',
+            : !isAuthenticated
+            ? '/auth' // Not authenticated → show auth screen only
+            : _shouldSkipOnboarding(profileRaw)
+            ? '/' // Authenticated + onboarding done → home
+            : '/onboarding', // Authenticated but onboarding pending
         dailyContent: null,
         streakCount: settings.getInt(SettingsKeys.streak) ?? 0,
         modeLabel: _resolveAppMode(
@@ -398,7 +427,7 @@ abstract final class AppBootstrap {
       debugPrint('[Bootstrap] ERROR: Fallback bootstrap also failed: $e');
       debugPrintStack(stackTrace: st);
       return const AppBootstrapResult(
-        initialRoute: '/onboarding',
+        initialRoute: '/auth', // Default to auth screen if everything fails
         dailyContent: null,
         streakCount: 0,
         modeLabel: 'PUBLIC',

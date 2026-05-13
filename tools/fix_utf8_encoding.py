@@ -27,6 +27,9 @@ ENCODING_FIXES = {
     'ã„': 'ä',
     'Ã–': 'Ö',
     'ã–': 'ö',
+    'Ã¶': 'ö',
+    'ÃŸ': 'ß',
+    'Ã¸': 'ø',
     'Ã¤': 'ä',
     'Ã¡': 'á',
     'Ã©': 'é',
@@ -50,6 +53,17 @@ def fix_encoding(text: str) -> str:
         return text
     
     result = text
+
+    # First try generic mojibake repairs for common broken encodings.
+    if any(marker in result for marker in ('Ã', 'Â', 'ã')):
+        for encoding in ('cp1252', 'latin1'):
+            try:
+                repaired = result.encode(encoding).decode('utf-8')
+                result = repaired
+                break
+            except (UnicodeEncodeError, UnicodeDecodeError):
+                continue
+
     for broken, fixed in ENCODING_FIXES.items():
         result = result.replace(broken, fixed)
     
@@ -69,10 +83,11 @@ def fix_dict_encoding(obj):
 def count_encoding_issues(data):
     """Count encoding issues in data"""
     count = 0
+    markers = ('Ã', 'Â', 'ã')
     for item in data:
         for value in item.values():
             if isinstance(value, str):
-                for broken in ENCODING_FIXES.keys():
+                for broken in markers:
                     if broken in value:
                         count += value.count(broken)
     return count

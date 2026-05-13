@@ -89,55 +89,83 @@ class QuoteWidgetProvider : AppWidgetProvider() {
           }
 
         val layout = selectLayout(appWidgetManager, appWidgetId, widgetMode, contentType)
+        Log.d(LOG_TAG, "Selected layout: ${layoutName(layout)} for widget $appWidgetId")
 
         val views = RemoteViews(context.packageName, layout)
-        views.setTextViewText(R.id.quote_header, header)
-        views.setTextViewText(R.id.widget_mode, widgetMode)
-        views.setTextViewText(R.id.quote_author, quoteAuthor)
-        views.setInt(R.id.quote_text_italic, "setMaxLines", 6)
-        views.setInt(R.id.fact_text_normal, "setMaxLines", 6)
-        views.setInt(R.id.quote_explanation, "setMaxLines", 3)
+        
+        // Set universal views (present in all layouts)
+        try {
+          views.setTextViewText(R.id.quote_header, header)
+          views.setTextViewText(R.id.widget_mode, widgetMode)
+          views.setTextViewText(R.id.quote_author, quoteAuthor)
+          Log.d(LOG_TAG, "✓ Set header, mode, author")
+        } catch (e: Exception) {
+          Log.w(LOG_TAG, "Failed to set header/mode/author: ${e.message}")
+        }
 
-        views.setTextViewText(R.id.quote_text_italic, quoteText)
-        views.setTextViewText(R.id.fact_text_normal, quoteText)
-        views.setTextViewText(R.id.quote_source, source.uppercase(Locale.GERMAN))
-        views.setViewVisibility(
-          R.id.quote_text_italic,
-          if (isFact) View.GONE else View.VISIBLE,
-        )
-        views.setViewVisibility(
-          R.id.fact_text_normal,
-          if (isFact) View.VISIBLE else View.GONE,
-        )
+        try {
+          views.setTextViewText(R.id.quote_text_italic, quoteText)
+          views.setTextViewText(R.id.fact_text_normal, quoteText)
+          views.setTextViewText(R.id.quote_source, source.uppercase(Locale.GERMAN))
+          Log.d(LOG_TAG, "✓ Set quote/fact text and source")
+        } catch (e: Exception) {
+          Log.w(LOG_TAG, "Failed to set text/source: ${e.message}")
+        }
 
-        views.setTextViewText(R.id.quote_explanation, explanation)
-        views.setTextViewText(R.id.quote_categories, categories)
-        views.setTextViewText(R.id.quote_streak, "LEKTÜRE · TAG $streak")
-        views.setViewVisibility(
-          R.id.quote_explanation,
-          if (explanation.isBlank()) View.GONE else View.VISIBLE,
-        )
-        views.setViewVisibility(
-          R.id.quote_categories,
-          if (categories.isBlank()) View.GONE else View.VISIBLE,
-        )
-        views.setViewVisibility(
-          R.id.quote_author,
-          if (quoteAuthor.isBlank()) View.GONE else View.VISIBLE,
-        )
+        try {
+          views.setViewVisibility(
+            R.id.quote_text_italic,
+            if (isFact) View.GONE else View.VISIBLE,
+          )
+          views.setViewVisibility(
+            R.id.fact_text_normal,
+            if (isFact) View.VISIBLE else View.GONE,
+          )
+          Log.d(LOG_TAG, "✓ Set text visibility")
+        } catch (e: Exception) {
+          Log.w(LOG_TAG, "Failed to set text visibility: ${e.message}")
+        }
+
+        try {
+          views.setTextViewText(R.id.quote_explanation, explanation)
+          views.setTextViewText(R.id.quote_categories, categories)
+          views.setTextViewText(R.id.quote_streak, "LEKTÜRE · TAG $streak")
+          Log.d(LOG_TAG, "✓ Set explanation, categories, streak")
+        } catch (e: Exception) {
+          Log.w(LOG_TAG, "Failed to set explanation/categories/streak: ${e.message}")
+        }
+
+        try {
+          views.setViewVisibility(
+            R.id.quote_explanation,
+            if (explanation.isBlank()) View.GONE else View.VISIBLE,
+          )
+          views.setViewVisibility(
+            R.id.quote_categories,
+            if (categories.isBlank()) View.GONE else View.VISIBLE,
+          )
+          views.setViewVisibility(
+            R.id.quote_author,
+            if (quoteAuthor.isBlank()) View.GONE else View.VISIBLE,
+          )
+          Log.d(LOG_TAG, "✓ Set explanation/categories/author visibility")
+        } catch (e: Exception) {
+          Log.w(LOG_TAG, "Failed to set visibility: ${e.message}")
+        }
 
         // Only set layout-specific views when the chosen layout includes them
         if (layout == R.layout.quote_widget_v2 || layout == R.layout.quote_widget_large) {
-          val sdf = SimpleDateFormat("d. MMMM yyyy", Locale.GERMAN)
-          val formatted = sdf.format(Date())
-          views.setTextViewText(R.id.quote_date, formatted)
-
-          // Bottom band: show series label + tag using streak
-          views.setTextViewText(R.id.bottom_series_label, "SERIE")
-          views.setTextViewText(R.id.bottom_tag_label, "TAG $streak")
-
-          // Favorite heart only present in larger layouts
-          views.setTextViewText(R.id.widget_favorite, "♥")
+          try {
+            val sdf = SimpleDateFormat("d. MMMM yyyy", Locale.GERMAN)
+            val formatted = sdf.format(Date())
+            views.setTextViewText(R.id.quote_date, formatted)
+            views.setTextViewText(R.id.bottom_series_label, "SERIE")
+            views.setTextViewText(R.id.bottom_tag_label, "TAG $streak")
+            views.setTextViewText(R.id.widget_favorite, "♥")
+            Log.d(LOG_TAG, "✓ Set layout-specific views (date, series, tag, favorite)")
+          } catch (e: Exception) {
+            Log.w(LOG_TAG, "Failed to set layout-specific views: ${e.message}")
+          }
         }
 
         val openIntent = Intent(context, MainActivity::class.java)
@@ -151,10 +179,16 @@ class QuoteWidgetProvider : AppWidgetProvider() {
           openIntent,
           PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
         )
-        views.setOnClickPendingIntent(R.id.quote_root, pendingIntent)
+        
+        try {
+          views.setOnClickPendingIntent(R.id.quote_root, pendingIntent)
+          Log.d(LOG_TAG, "✓ Set click intent")
+        } catch (e: Exception) {
+          Log.w(LOG_TAG, "Failed to set click intent: ${e.message}")
+        }
 
         appWidgetManager.updateAppWidget(appWidgetId, views)
-        Log.d(LOG_TAG, "Widget $appWidgetId successfully updated with layout $layout")
+        Log.d(LOG_TAG, "✓ Widget $appWidgetId successfully updated with layout ${layoutName(layout)}")
       } catch (e: Exception) {
         Log.e(LOG_TAG, "Widget render failed for id=$appWidgetId, using fallback", e)
         val fallbackViews = RemoteViews(context.packageName, R.layout.quote_widget_compat)
@@ -183,16 +217,34 @@ class QuoteWidgetProvider : AppWidgetProvider() {
       widgetMode: String,
       contentType: String,
     ): Int {
-      val options = appWidgetManager.getAppWidgetOptions(appWidgetId)
-      val minWidth = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH)
-      val minHeight = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT)
+      return try {
+        val options = appWidgetManager.getAppWidgetOptions(appWidgetId)
+        val minWidth = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH)
+        val minHeight = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT)
 
-      return when {
-        widgetMode.equals("MARX", ignoreCase = true) ||
-          contentType == "thinker_quote" ||
-          minWidth >= 240 || minHeight >= 160 -> R.layout.quote_widget_v2
-        minWidth >= 180 || minHeight >= 120 -> R.layout.quote_widget_medium
-        else -> R.layout.quote_widget_small
+        Log.d(LOG_TAG, "Widget size: ${minWidth}x${minHeight}dp")
+
+        when {
+          widgetMode.equals("MARX", ignoreCase = true) ||
+            contentType == "thinker_quote" ||
+            minWidth >= 240 || minHeight >= 160 -> R.layout.quote_widget_v2
+          minWidth >= 180 || minHeight >= 120 -> R.layout.quote_widget_medium
+          else -> R.layout.quote_widget_small
+        }
+      } catch (e: Exception) {
+        Log.w(LOG_TAG, "Failed to get widget options, using default layout: ${e.message}")
+        R.layout.quote_widget_small
+      }
+    }
+
+    private fun layoutName(layoutId: Int): String {
+      return when (layoutId) {
+        R.layout.quote_widget_v2 -> "quote_widget_v2"
+        R.layout.quote_widget_medium -> "quote_widget_medium"
+        R.layout.quote_widget_small -> "quote_widget_small"
+        R.layout.quote_widget_large -> "quote_widget_large"
+        R.layout.quote_widget_compat -> "quote_widget_compat"
+        else -> "unknown_layout_$layoutId"
       }
     }
   }
