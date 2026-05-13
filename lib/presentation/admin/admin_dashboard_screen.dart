@@ -44,7 +44,7 @@ class AdminDashboardScreen extends ConsumerWidget {
         padding: const EdgeInsets.fromLTRB(20, 20, 20, 24),
         children: <Widget>[
           Text(
-            'ADMIN DASHBOARD',
+            'ADMIN-BEREICH',
             style: GoogleFonts.playfairDisplay(
               fontSize: 32,
               fontWeight: FontWeight.w700,

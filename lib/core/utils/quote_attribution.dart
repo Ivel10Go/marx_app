@@ -1,34 +1,23 @@
 import '../../data/models/quote.dart';
 
 String quoteAuthorLabel(Quote quote) {
-  final source = quote.source.toLowerCase();
+  final series = quote.series.trim().toLowerCase();
 
-  if (source.contains('anti-duhring')) {
-    return 'Friedrich Engels';
+  if (series.startsWith('person_')) {
+    final personKey = series.substring('person_'.length);
+    final words = personKey
+        .split('_')
+        .where((part) => part.isNotEmpty)
+        .toList();
+    if (words.isNotEmpty) {
+      return words
+          .map((part) => part[0].toUpperCase() + part.substring(1))
+          .join(' ');
+    }
   }
 
-  if (source.contains('briefe')) {
+  if (series == 'manifest') {
     return 'Karl Marx & Friedrich Engels';
-  }
-
-  if (source.contains('achtzehnte brumaire')) {
-    return 'Karl Marx';
-  }
-
-  if (source.contains('feuerbach')) {
-    return 'Friedrich Engels';
-  }
-
-  if (source.contains('grundrisse')) {
-    return 'Karl Marx';
-  }
-
-  if (source.contains('deutsche ideologie')) {
-    return 'Karl Marx & Friedrich Engels';
-  }
-
-  if (source.contains('kapital')) {
-    return 'Karl Marx';
   }
 
   return quote.source;

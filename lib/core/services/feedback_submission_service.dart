@@ -24,7 +24,7 @@ class FeedbackSubmissionService {
   }) async {
     await _insertSubmission(<String, dynamic>{
       'submission_type': 'bug_report',
-      'title': title.isEmpty ? 'Bug Report' : title,
+      'title': title.isEmpty ? 'Fehlerbericht' : title,
       'message': description,
       'details': <String, dynamic>{
         'steps_to_reproduce': steps,

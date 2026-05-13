@@ -81,7 +81,7 @@ class AccountScreen extends ConsumerWidget {
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      'ACCOUNT',
+                      'KONTO',
                       style: GoogleFonts.playfairDisplay(
                         fontSize: 32,
                         fontWeight: FontWeight.w700,
@@ -93,7 +93,7 @@ class AccountScreen extends ConsumerWidget {
                     Container(width: 40, height: 2, color: AppColors.red),
                     const SizedBox(height: 10),
                     Text(
-                      'Verwalte deinen Account und Personalisierung',
+                      'Verwalte dein Konto und deine Personalisierung',
                       style: GoogleFonts.ibmPlexSans(
                         fontSize: 11,
                         color: scheme.onSurfaceVariant,
@@ -290,7 +290,7 @@ class _AuthCard extends StatelessWidget {
               ),
             ] else ...[
               Text(
-                'Erstelle einen Account um deine Favoriten zu synchronisieren und auf allen Geräten verfügbar zu haben.',
+                'Erstelle ein Konto, um deine Favoriten zu synchronisieren und auf allen Geräten verfügbar zu haben.',
                 style: GoogleFonts.ibmPlexSans(
                   fontSize: 11,
                   color: scheme.onSurfaceVariant,
@@ -836,7 +836,7 @@ class _DebugCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              'DEBUG TOOLS',
+              'ENTWICKLERWERKZEUGE',
               style: GoogleFonts.ibmPlexSans(
                 fontSize: 9,
                 fontWeight: FontWeight.w700,

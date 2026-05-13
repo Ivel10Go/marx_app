@@ -7,6 +7,7 @@ import '../../presentation/detail/quote_detail_screen_new.dart';
 import '../../presentation/favorites/favorites_screen.dart';
 import '../../presentation/home/home_screen.dart';
 import '../../presentation/onboarding/onboarding_screen.dart';
+import '../../presentation/auth/auth_choice_screen.dart';
 import '../../presentation/auth/auth_screen.dart';
 import '../../presentation/account/account_screen.dart';
 import '../../presentation/settings/settings_screen.dart';
@@ -78,7 +79,17 @@ final appRouterProvider = Provider<GoRouter>((Ref ref) {
       GoRoute(
         path: '/auth',
         name: 'auth',
+        builder: (context, state) => const AuthChoiceScreen(),
+      ),
+      GoRoute(
+        path: '/login',
+        name: 'login',
         builder: (context, state) => const AuthScreen(),
+      ),
+      GoRoute(
+        path: '/register',
+        name: 'register',
+        builder: (context, state) => const AuthScreen(isSignUp: true),
       ),
       GoRoute(
         path: '/account',

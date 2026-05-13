@@ -61,36 +61,67 @@ class _QuoteDetailScreenState extends ConsumerState<QuoteDetailScreen> {
   Future<void> _showExplanation(Quote quote) async {
     await showModalBottomSheet<void>(
       context: context,
+      isScrollControlled: true,
       showDragHandle: true,
       backgroundColor: Theme.of(context).colorScheme.surface,
       builder: (BuildContext context) {
         return SafeArea(
-          child: Padding(
-            padding: EdgeInsets.fromLTRB(
-              AppTheme.spacingLarge,
-              AppTheme.spacingXs,
-              AppTheme.spacingLarge,
-              AppTheme.spacingXl,
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  'KURZERKLÄRUNG',
-                  style: GoogleFonts.ibmPlexSans(
-                    fontSize: 10,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 1.2,
+          child: DraggableScrollableSheet(
+            expand: false,
+            initialChildSize: 0.72,
+            minChildSize: 0.45,
+            maxChildSize: 0.95,
+            builder: (BuildContext context, ScrollController scrollController) {
+              return SingleChildScrollView(
+                controller: scrollController,
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(
+                    AppTheme.spacingLarge,
+                    AppTheme.spacingXs,
+                    AppTheme.spacingLarge,
+                    AppTheme.spacingXl,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        'ERKLÄRUNG',
+                        style: GoogleFonts.ibmPlexSans(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 1.2,
+                        ),
+                      ),
+                      SizedBox(height: AppTheme.spacingMedium),
+                      Text(
+                        quote.explanationShort,
+                        style: GoogleFonts.ibmPlexSans(
+                          fontSize: 15,
+                          height: 1.7,
+                        ),
+                      ),
+                      SizedBox(height: AppTheme.spacingLarge),
+                      Text(
+                        'DETAILERLÄUTERUNG',
+                        style: GoogleFonts.ibmPlexSans(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 1.2,
+                        ),
+                      ),
+                      SizedBox(height: AppTheme.spacingMedium),
+                      Text(
+                        quote.explanationLong,
+                        style: GoogleFonts.ibmPlexSans(
+                          fontSize: 14,
+                          height: 1.75,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                SizedBox(height: AppTheme.spacingMedium),
-                Text(
-                  quote.explanationShort,
-                  style: GoogleFonts.ibmPlexSans(fontSize: 14, height: 1.65),
-                ),
-              ],
-            ),
+              );
+            },
           ),
         );
       },

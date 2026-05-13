@@ -42,7 +42,7 @@ class ProfileSection extends ConsumerWidget {
             final email = authState.whenData((u) => u?.email).value;
             if (isAuth) {
               return _ProfileRow(
-                label: 'Account',
+                label: 'KONTO',
                 value: email ?? 'Angemeldet',
                 onTap: () async {
                   // Quick sign out confirmation
@@ -70,7 +70,7 @@ class ProfileSection extends ConsumerWidget {
             }
 
             return _ProfileRow(
-              label: 'Account',
+              label: 'KONTO',
               value: 'Nicht angemeldet',
               onTap: () => _showAuthSheet(context, ref),
             );
@@ -115,7 +115,7 @@ class ProfileSection extends ConsumerWidget {
                 final localIds = localFavs.map((q) => q.id).toList();
 
                 messenger.showSnackBar(
-                  const SnackBar(content: Text('Debug Sync gestartet...')),
+                  const SnackBar(content: Text('Entwickler-Sync gestartet...')),
                 );
 
                 try {
@@ -124,7 +124,9 @@ class ProfileSection extends ConsumerWidget {
                     localFavoriteIds: localIds,
                   );
                   messenger.showSnackBar(
-                    const SnackBar(content: Text('Debug Sync abgeschlossen')),
+                    const SnackBar(
+                      content: Text('Entwickler-Sync abgeschlossen'),
+                    ),
                   );
                 } catch (e) {
                   messenger.showSnackBar(
@@ -136,7 +138,9 @@ class ProfileSection extends ConsumerWidget {
                 backgroundColor: AppColors.red,
                 foregroundColor: Theme.of(context).colorScheme.onPrimary,
               ),
-              child: const Text('Debug: Favoriten synchronisieren (nur Dev)'),
+              child: const Text(
+                'Entwickler: Favoriten synchronisieren (nur Entwicklung)',
+              ),
             ),
           ),
         ],
@@ -801,7 +805,7 @@ class _DebugPremiumToggle extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  'Premium-Test (Debug)',
+                  'Premium-Test (Entwicklung)',
                   style: GoogleFonts.ibmPlexSans(
                     fontSize: 12,
                     fontWeight: FontWeight.w700,
@@ -810,7 +814,7 @@ class _DebugPremiumToggle extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  'Aktiviert Premium-Features lokal (z. B. mehrere Zitate).',
+                  'Aktiviert Premium-Funktionen lokal (z. B. mehrere Zitate).',
                   style: GoogleFonts.ibmPlexSans(
                     fontSize: 10,
                     color: AppColors.inkMuted,

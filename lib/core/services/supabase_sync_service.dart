@@ -94,14 +94,14 @@ class SupabaseSyncService {
   }
 
   /// Lade UserProfile (Interessen + politische Neigung) aus Cloud
-  /// Gibt Map mit 'historical_interests' (List<String>) und 'political_leaning' (String) zurück
-  /// oder null wenn Benutzer nicht existiert
+  /// Gibt Map mit 'historical_interests' (List<String>), 'political_leaning' (String),
+  /// und 'onboarding_completed' (bool) zurück oder null wenn Benutzer nicht existiert
   Future<Map<String, dynamic>?> fetchUserProfileFromCloud(String userId) async {
     try {
       final response = await _client
           .from('profiles')
           .select(
-            'display_name, historical_interests, political_leaning, daily_quote_date',
+            'display_name, historical_interests, political_leaning, daily_quote_date, onboarding_completed',
           )
           .eq('id', userId)
           .single();
@@ -114,6 +114,8 @@ class SupabaseSyncService {
         'political_leaning':
             response['political_leaning'] as String? ?? 'neutral',
         'daily_quote_date': response['daily_quote_date'] as String?,
+        'onboarding_completed':
+            response['onboarding_completed'] as bool? ?? true,
       };
     } on PostgrestException catch (e) {
       if (e.code == 'PGRST116') {
@@ -133,6 +135,7 @@ class SupabaseSyncService {
     required List<String> historicalInterests,
     required String politicalLeaning,
     String? dailyQuoteDate,
+    bool? onboardingCompleted,
   }) async {
     try {
       await _client
@@ -142,6 +145,8 @@ class SupabaseSyncService {
             'historical_interests': historicalInterests,
             'political_leaning': politicalLeaning,
             'daily_quote_date': dailyQuoteDate,
+            if (onboardingCompleted != null)
+              'onboarding_completed': onboardingCompleted,
             'last_synced_at': DateTime.now().toIso8601String(),
             'updated_at': DateTime.now().toIso8601String(),
           })
