@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/foundation.dart';
 
 import '../services/supabase_auth_service.dart';
 import '../services/supabase_sync_service.dart';
@@ -52,19 +53,19 @@ class AuthController extends StateNotifier<AsyncValue<AuthUser?>> {
               await _onLogin(user.id);
             } catch (e) {
               // Log but don't fail - favorites sync is non-blocking
-              print('Favorites sync error: $e');
+              debugPrint('Favorites sync error: $e');
             }
             // Link RevenueCat to this user id
             try {
               await PurchasesService.instance.logIn(user.id);
             } catch (e) {
               // non-fatal: log and continue
-              print('RevenueCat login error: $e');
+              debugPrint('RevenueCat login error: $e');
             }
           }
         } catch (e) {
           // ignore sync errors here but log if needed
-          print('Auth state change error: $e');
+          debugPrint('Auth state change error: $e');
         }
       },
       onError: (e, st) {
@@ -105,7 +106,7 @@ class AuthController extends StateNotifier<AsyncValue<AuthUser?>> {
       await userProfileNotifier.loadProfileFromCloud(userId);
     } catch (e) {
       // Non-fatal: UserProfile sync failed but user is still logged in
-      print('UserProfile cloud load error: $e');
+      debugPrint('UserProfile cloud load error: $e');
     }
   }
 

@@ -31,6 +31,7 @@ class _IsolateDailyContent {
 
 /// Deferred background warm-up (runs after first frame in isolate).
 /// Only resolves content - seeding must be done in main thread first.
+// ignore: unused_element
 Future<_IsolateDailyContent> _initializeDatabaseInIsolate(
   Map<String, Object?> args,
 ) async {
@@ -148,9 +149,8 @@ abstract final class AppBootstrap {
       debugPrint('[Bootstrap] Initializing fonts...');
       _emitProgress(0.10, 'Schriftarten werden geladen ...');
 
-      // Fallback to runtime fetching when bundled font files are not present.
-      // This avoids crashes like "font ... was not found in application assets".
-      GoogleFonts.config.allowRuntimeFetching = true;
+      // Use bundled fonts only to avoid startup failures when network/font cache is unavailable.
+      GoogleFonts.config.allowRuntimeFetching = false;
       AppTheme.initializeTextStyles(); // Preload all text styles
 
       fontStart.stop();
@@ -263,6 +263,7 @@ abstract final class AppBootstrap {
     Future.delayed(const Duration(milliseconds: 500), () async {
       try {
         final prefs = await SharedPreferences.getInstance();
+        // ignore: unused_local_variable
         final isolateArgs = <String, Object?>{
           SettingsKeys.streak: prefs.getInt(SettingsKeys.streak),
           'app_mode': prefs.getString('app_mode'),

@@ -41,6 +41,8 @@ class SupabaseAuthService {
   bool get isAuthenticated => _client.auth.currentUser != null;
 
   /// Email/Passwort Registrierung
+  /// Hinweis: Wenn Email-Verifikation aktiviert ist, ist die Session null,
+  /// aber der Benutzer wird registriert und kann sich später anmelden.
   Future<AuthUser> signUpWithEmail(String email, String password) async {
     try {
       final res = await _client.auth.signUp(
@@ -56,6 +58,12 @@ class SupabaseAuthService {
       return _mapToAuthUser(user)!;
     } on AuthException catch (e) {
       // Besseres Error-Handling für Auth-spezifische Fehler
+      if (e.message.contains('already registered') ||
+          e.message.contains('already exists')) {
+        throw Exception(
+          'Diese E-Mail-Adresse ist bereits registriert. Bitte melden Sie sich an oder verwenden Sie eine andere E-Mail.',
+        );
+      }
       throw Exception('Auth Error: ${e.message}');
     } catch (e) {
       rethrow;
